@@ -590,6 +590,15 @@ html,body{background:#2B242D}
 .rh{padding-top:24px}.mn{top:68px}#hn{top:70px}
 #gl{height:65px;padding-top:24px}
 .bn .ib{top:24px}
+.sc:not(.hm):not(.rdc){padding-top:12px}
+.hd{padding-top:12px}.rh{padding-top:12px}.mn{top:56px}#hn{top:58px}#gl{height:53px;padding-top:12px}.bn .ib{top:12px}
+.bn{margin-top:-12px}.cv{aspect-ratio:3/4}.hs.pop .bk{width:88px}.bc2{height:auto;aspect-ratio:3/4}
+#dlg.fdl .pbx{margin:0;padding:14px}#dlg.fdl .pbt{margin:0}#dlg.fdl .pbx .av2{width:56px;height:56px;font-size:20px}#dlg.fdl .pbx .mb{width:30px;height:30px;font-size:10px}.pnm small{display:block;font-size:12px;color:var(--sub);margin-top:2px}#dlg.fdl .pbx .fadd{flex:none;padding:6px 12px;font-size:12px}
+.app.hm .blk{margin-top:20px}.app.hm .blk.hdt{margin-top:12px}.app.hm .blk.rblk{margin-top:32px}.sc.hm{padding-bottom:64px}
+.mts .mate{padding:12px 8px 10px}.mts .mate .p{width:40px;height:40px;margin-bottom:6px}
+.app.hm .cp{height:52px}.app.hm #sts .box{padding:10px 12px}
+.hs.pop .bk .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hs.pop .bk .a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hs.pop .rdr{white-space:normal!important;flex-wrap:wrap;align-items:center}
+#dlg.fdl .pnm small{white-space:nowrap;font-size:11px}#dlg.fdl .bkm small{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.02em}
 </style>
 </head>
 <body>
@@ -706,18 +715,18 @@ function lk(v){return'<svg class="ic l'+v+'" viewBox="0 0 24 24" aria-hidden="tr
 function friend(i,pf){
  var m=M[i],n=m[0],P=PF[n],fr0=!!FR[n];
  function sec(t,v,h){var ok=v===2||(v===1&&FR[n]);return'<section class="fs"><div class="fsh"><h3>'+t+'</h3><span class="lkt l'+v+'">'+lk(v)+VL[v]+'</span></div>'+(ok?h:'<div class="lkb">'+lk(v)+'<span>'+(v===0?"비공개 설정 중입니다.":"친구에게만 공개돼요.")+'</span></div>')+'</section>'}
- var shelf=P.b.length?'<div class="shl">'+P.b.map(function(t,k){return'<div class="bkm"><div class="c" style="background:'+BC[k%3]+'"></div><p>'+t+'</p></div>'}).join("")+'</div>':'<p class="sm" style="color:var(--sub)">아직 책장에 책이 없어요.</p>';
+ var shelf=P.b.length?'<div class="box"><div class="shs">'+P.b.map(function(t,k){var r=RDB.filter(function(b){return b[0]===t})[0];return bkTile({t:t,c:BC[k%3],s:r?"완독 "+r[3]:"읽은 책"})}).join("")+'</div></div>':'<p class="sm" style="color:var(--sub)">아직 책장에 책이 없어요.</p>';
  var posts=P.p.length?P.p.map(function(t){return'<div class="pst">'+t+'</div>'}).join(""):'<p class="sm" style="color:var(--sub)">아직 쓴 글이 없어요.</p>';
  var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.className="fdl";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label",n+" 프로필");
  function x(){o.remove();d.remove();if(!!FR[n]!==fr0){if(pf===1)profile();else if(pf===2)community()}}
  function main(){var fr=!!FR[n];
-  d.innerHTML='<div class="fp"><button class="av2" id="ph" aria-label="'+n+' 프로필 사진 크게 보기" style="background:'+m[2]+'">'+n.charAt(0)+'<i class="mb" aria-label="나와의 매칭률 '+m[1]+'%">'+m[1]+'%</i></button><div style="flex:1;min-width:0"><div class="fnr"><h2>'+n+'</h2><button class="fadd'+(!fr&&REQ[n]?" rq":"")+'" id="fa" aria-pressed="'+fr+'">'+(fr?"친구 추가됨":REQ[n]?"신청 중":"친구 추가 +")+'</button></div><div class="chips" style="margin-top:8px">'+chips(P.t)+'</div></div></div>'
+  d.innerHTML='<section class="box pbx"><div class="pbt"><button class="av2" id="ph" aria-label="'+n+' 프로필 사진 크게 보기" style="background:'+m[2]+'">'+n.charAt(0)+'<i class="mb" aria-label="나와의 매칭률 '+m[1]+'%">'+m[1]+'%</i></button><div class="pnm"><h2>'+n+'</h2><small>취향 일치도 '+m[1]+'%</small></div><button class="fadd'+(!fr&&REQ[n]?" rq":"")+'" id="fa" aria-pressed="'+fr+'">'+(fr?"친구 추가됨":REQ[n]?"신청 중":"친구 추가 +")+'</button></div></section>'
    +sec(n+" 님의 책장",P.sv,shelf)+sec(n+" 님의 글",P.pv,posts)+'<button class="btn ghost" id="fcl" style="width:100%;margin-top:16px">닫기</button>';
   document.getElementById("fcl").onclick=x;
   document.getElementById("fa").onclick=function(){if(FR[n])FR[n]=false;else REQ[n]=!REQ[n];main()};
   document.getElementById("ph").onclick=photo}
  function photo(){var fr=!!FR[n];
-  d.innerHTML='<div class="ph" style="background:'+m[2]+'">'+n.charAt(0)+'<i class="mb">나와의 매칭률 '+m[1]+'%</i>'+(fr||REQ[n]?'':'<button class="pl" id="pl" aria-label="친구 신청">'+ic("plus")+'</button>')+'</div><div class="chips" style="margin-top:14px">'+chips(P.t)+'</div><div class="chips" style="margin-top:8px">'+chips(P.g,1)+'</div><button class="btn ghost" id="pc2" style="width:100%;margin-top:16px;flex:none">닫기</button>';
+  d.innerHTML='<div class="ph" style="background:'+m[2]+'">'+n.charAt(0)+'<i class="mb">나와의 매칭률 '+m[1]+'%</i>'+(fr||REQ[n]?'':'<button class="pl" id="pl" aria-label="친구 신청">'+ic("plus")+'</button>')+'</div><div class="chips" style="margin-top:14px">'+chips(P.g,1)+'</div><button class="btn ghost" id="pc2" style="width:100%;margin-top:16px;flex:none">닫기</button>';
   document.getElementById("pc2").onclick=main;document.getElementById("pc2").focus();
   var pl=document.getElementById("pl");if(pl)pl.onclick=function(){REQ[n]=true;main()}}
  o.onclick=x;app.appendChild(o);app.appendChild(d);
@@ -1004,7 +1013,7 @@ function home(){
  app.innerHTML='<header class="hd"><button class="ib" id="hmn" aria-label="설정 열기">'+ic("menu")+'</button><span class="nick">'+esc(ME)+'</span><button class="ib" aria-label="검색">'+ic("search")+'</button><button class="ib" id="hbl" aria-label="알림 설정">'+ic("bell")+'</button><button class="ib" aria-label="설정">'+ic("set")+'</button></header>'
  +'<section class="blk hdt" id="hdt" role="button" tabindex="0" aria-label="달력 보기"><div class="box"><div class="dtl"><span>'+(new Date().getMonth()+1)+'월 '+new Date().getDate()+'일 ('+"일월화수목금토".charAt(new Date().getDay())+')</span>'+ic("next")+'</div><div class="days">'+days+'</div></div></section>'
  +'<section class="blk rblk"><div class="rcard" id="rc"><span class="rtab">진행 중인 독서</span><div class="rcv" style="background:'+DB[2]+'"></div><div class="rinfo"><h3>'+DB[0]+'</h3><p class="ra">'+DB[1]+'</p><button class="rmate" id="rm">'+MP[0][0]+'과 함께 읽는 중</button><div class="rpg"><i style="width:'+pct+'%"></i><b style="left:'+Math.round(mpg(MP[0])*100/TOT)+'%"></b></div></div><span class="rbd" aria-label="진행률">'+pct+'%</span><button class="rgo" aria-label="이어읽기">'+ic("next")+'</button></div></section>'
- +'<section class="blk"><div class="sh"><h3>추천 독서 메이트</h3></div><div class="mts">'+mt+'</div></section>'+'<section class="blk"><div class="box stl" id="sts" role="button" tabindex="0" aria-label="독서 우표 보러 가기"><b>독서 우표</b><span class="stm">'+st+'</span><em>'+NRD+'개</em>'+ic("next")+'</div></section>'
+ +'<section class="blk"><div class="sh"><h3>추천 독서 메이트</h3></div><div class="mts">'+mt+'</div></section>'+'<section class="blk" id="sts" role="button" tabindex="0" style="cursor:pointer" aria-label="독서 우표 보러 가기"><div class="sh"><h3>'+esc(ME)+' 님의 독서 우표</h3></div><div class="box"><div class="stg">'+st+'</div></div></section>'
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  document.getElementById("rc").onclick=reader;var sts=document.getElementById("sts");sts.onclick=function(){SPF=0;stampPg()};sts.onkeydown=function(e){if(e.key==="Enter")sts.onclick()};
  app.querySelectorAll(".mate").forEach(function(c,i){c.setAttribute("tabindex","0");c.setAttribute("role","button");c.style.cursor="pointer";c.onclick=function(){friend(i)};c.onkeydown=function(e){if(e.key==="Enter")friend(i)}});
