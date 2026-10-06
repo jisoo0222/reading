@@ -583,6 +583,13 @@ html,body{background:#2B242D}
 .rbx{padding:6px 14px}.rbk{display:flex;align-items:center;gap:12px;width:100%;padding:10px 0;background:none;border:0;border-top:1.5px solid var(--line);font:inherit;color:var(--ink);text-align:left;cursor:pointer}.rbk:first-child{border-top:0}
 .rbk i{width:40px;aspect-ratio:3/4;border-radius:4px;flex:none}.rbk span{flex:1;min-width:0}.rbk b{display:block;font-size:15px}.rbk small{font-size:12px;color:var(--sub)}.rbk em{display:block;font-style:normal;font-size:12px;color:var(--sec);font-weight:600;margin-top:2px}.rbk .ic{width:18px;height:18px;color:var(--sub);flex:none}
 .tk{touch-action:none;cursor:pointer}.tk::before{content:"";position:absolute;left:0;right:0;top:-10px;bottom:-10px}.th{width:16px;height:16px;top:-5px;margin-left:-8px}
+.stl{display:flex;align-items:center;gap:10px;padding:10px 12px 10px 16px;cursor:pointer}.stl>b{font-size:15px;flex:none}
+.stm{flex:1;display:flex;gap:6px;justify-content:flex-end;min-width:0}.stm>*{width:28px;flex:none}.stl em{font-style:normal;font-size:13px;font-weight:700;color:var(--pri);flex:none}.stl>.ic{width:18px;height:18px;color:var(--sub);flex:none}
+.hd{padding-top:24px}
+.sc>.sh2:first-child{margin-top:0}
+.rh{padding-top:24px}.mn{top:68px}#hn{top:70px}
+#gl{height:65px;padding-top:24px}
+.bn .ib{top:24px}
 </style>
 </head>
 <body>
@@ -923,7 +930,7 @@ function themeList(){
  document.getElementById("tl0").onclick=library;lbWire(themeList);
 }
 function bookDt(k,back){
- var b=LB[k];app.className="app dk";
+ var b=LB[k];app.className="app";
  app.innerHTML='<div class="sh2"><button class="ib" id="bd0" aria-label="뒤로">'+ic("back")+'</button><span class="sp3" style="flex:1"></span></div><div class="bdt"><h2>'+b[0]+'</h2><p>'+b[1]+'</p><div class="bcv" style="background:'+b[2]+'"><b>'+b[0]+'</b></div><div class="chips">'+["#에세이","#감성","#짧은 글","#위로"].map(function(t){return'<span class="chip g">'+t+'</span>'}).join("")+'</div><p class="rn">현재 '+Math.max(2,b[3]%7)+'명이 함께 읽는 중</p><span class="av">'+AC.slice(0,2).map(function(c){return'<i style="background:'+c+'"></i>'}).join("")+'</span><button class="btn" id="bgo" style="width:100%;margin-top:22px">함께 독서하기</button></div>';
  document.getElementById("bd0").onclick=back;document.getElementById("bgo").onclick=function(){if(BD[k]){reader(k);return}
   var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","alertdialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-labelledby","dt");
@@ -992,14 +999,14 @@ function calendar(y,m){
 function home(){
  app.className="app hm";window.scrollTo(0,0);if(BK!==DEF)useBk(DEF);var pct=Math.round(pg*100/TOT),DB=LB[DEF],ti=new Date().getDay(),NRD=8;
  var days="일월화수목금토".split("").map(function(w,i){return'<div class="cp'+(i<ti?" dn":i===ti?" td":" fu")+'"'+(i===ti?' aria-label="오늘"':'')+'>'+w+'</div>'}).join("");
- var mt=M.map(function(m){return'<div class="mate"><div class="p" style="background:'+m[2]+'">'+m[0].charAt(0)+'</div><b>'+m[0]+'</b><small>취향 일치도</small><em>'+m[1]+'%</em></div>'}).join("");var st="";for(var k=0;k<8;k++)st+=stamp(k<NRD?BC[k%3]:"var(--line)",k<NRD);
+ var mt=M.map(function(m){return'<div class="mate"><div class="p" style="background:'+m[2]+'">'+m[0].charAt(0)+'</div><b>'+m[0]+'</b><small>취향 일치도</small><em>'+m[1]+'%</em></div>'}).join("");var st="";for(var k=0;k<4;k++)st+=stamp(BC[k%3],1);
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","프로필"]].map(function(t){return'<button'+(t[0]==="home"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
  app.innerHTML='<header class="hd"><button class="ib" id="hmn" aria-label="설정 열기">'+ic("menu")+'</button><span class="nick">'+esc(ME)+'</span><button class="ib" aria-label="검색">'+ic("search")+'</button><button class="ib" id="hbl" aria-label="알림 설정">'+ic("bell")+'</button><button class="ib" aria-label="설정">'+ic("set")+'</button></header>'
  +'<section class="blk hdt" id="hdt" role="button" tabindex="0" aria-label="달력 보기"><div class="box"><div class="dtl"><span>'+(new Date().getMonth()+1)+'월 '+new Date().getDate()+'일 ('+"일월화수목금토".charAt(new Date().getDay())+')</span>'+ic("next")+'</div><div class="days">'+days+'</div></div></section>'
  +'<section class="blk rblk"><div class="rcard" id="rc"><span class="rtab">진행 중인 독서</span><div class="rcv" style="background:'+DB[2]+'"></div><div class="rinfo"><h3>'+DB[0]+'</h3><p class="ra">'+DB[1]+'</p><button class="rmate" id="rm">'+MP[0][0]+'과 함께 읽는 중</button><div class="rpg"><i style="width:'+pct+'%"></i><b style="left:'+Math.round(mpg(MP[0])*100/TOT)+'%"></b></div></div><span class="rbd" aria-label="진행률">'+pct+'%</span><button class="rgo" aria-label="이어읽기">'+ic("next")+'</button></div></section>'
- +'<section class="blk"><div class="sh"><h3>추천 독서 메이트</h3></div><div class="mts">'+mt+'</div></section>'+'<section class="blk" id="sts" role="button" tabindex="0" style="cursor:pointer"><div class="sh"><h3>'+esc(ME)+' 님의 독서 우표</h3></div><div class="box"><div class="stg">'+st+'</div></div></section>'
+ +'<section class="blk"><div class="sh"><h3>추천 독서 메이트</h3></div><div class="mts">'+mt+'</div></section>'+'<section class="blk"><div class="box stl" id="sts" role="button" tabindex="0" aria-label="독서 우표 보러 가기"><b>독서 우표</b><span class="stm">'+st+'</span><em>'+NRD+'개</em>'+ic("next")+'</div></section>'
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
- document.getElementById("rc").onclick=reader;document.getElementById("sts").onclick=function(){SPF=0;stampPg()};
+ document.getElementById("rc").onclick=reader;var sts=document.getElementById("sts");sts.onclick=function(){SPF=0;stampPg()};sts.onkeydown=function(e){if(e.key==="Enter")sts.onclick()};
  app.querySelectorAll(".mate").forEach(function(c,i){c.setAttribute("tabindex","0");c.setAttribute("role","button");c.style.cursor="pointer";c.onclick=function(){friend(i)};c.onkeydown=function(e){if(e.key==="Enter")friend(i)}});
  document.getElementById("rm").onclick=function(e){e.stopPropagation();friend(0)};
  var tb=app.querySelectorAll(".tab button");tb[0].onclick=community;tb[1].onclick=shop;tb[3].onclick=tabStamp;tb[4].onclick=profile;
