@@ -526,6 +526,27 @@ button.chip{font:inherit;font-size:14px;font-weight:600;background:none;cursor:p
 html,body{background:#2B242D}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]),:root:not([data-theme="light"]) body{background:#16111A}}
 :root[data-theme="dark"],:root[data-theme="dark"] body{background:#16111A}
+
+.app.hm .blk{margin-top:24px}
+.app.hm .blk.hdt{margin-top:12px}
+.app.hm .blk.rblk{margin-top:36px}
+.app.hm .rbd{top:-12px}
+.app.hm .sh{margin-bottom:12px}
+.sc.hm{padding-bottom:84px}
+.mts{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 16px)/3);gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.mts::-webkit-scrollbar{display:none}
+.mts>*{scroll-snap-align:start}
+.mts .mate{width:auto;border-radius:18px;padding:14px 8px 12px}
+.mts .mate .p{width:44px;height:44px;font-size:16px;margin-bottom:8px}
+.dsr{display:flex;gap:8px;margin:12px 0 14px}.dsr input{flex:1}#sheet .dsr input:focus{outline:none;border-color:var(--pri)}
+#sheet .dsr button{flex:none;width:48px;border-radius:12px;border:0;background:var(--pri);color:var(--onpri);display:grid;place-items:center;cursor:pointer}
+#wr{max-height:46vh;overflow-y:auto}
+.den{padding:12px 0;border-top:1.5px solid var(--line)}.den:first-child{border-top:0;padding-top:0}
+.dhw{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}.dhw b{font-size:18px}.dhw span{font-size:13px;color:var(--sub)}
+.dhw em{font-style:normal;font-size:11px;font-weight:600;color:var(--sec);border:1.5px solid var(--sec);border-radius:999px;padding:0 8px}
+.den ol{margin:8px 0 0;padding-left:18px;font-size:14px;line-height:1.6}.den li+li{margin-top:6px}
+.dex{margin:2px 0 0;font-size:13px;color:var(--sub)}
+.dmt{font-size:14px;color:var(--sub);margin:4px 0}
 </style>
 </head>
 <body>
@@ -879,9 +900,9 @@ function home(){
  var mt=M.map(function(m){return'<div class="mate"><div class="p" style="background:'+m[2]+'">'+m[0].charAt(0)+'</div><b>'+m[0]+'</b><small>취향 일치도</small><em>'+m[1]+'%</em></div>'}).join("");var st="";for(var k=0;k<8;k++)st+=stamp(k<NRD?BC[k%3]:"var(--line)",k<NRD);
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","프로필"]].map(function(t){return'<button'+(t[0]==="home"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
  app.innerHTML='<header class="hd"><button class="ib" id="hmn" aria-label="설정 열기">'+ic("menu")+'</button><span class="nick">서연</span><button class="ib" aria-label="검색">'+ic("search")+'</button><button class="ib" id="hbl" aria-label="알림 설정">'+ic("bell")+'</button><button class="ib" aria-label="설정">'+ic("set")+'</button></header>'
- +'<section class="blk hdt" id="hdt" role="button" tabindex="0" aria-label="달력 보기" style="margin-top:10px"><div class="box"><div class="dtl"><span>'+(new Date().getMonth()+1)+'월 '+new Date().getDate()+'일 ('+"일월화수목금토".charAt(new Date().getDay())+')</span>'+ic("next")+'</div><div class="days">'+days+'</div></div></section>'
- +'<section class="blk" style="margin-top:26px"><div class="rcard" id="rc"><span class="rtab">진행 중인 독서</span><div class="rcv" style="background:#7A637A"></div><div class="rinfo"><h3>'+B[0].t+'</h3><p class="ra">'+B[0].a+'</p><button class="rmate" id="rm">'+MP[0][0]+'과 함께 읽는 중</button><div class="rpg"><i style="width:'+pgv/2+'%"></i><b style="left:'+MP[0][1]/2+'%"></b></div></div><span class="rbd" aria-label="진행률">'+Math.round(pgv/2)+'%</span><button class="rgo" aria-label="이어읽기">'+ic("next")+'</button></div></section>'
- +'<section class="blk" style="margin-top:22px"><div class="sh"><h3>추천 독서 메이트</h3></div><div class="hs">'+mt+'</div></section>'+'<section class="blk" id="sts" role="button" tabindex="0" style="margin-top:22px;cursor:pointer"><div class="sh"><h3>서연 님의 독서 우표</h3></div><div class="stg">'+st+'</div></section>'
+ +'<section class="blk hdt" id="hdt" role="button" tabindex="0" aria-label="달력 보기"><div class="box"><div class="dtl"><span>'+(new Date().getMonth()+1)+'월 '+new Date().getDate()+'일 ('+"일월화수목금토".charAt(new Date().getDay())+')</span>'+ic("next")+'</div><div class="days">'+days+'</div></div></section>'
+ +'<section class="blk rblk"><div class="rcard" id="rc"><span class="rtab">진행 중인 독서</span><div class="rcv" style="background:#7A637A"></div><div class="rinfo"><h3>'+B[0].t+'</h3><p class="ra">'+B[0].a+'</p><button class="rmate" id="rm">'+MP[0][0]+'과 함께 읽는 중</button><div class="rpg"><i style="width:'+pgv/2+'%"></i><b style="left:'+MP[0][1]/2+'%"></b></div></div><span class="rbd" aria-label="진행률">'+Math.round(pgv/2)+'%</span><button class="rgo" aria-label="이어읽기">'+ic("next")+'</button></div></section>'
+ +'<section class="blk"><div class="sh"><h3>추천 독서 메이트</h3></div><div class="mts">'+mt+'</div></section>'+'<section class="blk" id="sts" role="button" tabindex="0" style="cursor:pointer"><div class="sh"><h3>서연 님의 독서 우표</h3></div><div class="stg">'+st+'</div></section>'
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  document.getElementById("rc").onclick=reader;document.getElementById("sts").onclick=function(){SPF=0;stampPg()};
  app.querySelectorAll(".mate").forEach(function(c,i){c.setAttribute("tabindex","0");c.setAttribute("role","button");c.style.cursor="pointer";c.onclick=function(){friend(i)};c.onkeydown=function(e){if(e.key==="Enter")friend(i)}});
@@ -1047,7 +1068,18 @@ function useBk(k){
 var CH=[],AVC=["#7A637A","#788165","#B8A07A","#9C7A5B"],TXC=["var(--pri)","var(--sec)","#B8A07A","#C08F6A"];function esc(t){return t.replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]})}
 var CM=[{n:"지민",c:"#7A637A",t:"저도 이 장면에서 괜히 울컥했어요.",sp:false},{n:"은우",c:"#788165",t:"이 말이 뒤에서 다시 나오는 게 소름이에요.",sp:true},{n:"지민",c:"#7A637A",t:"저도 이런 목록을 써 보고 싶어졌어요.",sp:false},{n:"은우",c:"#788165",t:"마지막 문장이 이 책 제목으로 이어지는 거예요.",sp:true}];
 var MP=[["지민",34,"#7A637A"],["은우",12,"#788165"]];
-var DIC={"가로등":"길가에 세워 밤에 불을 밝히는 등.","달큰하다":"맛이나 냄새가 은근히 달다.","잠기다":"어떤 생각이나 감정에 깊이 빠지다."};
+// 단어 사전 샘플 데이터. 외부 사전 연결 시 lookupWord()만 교체하면 돼요.
+var WDB=[{w:"가로등",h:"街路燈",p:"명사",d:[["거리를 밝히기 위하여 길가를 따라 설치한 등.","가로등이 하나둘 켜졌다."]]},
+{w:"달큰하다",p:"형용사",d:[["감칠맛이 있게 꽤 달다.","귤을 까자 달큰한 향이 퍼졌다."]]},
+{w:"잠기다",p:"동사",d:[["물속에 물체가 넣어지거나 가라앉게 되다.","발목까지 물에 잠기다."],["어떤 생각이나 기분에 열중하거나 빠지다.","생각에 잠기다."]]},
+{w:"종점",h:"終點",p:"명사",d:[["기차, 버스 따위를 운행하는 일정한 구간의 맨 끝이 되는 지점.","버스가 종점에 가까워졌다."],["일정한 동안이나 일의 맨 끝.",""]]},
+{w:"승객",h:"乘客",p:"명사",d:[["차, 배, 비행기 따위의 탈것을 타는 손님.","승객이 하나둘 내렸다."]]},
+{w:"수첩",h:"手帖",p:"명사",d:[["몸에 지니고 다니며 간단한 기록을 하는 조그마한 공책.","가방에서 작은 수첩을 꺼냈다."]]},
+{w:"삐뚤빼뚤하다",p:"형용사",d:[["이리저리 자꾸 고부라지거나 기울어진 모양이다.","삐뚤빼뚤한 글씨로 적혀 있었다."]]},
+{w:"서늘하다",p:"형용사",d:[["물체의 온도나 기온이 꽤 찬 듯하다.","저녁 공기가 서늘했다."],["갑자기 놀라거나 무서워서 마음속에 찬 기운이 도는 듯하다.",""]]},
+{w:"골목",p:"명사",d:[["큰길에서 들어가 동네 안을 이리저리 통하는 좁은 길.","두 사람은 말없이 골목을 걸었다."]]},
+{w:"끄덕이다",p:"동사",d:[["고개 따위를 아래위로 가볍게 움직이다.","고개를 끄덕였다."]]}];
+function lookupWord(q){return Promise.resolve(WDB.filter(function(e){var st=e.w.replace(/다$/,"");return e.w.indexOf(q)===0||q.indexOf(st)===0}))}
 var MMO={},eid=null,drg=null,MDF="#F7EFDC",csp,S,und,my,tool,cid,pg,cur,busy,BM,tt,TH=["","형광펜을 칠할 문장을 눌러 주세요","","코멘트를 남길 문장을 눌러 주세요"];
 function reader(k){
  useBk(typeof k==="number"?k:-1);
@@ -1057,7 +1089,7 @@ function reader(k){
  app.innerHTML='<header class="rh"><button class="ib" id="bk2" aria-label="뒤로">'+ic("back")+'</button><h2>'+esc(BT)+'</h2><button class="stk" id="mt" aria-label="같이 읽는 메이트"><i style="background:#7A637A">지</i><i style="background:#788165">은</i><i class="add">'+ic("plus")+'</i></button><button class="ib" id="mo" aria-label="더보기">'+ic("menu")+'</button></header>'
  +'<div class="mn" id="mn"><button data-a="dic">'+ic("person")+'인물사전</button><button data-a="sh">'+ic("share")+'공유하기</button><button data-a="set">'+ic("set")+'설정</button></div><div id="hn" role="status"></div>'
  +'<div class="bkw" id="tx"><div class="pgl" id="un"></div><div class="pgl leaf" id="lf"></div></div>'
- +'<div class="fx"><div class="col"><button class="fb hide" id="ws" aria-label="단어 검색">'+ic("search")+'</button><button class="fb zb" id="zn" aria-label="편하게 읽기 모드">'+ic("zen")+'</button></div><div class="col hide"><div class="tl" id="tl">'+tl+'</div><button class="fb" id="pn" aria-label="메모 및 꾸미기">'+ic("pen")+'</button></div></div>'
+ +'<div class="fx"><div class="col"><button class="fb hide" id="ws" aria-label="단어 사전">'+ic("search")+'</button><button class="fb zb" id="zn" aria-label="편하게 읽기 모드">'+ic("zen")+'</button></div><div class="col hide"><div class="tl" id="tl">'+tl+'</div><button class="fb" id="pn" aria-label="메모 및 꾸미기">'+ic("pen")+'</button></div></div>'
  +'<div class="prg" id="pg"></div><div id="ov"></div><div id="sheet" role="dialog"></div><div id="np" role="tooltip"></div>';
  var tx=document.getElementById("tx"),lf=document.getElementById("lf"),un=document.getElementById("un"),sheet=document.getElementById("sheet"),ov=document.getElementById("ov"),hn=document.getElementById("hn"),np=document.getElementById("np");
  function so(h){sheet.innerHTML=h+'<button class="btn ghost cl">닫기</button>';sheet.classList.add("on");ov.classList.add("on")}
@@ -1170,14 +1202,18 @@ function reader(k){
   else if(b.classList.contains("hrt"))b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")!=="true");
   else if(b.id==="sv"){var v=document.getElementById("ta").value.trim();if(v){my[cid]={t:v,sp:csp};CMTS.unshift({b:BT,t:v,d:todayStr()});rt()}sc()}
  });
- sheet.addEventListener("input",function(e){if(e.target.id==="wi"){var v=e.target.value.trim(),k=Object.keys(DIC).filter(function(x){return v&&(v.indexOf(x)>-1||x.indexOf(v)>-1)})[0];document.getElementById("wr").textContent=v?(k?k+": "+DIC[k]:"찾는 단어가 없어요."):""}});
+ function wsr(){var w=document.getElementById("wi");if(!w)return;var v=w.value.trim(),r=document.getElementById("wr");
+  if(!v){r.innerHTML='<p class="dmt">모르는 단어를 검색해 보세요.</p>';return}
+  lookupWord(v).then(function(a){if(w.value.trim()!==v)return;r.innerHTML=a.length?a.map(function(e){return'<div class="den"><div class="dhw"><b>'+esc(e.w)+'</b>'+(e.h?'<span>'+esc(e.h)+'</span>':'')+'<em>'+esc(e.p)+'</em></div><ol>'+e.d.map(function(d){return'<li>'+esc(d[0])+(d[1]?'<p class="dex">'+esc(d[1])+'</p>':'')+'</li>'}).join("")+'</ol></div>'}).join(""):'<p class="dmt">‘'+esc(v)+'’에 대한 검색 결과가 없어요.</p>'})}
+ sheet.addEventListener("input",function(e){if(e.target.id==="wi")wsr()});
+ sheet.addEventListener("submit",function(e){e.preventDefault();wsr()});
  ov.onclick=sc;
  document.getElementById("bk2").onclick=function(){if(BK!==-1)useBk(-1);home()};
  document.getElementById("mt").onclick=function(){so('<div class="who">같이 읽는 메이트</div><p class="sm">'+MP.map(function(m){return m[0]+" "+mpg(m)+"쪽"}).join(", ")+'</p>')};
  document.getElementById("mo").onclick=function(){document.getElementById("mn").classList.toggle("on")};
  document.getElementById("mn").onclick=function(e){var b=e.target.closest("button");if(!b)return;document.getElementById("mn").classList.remove("on");
   if(b.dataset.a==="set")st();if(b.dataset.a==="dic")dic()};
- document.getElementById("ws").onclick=function(){so('<input id="wi" placeholder="단어를 입력하세요" aria-label="단어 검색"><p class="sm" id="wr" style="margin-top:12px"></p>');document.getElementById("wi").focus()};
+ document.getElementById("ws").onclick=function(){so('<h3 class="dh">단어 사전</h3><form class="dsr" role="search"><input id="wi" type="search" placeholder="찾을 단어를 입력하세요" aria-label="찾을 단어" autocomplete="off"><button aria-label="검색">'+ic("search")+'</button></form><div id="wr" aria-live="polite"></div>');wsr();document.getElementById("wi").focus()};
  document.getElementById("zn").onclick=function(){app.classList.toggle("zen")};
  document.getElementById("pn").onclick=function(){var t=document.getElementById("tl");t.classList.toggle("on");if(!t.classList.contains("on")&&tool)tset(tool)};
  document.getElementById("tl").onclick=function(e){var b=e.target.closest(".tb");if(!b)return;var t=+b.dataset.t;
