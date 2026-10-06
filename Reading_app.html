@@ -609,6 +609,8 @@ html,body{background:#2B242D}
 .frE{text-align:center;padding:14px 0 6px;font-weight:600;color:var(--ink)!important}.frH{font-size:13px;color:var(--sub);margin:12px 0 2px}
 .pps .bk .t,.pps .bk .a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pps .rdr{font-size:11px;white-space:nowrap!important;color:var(--sec);font-weight:600;margin-top:2px}.pps .rdr .av{display:none!important}
 .tm .dbt .btn.ghost{flex:1}
+.fsp{padding:12px 12px 0;height:132px;display:flex;align-items:flex-end;background:var(--line);border:0}.fsp .sps{justify-content:flex-start;gap:6px}.fsp .sps span{flex:1;max-width:40px;opacity:1;font-size:11px;align-items:center;padding:0}
+.ost{justify-content:center}.ost li{flex:none}.ost li:not(:last-child)::after{flex:none;width:18px}
 </style>
 </head>
 <body>
@@ -725,7 +727,7 @@ function lk(v){return'<svg class="ic l'+v+'" viewBox="0 0 24 24" aria-hidden="tr
 function friend(i,pf){
  var m=M[i],n=m[0],P=PF[n],fr0=!!FR[n];
  function sec(t,v,h){var ok=v===2||(v===1&&FR[n]);return'<section class="fs"><div class="fsh"><h3>'+t+'</h3><span class="lkt l'+v+'">'+lk(v)+VL[v]+'</span></div>'+(ok?h:'<div class="lkb">'+lk(v)+'<span>'+(v===0?"비공개 설정 중입니다.":"친구에게만 공개돼요.")+'</span></div>')+'</section>'}
- var shelf=P.b.length?'<div class="box"><div class="shs">'+P.b.map(function(t,k){var r=RDB.filter(function(b){return b[0]===t})[0];return bkTile({t:t,c:BC[k%3],s:r?"완독 "+r[3]:"읽은 책"})}).join("")+'</div></div>':'<p class="sm" style="color:var(--sub)">아직 책장에 책이 없어요.</p>';
+ var shelf=P.b.length?'<div class="box fsp"><div class="sps" role="list" aria-label="'+n+' 님의 책장">'+P.b.map(function(t,k){return'<span role="listitem" style="height:'+[92,110,100,106,96,104][k%6]+'px;background:'+BC[k%3]+';color:'+(k%3===2?"#2E2530":"#F8F0E0")+'">'+t+'</span>'}).join("")+'</div></div>':'<p class="sm" style="color:var(--sub)">아직 책장에 책이 없어요.</p>';
  var posts=P.p.length?P.p.map(function(t){return'<div class="pst">'+t+'</div>'}).join(""):'<p class="sm" style="color:var(--sub)">아직 쓴 글이 없어요.</p>';
  var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.className="fdl";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label",n+" 프로필");
  function x(){o.remove();d.remove();if(!!FR[n]!==fr0){if(pf===1)profile();else if(pf===2)community()}}
