@@ -672,11 +672,11 @@ function result(){
   var p=strong?100:62;if(!side)p=100-p;
   rows+='<div class="ax"><div class="lb"><span'+(side?'>'+AX[i][0]:'><b>'+AX[i][0]+'</b>')+'</span><span>'+(side?'<b>'+AX[i][1]+'</b>':AX[i][1])+'</span></div><div class="trk"><i style="left:'+p+'%"></i></div><h4>'+(strong?'뚜렷한 '+nm:nm+'에 가까움')+'</h4><p>'+D[i][side]+'</p></div>';
  }
- var t=T[key];
+ var t=T[key];RKEY=key;
  app.innerHTML=bar(Q.length)+'<h1>독서 성향이 분석되었어요</h1><div class="prof"><p>당신은 이런 유형이에요</p><h2>'+t[0]+'</h2><p>'+t[1]+'</p><div class="chips">'+names.map(function(n){return'<span class="chip">'+n+'</span>'}).join("")+'</div></div>'
  +recBox(key)+'<div class="sec"><h3>성향 분석</h3>'+rows+'</div>'
  +'<div class="foot"><button class="btn ghost" id="re">다시 하기</button><button class="btn" id="go">홈으로 가기</button></div>';
- document.getElementById("go").onclick=home;
+ document.getElementById("go").onclick=function(){home();if(!PICKED)pickBook()};
  app.querySelectorAll(".rbk").forEach(function(b){b.onclick=function(){bookDt(+b.dataset.k,result)}});
  document.getElementById("re").onclick=function(){step=0;ans=[null,null,null,null];ask()};
 }
@@ -702,7 +702,14 @@ function goal(){
  app.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){GOAL=+b.dataset.v;app.querySelectorAll(".opt").forEach(function(c){c.setAttribute("aria-pressed",c===b)});nx.disabled=false}});
  document.getElementById("bk1").onclick=info;
  nx.onclick=function(){step=0;ask()}}
-var RK={0:"SEDJ",1:"SEWJ",2:"SEWI",3:"FEWI",4:"FEDJ",5:"SEWJ",7:"FADI",8:"FADI",9:"FEDJ",10:"SAWJ"};
+var RK={4:"FEDJ",5:"SEWJ",6:"FADJ",7:"FADI",8:"FADI",9:"FEDJ",10:"SAWJ"},RKEY="",PICKED=0;
+function recList(key){return Object.keys(RK).map(function(k){var m=[];for(var i=0;i<4;i++)if(RK[k].charAt(i)===key.charAt(i))m.push(1);return{k:+k,m:m}}).sort(function(a,b){return b.m.length-a.m.length||a.k-b.k}).slice(0,3)}
+function pickBook(){
+ var L=recList(RKEY),sel=L[0].k;
+ var x=pop('<h3>어떤 책부터 읽어 볼까요?</h3><p class="sm" style="font-size:13px">독서 성향에 맞춰 고른 책이에요. 한 권을 골라 바로 읽기 시작해요.</p><div class="mpl" id="pkl">'+L.map(function(r){var b=LB[r.k];return'<button class="mpi" data-k="'+r.k+'" aria-pressed="'+(r.k===sel)+'"><i style="background:'+b[2]+'"></i><span><b>'+b[0]+'</b><small>'+b[1]+' · 취향 일치도 '+r.m.length*25+'%</small></span><em aria-hidden="true">'+(r.k===sel?ic("check"):"")+'</em></button>'}).join("")+'</div><button class="btn" id="pkg" style="width:100%;margin-top:14px">이 책으로 시작하기</button>');
+ document.getElementById("ov2").onclick=null;document.getElementById("dlg").onkeydown=null;
+ document.getElementById("pkl").onclick=function(e){var b=e.target.closest(".mpi");if(!b)return;sel=+b.dataset.k;document.querySelectorAll("#pkl .mpi").forEach(function(c){var on=c===b;c.setAttribute("aria-pressed",on);c.querySelector("em").innerHTML=on?ic("check"):""})};
+ document.getElementById("pkg").onclick=function(){PICKED=1;x();DEF=sel;reader(sel)}}
 function recBox(key){
  var L=Object.keys(RK).map(function(k){var m=[];for(var i=0;i<4;i++)if(RK[k].charAt(i)===key.charAt(i))m.push(AX[i]["FSAEDWIJ".indexOf(key.charAt(i))%2]);return{k:+k,m:m}}).sort(function(a,b){return b.m.length-a.m.length||a.k-b.k}).slice(0,3);
  return'<div class="sec"><h3>이런 책을 추천해요</h3><div class="box rbx">'+L.map(function(r){var b=LB[r.k];return'<button class="rbk" data-k="'+r.k+'"><i style="background:'+b[2]+'"></i><span><b>'+b[0]+'</b><small>'+b[1]+'</small><em>취향 일치도 '+r.m.length*25+'%</em></span>'+ic("next")+'</button>'}).join("")+'</div></div>'}
@@ -1192,13 +1199,21 @@ var PAGES=[
 [[q("버스가 종점에 가까워질수록 승객은 하나둘 내렸다."),q("수아는 가방에서 작은 수첩을 꺼내 펼쳤다.")],[q("“이거 봐. 오늘 잘한 일 세 가지.”",2),q("삐뚤빼뚤한 글씨로 ‘아침에 일어난 것’, ‘지각 안 한 것’, ‘귤 나눠 준 것’이라고 적혀 있었다.")],[q("지호는 그 목록이 우스워서 웃다가, 이상하게 눈이 뜨거워졌다."),q("아무것도 못 했다고 믿었던 하루에 이렇게 많은 일이 숨어 있었다니.")]],
 [[q("버스에서 내리자 저녁 공기가 서늘했다."),q("두 사람은 말없이 골목을 걸었다.")],[q("“내일도 힘들면, 또 귤 줄게.”",3),q("수아의 말에 지호는 고개를 끄덕였다.")],[q("집에 돌아온 지호는 수첩 대신 작은 메모지에 한 줄을 적었다."),q("오늘의 나도, 충분하다.")]]];
 var PGN=[24,25,26];
+var MTC={"지민":"#7A637A","은우":"#788165","하린":"#B8A07A","도윤":"#6B5E6B"},
+BCM={4:[[1,2,0,"지민","다친 딸보다 깨진 동이가 먼저 보인다는 문장이 너무 아파요.",0],[2,2,0,"하린","이 한 줄에서 아다다라는 이름의 이유가 확 와닿았어요.",0],[3,0,0,"은우","본명이 확실이라는 게 오히려 더 쓸쓸하게 느껴져요.",0],[4,1,0,"도윤","굴뚝 모퉁이로 피하는 장면, 뒤에서 비슷한 장면이 또 나와요.",1]],
+5:[[0,1,0,"하린","첫 문장부터 닭싸움이라니, 시작이 너무 귀여워요.",0],[1,1,0,"은우","화자가 자기 닭이랑 감정이입하는 게 웃겨요.",0],[3,0,0,"지민","감자 장면은 마지막까지 읽고 다시 보면 점순이 마음이 보여요.",1],[3,2,0,"도윤","“너 혼자만 일하니?” 이 말투 은근히 설레요.",0]],
+6:[[0,1,0,"지민","첫 문장이 너무 유명해서 읽기 전부터 두근거렸어요.",0],[0,2,0,"은우","‘정신이 은화처럼 맑소’ 이 비유 오래 남네요.",0],[2,0,1,"하린","굿바이를 두 번 쓰는 리듬이 좋아요.",0],[3,2,0,"도윤","마지막 장면의 외침이랑 이어서 읽으면 소름 돋아요.",1]],
+7:[[0,2,0,"도윤","실제 역사 속 인물이라 이름만 봐도 긴장돼요.",0],[1,3,0,"은우","우물우물 넘어가는 대답에서 뭔가 숨기는 느낌이 나요.",0],[2,1,0,"지민","‘사내로 태어나서’ 이 결심이 어디로 이어질지 알아서 더 묘해요.",1],[3,3,0,"하린","가족을 데리러 왔다는 말이 괜히 마음에 걸려요.",0]],
+8:[[0,2,0,"은우","영화관 장면으로 시작하는 게 신선해요.",0],[2,1,0,"도윤","혼잡한 극장 속에 움직이지 않는 그림자, 분위기가 확 바뀌어요.",0],[3,2,2,"하린","영화 속 신부와 객석의 신부가 겹치는 연출이 좋아요.",0]],
+9:[[0,1,0,"지민","여름 장터의 쓸쓸한 공기가 그대로 느껴져요.",0],[2,0,0,"하린","“달이 뜨렷다.” 짧은데 이 장면 전체가 그려져요.",0],[3,0,1,"은우","육칠십 리 밤길이라니, 장돌뱅이 삶이 실감 나요.",0],[4,2,1,"도윤","동이라는 이름 기억해 두세요. 끝에서 다시 생각나요.",1]],
+10:[[0,2,0,"은우","첫 문장의 날씨가 이야기 전체 분위기를 깔아 줘요.",0],[0,3,0,"지민","제목이 왜 ‘운수 좋은 날’인지는 끝까지 읽어야 알게 돼요.",1],[1,0,3,"하린","설렁탕 한 그릇이 이렇게 무겁게 느껴질 줄 몰랐어요.",0],[4,1,2,"도윤","화를 내면서도 눈시울이 뜨거워지는 김첨지, 마음이 복잡해요.",0]]};
 var DEF=6,BK=-1,ST={},SPG=PAGES,SPN=PGN,TOT=200,BT="너는 지금도 충분해";
 function mpg(m){return Math.max(1,Math.round(m[1]*TOT/200))}
 function useBk(k){
  if(k===BK)return;
  ST[BK]={und:und,my:my,BM:BM,cur:cur,pg:pg,mm:MMO};BK=k;var s=ST[k];
  if(k===-1){PAGES=SPG;PGN=SPN;TOT=200;BT="너는 지금도 충분해"}
- else{PAGES=BD[k].map(function(p){return p.map(function(r){return r.map(function(t){return{t:t}})})});PGN=PAGES.map(function(_,i){return i+1});TOT=PAGES.length;BT=LB[k][0]}
+ else{PAGES=BD[k].map(function(p){return p.map(function(r){return r.map(function(t){return{t:t}})})});PGN=PAGES.map(function(_,i){return i+1});TOT=PAGES.length;BT=LB[k][0];(BCM[k]||[]).forEach(function(c){var x=PAGES[c[0]]&&PAGES[c[0]][c[1]]&&PAGES[c[0]][c[1]][c[2]];if(x){if(c[6]===undefined){c[6]=CM.length;CM.push({n:c[3],c:MTC[c[3]],t:c[4],sp:!!c[5]})}x.c=c[6]}})}
  und=s&&s.und||{};my=s&&s.my||{};BM=s&&s.BM||[];MMO=s&&s.mm||{};cur=s&&s.cur||0;pg=s&&s.pg||PGN[0]}
 var CH=[],AVC=["#7A637A","#788165","#B8A07A","#9C7A5B"],TXC=["var(--pri)","var(--sec)","#B8A07A","#C08F6A"];function esc(t){return t.replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]})}
 var CM=[{n:"지민",c:"#7A637A",t:"저도 이 장면에서 괜히 울컥했어요.",sp:false},{n:"은우",c:"#788165",t:"이 말이 뒤에서 다시 나오는 게 소름이에요.",sp:true},{n:"지민",c:"#7A637A",t:"저도 이런 목록을 써 보고 싶어졌어요.",sp:false},{n:"은우",c:"#788165",t:"마지막 문장이 이 책 제목으로 이어지는 거예요.",sp:true}];
