@@ -114,7 +114,14 @@ h1{font-size:26px;line-height:1.35;font-weight:700;letter-spacing:-.02em}
 .s.ud{text-decoration:underline;text-decoration-color:var(--pri);text-decoration-thickness:2px;text-underline-offset:4px}
 .nm{font-weight:700;cursor:pointer;user-select:none;-webkit-touch-callout:none}
 #np{position:absolute;z-index:12;width:220px;background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:0 6px 18px rgba(36,29,38,.18);display:none}
-#np.on{display:block}#np .who{margin-bottom:4px}#np p{margin:0;font-size:13px;line-height:1.55;color:var(--sub)}
+#np.on{display:block}
+.mm{position:absolute;z-index:3;cursor:pointer}.mm>i{position:absolute;inset:0}.mm>p{position:relative;margin:0;padding:10px 12px;height:100%;overflow:hidden;font-family:Pretendard,"Pretendard Variable","Apple SD Gothic Neo","Noto Sans KR",sans-serif;font-size:13px;line-height:1.5;color:#2E2530;white-space:pre-wrap;word-break:break-all}
+.mm.ed{outline:1.5px dashed var(--pri);outline-offset:3px;touch-action:none;cursor:move;z-index:5}.mm .rz{position:absolute;right:-9px;bottom:-9px;width:18px;height:18px;border-radius:50%;background:var(--pri);border:2px solid var(--card);cursor:nwse-resize}
+.mm .mdn{position:absolute;left:50%;top:-34px;transform:translateX(-50%);background:var(--pri);color:var(--onpri);border:0;border-radius:999px;font:inherit;font-size:12px;padding:4px 12px;cursor:pointer}
+.mpk{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 12px}.mpk button{width:48px;height:48px;display:grid;place-items:center;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;cursor:pointer;padding:0}.mpk button[aria-pressed="true"]{border-color:var(--pri);border-width:2px}.mpk i{display:block;width:70%;aspect-ratio:1}
+.mpv{position:relative;height:96px;margin-bottom:12px}.mpv .mm{inset:0 18%;cursor:default}
+#dlg textarea{width:100%;font:inherit;font-size:14px;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:10px;resize:none}
+.mop{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:13px;color:var(--sub)}.mop input{flex:1;accent-color:var(--pri)}.mop span{width:38px;text-align:right}#np .who{margin-bottom:4px}#np p{margin:0;font-size:13px;line-height:1.55;color:var(--sub)}
 .ct{font:inherit;font-size:11px;background:var(--card);color:var(--pri);border:1.5px solid var(--pri);border-radius:8px;padding:0 6px;margin-left:4px;cursor:pointer;line-height:1.6;vertical-align:middle}
 .ct.me{color:var(--sec);border-color:var(--sec)}
 .sk{width:16px;height:16px;color:var(--sec);vertical-align:-3px}
@@ -1033,20 +1040,20 @@ var BK=-1,ST={},SPG=PAGES,SPN=PGN,TOT=200,BT="너는 지금도 충분해";
 function mpg(m){return Math.max(1,Math.round(m[1]*TOT/200))}
 function useBk(k){
  if(k===BK)return;
- ST[BK]={und:und,my:my,BM:BM,cur:cur,pg:pg};BK=k;var s=ST[k];
+ ST[BK]={und:und,my:my,BM:BM,cur:cur,pg:pg,mm:MMO};BK=k;var s=ST[k];
  if(k===-1){PAGES=SPG;PGN=SPN;TOT=200;BT="너는 지금도 충분해"}
  else{PAGES=BD[k].map(function(p){return p.map(function(r){return r.map(function(t){return{t:t}})})});PGN=PAGES.map(function(_,i){return i+1});TOT=PAGES.length;BT=LB[k][0]}
- und=s&&s.und||{};my=s&&s.my||{};BM=s&&s.BM||[];cur=s&&s.cur||0;pg=s&&s.pg||PGN[0]}
+ und=s&&s.und||{};my=s&&s.my||{};BM=s&&s.BM||[];MMO=s&&s.mm||{};cur=s&&s.cur||0;pg=s&&s.pg||PGN[0]}
 var CH=[],AVC=["#7A637A","#788165","#B8A07A","#9C7A5B"],TXC=["var(--pri)","var(--sec)","#B8A07A","#C08F6A"];function esc(t){return t.replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]})}
 var CM=[{n:"지민",c:"#7A637A",t:"저도 이 장면에서 괜히 울컥했어요.",sp:false},{n:"은우",c:"#788165",t:"이 말이 뒤에서 다시 나오는 게 소름이에요.",sp:true},{n:"지민",c:"#7A637A",t:"저도 이런 목록을 써 보고 싶어졌어요.",sp:false},{n:"은우",c:"#788165",t:"마지막 문장이 이 책 제목으로 이어지는 거예요.",sp:true}];
 var MP=[["지민",34,"#7A637A"],["은우",12,"#788165"]];
 var DIC={"가로등":"길가에 세워 밤에 불을 밝히는 등.","달큰하다":"맛이나 냄새가 은근히 달다.","잠기다":"어떤 생각이나 감정에 깊이 빠지다."};
-var csp,S,und,my,tool,cid,pg,cur,busy,BM,tt,TH=["","형광펜을 칠할 문장을 눌러 주세요","","코멘트를 남길 문장을 눌러 주세요"];
+var MMO={},eid=null,drg=null,MDF="#F7EFDC",csp,S,und,my,tool,cid,pg,cur,busy,BM,tt,TH=["","형광펜을 칠할 문장을 눌러 주세요","","코멘트를 남길 문장을 눌러 주세요"];
 function reader(k){
  useBk(typeof k==="number"?k:-1);
- if(!S){S={f:1,n:0,m:1,s:0,ff:0};und={};my={};BM=[]}tool=0;busy=false;cur=cur||0;pg=pg||PGN[0];
+ if(!S){S={f:1,n:0,m:1,s:0,ff:0};und={};my={};BM=[];MMO={}}tool=0;eid=null;drg=null;busy=false;cur=cur||0;pg=pg||PGN[0];
  app.className="app rd";
- var tl=[["형광펜","ul"],["책갈피","bm"],["코멘트","chat"]].map(function(t,i){return'<button class="tb" data-t="'+(i+1)+'"><span>'+t[0]+'</span><span class="fb">'+ic(t[1])+'</span></button>'}).join("");
+ var tl=[["형광펜","ul"],["책갈피","bm"],["코멘트","chat"],["메모","memo"]].map(function(t,i){return'<button class="tb" data-t="'+(i+1)+'"><span>'+t[0]+'</span><span class="fb">'+ic(t[1])+'</span></button>'}).join("");
  app.innerHTML='<header class="rh"><button class="ib" id="bk2" aria-label="뒤로">'+ic("back")+'</button><h2>'+esc(BT)+'</h2><button class="stk" id="mt" aria-label="같이 읽는 메이트"><i style="background:#7A637A">지</i><i style="background:#788165">은</i><i class="add">'+ic("plus")+'</i></button><button class="ib" id="mo" aria-label="더보기">'+ic("menu")+'</button></header>'
  +'<div class="mn" id="mn"><button data-a="dic">'+ic("person")+'인물사전</button><button data-a="sh">'+ic("share")+'공유하기</button><button data-a="set">'+ic("set")+'설정</button></div><div id="hn" role="status"></div>'
  +'<div class="bkw" id="tx"><div class="pgl" id="un"></div><div class="pgl leaf" id="lf"></div></div>'
@@ -1062,10 +1069,10 @@ function reader(k){
   var id=pi+"-"+pj+"-"+si,h=nmr(esc(x.t));
   var tg=x.c!==undefined?'<button class="ct" data-c="'+x.c+'">남의 코멘트'+(S.s===0&&CM[x.c].sp?" (스포주의)":"")+'</button>':'';
   if(my[id])tg+='<button class="ct me" data-m="'+id+'">내 코멘트'+(my[id].sp?" (스포 방지)":"")+'</button>';
-  return'<span class="s'+(und[id]?" ud":"")+(x.c!==undefined?" cm":"")+'" data-id="'+id+'">'+h+'</span>'+tg+' '}).join("")+'</p>'}).join("")+(BM.indexOf(PGN[pi])>-1?'<i class="crn"></i>':'')+'<div class="fol">'+PGN[pi]+'</div>'}
+  return'<span class="s'+(und[id]?" ud":"")+(x.c!==undefined?" cm":"")+'" data-id="'+id+'">'+h+'</span>'+tg+' '}).join("")+'</p>'}).join("")+(BM.indexOf(PGN[pi])>-1?'<i class="crn"></i>':'')+(MMO[pi]||[]).map(function(m,j){return mmH(m,pi+"-"+j)}).join("")+'<div class="fol">'+PGN[pi]+'</div>'}
  function rt(){nmx();lf.innerHTML=pH(cur)}
  function pr(){var pc=function(v){return v*100/TOT};document.getElementById("pg").innerHTML='<div class="pr"><span>'+pg+'p</span><div class="tk"><i style="width:'+pc(pg)+'%"></i><b class="th" style="left:'+pc(pg)+'%"></b>'+BM.map(function(b){return'<button class="rb" data-p="'+b+'" style="left:'+pc(b)+'%" aria-label="'+b+'쪽 책갈피"></button>'}).join("")+MP.map(function(m){return'<em class="md" style="left:'+pc(mpg(m))+'%;background:'+m[2]+'" aria-label="'+m[0]+' '+mpg(m)+'쪽">'+m[0].charAt(0)+'</em>'}).join("")+'</div><span>'+TOT+'p</span></div><p class="pc">'+Math.round(pc(pg))+'% · '+MP.map(function(m){return m[0]+" "+mpg(m)+"p"}).join(" · ")+'</p>'}
- function fl(n){if(busy||n<0||n>=PGN.length||n===cur)return;busy=true;var d=n>cur?1:-1;pg=PGN[n];
+ function fl(n){if(busy||n<0||n>=PGN.length||n===cur)return;busy=true;eid=null;var d=n>cur?1:-1;pg=PGN[n];
   function fin(){cur=n;lf.style.transition="none";lf.style.transform="none";lf.classList.remove("flip");rt();un.innerHTML="";busy=false;pr()}
   if(matchMedia("(prefers-reduced-motion: reduce)").matches){fin();return}
   lf.classList.add("flip");
@@ -1091,11 +1098,46 @@ function reader(k){
    var v=[n,t||"설명이 없어요."];ed?CH[k]=v:CH.push(v);rt();x();dic()};
   d.onkeydown=function(e){if(e.key==="Escape")x()};
   document.getElementById("cn").focus()}
+ function mcol(i){return i<0?MDF:COL[("PN"+i) in CS?CS["PN"+i]:i%5]}
+ function mshp(i){return i<0?"border-radius:4px;border:1.5px solid #D9C9AA":PS[i].replace(/(width|aspect-ratio):[^;]*;?/g,"")}
+ function mbg(m){return'<i style="background:'+mcol(m.i)+';'+mshp(m.i)+';opacity:'+m.o/100+'"></i>'}
+ function mmH(m,id){var e=id===eid;return'<div class="mm'+(e?" ed":"")+'" data-mm="'+id+'" style="left:'+m.x+'%;top:'+m.y+'%;width:'+m.w+'%;height:'+m.h+'%" role="note" aria-label="내 메모">'+mbg(m)+'<p>'+esc(m.t)+'</p>'+(e?'<button class="mdn">완료</button><b class="rz" aria-hidden="true"></b>':'')+'</div>'}
+ function memo(id){var ed=!!id,pi,j,m;
+  if(ed){pi=+id.split("-")[0];j=+id.split("-")[1];m=MMO[pi][j]}
+  else{var a=AP.PN&&OWN[AP.PN]?+AP.PN.slice(2):-1;m={t:"",i:a,o:100,x:27,y:30,w:46,h:24}}
+  var v={t:m.t,i:m.i,o:m.o},pk=[-1].concat(ITM.PN.map(function(_,k){return k}).filter(function(k){return OWN["PN"+k]}));
+  var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-labelledby","dt");
+  d.innerHTML='<h3 id="dt">'+(ed?"메모 수정":"메모")+'</h3><div class="mpk" role="group" aria-label="메모지">'+pk.map(function(k){return'<button data-p="'+k+'" aria-label="'+(k<0?"기본 메모":ITM.PN[k][0])+'" aria-pressed="'+(k===v.i)+'"><i style="background:'+mcol(k)+';'+(k<0?"border-radius:3px;border:1.5px solid #D9C9AA":PS[k])+'"></i></button>'}).join("")+'</div>'
+   +'<div class="mpv" id="mpv"></div><textarea id="mt2" rows="3" placeholder="메모를 적어 주세요" aria-label="메모 내용"></textarea>'
+   +'<label class="mop">투명도<input type="range" id="mo2" min="20" max="100" step="5" aria-label="메모지 투명도"><span id="mo3"></span></label>'
+   +'<p id="me" style="color:var(--sub);font-size:13px;margin:8px 0 0;min-height:18px"></p>'
+   +'<div class="dbt">'+(ed?'<button class="btn ghost" id="mdl">삭제</button><button class="btn ghost" id="mmv">위치·크기</button>':'<button class="btn ghost" id="mx">취소</button>')+'<button class="btn" id="ms">'+(ed?"저장":"붙이기")+'</button></div>';
+  function x(){o.remove();d.remove()}
+  o.onclick=x;app.appendChild(o);app.appendChild(d);d.onkeydown=function(e){if(e.key==="Escape")x()};
+  var ta=document.getElementById("mt2"),rg=document.getElementById("mo2");ta.value=v.t;rg.value=v.o;
+  function pv(){document.getElementById("mpv").innerHTML='<div class="mm">'+mbg(v)+'<p>'+esc(v.t)+'</p></div>';document.getElementById("mo3").textContent=v.o+"%"}
+  pv();
+  ta.oninput=function(){v.t=ta.value;pv()};rg.oninput=function(){v.o=+rg.value;pv()};
+  d.querySelector(".mpk").onclick=function(e){var b=e.target.closest("button");if(!b)return;v.i=+b.dataset.p;d.querySelectorAll(".mpk button").forEach(function(y){y.setAttribute("aria-pressed",y===b)});pv()};
+  if(!ed)document.getElementById("mx").onclick=x;
+  else{document.getElementById("mdl").onclick=function(){MMO[pi].splice(j,1);x();rt();toast("메모를 뗐어요")};
+   document.getElementById("mmv").onclick=function(){x();eid=id;rt();toast("끌어서 옮기고, 모서리로 크기를 조절해요")}}
+  document.getElementById("ms").onclick=function(){var t=ta.value.trim();if(!t){document.getElementById("me").textContent="메모를 적어 주세요.";return}
+   m.t=t;m.i=v.i;m.o=v.o;x();
+   if(!ed){document.getElementById("tl").classList.remove("on");(MMO[cur]=MMO[cur]||[]).push(m);eid=cur+"-"+(MMO[cur].length-1);toast("끌어서 옮기고, 모서리로 크기를 조절해요")}
+   rt()};
+  ta.focus()}
  function tset(t){tool=tool===t?0:t;document.querySelectorAll(".tb .fb").forEach(function(b,i){b.classList.toggle("on",tool===i+1)});hn.textContent=TH[tool];hn.classList.toggle("on",!!tool)}
  rt();pr();ap();
  var x0=0,sw=false;
  tx.addEventListener("pointerdown",function(e){x0=e.clientX;sw=false});
- tx.addEventListener("pointerup",function(e){var d=e.clientX-x0;if(Math.abs(d)>50){sw=true;nmx();fl(cur+(d<0?1:-1))}});
+ tx.addEventListener("pointerdown",function(e){var el=e.target.closest(".mm.ed");if(!el||e.target.closest(".mdn"))return;e.stopPropagation();e.preventDefault();
+  var pi=+el.dataset.mm.split("-")[0],m=MMO[pi][+el.dataset.mm.split("-")[1]],b=el.parentNode.getBoundingClientRect();
+  drg={el:el,m:m,rz:!!e.target.closest(".rz"),x:e.clientX,y:e.clientY,m0:{x:m.x,y:m.y,w:m.w,h:m.h},bw:b.width,bh:b.height};el.setPointerCapture(e.pointerId)},true);
+ tx.addEventListener("pointermove",function(e){if(!drg)return;var g=drg,m=g.m,dx=(e.clientX-g.x)*100/g.bw,dy=(e.clientY-g.y)*100/g.bh,c=function(v,a,b){return Math.min(Math.max(v,a),b)};
+  if(g.rz){m.w=c(g.m0.w+dx,20,100-m.x);m.h=c(g.m0.h+dy,8,100-m.y)}else{m.x=c(g.m0.x+dx,0,100-m.w);m.y=c(g.m0.y+dy,0,100-m.h)}
+  ["left","top","width","height"].forEach(function(k,i){g.el.style[k]=[m.x,m.y,m.w,m.h][i]+"%"})});
+ tx.addEventListener("pointerup",function(e){if(drg){drg=null;sw=true;return}var d=e.clientX-x0;if(Math.abs(d)>50){sw=true;nmx();eid=null;fl(cur+(d<0?1:-1))}});
  tx.addEventListener("pointerover",function(e){var n=e.target.closest(".nm");if(n&&e.pointerType==="mouse"&&!tool)nm(n)});
  tx.addEventListener("pointerout",function(e){var n=e.target.closest(".nm");if(n&&e.pointerType==="mouse"&&!n.contains(e.relatedTarget))nmx()});
  app.onpointerdown=function(e){if(document.getElementById("np")&&!e.target.closest(".nm,#np"))nmx()};
@@ -1104,6 +1146,9 @@ function reader(k){
  app.onkeydown=function(e){if(!document.getElementById("lf"))return;if(e.key==="ArrowRight")fl(cur+1);if(e.key==="ArrowLeft")fl(cur-1)};
  tx.addEventListener("click",function(e){
   if(sw){sw=false;return}
+  var mm=e.target.closest(".mm");
+  if(eid){if(!mm||e.target.closest(".mdn")){eid=null;rt()}return}
+  if(mm){memo(mm.dataset.mm);return}
   var c=e.target.closest(".ct"),s=e.target.closest(".s"),n=e.target.closest(".nm");
   if(n&&!tool){nm(n);return}
   if(c&&c.dataset.m){var mm=my[c.dataset.m];so('<p class="sm">'+esc(mm.t)+'</p><p class="sm" style="color:var(--sub);font-size:13px">스포 방지 '+(mm.sp?"켜짐":"꺼짐")+'</p>');return}
@@ -1136,7 +1181,7 @@ function reader(k){
  document.getElementById("zn").onclick=function(){app.classList.toggle("zen")};
  document.getElementById("pn").onclick=function(){var t=document.getElementById("tl");t.classList.toggle("on");if(!t.classList.contains("on")&&tool)tset(tool)};
  document.getElementById("tl").onclick=function(e){var b=e.target.closest(".tb");if(!b)return;var t=+b.dataset.t;
-  if(t===2){var i=BM.indexOf(pg);i>-1?BM.splice(i,1):BM.push(pg);rt();pr();toast(i>-1?pg+"쪽 책갈피를 뺐어요":pg+"쪽에 책갈피를 꽂았어요")}else tset(t)};
+  if(t===4){if(tool)tset(tool);memo();return}if(t===2){var i=BM.indexOf(pg);i>-1?BM.splice(i,1):BM.push(pg);rt();pr();toast(i>-1?pg+"쪽 책갈피를 뺐어요":pg+"쪽에 책갈피를 꽂았어요")}else tset(t)};
  document.getElementById("pg").onclick=function(e){var b=e.target.closest(".rb");if(b)fl(PGN.indexOf(+b.dataset.p))};
 }
 ask();
