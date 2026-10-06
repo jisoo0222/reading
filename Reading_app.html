@@ -547,6 +547,9 @@ html,body{background:#2B242D}
 .den ol{margin:8px 0 0;padding-left:18px;font-size:14px;line-height:1.6}.den li+li{margin-top:6px}
 .dex{margin:2px 0 0;font-size:13px;color:var(--sub)}
 .dmt{font-size:14px;color:var(--sub);margin:4px 0}
+#dlg.fdl{padding:20px}#dlg.fdl .fp{padding:0 0 16px}#dlg.fdl .fp h2{font-size:19px}#dlg.fdl .av2{width:64px;height:64px;font-size:24px}
+.fnr{display:flex;align-items:center;justify-content:space-between;gap:8px}.fnr .fadd{flex:none}
+#dlg.fdl .fs{margin-top:16px}#dlg.fdl .pst{background:var(--bg)}#dlg.fdl .bkm p{font-size:12px;line-height:1.4;color:var(--ink);margin-top:6px}
 </style>
 </head>
 <body>
@@ -634,24 +637,25 @@ PF={"지민":{t:["#슬로우리더","#감정·공감"],g:["고전","인문학","
 function chips(a,g){return a.map(function(x){return'<span class="chip'+(g?" g":"")+'">'+x+'</span>'}).join("")}
 function lk(v){return'<svg class="ic l'+v+'" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 11h12v9H6z"/><path d="'+["M8 11V8a4 4 0 0 1 8 0v3","M8 11V8a4 4 0 0 1 8 0v1","M8 9V6a4 4 0 0 1 8 0"][v]+'"/></svg>'}
 function friend(i,pf){
- var m=M[i],n=m[0],P=PF[n],fr=!!FR[n];
- app.className="app";
- function sec(t,v,h){var ok=v===2||(v===1&&fr);return'<section class="fs"><div class="fsh"><h3>'+t+'</h3><span class="lkt l'+v+'">'+lk(v)+VL[v]+'</span></div>'+(ok?h:'<div class="lkb">'+lk(v)+'<span>'+(v===0?"비공개 설정 중입니다.":"친구에게만 공개돼요.")+'</span></div>')+'</section>'}
+ var m=M[i],n=m[0],P=PF[n],fr0=!!FR[n];
+ function sec(t,v,h){var ok=v===2||(v===1&&FR[n]);return'<section class="fs"><div class="fsh"><h3>'+t+'</h3><span class="lkt l'+v+'">'+lk(v)+VL[v]+'</span></div>'+(ok?h:'<div class="lkb">'+lk(v)+'<span>'+(v===0?"비공개 설정 중입니다.":"친구에게만 공개돼요.")+'</span></div>')+'</section>'}
  var shelf=P.b.length?'<div class="shl">'+P.b.map(function(t,k){return'<div class="bkm"><div class="c" style="background:'+BC[k%3]+'"></div><p>'+t+'</p></div>'}).join("")+'</div>':'<p class="sm" style="color:var(--sub)">아직 책장에 책이 없어요.</p>';
  var posts=P.p.length?P.p.map(function(t){return'<div class="pst">'+t+'</div>'}).join(""):'<p class="sm" style="color:var(--sub)">아직 쓴 글이 없어요.</p>';
- app.innerHTML='<div class="fh"><button class="ib" id="fb2" aria-label="뒤로">'+ic("back")+'</button><button class="fadd" id="fa" aria-pressed="'+fr+'">'+(fr?"친구 추가됨":"친구 추가 +")+'</button></div>'
- +'<div class="fp"><button class="av2" id="ph" aria-label="'+n+' 프로필 사진 크게 보기" style="background:'+m[2]+'">'+n.charAt(0)+'<i class="mb" aria-label="나와의 매칭률 '+m[1]+'%">'+m[1]+'%</i></button><div><h2>'+n+'</h2><div class="chips" style="margin-top:8px">'+chips(P.t)+'</div></div></div>'
- +sec(n+" 님의 책장",P.sv,shelf)+sec(n+" 님의 글",P.pv,posts);
- document.getElementById("fb2").onclick=pf===2?community:pf?profile:home;
- document.getElementById("fa").onclick=function(){FR[n]=!FR[n];friend(i,pf)};
- document.getElementById("ph").onclick=function(){
-  var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label",n+" 프로필");
+ var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.className="fdl";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label",n+" 프로필");
+ function x(){o.remove();d.remove();if(!!FR[n]!==fr0){if(pf===1)profile();else if(pf===2)community()}}
+ function main(){var fr=!!FR[n];
+  d.innerHTML='<div class="fp"><button class="av2" id="ph" aria-label="'+n+' 프로필 사진 크게 보기" style="background:'+m[2]+'">'+n.charAt(0)+'<i class="mb" aria-label="나와의 매칭률 '+m[1]+'%">'+m[1]+'%</i></button><div style="flex:1;min-width:0"><div class="fnr"><h2>'+n+'</h2><button class="fadd" id="fa" aria-pressed="'+fr+'">'+(fr?"친구 추가됨":"친구 추가 +")+'</button></div><div class="chips" style="margin-top:8px">'+chips(P.t)+'</div></div></div>'
+   +sec(n+" 님의 책장",P.sv,shelf)+sec(n+" 님의 글",P.pv,posts)+'<button class="btn ghost" id="fcl" style="width:100%;margin-top:16px">닫기</button>';
+  document.getElementById("fcl").onclick=x;
+  document.getElementById("fa").onclick=function(){FR[n]=!FR[n];main()};
+  document.getElementById("ph").onclick=photo}
+ function photo(){var fr=!!FR[n];
   d.innerHTML='<div class="ph" style="background:'+m[2]+'">'+n.charAt(0)+'<i class="mb">나와의 매칭률 '+m[1]+'%</i>'+(fr?'':'<button class="pl" id="pl" aria-label="친구 추가">'+ic("plus")+'</button>')+'</div><div class="chips" style="margin-top:14px">'+chips(P.t)+'</div><div class="chips" style="margin-top:8px">'+chips(P.g,1)+'</div><button class="btn ghost" id="pc2" style="width:100%;margin-top:16px;flex:none">닫기</button>';
-  function x(){o.remove();d.remove()}
-  o.onclick=x;app.appendChild(o);app.appendChild(d);
-  document.getElementById("pc2").onclick=x;document.getElementById("pc2").focus();
-  var pl=document.getElementById("pl");if(pl)pl.onclick=function(){FR[n]=true;x();friend(i,pf)};
-  d.onkeydown=function(e){if(e.key==="Escape")x()}}
+  document.getElementById("pc2").onclick=main;document.getElementById("pc2").focus();
+  var pl=document.getElementById("pl");if(pl)pl.onclick=function(){FR[n]=true;main()}}
+ o.onclick=x;app.appendChild(o);app.appendChild(d);
+ d.onkeydown=function(e){if(e.key==="Escape")x()};
+ main();document.getElementById("fcl").focus()
 }
 var MYT=["#슬로우리더","#논리·분석","#재미형"],MYX=["#소설","#에세이","#새벽독서"];
 function profile(){
