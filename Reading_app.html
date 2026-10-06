@@ -612,6 +612,7 @@ html,body{background:#2B242D}
 .fsp{padding:12px 12px 0;height:132px;display:flex;align-items:flex-end;background:var(--line);border:0}.fsp .sps{justify-content:flex-start;gap:6px}.fsp .sps span{flex:1;max-width:40px;opacity:1;font-size:11px;align-items:center;padding:0}
 .ost{justify-content:center}.ost li{flex:none}.ost li:not(:last-child)::after{flex:none;width:18px}
 .fp2.rq{border-style:dashed;border-color:var(--sub);color:var(--sub)}
+.sc:not(.rdc)>*{flex-shrink:0}
 </style>
 </head>
 <body>
@@ -1052,7 +1053,7 @@ var PO=[
 {id:2,t:"코멘트",u:"지민",tm:"1시간 전",v:0,x:"친구들이랑 읽었는데 남주가 쓰레기 발언할 때마다 코멘트로 패줘서 너무 시원했다 ㅋㅋ 그 코멘트들이 궁금하면 책 열어 봐요. 같이 읽는 재미가 확실히 달라요.",b:1,l:48,c:[["은우","3장 남주 대사에 ‘이게 사람이냐’ 달아 놓은 거 레전드",32],["하린","여주 편 들어주는 코멘트가 제일 웃겼어요",14]]},
 {id:3,t:"밸런스",u:"은우",tm:"3시간 전",v:0,x:"밸런스 게임! 이 책에서 더 빌런은 누구일까요?",b:2,o:["남주의 거짓말","여주의 침묵"],n:[62,38],l:9,c:[]},
 {id:4,t:"자유",u:"도윤",tm:"어제",v:1,x:"요즘 출퇴근길에 한 챕터씩 읽는 습관이 생겼어요. 짧게라도 매일 읽으니 휴대폰을 덜 보게 돼요.",l:7,c:[]}],
-TY=[["all","전체"],["자유","자유글"],["같이","같이 읽어요"],["코멘트","코멘트 공유"],["밸런스","밸런스 게임"]],
+TY=[["all","전체"],["자유","자유글"],["같이","같이 읽어요"],["밸런스","밸런스 게임"],["mine","내가 쓴 글"],["mycm","내가 쓴 댓글"]],
 TN={자유:"자유글",같이:"같이 읽어요",코멘트:"코멘트 공유",밸런스:"밸런스 게임"},
 VIS=[["globe","전체공개"],["users","친구공개"],["lock","나만보기"]],LKD={},VT={},CF="all";
 function vic(v){return v===2?lk(0):ic(VIS[v][0])}
@@ -1077,8 +1078,8 @@ function community(){
    +'<div class="pa"><button data-l="'+p.id+'" aria-pressed="'+lk2+'">'+ic("heart")+(p.l+(lk2?1:0))+'</button><button data-cm="'+p.id+'">'+ic("chat")+'댓글 '+p.c.length+'</button></div></article>'}
  function feed(){
   document.getElementById("tyb").innerHTML=TY.map(function(c){return'<button role="tab" aria-selected="'+(CF===c[0])+'" data-t="'+c[0]+'">'+c[1]+'</button>'}).join("");
-  var h=PO.filter(function(p){return(CF==="all"||p.t===CF)&&(p.v===0||p.mine||(p.v===1&&FR[p.u]))}).map(post).join("");
-  document.getElementById("feed").innerHTML=h||'<div class="emp">아직 올라온 글이 없어요.</div>'}
+  var h=PO.filter(function(p){return(CF==="all"||(CF==="mine"?p.mine:CF==="mycm"?p.c.some(function(c){return c[3]}):p.t===CF))&&(p.v===0||p.mine||(p.v===1&&FR[p.u]))}).map(post).join("");
+  document.getElementById("feed").innerHTML=h||'<div class="emp">'+(CF==="mine"?"아직 쓴 글이 없어요.":CF==="mycm"?"아직 댓글을 단 글이 없어요.":"아직 올라온 글이 없어요.")+'</div>'}
  function byId(id){return PO.filter(function(p){return p.id===id})[0]}
  function cmts(id){var p=byId(id);
   var x=pop('<h3>댓글 '+p.c.length+'</h3>'+(p.c.length?p.c.map(function(c){return'<div class="cr"><b>'+esc(c[3]?ME:c[0])+'</b> '+esc(c[1])+'</div>'}).join(""):'<p class="sm" style="color:var(--sub)">첫 댓글을 남겨 보세요.</p>')+'<input id="ci" placeholder="댓글을 입력하세요" aria-label="댓글 입력" style="margin-top:10px"><div class="dbt"><button class="btn ghost" id="n">닫기</button><button class="btn" id="y">등록</button></div>');
