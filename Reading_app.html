@@ -613,6 +613,9 @@ html,body{background:#2B242D}
 .ost{justify-content:center}.ost li{flex:none}.ost li:not(:last-child)::after{flex:none;width:18px}
 .fp2.rq{border-style:dashed;border-color:var(--sub);color:var(--sub)}
 .sc:not(.rdc)>*{flex-shrink:0}
+.rcr{display:block;padding:22px 14px 14px;cursor:default}.rch{font-size:13px;color:var(--sub);margin:0 0 10px}
+.rcl{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.rck{display:flex;flex-direction:column;align-items:flex-start;gap:2px;background:none;border:0;padding:0;font:inherit;color:var(--ink);text-align:left;cursor:pointer;min-width:0}
+.rck i{width:56px;aspect-ratio:3/4;border-radius:6px;margin-bottom:4px}.rck b{font-size:13px;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rck small{font-size:11px;color:var(--sec);font-weight:600}
 </style>
 </head>
 <body>
@@ -676,7 +679,7 @@ function result(){
  app.innerHTML=bar(Q.length)+'<h1>독서 성향이 분석되었어요</h1><div class="prof"><p>당신은 이런 유형이에요</p><h2>'+t[0]+'</h2><p>'+t[1]+'</p><div class="chips">'+names.map(function(n){return'<span class="chip">'+n+'</span>'}).join("")+'</div></div>'
  +recBox(key)+'<div class="sec"><h3>성향 분석</h3>'+rows+'</div>'
  +'<div class="foot"><button class="btn ghost" id="re">다시 하기</button><button class="btn" id="go">홈으로 가기</button></div>';
- document.getElementById("go").onclick=function(){home();if(!PICKED)pickBook()};
+ document.getElementById("go").onclick=home;
  app.querySelectorAll(".rbk").forEach(function(b){b.onclick=function(){bookDt(+b.dataset.k,result)}});
  document.getElementById("re").onclick=function(){step=0;ans=[null,null,null,null];ask()};
 }
@@ -704,12 +707,6 @@ function goal(){
  nx.onclick=function(){step=0;ask()}}
 var RK={4:"FEDJ",5:"SEWJ",6:"FADJ",7:"FADI",8:"FADI",9:"FEDJ",10:"SAWJ"},RKEY="",PICKED=0;
 function recList(key){return Object.keys(RK).map(function(k){var m=[];for(var i=0;i<4;i++)if(RK[k].charAt(i)===key.charAt(i))m.push(1);return{k:+k,m:m}}).sort(function(a,b){return b.m.length-a.m.length||a.k-b.k}).slice(0,3)}
-function pickBook(){
- var L=recList(RKEY),sel=L[0].k;
- var x=pop('<h3>어떤 책부터 읽어 볼까요?</h3><p class="sm" style="font-size:13px">독서 성향에 맞춰 고른 책이에요. 한 권을 골라 바로 읽기 시작해요.</p><div class="mpl" id="pkl">'+L.map(function(r){var b=LB[r.k];return'<button class="mpi" data-k="'+r.k+'" aria-pressed="'+(r.k===sel)+'"><i style="background:'+b[2]+'"></i><span><b>'+b[0]+'</b><small>'+b[1]+' · 취향 일치도 '+r.m.length*25+'%</small></span><em aria-hidden="true">'+(r.k===sel?ic("check"):"")+'</em></button>'}).join("")+'</div><button class="btn" id="pkg" style="width:100%;margin-top:14px">이 책으로 시작하기</button>');
- document.getElementById("ov2").onclick=null;document.getElementById("dlg").onkeydown=null;
- document.getElementById("pkl").onclick=function(e){var b=e.target.closest(".mpi");if(!b)return;sel=+b.dataset.k;document.querySelectorAll("#pkl .mpi").forEach(function(c){var on=c===b;c.setAttribute("aria-pressed",on);c.querySelector("em").innerHTML=on?ic("check"):""})};
- document.getElementById("pkg").onclick=function(){PICKED=1;x();DEF=sel;reader(sel)}}
 function recBox(key){
  var L=Object.keys(RK).map(function(k){var m=[];for(var i=0;i<4;i++)if(RK[k].charAt(i)===key.charAt(i))m.push(AX[i]["FSAEDWIJ".indexOf(key.charAt(i))%2]);return{k:+k,m:m}}).sort(function(a,b){return b.m.length-a.m.length||a.k-b.k}).slice(0,3);
  return'<div class="sec"><h3>이런 책을 추천해요</h3><div class="box rbx">'+L.map(function(r){var b=LB[r.k];return'<button class="rbk" data-k="'+r.k+'"><i style="background:'+b[2]+'"></i><span><b>'+b[0]+'</b><small>'+b[1]+'</small><em>취향 일치도 '+r.m.length*25+'%</em></span>'+ic("next")+'</button>'}).join("")+'</div></div>'}
@@ -1038,18 +1035,18 @@ function calendar(y,m){
  document.getElementById("cnx").onclick=function(){calendar(y,m+1)};
 }
 function home(){
- app.className="app hm";window.scrollTo(0,0);if(BK!==DEF)useBk(DEF);var pct=Math.round(pg*100/TOT),DB=LB[DEF],ti=new Date().getDay(),NRD=8;
+ app.className="app hm";window.scrollTo(0,0);if(BK!==DEF)useBk(DEF);var REC=!PICKED&&!!RKEY,pct=Math.round(pg*100/TOT),DB=LB[DEF],ti=new Date().getDay(),NRD=8;
  var days="일월화수목금토".split("").map(function(w,i){return'<div class="cp'+(i<ti?" dn":i===ti?" td":" fu")+'"'+(i===ti?' aria-label="오늘"':'')+'>'+w+'</div>'}).join("");
  var mt=M.map(function(m){return'<div class="mate"><div class="p" style="background:'+m[2]+'">'+m[0].charAt(0)+'</div><b>'+m[0]+'</b><small>취향 일치도</small><em>'+m[1]+'%</em></div>'}).join("");var st="";for(var k=0;k<4;k++)st+=stamp(BC[k%3],1);
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","프로필"]].map(function(t){return'<button'+(t[0]==="home"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
  app.innerHTML='<header class="hd"><button class="ib" id="hmn" aria-label="설정 열기">'+ic("menu")+'</button><span class="nick">'+esc(ME)+'</span><button class="ib" aria-label="검색">'+ic("search")+'</button><button class="ib" id="hbl" aria-label="알림 설정">'+ic("bell")+'</button><button class="ib" aria-label="설정">'+ic("set")+'</button></header>'
  +'<section class="blk hdt" id="hdt" role="button" tabindex="0" aria-label="달력 보기"><div class="box"><div class="dtl"><span>'+(new Date().getMonth()+1)+'월 '+new Date().getDate()+'일 ('+"일월화수목금토".charAt(new Date().getDay())+')</span>'+ic("next")+'</div><div class="days">'+days+'</div></div></section>'
- +'<section class="blk rblk"><div class="rcard" id="rc"><span class="rtab">진행 중인 독서</span><div class="rcv" style="background:'+DB[2]+'"></div><div class="rinfo"><h3>'+DB[0]+'</h3><p class="ra">'+DB[1]+'</p><button class="rmate" id="rm">'+MP[0][0]+'과 함께 읽는 중</button><div class="rpg"><i style="width:'+pct+'%"></i><b style="left:'+Math.round(mpg(MP[0])*100/TOT)+'%"></b></div></div><span class="rbd" aria-label="진행률">'+pct+'%</span><button class="rgo" aria-label="이어읽기">'+ic("next")+'</button></div></section>'
+ +(REC?'<section class="blk rblk"><div class="rcard rcr"><span class="rtab">추천 독서</span><div class="rcl">'+recList(RKEY).map(function(r){var b=LB[r.k];return'<button class="rck" data-k="'+r.k+'" aria-label="'+b[0]+' 읽기 시작"><i style="background:'+b[2]+'"></i><b>'+b[0]+'</b><small>일치도 '+r.m.length*25+'%</small></button>'}).join("")+'</div></div></section>':'<section class="blk rblk"><div class="rcard" id="rc"><span class="rtab">진행 중인 독서</span><div class="rcv" style="background:'+DB[2]+'"></div><div class="rinfo"><h3>'+DB[0]+'</h3><p class="ra">'+DB[1]+'</p><button class="rmate" id="rm">'+MP[0][0]+'과 함께 읽는 중</button><div class="rpg"><i style="width:'+pct+'%"></i><b style="left:'+Math.round(mpg(MP[0])*100/TOT)+'%"></b></div></div><span class="rbd" aria-label="진행률">'+pct+'%</span><button class="rgo" aria-label="이어읽기">'+ic("next")+'</button></div></section>')
  +'<section class="blk"><div class="sh"><h3>추천 독서 메이트</h3></div><div class="mts">'+mt+'</div></section>'+'<section class="blk" id="sts" role="button" tabindex="0" style="cursor:pointer" aria-label="독서 우표 보러 가기"><div class="sh"><h3>'+esc(ME)+' 님의 독서 우표</h3></div><div class="box"><div class="stg">'+st+'</div></div></section>'
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
- document.getElementById("rc").onclick=reader;var sts=document.getElementById("sts");sts.onclick=function(){SPF=0;stampPg()};sts.onkeydown=function(e){if(e.key==="Enter")sts.onclick()};
+ if(REC)app.querySelectorAll(".rck").forEach(function(b){b.onclick=function(){PICKED=1;DEF=+b.dataset.k;reader(DEF)}});else document.getElementById("rc").onclick=reader;var sts=document.getElementById("sts");sts.onclick=function(){SPF=0;stampPg()};sts.onkeydown=function(e){if(e.key==="Enter")sts.onclick()};
  app.querySelectorAll(".mate").forEach(function(c,i){c.setAttribute("tabindex","0");c.setAttribute("role","button");c.style.cursor="pointer";c.onclick=function(){friend(i)};c.onkeydown=function(e){if(e.key==="Enter")friend(i)}});
- document.getElementById("rm").onclick=function(e){e.stopPropagation();friend(0)};
+ if(!REC)document.getElementById("rm").onclick=function(e){e.stopPropagation();friend(0)};
  var tb=app.querySelectorAll(".tab button");tb[0].onclick=community;tb[1].onclick=shop;tb[3].onclick=tabStamp;tb[4].onclick=profile;
  document.getElementById("hmn").onclick=drawer;document.getElementById("hbl").onclick=alarm;
  var hd=document.getElementById("hdt");hd.onclick=function(){calendar()};hd.onkeydown=function(e){if(e.key==="Enter")calendar()};
