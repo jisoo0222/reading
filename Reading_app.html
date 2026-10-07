@@ -624,6 +624,7 @@ html,body{background:#2B242D}
 .ntl{display:flex;flex-direction:column;gap:8px}.ntr{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:12px 14px;background:var(--card);border:1.5px solid var(--line);border-radius:14px;font:inherit;color:var(--ink);cursor:pointer}
 .ntr.new{border-color:var(--pri)}.nti{width:36px;height:36px;border-radius:50%;background:var(--bg);color:var(--pri);display:grid;place-items:center;flex:none}.nti .ic{width:18px;height:18px}
 .ntx{flex:1;min-width:0}.ntx b{display:block;font-size:14px;font-weight:600;line-height:1.45}.ntx small{font-size:12px;color:var(--sub)}.ntd{width:8px;height:8px;border-radius:50%;background:var(--pri);flex:none}
+.tin{margin:auto 0;text-align:center;display:flex;flex-direction:column;align-items:center}.tin svg{margin-bottom:14px}.tik{font-size:13px;font-weight:700;color:var(--sec);margin-bottom:6px}.tin .hint{max-width:280px;margin-top:10px}
 </style>
 </head>
 <body>
@@ -668,7 +669,7 @@ function ask(){
   ans[step]=+b.dataset.i;
   app.querySelectorAll(".opt").forEach(function(c){c.setAttribute("aria-pressed",+c.dataset.i===ans[step])});nx.disabled=false}});
  nx.onclick=function(){step<Q.length-1?(step++,ask()):load()};
- document.getElementById("bk").onclick=function(){if(step){step--;ask()}else goal()};
+ document.getElementById("bk").onclick=function(){if(step){step--;ask()}else tiIntro()};
 }
 function load(){
  app.innerHTML=ost(3)+bar(Q.length)+'<div class="center" role="status"><div class="ring"></div><h1>독서 성향을 분석하고 있어요</h1><p class="hint">답변을 바탕으로 프로필을 만드는 중이에요.</p></div>';
@@ -729,7 +730,13 @@ function goal(){
  var nx=document.getElementById("nx2");nx.disabled=GOAL===null;
  app.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){GOAL=+b.dataset.v;app.querySelectorAll(".opt").forEach(function(c){c.setAttribute("aria-pressed",c===b)});nx.disabled=false}});
  document.getElementById("bk1").onclick=info;
- nx.onclick=function(){step=0;ask()}}
+ nx.onclick=tiIntro}
+function tiIntro(){
+ app.className="app";
+ app.innerHTML=ost(3)+'<div class="tin"><svg viewBox="0 0 200 160" width="168" height="134" aria-hidden="true"><circle cx="100" cy="82" r="70" fill="var(--card)"/><path d="M100 58c-14-7-32-7-44-2v54c12-5 30-5 44 2z" fill="var(--bg)" stroke="var(--pri)" stroke-width="3" stroke-linejoin="round"/><path d="M100 58c14-7 32-7 44-2v54c-12-5-30-5-44 2z" fill="var(--bg)" stroke="var(--pri)" stroke-width="3" stroke-linejoin="round"/><path d="M100 58v54" stroke="var(--pri)" stroke-width="3"/><circle cx="148" cy="40" r="15" fill="none" stroke="var(--sec)" stroke-width="3"/><path d="M144 40a4 4 0 1 1 6 3.5c-1.5 1-2 1.8-2 3.5M148 51v.5" fill="none" stroke="var(--sec)" stroke-width="3" stroke-linecap="round"/></svg>'
+ +'<p class="tik">거의 다 왔어요</p><h1>이제 나의 독서TI를<br>알아볼게요!</h1><p class="hint">질문 4개에 답하면 나에게 맞는 책과 독서 메이트를 찾아 드려요. 1분이면 충분해요.</p></div>'
+ +'<div class="foot"><button class="btn ghost" id="tib">이전</button><button class="btn" id="tig">시작하기</button></div>';
+ document.getElementById("tib").onclick=goal;document.getElementById("tig").onclick=function(){step=0;ask()}}
 var RK={4:"FEDJ",5:"SEWJ",6:"FADJ",7:"FADI",8:"FADI",9:"FEDJ",10:"SAWJ"},RKEY="",PICKED=0;
 function tWrap(t,n){var w=t.split(" "),L=[],c="";w.forEach(function(x){if((c+" "+x).trim().length>n&&c){L.push(c);c=x}else c=(c+" "+x).trim()});if(c)L.push(c);return L}
 function typeSVG(key,t,names){
@@ -1082,7 +1089,7 @@ function drawer(){
  function cl(){o.classList.remove("on");d.classList.remove("on");setTimeout(function(){o.remove();d.remove()},300)}
  o.onclick=cl;d.onkeydown=function(e){if(e.key==="Escape")cl()};
  r();app.appendChild(o);app.appendChild(d);
- requestAnimationFrame(function(){requestAnimationFrame(function(){o.classList.add("on");d.classList.add("on");d.querySelector("#dcl").focus()})})}
+ requestAnimationFrame(function(){requestAnimationFrame(function(){o.classList.add("on");d.classList.add("on");d.querySelector("#dcl").focus({preventScroll:true});app.scrollLeft=0})})}
 function calendar(y,m){
  var now=new Date();if(y===undefined){y=now.getFullYear();m=now.getMonth()}
  var dt=new Date(y,m,1);y=dt.getFullYear();m=dt.getMonth();
