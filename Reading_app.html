@@ -708,6 +708,7 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .mys{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:default;text-align:center}.mys .pvw{width:100%}.mys .pvw{aspect-ratio:1;overflow:hidden;position:relative}.mys .pvw img{position:absolute;inset:10%;width:80%;height:80%;object-fit:contain}.mys b{font-size:12px}.mys .fadd{font-size:11px;padding:5px 8px}
 .msh{position:absolute;top:6px;right:6px;width:28px;height:28px;border-radius:50%;border:0;background:var(--bg);color:var(--pri);display:grid;place-items:center;cursor:pointer;box-shadow:0 0 0 1.5px var(--line)}.msh .ic{width:17px;height:17px;stroke-width:2.2}
 .msh .icf{width:16px;height:16px;display:block}
+.xpv{display:flex;flex-direction:column;align-items:center;gap:6px;background:var(--bg);border-radius:14px;padding:14px;margin:4px 0 12px}.xpv img{width:96px;height:96px;object-fit:contain}.xpv b{font-size:13px}
 </style>
 </head>
 <body>
@@ -1036,9 +1037,17 @@ function shop(){
     if(c==="HL")return'<button class="cd2 hlr" data-c="HL" data-i="'+i+'"><span class="hn">'+t[0]+ic("pen")+'</span><span class="hv">'+pv(c,i,COL[i%5])+'</span><span class="hp">'+(own?"보유":ic("plus"))+'</span></button>';
     return'<button class="cd2" data-c="'+c+'" data-i="'+i+'"><div class="pvw">'+pv(c,i,COL[i%5])+'</div><b>'+t[0]+'</b><span>'+(own?"보유 중":p?p+"P":"무료")+'</span></button>'}).join("")+'</div>'}}
  var draw0=draw;draw=function(){draw0();if(STB!==1||SC!=="MK")return;var gd=g.querySelector(".gd");if(!gd)return;
-  gd.outerHTML='<button class="mkc" id="mkc"><span>'+ic("pen")+'</span><div><b>직접 만들기</b><small>그림을 그려 나만의 스티커를 만들어요</small></div>'+ic("next")+'</button><h4 class="lgh">내가 만든 스티커</h4>'+(MY.length?'<div class="gd g3">'+MY.map(function(m,k){return'<div class="cd2 mys"><div class="pvw"><img src="'+m.u+'" alt="'+esc(m.n)+'"><button class="msh" data-sh="'+k+'" aria-label="'+esc(m.n)+' 커뮤니티에 공유"><svg class="icf" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.500 3.500 21 10l-7.500 6.500v-3.800c-4.200 0-7.100 1.500-9.500 5.300.4-6.200 3.800-10.400 9.500-11z" fill="currentColor"/></svg></button></div><b>'+esc(m.n)+'</b></div>'}).join("")+'</div>':'<div class="emp">아직 만든 스티커가 없어요. 직접 만들어 보세요.</div>');
+  gd.outerHTML='<button class="mkc" id="mkc"><span>'+ic("pen")+'</span><div><b>직접 만들기</b><small>그림을 그려 나만의 스티커를 만들어요</small></div>'+ic("next")+'</button><h4 class="lgh">내가 만든 스티커</h4>'+(MY.length?'<div class="gd g3">'+MY.map(function(m,k){return'<div class="cd2 mys"><div class="pvw"><img src="'+m.u+'" alt="'+esc(m.n)+'"><button class="msh" data-sh="'+k+'" aria-label="'+esc(m.n)+' 내보내기"><svg class="icf" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.500 3.500 21 10l-7.500 6.500v-3.800c-4.200 0-7.100 1.500-9.500 5.300.4-6.200 3.800-10.400 9.500-11z" fill="currentColor"/></svg></button></div><b>'+esc(m.n)+'</b></div>'}).join("")+'</div>':'<div class="emp">아직 만든 스티커가 없어요. 직접 만들어 보세요.</div>');
   document.getElementById("mkc").onclick=craft;
-  g.querySelectorAll("[data-sh]").forEach(function(b){b.onclick=function(e){e.stopPropagation();var m=MY[+b.dataset.sh];PO.unshift({id:Date.now(),t:"자유",u:ME,mine:1,tm:"방금 전",v:0,x:"내가 만든 ‘"+m.n+"’를 공유해요.",img:m.u,l:0,c:[]});var x=pop('<h3>공유했어요</h3><p>커뮤니티에 올렸어요.</p><button class="btn" id="o" style="width:100%;margin-top:14px">확인</button>');document.getElementById("o").onclick=x}})};
+  g.querySelectorAll("[data-sh]").forEach(function(b){b.onclick=function(e){e.stopPropagation();var m=MY[+b.dataset.sh];
+   var x=pop('<h3>내보내기</h3><div class="xpv"><img src="'+m.u+'" alt="'+esc(m.n)+'"><b>'+esc(m.n)+'</b></div><button class="drow" data-x="cm">커뮤니티에 올리기'+ic("next")+'</button><button class="drow" data-x="sv">이미지로 저장하기'+ic("next")+'</button><button class="drow" data-x="ap">다른 앱으로 보내기'+ic("next")+'</button><button class="btn ghost" id="xcl" style="width:100%;margin-top:6px">닫기</button>'),d=document.getElementById("dlg");
+   function done(t){d.innerHTML='<h3>'+t+'</h3><button class="btn" id="xok" style="width:100%;margin-top:14px">확인</button>';document.getElementById("xok").onclick=x}
+   document.getElementById("xcl").onclick=x;
+   d.querySelectorAll("[data-x]").forEach(function(r){r.onclick=function(){var k=r.dataset.x;
+    if(k==="cm"){PO.unshift({id:Date.now(),t:"자유",u:ME,mine:1,tm:"방금 전",v:0,x:"내가 만든 ‘"+m.n+"’를 공유해요.",img:m.u,l:0,c:[]});done("커뮤니티에 올렸어요")}
+    else if(k==="sv")fetch(m.u).then(function(q){return q.blob()}).then(function(bl){var a=document.createElement("a");a.href=URL.createObjectURL(bl);a.download=m.n+".png";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},1000);done("이미지로 저장했어요")})
+    else fetch(m.u).then(function(q){return q.blob()}).then(function(bl){var f=new File([bl],m.n+".png",{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],title:m.n}).then(x,function(){});else done("이 기기에서는 다른 앱으로 보낼 수 없어요")})}})}});
+ };
  function detail(c,i){
   var t=ITM[c][i],id=c+i,p=pc(c,i);if(!(id in CS))CS[id]=i%5;
   var sw=c==="TH"?"":'<div class="sg"><b>색상</b><div>'+COL.map(function(x,k){return'<button class="sw" data-k="'+k+'" aria-label="색상 '+(k+1)+'" aria-pressed="'+(CS[id]===k)+'" style="background:'+x+'"></button>'}).join("")+'</div></div>';
