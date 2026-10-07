@@ -704,6 +704,8 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .lgt li{gap:10px}.lgt li>time{width:38px;flex:none;padding-top:6px;font-size:11px;font-weight:700;color:var(--sub);text-align:right;font-variant-numeric:tabular-nums}
 .lgt li:not(:last-child)::before{left:61px}
 .cats{display:grid!important;grid-template-columns:repeat(4,1fr);gap:0!important}.cats .cat{width:100%;min-width:0}
+.mkc{display:flex;align-items:center;gap:12px;width:100%;padding:14px;background:var(--card);border:1.5px solid var(--pri);border-radius:16px;font:inherit;color:var(--ink);text-align:left;cursor:pointer}.mkc>span{width:42px;height:42px;border-radius:12px;background:var(--pri);color:var(--onpri);display:grid;place-items:center;flex:none}.mkc>div{flex:1}.mkc b{display:block;font-size:15px}.mkc small{font-size:12px;color:var(--sub)}.mkc>.ic{width:18px;height:18px;color:var(--sub)}
+.mys{display:flex;flex-direction:column;gap:4px;cursor:default}.mys .pvw{aspect-ratio:1;overflow:hidden;position:relative}.mys .pvw img{position:absolute;inset:10%;width:80%;height:80%;object-fit:contain}.mys b{font-size:12px}.mys .fadd{font-size:11px;padding:5px 8px}
 </style>
 </head>
 <body>
@@ -993,7 +995,7 @@ function meEdit(){
  main()}
 var PT=1700,OWN={TH0:1},SC="ALL",CS={},OP={},STB=1,MY=[],SLOT=[],
 RDB=[["느리게 읽는 밤","이서윤",224,"2026.08.12"],["나의 작은 서재","박하은",180,"2026.07.03"],["여행의 이유","김도현",256,"2026.06.14"],["마음의 구조","최유진",312,"2026.05.20"],["한 줄의 추리","정민우",288,"2026.04.08"],["작은 습관의 지도","한서진",200,"2026.03.11"],["밤의 도서관","오지윤",340,"2026.02.02"],["달의 정원","윤서하",208,"2026.01.10"]],
-CAT=[["ALL","전체","grid"],["NEW","신규","new"],["HL","형광펜","pen"],["PN","스티커","memo"]],
+CAT=[["ALL","전체","grid"],["HL","형광펜","pen"],["PN","스티커","memo"],["MK","제작","plus"]],
 COL=["#E9D58B","#E3B7B0","#B9C7A5","#C5B3D1","#BFD0D8"],
 ITM={PN:[["접힌 스티커",0,200],["타원 스티커",1,200],["테이프 스티커",2,250],["리스트 스티커",3,250],["클립 스티커",4,250],["하트 스티커",5,300],["스프링 노트",6,300],["마스킹 스티커",7,300],["말풍선 스티커",8,350]],
 HL:[["펜",5,150],["마커",14,200],["연필",8,150],["테마펜",10,250],["붓펜",16,300],["점선펜",6,250]],
@@ -1018,13 +1020,11 @@ function shop(){
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","프로필"]].map(function(t){return'<button'+(t[0]==="basket"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
  app.innerHTML='<div class="sh2"><span class="sp3"></span><h2>디지털 문구점</h2><span class="sp3"></span></div><div class="mpt"><b>나의 포인트 :</b><span class="pt" id="ptx"></span><button class="vl" id="vlt">보관함</button></div><div id="gr"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav><div id="ov"></div><div id="sheet" role="dialog"></div>';
  app.firstChild.style.paddingBottom="76px";
- var fab=document.createElement("button"),fm=document.createElement("div");fab.className="fab";fab.setAttribute("aria-label","추가");fab.innerHTML=ic("plus");fm.className="fm";fm.innerHTML='<button id="m1">제작하기</button><button id="m2">내 모음집</button><button id="m3">공유</button>';app.appendChild(fab);app.appendChild(fm);
  var sheet=document.getElementById("sheet"),ov=document.getElementById("ov"),g=document.getElementById("gr");
  function cl(){sheet.classList.remove("on");ov.classList.remove("on")}
  function draw(){
   document.getElementById("ptx").innerHTML='<i></i>'+PT+'P';
   document.querySelectorAll(".stb button").forEach(function(b){b.setAttribute("aria-selected",+b.dataset.t===STB)});
-  fab.style.display=STB===1&&SC!=="HL"?"grid":"none";fm.classList.remove("on");
   if(STB===0){
    var p=Math.max(0,Math.min(1,(PT-500)/1500)),tk=[500,1000,1500,2000].map(function(v,k){return'<span class="tkm'+(PT>=v?" on":"")+'" style="left:'+k*100/3+'%"><i></i>'+v+'P</span>'}).join("");
    g.innerHTML='<div class="mbar" role="img" aria-label="내 포인트 '+PT+'P"><div class="mtr"><i style="width:'+p*100+'%"></i><b style="left:'+p*100+'%"></b></div>'+tk+'</div><div class="msg">'+MS.map(function(m){return'<div class="ms"><small>+'+m[2]+'P 획득</small><div class="mc2">'+ic(m[1])+(m[3]?'<em>완료</em>':'')+'</div><span>'+m[0]+' 포인트</span></div>'}).join("")+'</div>'}
@@ -1033,6 +1033,10 @@ function shop(){
    g.innerHTML='<div class="cats" role="tablist">'+CAT.map(function(c){return'<button class="cat" role="tab" aria-selected="'+(SC===c[0])+'" data-c="'+c[0]+'"><span>'+(c[2]==="new"?'<b class="nw">NEW</b>':ic(c[2]))+'</span><small>'+c[1]+'</small></button>'}).join("")+'</div><div class="gd '+gc+'">'+lst(SC).map(function(r){var c=r[0],i=r[1],t=ITM[c][i],p=pc(c,i),own=OWN[c+i];
     if(c==="HL")return'<button class="cd2 hlr" data-c="HL" data-i="'+i+'"><span class="hn">'+t[0]+ic("pen")+'</span><span class="hv">'+pv(c,i,COL[i%5])+'</span><span class="hp">'+(own?"보유":ic("plus"))+'</span></button>';
     return'<button class="cd2" data-c="'+c+'" data-i="'+i+'"><div class="pvw">'+pv(c,i,COL[i%5])+'</div><b>'+t[0]+'</b><span>'+(own?"보유 중":p?p+"P":"무료")+'</span></button>'}).join("")+'</div>'}}
+ var draw0=draw;draw=function(){draw0();if(STB!==1||SC!=="MK")return;var gd=g.querySelector(".gd");if(!gd)return;
+  gd.outerHTML='<button class="mkc" id="mkc"><span>'+ic("pen")+'</span><div><b>직접 만들기</b><small>그림을 그려 나만의 스티커를 만들어요</small></div>'+ic("next")+'</button><h4 class="lgh">내가 만든 스티커</h4>'+(MY.length?'<div class="gd g3">'+MY.map(function(m,k){return'<div class="cd2 mys"><div class="pvw"><img src="'+m.u+'" alt="'+esc(m.n)+'"></div><b>'+esc(m.n)+'</b><button class="fadd" data-sh="'+k+'">커뮤니티에 공유</button></div>'}).join("")+'</div>':'<div class="emp">아직 만든 스티커가 없어요. 직접 만들어 보세요.</div>');
+  document.getElementById("mkc").onclick=craft;
+  g.querySelectorAll("[data-sh]").forEach(function(b){b.onclick=function(e){e.stopPropagation();var m=MY[+b.dataset.sh];PO.unshift({id:Date.now(),t:"자유",u:ME,mine:1,tm:"방금 전",v:0,x:"내가 만든 ‘"+m.n+"’를 공유해요.",img:m.u,l:0,c:[]});var x=pop('<h3>공유했어요</h3><p>커뮤니티에 올렸어요.</p><button class="btn" id="o" style="width:100%;margin-top:14px">확인</button>');document.getElementById("o").onclick=x}})};
  function detail(c,i){
   var t=ITM[c][i],id=c+i,p=pc(c,i);if(!(id in CS))CS[id]=i%5;
   var sw=c==="TH"?"":'<div class="sg"><b>색상</b><div>'+COL.map(function(x,k){return'<button class="sw" data-k="'+k+'" aria-label="색상 '+(k+1)+'" aria-pressed="'+(CS[id]===k)+'" style="background:'+x+'"></button>'}).join("")+'</div></div>';
@@ -1045,8 +1049,6 @@ function shop(){
  ov.onclick=cl;
  
  g.onclick=function(e){var b=e.target.closest("button");if(!b)return;if(b.dataset.i!==undefined)detail(b.dataset.c,+b.dataset.i);else if(b.dataset.c){SC=b.dataset.c;draw()}};
- fab.onclick=function(){fm.classList.toggle("on")};
- document.getElementById("m1").onclick=craft;document.getElementById("m2").onclick=function(){album()};document.getElementById("m3").onclick=function(){album(1)};
  sheet.onclick=function(e){var b=e.target.closest("button");if(!b)return;var c=sheet.dataset.c,i=+sheet.dataset.i,id=c+i;
   if(b.classList.contains("cl"))cl();
   else if(b.dataset.k!==undefined){CS[id]=+b.dataset.k;detail(c,i)}
@@ -1070,8 +1072,8 @@ function craft(){
   if(b.dataset.t==="c"){x.clearRect(0,0,cv.width,cv.height);return}
   if(b.dataset.t){er=b.dataset.t==="e";document.querySelectorAll(".tlb[data-t]").forEach(function(t){t.setAttribute("aria-pressed",t===b)})}
   else{col=cl[+b.dataset.k];er=false;document.querySelectorAll(".tlc").forEach(function(t){t.setAttribute("aria-pressed",t===b)});document.querySelectorAll(".tlb[data-t]").forEach(function(t){t.setAttribute("aria-pressed",t.dataset.t==="p")})}};
- document.getElementById("cb").onclick=function(){STB=1;shop()};
- document.getElementById("cs").onclick=function(){var d=new Date(),z=function(n){return(n<10?"0":"")+n};MY.unshift({n:"나의 스티커 "+(MY.length+1),d:d.getFullYear()+"."+z(d.getMonth()+1)+"."+z(d.getDate()),u:cv.toDataURL()});album()};
+ document.getElementById("cb").onclick=function(){STB=1;SC="MK";shop()};
+ document.getElementById("cs").onclick=function(){var d=new Date(),z=function(n){return(n<10?"0":"")+n};MY.unshift({n:"나의 스티커 "+(MY.length+1),d:d.getFullYear()+"."+z(d.getMonth()+1)+"."+z(d.getDate()),u:cv.toDataURL()});STB=1;SC="MK";shop()};
 }
 function album(h){
  app.className="app";
