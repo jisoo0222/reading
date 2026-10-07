@@ -743,6 +743,12 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .sfs{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;transition:transform .15s}.sfs.drg{z-index:5;transition:none;box-shadow:0 10px 22px rgba(36,29,38,.28);opacity:.95}.sfs.tgt{outline:2px dashed var(--pri);outline-offset:3px}
 .sfx{display:flex;align-items:center;justify-content:space-between;margin-top:20px;padding:14px 16px}.sfx span{font-size:14px;color:var(--sub)}.sfx b{color:var(--ink);font-size:16px}
 .app.pfo .sc{pointer-events:none}.app.pfo .pfb{pointer-events:auto}
+.sedl{max-height:92%}.sel{display:flex;flex-direction:column;gap:6px}.ser{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;touch-action:none;position:relative}.ser.off{opacity:.75}.ser.drg{z-index:3;box-shadow:0 8px 18px rgba(36,29,38,.2);background:var(--card)}.ser.tgt{border-color:var(--pri)}
+.seh{font-size:18px;color:var(--sub);cursor:grab;padding:0 4px;touch-action:none;user-select:none}.ser i{width:24px;aspect-ratio:3/4;border-radius:3px;flex:none}.sen{flex:1;min-width:0}.sen b{display:block;font-size:13px}.sen small{font-size:11px;color:var(--sub)}
+.sex{flex:none;font:inherit;font-size:12px;font-weight:600;border:1.5px solid var(--pri);color:var(--pri);background:none;border-radius:999px;padding:4px 10px;cursor:pointer}.ser.off .sex{background:var(--pri);color:var(--onpri)}
+.sfb.tgt{outline:2px dashed var(--pri);outline-offset:4px;border-radius:6px}
+#mfi{display:none!important}.mep .fadd{flex:none;white-space:nowrap;padding:9px 16px}.mep{gap:16px}
+.sel .ser{padding:6px 10px}
 </style>
 </head>
 <body>
@@ -963,7 +969,7 @@ function friend(i,pf){
  main();document.getElementById("fcl").focus()
 }
 I.check="M5 12l5 5 9-10";
-var MYT=["#슬로우리더","#논리·분석","#재미형"],MYX=["#소설","#에세이","#새벽독서"],ME="",MEP="",SHB=[0,1,2,3,4,5,6],SHMAX=7;
+var MYT=["#슬로우리더","#논리·분석","#재미형"],MYX=["#소설","#에세이","#새벽독서"],ME="",MEP="",SHB=[0,1,2,3,4,5,6],SHMAX=18;
 function myShelf(){if(BK!==DEF)useBk(DEF);var d=LB[DEF];return[{t:d[0],a:d[1],c:d[2],s:"읽는 중 · "+Math.round(pg*100/TOT)+"%",k:DEF}].concat(RDB.map(function(b,k){return{t:b[0],a:b[1],c:BC[k%3],s:"완독 "+b[3]}}))}
 function bkTile(b){return'<div class="bkm"><div class="c" style="background:'+b.c+'"></div><p>'+b.t+'</p><small>'+b.s+'</small></div>'}
 function shelfHTML(L){var H=[128,112,136,120,104,132,116,124,108,130],rows=[];for(var i=0;i<L.length;i+=5)rows.push(L.slice(i,i+5));while(rows.length<3)rows.push([]);
@@ -996,21 +1002,36 @@ function profile(){
 
  app.classList.add("pf");var SL=[],shf=document.createElement("div");shf.id="shf";
  app.insertBefore(shf,app.firstChild);
- function rShelf(){SL=SHB.map(function(k){var b=RDB[k];return{t:b[0],a:b[1],c:BC[k%3],s:"완독 "+b[3]}});shf.innerHTML=shelfHTML(SL)+'<div class="box sfx"><span>총 <b>'+SL.length+'권</b>의 책</span><button class="fadd" id="sfe">수정하기</button></div>';
+ function bkOf(k){var b=RDB[k];return{t:b[0],a:b[1],c:BC[k%3],s:"완독 "+b[3]}}
+ function rShelf(){if(!window.SHR){SHR=[[],[],[]];SHB.forEach(function(k,i){SHR[Math.min(2,Math.floor(i/6))].push(k)})}SHB=[].concat.apply([],SHR);
+  var H=[128,112,136,120,104,132,116,124,108,130];
+  shf.innerHTML='<div class="sfw">'+SHR.map(function(r,ri){return'<div class="sfr" data-r="'+ri+'"><div class="sfb">'+r.map(function(k,j){var b=bkOf(k),lt=b.c==="#B8A07A";return'<button class="sfs" data-k="'+k+'" data-r="'+ri+'" data-j="'+j+'" style="height:'+H[(ri*6+j)%10]+'px;background:'+b.c+';color:'+(lt?"#2E2530":"#F8F0E0")+'" aria-label="'+b.t+' 정보 보기, 길게 눌러 옮기기"><span>'+b.t+'</span></button>'}).join("")+'</div><i class="sfl"></i></div>'}).join("")+'</div>'
+   +'<div class="box sfx"><span>총 <b>'+SHB.length+'권</b>의 책</span><button class="fadd" id="sfe">수정하기</button></div>';
   document.getElementById("sfe").onclick=shelfEdit;
   shf.querySelectorAll(".sfs").forEach(function(el){var tm=null,x0,y0,drag=false,moved=false;
    el.addEventListener("pointerdown",function(e){x0=e.clientX;y0=e.clientY;moved=false;drag=false;tm=setTimeout(function(){drag=true;window.SDRAG=1;el.classList.add("drg");try{el.setPointerCapture(e.pointerId)}catch(_){}if(navigator.vibrate)navigator.vibrate(15)},420)});
+   function tgt(e){var best=null,bd=1e9;shf.querySelectorAll(".sfs").forEach(function(o){if(o===el)return;var r=o.getBoundingClientRect(),d=Math.hypot(r.left+r.width/2-e.clientX,r.top+r.height/2-e.clientY);if(d<bd){bd=d;best=o}});if(best&&bd<70)return{el:best};
+    var row=null;shf.querySelectorAll(".sfr").forEach(function(o){var r=o.getBoundingClientRect();if(e.clientY>=r.top-10&&e.clientY<=r.bottom+10)row=o});return row?{row:row}:null}
    el.addEventListener("pointermove",function(e){if(!drag){if(Math.abs(e.clientX-x0)+Math.abs(e.clientY-y0)>8){clearTimeout(tm);moved=true}return}e.preventDefault();el.style.transform="translate("+(e.clientX-x0)+"px,"+(e.clientY-y0)+"px) rotate(-3deg)";
-    shf.querySelectorAll(".sfs").forEach(function(o){o.classList.remove("tgt")});var t=near(e);if(t&&t!==el)t.classList.add("tgt")});
-   function near(e){var best=null,bd=1e9;shf.querySelectorAll(".sfs").forEach(function(o){if(o===el)return;var r=o.getBoundingClientRect(),d=Math.hypot(r.left+r.width/2-e.clientX,r.top+r.height/2-e.clientY);if(d<bd){bd=d;best=o}});return bd<90?best:null}
-   function end(e){clearTimeout(tm);if(!drag)return;drag=false;var t=near(e),from=+el.dataset.i;el.classList.remove("drg");el.style.transform="";setTimeout(function(){window.SDRAG=0},50);
-    if(t){var to=+t.dataset.i,v=SHB.splice(from,1)[0];SHB.splice(to,0,v);rShelf()}else shf.querySelectorAll(".sfs").forEach(function(o){o.classList.remove("tgt")});el.dataset.nd="1"}
-   el.addEventListener("pointerup",end);el.addEventListener("pointercancel",end);
-   el.addEventListener("contextmenu",function(e){e.preventDefault()});
-   el.onclick=function(){if(el.dataset.nd){delete el.dataset.nd;return}if(moved)return;var b=SL[+el.dataset.i];var x=pop('<div class="bi"><div class="bc" style="background:'+b.c+'"></div><div><h3 style="margin:0">'+b.t+'</h3><p style="margin:6px 0 0">'+b.a+'</p><p style="margin:4px 0 0;font-size:13px">'+b.s+'</p></div></div><button class="btn ghost" id="sfx" style="width:100%;margin-top:16px">닫기</button>');document.getElementById("sfx").onclick=x}})}
- function shelfEdit(){var v=SHB.slice(),x=pop('<h3>책장 수정</h3><p class="sm" style="font-size:13px">책장에 꽂을 책을 골라 주세요. 최대 '+SHMAX+'권까지 고를 수 있어요. 순서는 책등을 꾹 눌러 옮길 수 있어요.</p><div class="mpl" id="sel2">'+RDB.map(function(b,k){var on=v.indexOf(k)>-1;return'<button class="mpi" data-k="'+k+'" aria-pressed="'+on+'"><i style="background:'+BC[k%3]+'"></i><span><b>'+b[0]+'</b><small>'+b[1]+'</small></span><em aria-hidden="true">'+(on?ic("check"):"")+'</em></button>'}).join("")+'</div><p id="se2" style="color:var(--sub);font-size:13px;margin:8px 0 0;min-height:18px"></p><div class="dbt"><button class="btn ghost" id="sx2">취소</button><button class="btn" id="ss2">저장</button></div>');
-  document.getElementById("sel2").onclick=function(e){var b=e.target.closest(".mpi");if(!b)return;var k=+b.dataset.k,i=v.indexOf(k);if(i>-1)v.splice(i,1);else if(v.length>=SHMAX){document.getElementById("se2").textContent="최대 "+SHMAX+"권까지 고를 수 있어요.";return}else v.push(k);document.getElementById("se2").textContent="";b.setAttribute("aria-pressed",i<0);b.querySelector("em").innerHTML=i<0?ic("check"):""};
-  document.getElementById("sx2").onclick=x;document.getElementById("ss2").onclick=function(){SHB=v;x();rShelf()}}
+    shf.querySelectorAll(".tgt").forEach(function(o){o.classList.remove("tgt")});var t=tgt(e);if(t)(t.el||t.row.querySelector(".sfb")).classList.add("tgt")});
+   function end(e){clearTimeout(tm);if(!drag)return;drag=false;var t=tgt(e),r0=+el.dataset.r,j0=+el.dataset.j,k=+el.dataset.k;el.classList.remove("drg");el.style.transform="";setTimeout(function(){window.SDRAG=0},50);el.dataset.nd="1";
+    if(t&&t.el){var r1=+t.el.dataset.r,j1=+t.el.dataset.j;if(r1!==r0&&SHR[r1].length>=6){var k1=SHR[r1][j1];SHR[r1][j1]=k;SHR[r0][j0]=k1}else{SHR[r0].splice(j0,1);if(r1===r0&&j1>j0)j1--;SHR[r1].splice(r1===r0&&j1>=j0?j1+1:j1,0,k)}rShelf();return}
+    if(t&&t.row){var r2=+t.row.dataset.r;if(r2!==r0&&SHR[r2].length<6){SHR[r0].splice(j0,1);SHR[r2].push(k);rShelf();return}if(r2===r0){SHR[r0].splice(j0,1);SHR[r0].push(k);rShelf();return}}
+    shf.querySelectorAll(".tgt").forEach(function(o){o.classList.remove("tgt")})}
+   el.addEventListener("pointerup",end);el.addEventListener("pointercancel",end);el.addEventListener("contextmenu",function(e){e.preventDefault()});
+   el.onclick=function(){if(el.dataset.nd){delete el.dataset.nd;return}if(moved)return;var b=bkOf(+el.dataset.k);var x=pop('<div class="bi"><div class="bc" style="background:'+b.c+'"></div><div><h3 style="margin:0">'+b.t+'</h3><p style="margin:6px 0 0">'+b.a+'</p><p style="margin:4px 0 0;font-size:13px">'+b.s+'</p></div></div><button class="btn ghost" id="sfx" style="width:100%;margin-top:16px">닫기</button>');document.getElementById("sfx").onclick=x}})}
+ function shelfEdit(){var v=SHB.slice(),x=pop('<h3>책장 수정</h3><p class="sm" style="font-size:13px">≡ 를 끌어 순서를 바꾸고, 책을 눌러 빼거나 넣어요. 선반 한 줄에 6권씩, 최대 18권이에요.</p><h4 class="lgh">책장에 꽂힌 책</h4><div class="sel" id="sel2"></div><h4 class="lgh">꽂을 수 있는 책</h4><div class="sel" id="sel3"></div><div class="dbt"><button class="btn ghost" id="sx2">취소</button><button class="btn" id="ss2">저장</button></div>'),d=document.getElementById("dlg");d.classList.add("sedl");
+  function row(k,on){var b=RDB[k];return'<div class="ser'+(on?"":" off")+'" data-k="'+k+'">'+(on?'<span class="seh" aria-label="'+b[0]+' 순서 옮기기">≡</span>':'')+'<i style="background:'+BC[k%3]+'"></i><span class="sen"><b>'+b[0]+'</b><small>'+b[1]+'</small></span><button class="sex" aria-label="'+b[0]+(on?' 빼기':' 넣기')+'">'+(on?"빼기":"넣기")+'</button></div>'}
+  function r(){document.getElementById("sel2").innerHTML=v.length?v.map(function(k){return row(k,1)}).join(""):'<p class="pfe" style="padding:8px 0">아직 꽂힌 책이 없어요.</p>';
+   document.getElementById("sel3").innerHTML=RDB.map(function(_,k){return k}).filter(function(k){return v.indexOf(k)<0}).map(function(k){return row(k,0)}).join("")||'<p class="pfe" style="padding:8px 0">모든 책을 꽂았어요.</p>';
+   d.querySelectorAll(".sex").forEach(function(bt){bt.onclick=function(){var k=+bt.parentNode.dataset.k,i=v.indexOf(k);if(i>-1)v.splice(i,1);else if(v.length<18)v.push(k);r()}});
+   d.querySelectorAll("#sel2 .seh").forEach(function(h){var it=h.parentNode,y0,on=false;
+    h.addEventListener("pointerdown",function(e){e.preventDefault();y0=e.clientY;on=true;it.classList.add("drg");h.setPointerCapture(e.pointerId)});
+    h.addEventListener("pointermove",function(e){if(!on)return;it.style.transform="translateY("+(e.clientY-y0)+"px)";var L=[].slice.call(d.querySelectorAll("#sel2 .ser")),to=L.length-1;L.forEach(function(o,i){if(o===it)return;var q=o.getBoundingClientRect();o.classList.toggle("tgt",e.clientY>q.top&&e.clientY<q.bottom)})});
+    function up(e){if(!on)return;on=false;var L=[].slice.call(d.querySelectorAll("#sel2 .ser")),from=L.indexOf(it),to=from;L.forEach(function(o,i){var q=o.getBoundingClientRect();if(o!==it&&e.clientY>q.top&&e.clientY<q.bottom)to=i});var k=v.splice(from,1)[0];v.splice(to,0,k);r()}
+    h.addEventListener("pointerup",up);h.addEventListener("pointercancel",up)})}
+  r();
+  document.getElementById("sx2").onclick=x;document.getElementById("ss2").onclick=function(){SHR=[[],[],[]];v.forEach(function(k,i){SHR[Math.min(2,Math.floor(i/6))].push(k)});x();rShelf()}}
  rShelf();
  function sOpen(){var sc0=document.querySelector(".sc");app.style.setProperty("--pfy",(app.clientHeight-106-document.getElementById("bn").offsetHeight+sc0.scrollTop)+"px");app.classList.add("pfo");document.querySelector(".sc").setAttribute("aria-hidden","true")}
  function sClose(){app.classList.remove("pfo");document.querySelector(".sc").removeAttribute("aria-hidden")}
@@ -1049,7 +1070,7 @@ function meEdit(){
    var r=new FileReader();r.onload=function(){v.p=r.result;var a=document.getElementById("mav");a.textContent="";a.style.background="var(--pri) center/cover no-repeat url("+v.p+")"};r.readAsDataURL(f)};
   document.getElementById("msh").onclick=pick;
   document.getElementById("mcx").onclick=x;
-  document.getElementById("msv").onclick=function(){var n=v.n.trim();if(!n){document.getElementById("mer").textContent="이름을 입력해 주세요.";return}ME=n;MEP=v.p;SHB=v.s.sort(function(a,b){return a-b});x();profile()}}
+  document.getElementById("msv").onclick=function(){var n=v.n.trim();if(!n){document.getElementById("mer").textContent="이름을 입력해 주세요.";return}ME=n;MEP=v.p;SHB=v.s.slice();window.SHR=null;x();profile()}}
  function pick(){
   d.innerHTML='<h3 id="dt">책장에 보여줄 책</h3><p class="sm" style="font-size:13px">프로필 위 책장에 꽂을 책을 골라 주세요. 최대 '+SHMAX+'권까지 고를 수 있어요.</p><div class="mpl">'+RDB.map(function(b,k){var on=v.s.indexOf(k)>-1;return'<button class="mpi" data-k="'+k+'" aria-pressed="'+on+'"><i style="background:'+BC[k%3]+'"></i><span><b>'+b[0]+'</b><small>'+b[1]+'</small></span><em aria-hidden="true">'+(on?ic("check"):"")+'</em></button>'}).join("")+'</div><p id="mer" style="color:var(--sub);font-size:13px;margin:8px 0 0;min-height:18px"></p><button class="btn" id="mdn" style="width:100%;margin-top:6px">완료</button>';
   d.querySelector(".mpl").onclick=function(e){var b=e.target.closest(".mpi");if(!b)return;var k=+b.dataset.k,i=v.s.indexOf(k);
