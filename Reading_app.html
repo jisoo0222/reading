@@ -755,6 +755,14 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .ptc2{display:flex;align-items:center;gap:8px;width:100%;margin-top:12px;padding:10px 12px;background:var(--bg);border:0;border-radius:12px;font:inherit;color:var(--ink);text-align:left;cursor:pointer}.ptc2>small{font-size:11px;color:var(--sub);flex:none}.ptl{flex:1;min-width:0;display:flex;align-items:center;gap:8px}.ptl b{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ptc2 .ptk{font-style:normal;padding:3px 7px;font-size:11px;border-radius:7px}.ptc2>.ic{width:16px;height:16px;color:var(--sub);flex:none}
 .pfb .fs{margin-top:16px}.pfl{padding:10px 14px}.pfc span{width:44px;height:44px;font-size:16px}.pfb #pst .box{padding:10px 12px}
 .ptl{flex-direction:column;align-items:flex-start;gap:4px}.ptl>small{font-size:11px;color:var(--sub)}.ptr{display:flex;align-items:center;gap:8px;max-width:100%}.ptr b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tut{position:absolute;inset:0;z-index:40;touch-action:none}#tut.t1{background:rgba(36,29,38,.62)}
+.tbx{position:absolute;left:16px;right:16px;background:var(--card);color:var(--ink);border-radius:18px;padding:16px 16px 12px}.tbx b{display:block;font-size:16px;margin-bottom:4px}.tbx p{font-size:13px;line-height:1.55;color:var(--sub);margin:0}.tbx small{font-size:11px;font-weight:700;color:var(--pri)}
+.tb1{bottom:150px;text-align:center}.tsk{background:none;border:0;font:inherit;font-size:13px;color:var(--sub);text-decoration:underline;cursor:pointer;margin-top:10px;padding:4px}
+.tar{position:absolute;left:50%;bottom:24px;width:48px;margin-left:-24px;display:flex;flex-direction:column;align-items:center;color:#F8F0E0;animation:tup 1.4s ease-in-out infinite}.tar .ic{width:30px;height:30px;transform:rotate(90deg)}.tar i{display:block;width:44px;height:5px;border-radius:3px;background:#F8F0E0;order:2;margin-top:6px}
+@keyframes tup{0%{transform:translateY(20px);opacity:0}40%{opacity:1}100%{transform:translateY(-50px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.tar{animation:none}}
+.tsp{position:absolute;border-radius:14px;box-shadow:0 0 0 2px var(--pri),0 0 0 9999px rgba(36,29,38,.62);pointer-events:none;transition:all .25s}
+.tb2{position:absolute}.tbt2{display:flex;justify-content:space-between;align-items:center;margin-top:10px}.tbt2 .tsk{margin:0}.tnx{background:var(--pri);color:var(--onpri);border:0;border-radius:10px;font:inherit;font-size:13px;font-weight:700;padding:8px 16px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -1753,6 +1761,22 @@ function reader(k){
  function selRange(){var s=window.getSelection();if(!s||!s.rangeCount||s.isCollapsed)return null;var r=s.getRangeAt(0);return lf.contains(r.commonAncestorContainer)&&String(s).trim()?r:null}
  function selHide(){selb.classList.remove("on")}
  function selShow(){var r=selRange();if(!r||app.classList.contains("cpo")){selHide();return}var a=app.getBoundingClientRect(),q=r.getBoundingClientRect();selb.classList.add("on");var w=selb.offsetWidth,h=selb.offsetHeight,l=Math.min(Math.max(8,q.left-a.left+q.width/2-w/2),a.width-w-8),t=q.top-a.top-h-10;if(t<8)t=q.bottom-a.top+10;selb.style.left=l+"px";selb.style.top=t+"px"}
+ if(!window.TUTD)setTimeout(tut,400);
+ function tut(){if(!document.getElementById("lf"))return;
+  var ov=document.createElement("div");ov.id="tut";app.appendChild(ov);
+  var C=[["hl","형광펜","문구점에서 산 펜 중 어떤 형광펜으로 칠할지 골라요. 칠하기는 글을 드래그한 뒤 말풍선에서 해요."],["cm","코멘트","문장을 눌러 메이트에게 보일 코멘트를 남겨요. 스포 방지도 켤 수 있어요."],["memo","스티커","스티커를 골라 글을 적고, 원하는 자리에 붙여요. 직접 만든 스티커도 쓸 수 있어요."],["bm","책갈피","지금 보는 쪽에 책갈피를 꽂거나 빼요."],["wd","단어 사전","모르는 단어의 뜻을 바로 찾아봐요."],["ch","인물 사전","나만 보는 인물 메모예요. 추가한 이름은 본문에서 색으로 표시돼요."],["sh","공유하기","이 쪽의 문장을 카드로 만들어 공유해요."],["set","읽기 설정","글자 크기, 글씨체, 낮·밤 화면, 스포 방지를 바꿔요."],["pg","쪽 이동","슬라이더를 끌어 원하는 쪽으로 가요. 메이트가 어디쯤 읽는지도 보여요."]],i=0;
+  function done(){ov.remove();window.TUTD=1;cpClose();toast("이제 편하게 읽어 보세요")}
+  function s1(){ov.className="t1";ov.innerHTML='<div class="tbx tb1"><b>읽기 도구 열기</b><p>화면 아래에서 위로 밀어 보세요.<br>형광펜, 코멘트, 쪽 이동 같은 도구가 나와요.</p><button class="tsk">건너뛰기</button></div><div class="tar" aria-hidden="true"><i></i>'+ic("back")+'</div>';
+   var y0=null;function st(y){y0=y}function en(y){if(y0!==null&&y0-y>40){cpOpen();setTimeout(step,340)}y0=null}
+   ov.onpointerdown=function(e){if(e.target.closest(".tsk"))return;st(e.clientY)};ov.onpointerup=function(e){en(e.clientY)};
+   ov.addEventListener("touchstart",function(e){st(e.touches[0].clientY)},{passive:true});ov.addEventListener("touchend",function(e){en(e.changedTouches[0].clientY)});
+   ov.querySelector(".tsk").onclick=done}
+  function step(){if(i>=C.length){done();return}var c=C[i],t=c[0]==="pg"?document.getElementById("pg"):document.querySelector('.cpt[data-a="'+c[0]+'"]');
+   ov.onpointerdown=ov.onpointerup=null;ov.className="t2";var a=app.getBoundingClientRect(),r=t.getBoundingClientRect(),p=6;
+   ov.innerHTML='<i class="tsp" style="left:'+(r.left-a.left-p)+'px;top:'+(r.top-a.top-p)+'px;width:'+(r.width+p*2)+'px;height:'+(r.height+p*2)+'px"></i><div class="tbx tb2"><small>'+(i+1)+' / '+C.length+'</small><b>'+c[1]+'</b><p>'+c[2]+'</p><div class="tbt2"><button class="tsk">건너뛰기</button><button class="tnx">'+(i===C.length-1?"시작하기":"다음")+'</button></div></div>';
+   var bx=ov.querySelector(".tb2"),bh=bx.offsetHeight,top=r.top-a.top-p-bh-14;if(top<10)top=10;bx.style.top=top+"px";
+   ov.querySelector(".tsk").onclick=done;ov.querySelector(".tnx").onclick=function(){i++;step()}}
+  s1()}
  if(window.SELH)document.removeEventListener("selectionchange",window.SELH);
  window.SELH=function(){if(document.getElementById("lf")!==lf){document.removeEventListener("selectionchange",window.SELH);return}clearTimeout(window.SELT);window.SELT=setTimeout(selShow,120)};
  document.addEventListener("selectionchange",window.SELH);
