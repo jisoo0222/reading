@@ -697,6 +697,10 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 
 .hpv{font-size:15px!important;color:var(--ink)!important;background:var(--bg);border-radius:12px;padding:14px;margin:4px 0 12px;line-height:1.9}.hsw{display:grid!important;place-items:center;background:var(--bg);width:34px!important;aspect-ratio:auto!important;height:34px;border-radius:8px!important;font-style:normal;font-size:15px;font-weight:700;color:var(--ink)}
 .cdi{background:var(--bg);border-radius:12px;padding:12px 14px;margin:6px 0 14px;font-size:13px;color:var(--sub);line-height:1.55}.cdi p{margin:0 0 6px;color:var(--ink)}.cdi ul{margin:0;padding-left:16px}.cdi li+li{margin-top:2px}
+#dlg.qdl{max-height:94%;overflow-y:auto}.qpv{width:190px;margin:0 auto 12px;border-radius:14px;overflow:hidden;box-shadow:0 4px 14px rgba(36,29,38,.18)}.qpv svg{display:block;width:100%;height:auto}
+.qth{display:flex;justify-content:center;gap:10px;margin-bottom:10px}.qth button{width:36px;height:36px;border-radius:50%;border:2px solid var(--card);box-shadow:0 0 0 1.5px var(--line);font:inherit;font-size:13px;font-weight:700;cursor:pointer}.qth button[aria-pressed="true"]{box-shadow:0 0 0 2.5px var(--pri)}
+.qdl .och{justify-content:center;margin-bottom:4px}
+.qdl .dbt .btn,.qdl .dbt .btn.ghost{flex:1}
 </style>
 </head>
 <body>
@@ -837,7 +841,40 @@ function typeSVG(key,t,names){
  +'<text x="200" y="'+(by+76)+'" text-anchor="middle" font-size="20" fill="#6B5E6B" '+F+'>첫 책</text><text x="200" y="'+(by+120)+'" text-anchor="middle" font-size="28" font-weight="700" fill="#2E2530" '+F+'>'+e(bk)+'</text>'
  +'<text x="520" y="'+(by+76)+'" text-anchor="middle" font-size="20" fill="#6B5E6B" '+F+'>독서 메이트</text><text x="520" y="'+(by+120)+'" text-anchor="middle" font-size="28" font-weight="700" fill="#2E2530" '+F+'>'+e(mt[0])+' · '+mt[1]+'%</text>'
  +'</svg>'}
-function cardPNG(svg,cb){var i=new Image();i.onload=function(){var c=document.createElement("canvas");c.width=i.width*1.5;c.height=i.height*1.5;var x=c.getContext("2d");x.scale(1.5,1.5);x.drawImage(i,0,0);c.toBlob(cb,"image/png")};i.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)}
+function cardPNG(svg,cb,sc){sc=sc||1.5;var i=new Image();i.onload=function(){var c=document.createElement("canvas");c.width=i.width*sc;c.height=i.height*sc;var x=c.getContext("2d");x.scale(sc,sc);x.drawImage(i,0,0);c.toBlob(cb,"image/png")};i.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)}
+var QTH=[["양피지","#F1E4CC","#2E2530","#7A637A","#6B5E6B"],["라벤더","#7A637A","#F8F0E0","#F1E4CC","#E6DAE6"],["올리브","#788165","#F8F0E0","#F1E4CC","#E8EBDD"],["밤","#241D26","#F1E4CC","#A58CA5","#B9AAB4"],["종이","#FBF6EA","#2E2530","#788165","#6B5E6B"]];
+function qWrap(t,n){var L=[],c="";t.split(" ").forEach(function(w){while(w.length>n){if(c){L.push(c);c=""}L.push(w.slice(0,n));w=w.slice(n)}if((c?c+" "+w:w).length>n){L.push(c);c=w}else c=c?c+" "+w:w});if(c)L.push(c);return L}
+function quoteSVG(q,bt,au,th,serif){
+ var T=QTH[th],e=function(x){return esc(String(x))},F=serif?'font-family="Noto Serif KR,Nanum Myeongjo,Batang,serif"':'font-family="Pretendard,Apple SD Gothic Neo,Noto Sans KR,sans-serif"',S='font-family="Pretendard,Apple SD Gothic Neo,Noto Sans KR,sans-serif"';
+ if(q.length>150)q=q.slice(0,148)+"…";
+ var fs=q.length>90?52:q.length>50?58:66,n=Math.floor(900/fs),L=qWrap(q,n),lh=Math.round(fs*1.62),h=L.length*lh,y0=Math.round(960-h/2+fs*.35);
+ return'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920" role="img" aria-label="문장 카드">'
+ +'<rect width="1080" height="1920" fill="'+T[1]+'"/>'
+ +'<rect x="60" y="60" width="960" height="1800" rx="36" fill="none" stroke="'+T[3]+'" stroke-opacity=".45" stroke-width="3"/>'
+ +'<text x="540" y="250" text-anchor="middle" font-size="34" letter-spacing="10" fill="'+T[4]+'" '+S+'>오늘의 문장</text>'
+ +'<text x="540" y="'+(y0-fs+40)+'" text-anchor="middle" font-size="200" fill="'+T[3]+'" '+F+'>“</text>'
+ +L.map(function(l,i){return'<text x="540" y="'+(y0+i*lh)+'" text-anchor="middle" font-size="'+fs+'" fill="'+T[2]+'" '+F+'>'+e(l)+'</text>'}).join("")
+ +'<rect x="500" y="'+(y0+h+30)+'" width="80" height="4" rx="2" fill="'+T[3]+'"/>'
+ +'<text x="540" y="'+(y0+h+120)+'" text-anchor="middle" font-size="42" font-weight="700" fill="'+T[2]+'" '+S+'>『'+e(bt)+'』</text>'
+ +'<text x="540" y="'+(y0+h+176)+'" text-anchor="middle" font-size="32" fill="'+T[4]+'" '+S+'>'+e(au)+'</text>'
+ +'<text x="540" y="1740" text-anchor="middle" font-size="30" fill="'+T[4]+'" '+S+'>'+e(ME||"")+(ME?" 님이 읽고 있는 책 · ":"")+'AI 독서 습관</text>'
+ +'</svg>'}
+function quoteShare(q,bt,au){
+ var th=0,sf=1,x=pop('<h3>문장 카드로 공유</h3><p class="sm" style="font-size:12px;margin:-2px 0 10px">인스타그램 스토리(9:16) 크기로 만들어져요.</p><div class="qpv" id="qpv"></div><div class="qth" id="qth">'+QTH.map(function(t,i){return'<button data-i="'+i+'" aria-label="'+t[0]+' 배경" aria-pressed="'+(i===th)+'" style="background:'+t[1]+';color:'+t[2]+'">가</button>'}).join("")+'</div><div class="och" id="qff"><button data-f="1" aria-pressed="true">명조</button><button data-f="0" aria-pressed="false">고딕</button></div><div class="dbt"><button class="btn ghost" id="qsv">저장하기</button><button class="btn" id="qsh">공유하기</button></div><button class="btn ghost" id="qcx" style="width:100%;margin-top:8px">닫기</button>');
+ document.getElementById("dlg").classList.add("qdl");
+ function svg(){return quoteSVG(q,bt,au,th,sf)}
+ function r(){document.getElementById("qpv").innerHTML=svg();document.querySelectorAll("#qth button").forEach(function(b){b.setAttribute("aria-pressed",+b.dataset.i===th)});document.querySelectorAll("#qff button").forEach(function(b){b.setAttribute("aria-pressed",+b.dataset.f===sf)})}
+ r();
+ document.getElementById("qth").onclick=function(e){var b=e.target.closest("button");if(b){th=+b.dataset.i;r()}};
+ document.getElementById("qff").onclick=function(e){var b=e.target.closest("button");if(b){sf=+b.dataset.f;r()}};
+ function mis(){if(!MS[3][3]){MS[3][3]=1;PT+=MS[3][2]}}
+ var fn="문장카드_"+bt+".png";
+ document.getElementById("qsv").onclick=function(){cardPNG(svg(),function(b){var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=fn;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},1000);mis()},1)};
+ document.getElementById("qsh").onclick=function(){cardPNG(svg(),function(b){var f=new File([b],fn,{type:"image/png"}),t="“"+q+"” — 『"+bt+"』";mis();
+  if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],title:bt,text:t}).catch(function(){});
+  else if(navigator.share)navigator.share({title:bt,text:t}).catch(function(){});
+  else if(navigator.clipboard)navigator.clipboard.writeText(t)},1)};
+ document.getElementById("qcx").onclick=x}
 function recList(key){return Object.keys(RK).map(function(k){var m=[];for(var i=0;i<4;i++)if(RK[k].charAt(i)===key.charAt(i))m.push(1);return{k:+k,m:m}}).sort(function(a,b){return b.m.length-a.m.length||a.k-b.k}).slice(0,3)}
 function recBox(key){
  var L=Object.keys(RK).map(function(k){var m=[];for(var i=0;i<4;i++)if(RK[k].charAt(i)===key.charAt(i))m.push(AX[i]["FSAEDWIJ".indexOf(key.charAt(i))%2]);return{k:+k,m:m}}).sort(function(a,b){return b.m.length-a.m.length||a.k-b.k}).slice(0,3);
@@ -1594,7 +1631,7 @@ function reader(k){
   if(a==="hl")hlPop();else if(a==="cm")tset(3);else if(a==="memo")memo();
   else if(a==="bm"){var i=BM.indexOf(pg);i>-1?BM.splice(i,1):BM.push(pg);rt();pr();toast(i>-1?pg+"쪽 책갈피를 뺐어요":pg+"쪽에 책갈피를 꽂았어요")}
   else if(a==="wd"){so('<h3 class="dh">단어 사전</h3><form class="dsr" role="search"><input id="wi" type="search" placeholder="찾을 단어를 입력하세요" aria-label="찾을 단어" autocomplete="off"><button aria-label="검색">'+ic("search")+'</button></form><div id="wr" aria-live="polite"></div>');wsr();document.getElementById("wi").focus()}
-  else if(a==="ch")dic();else if(a==="sh")shareText("『"+BT+"』을 읽고 있어요. ("+pg+" / "+TOT+"쪽)");else if(a==="set")st()};
+  else if(a==="ch")dic();else if(a==="sh"){var fs=[].map.call(lf.querySelectorAll(".s"),function(e){return e.textContent.trim()}).filter(function(t){return t.length>8})[0]||BT;quoteShare(fs,BT,BK>=0?LB[BK][1]:"")}else if(a==="set")st()};
  function selRange(){var s=window.getSelection();if(!s||!s.rangeCount||s.isCollapsed)return null;var r=s.getRangeAt(0);return lf.contains(r.commonAncestorContainer)&&String(s).trim()?r:null}
  function selHide(){selb.classList.remove("on")}
  function selShow(){var r=selRange();if(!r||app.classList.contains("cpo")){selHide();return}var a=app.getBoundingClientRect(),q=r.getBoundingClientRect();selb.classList.add("on");var w=selb.offsetWidth,h=selb.offsetHeight,l=Math.min(Math.max(8,q.left-a.left+q.width/2-w/2),a.width-w-8),t=q.top-a.top-h-10;if(t<8)t=q.bottom-a.top+10;selb.style.left=l+"px";selb.style.top=t+"px"}
@@ -1609,7 +1646,7 @@ function reader(k){
   if(b.dataset.s==="hl"){var all=spans.every(function(x){return hR(x[0],x[3]).some(function(q){return q[0]<=x[1]&&q[1]>=x[2]})});
    spans.forEach(function(x){var cur0=hR(x[0],x[3]);und[x[0]]=all?hSub(cur0,x[1],x[2]):hMerge(cur0.concat([[x[1],x[2]]]))});rt();toast(all?"형광펜을 지웠어요":"형광펜을 칠했어요")}
   else if(b.dataset.s==="cm"&&ids.length){cid=ids[0];csp=false;so('<p class="sm lgq" style="margin:0 0 10px">“'+esc(txt)+'”</p><textarea id="ta" rows="3" placeholder="이 문장에 남길 코멘트"></textarea><div class="sg" style="margin-top:14px"><b>스포 방지</b><div><button data-cs="1" aria-pressed="false">켜기</button><button data-cs="0" aria-pressed="true">끄기</button></div></div><button class="btn" id="sv" style="width:100%">저장</button>')}
-  else if(b.dataset.s==="sh")shareText("“"+txt+"” — 『"+BT+"』")};
+  else if(b.dataset.s==="sh")quoteShare(txt,BT,BK>=0?LB[BK][1]:"")};
 }
 useBk(DEF);
 info();
