@@ -1114,7 +1114,6 @@ function community(){
  app.className="app";
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","프로필"]].map(function(t){return'<button'+(t[0]==="chat"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
  app.innerHTML='<div class="sh2"><span class="sp3"></span><h2>커뮤니티</h2><button class="ib" id="cm" aria-label="내 활동 메뉴">'+ic("menu")+'</button></div>'
- +'<div class="sh"><h3>추천 친구</h3></div><div class="frs">'+M.map(function(m,i){return'<button class="fr" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span>'+m[0]+'</button>'}).join("")+'</div>'
  +'<div class="ctb" role="tablist" id="tyb"></div><div id="feed"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.firstChild.style.paddingBottom="90px";
  var fb=document.createElement("button");fb.className="wfab";fb.setAttribute("aria-label","글쓰기");fb.innerHTML=ic("plus");app.appendChild(fb);
@@ -1172,7 +1171,6 @@ function community(){
   else if(b.dataset.v!==undefined){VT[+b.closest(".po").dataset.id]=+b.dataset.v;feed()}
   else if(b.classList.contains("mre")){var t=b.previousElementSibling;t.classList.toggle("open");b.textContent=t.classList.contains("open")?"접기":"더보기"}
   else if(b.dataset.u){for(var i=0;i<M.length;i++)if(M[i][0]===b.dataset.u)friend(i,2)}};
- app.querySelector(".frs").onclick=function(e){var b=e.target.closest(".fr");if(b)friend(+b.dataset.i,2)};
  fb.onclick=compose;
  document.getElementById("cm").onclick=act;
 
