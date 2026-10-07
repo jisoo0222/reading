@@ -668,6 +668,17 @@ button.cd{font:inherit;color:var(--ink);background:none;cursor:pointer;padding:0
 .hpm{-webkit-tap-highlight-color:transparent;border-radius:10px}.hpm:focus{outline:none}.hpm:focus-visible{outline:2px solid var(--pri)}
 .hps .hpp{font-size:15px;color:var(--ink)}
 .hps{line-height:1.3}.hps .hpp{font-size:15px;line-height:1}
+.cmc{justify-content:center;gap:18px}.cmo{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--line);background:var(--bg);color:var(--sub);display:grid;place-items:center;cursor:pointer;padding:0}.cmo .ic{width:16px;height:16px}
+.lgw{margin-top:14px;background:var(--card);border-radius:18px;padding:16px 16px 6px}.lgt-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.lgt-h h3{font-size:15px}
+.lgp{font-size:12px;font-weight:700;color:var(--pri);background:var(--bg);border-radius:999px;padding:4px 10px}.lgp.ok{background:var(--sec);color:#F8F0E0}.lge{font-size:13px;color:var(--sub);padding-bottom:10px}
+.lgt{list-style:none;margin:0;padding:0;position:relative}.lgt li{position:relative;display:flex;gap:12px;padding-bottom:18px}
+.lgt li:not(:last-child)::before{content:"";position:absolute;left:13px;top:30px;bottom:2px;border-left:2px dotted var(--line)}
+.lgt li>i{width:28px;height:28px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--bg);color:var(--pri);border:1.5px solid var(--pri)}.lgt li>i .ic{width:15px;height:15px}
+.lgt li>div{flex:1;min-width:0;padding-top:4px}.lgt li>div>b{font-size:14px;display:block}.lgt li>div>p{font-size:12px;color:var(--sub);margin:4px 0 0}.lgt li>div>small{display:block;font-size:11px;color:var(--sub);margin-top:4px}
+.lgt li.goal>i{background:var(--sec);border-color:var(--sec);color:#F8F0E0}.lgt li.next>i{border-style:dashed;color:var(--sub);border-color:var(--sub)}.lgt li.next b{color:var(--sub);font-weight:600}.lgt li.rest>i{border-color:var(--line);color:var(--sub)}
+.lgb{display:flex;align-items:center;gap:10px;margin-top:8px;background:var(--bg);border-radius:12px;padding:8px 10px}.lgb span{width:28px;aspect-ratio:3/4;border-radius:3px;flex:none}.lgb p{margin:0;min-width:0}.lgb p b{display:block;font-size:13px}.lgb small{font-size:11px;color:var(--sub)}
+.lgg{height:6px;border-radius:3px;background:var(--bg);margin-top:8px;overflow:hidden}.lgg span{display:block;height:100%;background:var(--sec)}
+.lgq{font-size:13px!important;color:var(--ink)!important;background:var(--bg);border-radius:12px;padding:8px 10px;margin-top:8px!important;line-height:1.5}
 </style>
 </head>
 <body>
@@ -1176,14 +1187,15 @@ function calendar(y,m,sd){
  var cms=CMTS.filter(function(c){return c.d===ds});
  var pm=new Date(y,m-1,1).getMonth()+1,nm=new Date(y,m+1,1).getMonth()+1;
  app.innerHTML='<div class="sh2"><button class="ib" id="cb0" aria-label="뒤로">'+ic("back")+'</button><h2>독서 달력</h2><span class="sp3"></span></div>'
- +'<section class="box cbx"><div class="cmn"><button class="cmb" id="cpv" aria-label="이전 달">'+ic("back")+pm+'월</button><b>'+y+'년 '+(m+1)+'월</b><button class="cmb" id="cnx" aria-label="다음 달">'+nm+'월'+ic("next")+'</button></div>'
+ +'<section class="box cbx"><div class="cmn cmc"><button class="cmo" id="cpv" aria-label="이전 달 ('+pm+'월)">'+ic("back")+'</button><b>'+y+'년 '+(m+1)+'월</b><button class="cmo" id="cnx" aria-label="다음 달 ('+nm+'월)">'+ic("next")+'</button></div>'
  +'<div class="cgd cwk">'+"일월화수목금토".split("").map(function(w){return'<span>'+w+'</span>'}).join("")+'</div><div class="cgd" id="cgd">'+cells+'</div>'
  +'<div class="clg"><span><i class="on"></i>읽은 날</span><span><i class="td"></i>오늘</span><span><i class="sl"></i>선택한 날</span></div></section>'
- +'<section class="fs"><div class="fsh"><h3>'+(sd?(m+1)+'월 '+sd+'일 독서 로그':'독서 로그')+'</h3></div>'
- +(!sd?'<div class="emp">날짜를 눌러 그날의 기록을 확인해 보세요.</div>':!rd(sd)?'<div class="emp">'+(cur&&sd===td?"오늘은 아직 읽지 않았어요. 한 쪽만 가볍게 시작해 볼까요?":"이 날은 쉬어 갔어요.")+'</div>'
- :'<div class="lgs l2"><div><b>'+pgs+'쪽</b><small>읽은 쪽</small></div><div><b>'+pc+'%</b><small>목표 '+G+'쪽 대비</small></div></div>'
- +'<h4 class="lgh">읽은 책</h4><div class="box lgl"><div class="shi"><i style="background:'+bk.c+'"></i><div><b>'+bk.t+'</b><small>'+bk.a+' · '+bk.s+'</small></div></div></div>'
- +'<h4 class="lgh">남긴 코멘트</h4>'+(cms.length?'<div class="lgc">'+cms.map(function(c){return'<div class="pst"><small>'+esc(c.b)+'</small><p>'+esc(c.t)+'</p></div>'}).join("")+'</div>':'<div class="emp">이 날 남긴 코멘트가 없어요.</div>'))
+ +'<section class="lgw"><div class="lgt-h"><h3>'+(sd?(m+1)+'월 '+sd+'일의 독서 길':'독서 길')+'</h3>'+(sd&&rd(sd)?'<span class="lgp'+(pc>=100?" ok":"")+'">'+pgs+'쪽 · '+pc+'%</span>':'')+'</div>'
+ +(!sd?'<p class="lge">날짜를 눌러 그날의 기록을 걸어 보세요.</p>':!rd(sd)?'<ol class="lgt"><li class="rest"><i>'+ic("clock")+'</i><div><b>'+(cur&&sd===td?"아직 출발 전이에요":"쉬어 간 날")+'</b><p>'+(cur&&sd===td?"한 쪽만 가볍게 시작해 볼까요?":"쉬는 날도 독서 습관의 일부예요.")+'</p></div></li></ol>'
+ :'<ol class="lgt"><li><i>'+ic("book")+'</i><div><b>책을 펼쳤어요</b><div class="lgb"><span style="background:'+bk.c+'"></span><p><b>'+bk.t+'</b><small>'+bk.a+' · '+bk.s+'</small></p></div></div></li>'
+ +'<li><i>'+ic("stack")+'</i><div><b>'+pgs+'쪽을 걸었어요</b><div class="lgg"><span style="width:'+Math.min(100,pc)+'%"></span></div><p>하루 목표 '+G+'쪽의 '+pc+'%</p></div></li>'
+ +cms.map(function(c){return'<li><i>'+ic("chat")+'</i><div><b>코멘트를 남겼어요</b><p class="lgq">“'+esc(c.t)+'”</p><small>'+esc(c.b)+'</small></div></li>'}).join("")
+ +'<li class="'+(pc>=100?"goal":"next")+'"><i>'+ic(pc>=100?"check":"next")+'</i><div><b>'+(pc>=100?"하루 목표에 도착했어요":"목표까지 "+(G-pgs)+"쪽 남았어요")+'</b></div></li></ol>')
  +'</section>';
  document.getElementById("cb0").onclick=home;
  document.getElementById("cpv").onclick=function(){calendar(y,m-1)};
