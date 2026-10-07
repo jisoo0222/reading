@@ -616,6 +616,8 @@ html,body{background:#2B242D}
 .rcr{display:block;padding:22px 14px 14px;cursor:default}.rch{font-size:13px;color:var(--sub);margin:0 0 10px}
 .rcl{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.rck{display:flex;flex-direction:column;align-items:flex-start;gap:2px;background:none;border:0;padding:0;font:inherit;color:var(--ink);text-align:left;cursor:pointer;min-width:0}
 .rck i{width:56px;aspect-ratio:3/4;border-radius:6px;margin-bottom:4px}.rck b{font-size:13px;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rck small{font-size:11px;color:var(--sec);font-weight:600}
+.tcard{margin-top:14px}.tcard svg{display:block;width:100%;height:auto}
+.tbt{display:flex;gap:10px;margin-top:12px}.tbt .btn,.tbt .btn.ghost{flex:1}
 </style>
 </head>
 <body>
@@ -676,10 +678,18 @@ function result(){
   rows+='<div class="ax"><div class="lb"><span'+(side?'>'+AX[i][0]:'><b>'+AX[i][0]+'</b>')+'</span><span>'+(side?'<b>'+AX[i][1]+'</b>':AX[i][1])+'</span></div><div class="trk"><i style="left:'+p+'%"></i></div><h4>'+(strong?'뚜렷한 '+nm:nm+'에 가까움')+'</h4><p>'+D[i][side]+'</p></div>';
  }
  var t=T[key];RKEY=key;
- app.innerHTML=bar(Q.length)+'<h1>독서 성향이 분석되었어요</h1><div class="prof"><p>당신은 이런 유형이에요</p><h2>'+t[0]+'</h2><p>'+t[1]+'</p><div class="chips">'+names.map(function(n){return'<span class="chip">'+n+'</span>'}).join("")+'</div></div>'
+ app.innerHTML=bar(Q.length)+'<h1>독서 성향이 분석되었어요</h1><div class="tcard" id="tcd">'+typeSVG(key,t,names)+'</div><div class="tbt"><button class="btn ghost" id="tsv">저장하기</button><button class="btn" id="tsh">공유하기</button></div>'
  +recBox(key)+'<div class="sec"><h3>성향 분석</h3>'+rows+'</div>'
  +'<div class="foot"><button class="btn ghost" id="re">다시 하기</button><button class="btn" id="go">홈으로 가기</button></div>';
  document.getElementById("go").onclick=home;
+ var svg=typeSVG(key,t,names),fn="독서유형_"+key+".png",msg="나의 독서 유형은 "+key+" ‘"+t[0]+"’ — "+t[1];
+ function note(h){var x=pop('<h3>'+h+'</h3><button class="btn" id="tok" style="width:100%;margin-top:14px">확인</button>');document.getElementById("tok").onclick=x}
+ document.getElementById("tsv").onclick=function(){cardPNG(svg,function(b){var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=fn;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},1000);note("카드 이미지를 저장했어요")})};
+ document.getElementById("tsh").onclick=function(){cardPNG(svg,function(b){var f=new File([b],fn,{type:"image/png"});
+  if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],title:"나의 독서 유형",text:msg}).catch(function(){});
+  else if(navigator.share)navigator.share({title:"나의 독서 유형",text:msg}).catch(function(){});
+  else if(navigator.clipboard)navigator.clipboard.writeText(msg).then(function(){note("유형 소개를 복사했어요")},function(){note("이 기기에서는 공유를 지원하지 않아요")});
+  else note("이 기기에서는 공유를 지원하지 않아요")})};
  app.querySelectorAll(".rbk").forEach(function(b){b.onclick=function(){bookDt(+b.dataset.k,result)}});
  document.getElementById("re").onclick=function(){step=0;ans=[null,null,null,null];ask()};
 }
@@ -706,6 +716,34 @@ function goal(){
  document.getElementById("bk1").onclick=info;
  nx.onclick=function(){step=0;ask()}}
 var RK={4:"FEDJ",5:"SEWJ",6:"FADJ",7:"FADI",8:"FADI",9:"FEDJ",10:"SAWJ"},RKEY="",PICKED=0;
+function tWrap(t,n){var w=t.split(" "),L=[],c="";w.forEach(function(x){if((c+" "+x).trim().length>n&&c){L.push(c);c=x}else c=(c+" "+x).trim()});if(c)L.push(c);return L}
+function typeSVG(key,t,names){
+ var bk=LB[recList(key)[0].k][0],mt=M[0],e=function(x){return esc(String(x))},F='font-family="Pretendard,Apple SD Gothic Neo,Noto Sans KR,sans-serif"';
+ var d=tWrap(t[1],16).map(function(l,i){return'<text x="360" y="'+(586+i*38)+'" text-anchor="middle" font-size="27" fill="#2E2530" '+F+'>'+e(l)+'</text>'}).join(""),dy=586+tWrap(t[1],16).length*38;
+ var cw=150,cx=360-(names.length*cw+(names.length-1)*12)/2;
+ var ch=names.map(function(n,i){var x=cx+i*(cw+12);return'<rect x="'+x+'" y="'+(dy+6)+'" width="'+cw+'" height="46" rx="23" fill="none" stroke="#788165" stroke-width="2"/><text x="'+(x+cw/2)+'" y="'+(dy+37)+'" text-anchor="middle" font-size="24" font-weight="600" fill="#788165" '+F+'>'+e(n)+'</text>'}).join("");
+ var by=dy+96;
+ return'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 '+(by+210)+'" width="720" height="'+(by+210)+'" role="img" aria-label="나의 독서 유형 카드: '+e(t[0])+'">'
+ +'<rect x="2" y="2" width="716" height="'+(by+206)+'" rx="40" fill="#F8F0E0" stroke="#D9C9AA" stroke-width="3"/>'
+ +'<rect x="250" y="44" width="220" height="44" rx="22" fill="#F1E4CC"/><text x="360" y="74" text-anchor="middle" font-size="21" fill="#6B5E6B" '+F+'>나의 독서 유형은?</text>'
+ +'<text x="360" y="168" text-anchor="middle" font-size="72" font-weight="800" letter-spacing="8" fill="#7A637A" '+F+'>'+e(key)+'</text>'
+ +'<text x="360" y="226" text-anchor="middle" font-size="38" font-weight="700" fill="#2E2530" '+F+'>'+e(t[0])+'</text>'
+ +'<circle cx="360" cy="398" r="128" fill="#F1E4CC"/>'
+ +'<path d="M360 330 C320 312 270 312 238 326 V466 C270 452 320 452 360 470 Z" fill="#FBF6EA" stroke="#7A637A" stroke-width="5" stroke-linejoin="round"/>'
+ +'<path d="M360 330 C400 312 450 312 482 326 V466 C450 452 400 452 360 470 Z" fill="#FBF6EA" stroke="#7A637A" stroke-width="5" stroke-linejoin="round"/>'
+ +'<path d="M360 330 V470" stroke="#7A637A" stroke-width="5"/>'
+ +'<path d="M262 362 C285 354 315 354 338 362 M262 390 C285 382 315 382 338 390 M262 418 C285 410 305 410 320 414" stroke="#B9AAB4" stroke-width="4" fill="none" stroke-linecap="round"/>'
+ +'<path d="M382 362 C405 354 435 354 458 362 M382 390 C405 382 435 382 458 390" stroke="#B9AAB4" stroke-width="4" fill="none" stroke-linecap="round"/>'
+ +'<path d="M430 318 V372 L442 360 L454 372 V316" fill="#788165"/>'
+ +'<path d="M246 300 l6 -14 l6 14 l14 6 l-14 6 l-6 14 l-6 -14 l-14 -6 z" fill="#B8A07A"/><path d="M486 470 l4 -9 l4 9 l9 4 l-9 4 l-4 9 l-4 -9 l-9 -4 z" fill="#B8A07A"/>'
+ +d+ch
+ +'<rect x="40" y="'+by+'" width="640" height="170" rx="24" fill="#FFFFFF" fill-opacity=".55" stroke="#D9C9AA" stroke-width="2"/>'
+ +'<rect x="270" y="'+(by-18)+'" width="180" height="36" rx="18" fill="#7A637A"/><text x="360" y="'+(by+7)+'" text-anchor="middle" font-size="19" font-weight="600" fill="#F8F0E0" '+F+'>나와 잘 맞는</text>'
+ +'<path d="M360 '+(by+40)+' V'+(by+140)+'" stroke="#D9C9AA" stroke-width="2"/>'
+ +'<text x="200" y="'+(by+76)+'" text-anchor="middle" font-size="20" fill="#6B5E6B" '+F+'>첫 책</text><text x="200" y="'+(by+120)+'" text-anchor="middle" font-size="28" font-weight="700" fill="#2E2530" '+F+'>'+e(bk)+'</text>'
+ +'<text x="520" y="'+(by+76)+'" text-anchor="middle" font-size="20" fill="#6B5E6B" '+F+'>독서 메이트</text><text x="520" y="'+(by+120)+'" text-anchor="middle" font-size="28" font-weight="700" fill="#2E2530" '+F+'>'+e(mt[0])+' · '+mt[1]+'%</text>'
+ +'</svg>'}
+function cardPNG(svg,cb){var i=new Image();i.onload=function(){var c=document.createElement("canvas");c.width=i.width*1.5;c.height=i.height*1.5;var x=c.getContext("2d");x.scale(1.5,1.5);x.drawImage(i,0,0);c.toBlob(cb,"image/png")};i.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)}
 function recList(key){return Object.keys(RK).map(function(k){var m=[];for(var i=0;i<4;i++)if(RK[k].charAt(i)===key.charAt(i))m.push(1);return{k:+k,m:m}}).sort(function(a,b){return b.m.length-a.m.length||a.k-b.k}).slice(0,3)}
 function recBox(key){
  var L=Object.keys(RK).map(function(k){var m=[];for(var i=0;i<4;i++)if(RK[k].charAt(i)===key.charAt(i))m.push(AX[i]["FSAEDWIJ".indexOf(key.charAt(i))%2]);return{k:+k,m:m}}).sort(function(a,b){return b.m.length-a.m.length||a.k-b.k}).slice(0,3);
