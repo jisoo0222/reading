@@ -749,6 +749,7 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .sfb.tgt{outline:2px dashed var(--pri);outline-offset:4px;border-radius:6px}
 #mfi{display:none!important}.mep .fadd{flex:none;white-space:nowrap;padding:9px 16px}.mep{gap:16px}
 .sel .ser{padding:6px 10px}
+.mfe{margin-top:14px}.mfe .och{margin-top:6px;gap:6px}.mfe .och button{font-size:13px;padding:7px 12px}
 </style>
 </head>
 <body>
@@ -1057,18 +1058,22 @@ function frList(){
  document.getElementById("flx").onclick=x;
  document.querySelectorAll("#dlg .frw").forEach(function(b){b.onclick=function(){x();friend(+b.dataset.i,1)}})}
 function meEdit(){
- var v={n:ME,p:MEP,s:SHB.slice()},o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-labelledby","dt");
+ var v={n:ME,p:MEP,s:SHB.slice(),ag:AGE,go:GOAL},o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-labelledby","dt");
  function x(){o.remove();d.remove()}
  function main(){
   d.innerHTML='<h3 id="dt">내 프로필</h3><div class="mep"><div class="av3" id="mav" style="'+(v.p?'background:var(--pri) center/cover no-repeat url('+v.p+')':'')+'">'+(v.p?'':esc(v.n||ME).charAt(0))+'</div><button class="fadd" id="mph">프로필 사진 바꾸기</button><input type="file" id="mfi" accept="image/*" hidden></div>'
    +'<label class="mel">이름<input id="mnm" maxlength="10" autocomplete="off"></label>'
+   +'<div class="mel mfe">연령대<div class="och" id="mag">'+AGES.map(function(a,i){return'<button data-i="'+i+'" aria-pressed="'+(v.ag===i)+'">'+a+'</button>'}).join("")+'</div></div>'
+   +'<div class="mel mfe">하루 목표<div class="och" id="mgo">'+GO.map(function(g){return'<button data-v="'+g[0]+'" aria-pressed="'+(v.go===g[0])+'">'+g[0]+'쪽</button>'}).join("")+'</div></div>'
    +'<p id="mer" style="color:var(--sub);font-size:13px;margin:8px 0 0;min-height:18px"></p><div class="dbt"><button class="btn ghost" id="mcx">취소</button><button class="btn" id="msv">저장</button></div>';
   var nm=document.getElementById("mnm"),fi=document.getElementById("mfi");nm.value=v.n;nm.oninput=function(){v.n=nm.value;if(!v.p)document.getElementById("mav").textContent=esc(v.n.trim()||ME).charAt(0)};
   document.getElementById("mph").onclick=function(){fi.click()};
+  document.getElementById("mag").onclick=function(e){var b=e.target.closest("button");if(!b)return;v.ag=+b.dataset.i;this.querySelectorAll("button").forEach(function(c){c.setAttribute("aria-pressed",c===b)})};
+  document.getElementById("mgo").onclick=function(e){var b=e.target.closest("button");if(!b)return;v.go=+b.dataset.v;this.querySelectorAll("button").forEach(function(c){c.setAttribute("aria-pressed",c===b)})};
   fi.onchange=function(){var f=fi.files[0];if(!f)return;if(!/^image\//.test(f.type)){document.getElementById("mer").textContent="이미지 파일만 올릴 수 있어요.";return}
    var r=new FileReader();r.onload=function(){v.p=r.result;var a=document.getElementById("mav");a.textContent="";a.style.background="var(--pri) center/cover no-repeat url("+v.p+")"};r.readAsDataURL(f)};
   document.getElementById("mcx").onclick=x;
-  document.getElementById("msv").onclick=function(){var n=v.n.trim();if(!n){document.getElementById("mer").textContent="이름을 입력해 주세요.";return}ME=n;MEP=v.p;x();profile()}}
+  document.getElementById("msv").onclick=function(){var n=v.n.trim();if(!n){document.getElementById("mer").textContent="이름을 입력해 주세요.";return}ME=n;MEP=v.p;AGE=v.ag;GOAL=v.go;x();profile()}}
  function pick(){
   d.innerHTML='<h3 id="dt">책장에 보여줄 책</h3><p class="sm" style="font-size:13px">프로필 위 책장에 꽂을 책을 골라 주세요. 최대 '+SHMAX+'권까지 고를 수 있어요.</p><div class="mpl">'+RDB.map(function(b,k){var on=v.s.indexOf(k)>-1;return'<button class="mpi" data-k="'+k+'" aria-pressed="'+on+'"><i style="background:'+BC[k%3]+'"></i><span><b>'+b[0]+'</b><small>'+b[1]+'</small></span><em aria-hidden="true">'+(on?ic("check"):"")+'</em></button>'}).join("")+'</div><p id="mer" style="color:var(--sub);font-size:13px;margin:8px 0 0;min-height:18px"></p><button class="btn" id="mdn" style="width:100%;margin-top:6px">완료</button>';
   d.querySelector(".mpl").onclick=function(e){var b=e.target.closest(".mpi");if(!b)return;var k=+b.dataset.k,i=v.s.indexOf(k);
