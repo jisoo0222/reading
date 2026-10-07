@@ -693,6 +693,7 @@ button.cd{font:inherit;color:var(--ink);background:none;cursor:pointer;padding:0
 #selb button{display:flex;align-items:center;gap:4px;background:none;border:0;color:var(--bg);font:inherit;font-size:12px;font-weight:600;padding:7px 10px;border-radius:10px;cursor:pointer}#selb button .ic{width:15px;height:15px}#selb button:hover{background:rgba(255,255,255,.12)}
 .app.rd .pgl ::selection{background:rgba(122,99,122,.3)}
 .app.rd .fol{bottom:30px}#grb{bottom:4px}
+.s.cm{background:none;text-decoration:underline;text-decoration-color:var(--cmc,var(--pri));text-decoration-thickness:1.5px;text-underline-offset:5px}.zen .s.cm{text-decoration:none}
 </style>
 </head>
 <body>
@@ -1439,7 +1440,7 @@ function reader(k){
   var id=pi+"-"+pj+"-"+si,h=nmr(esc(x.t));
   var tg=x.c!==undefined?'<button class="ct" data-c="'+x.c+'"><i class="ctv" style="background:'+CM[x.c].c+'"></i>'+CM[x.c].n+(S.s===0&&CM[x.c].sp?" (스포주의)":"")+'</button>':'';
   if(my[id])tg+='<button class="ct me" data-m="'+id+'">내 코멘트'+(my[id].sp?" (스포 방지)":"")+'</button>';
-  return'<span class="s'+(und[id]?" ud":"")+(x.c!==undefined?" cm":"")+'" data-id="'+id+'">'+h+'</span>'+tg+' '}).join("")+'</p>'}).join("")+(BM.indexOf(PGN[pi])>-1?'<i class="crn"></i>':'')+(MMO[pi]||[]).map(function(m,j){return mmH(m,pi+"-"+j)}).join("")+'<div class="fol">'+PGN[pi]+'</div>'}
+  return'<span class="s'+(und[id]?" ud":"")+(x.c!==undefined?" cm":"")+'" data-id="'+id+'"'+(x.c!==undefined?' style="--cmc:'+CM[x.c].c+'"':'')+'>'+h+'</span>'+tg+' '}).join("")+'</p>'}).join("")+(BM.indexOf(PGN[pi])>-1?'<i class="crn"></i>':'')+(MMO[pi]||[]).map(function(m,j){return mmH(m,pi+"-"+j)}).join("")+'<div class="fol">'+PGN[pi]+'</div>'}
  function rt(){nmx();lf.innerHTML=pH(cur);gck()}
  function gck(){var t=todayStr();if(RDY.d!==t)RDY={d:t,p:{},ok:0};RDY.p[BK+"-"+pg]=1;if(GOAL&&!RDY.ok&&Object.keys(RDY.p).length>=GOAL){RDY.ok=1;var g=document.getElementById("gl");g.textContent="오늘의 목표 "+GOAL+"쪽을 달성했어요!";g.classList.add("on");setTimeout(function(){g.classList.remove("on")},3200)}}
  function pr(){var pc=function(v){return v*100/TOT};document.getElementById("pg").innerHTML='<div class="pr"><span>'+pg+'p</span><div class="tk"><i style="width:'+pc(pg)+'%"></i><b class="th" style="left:'+pc(pg)+'%" role="slider" aria-label="진행도" aria-valuemin="1" aria-valuemax="'+TOT+'" aria-valuenow="'+pg+'"></b>'+BM.map(function(b){return'<button class="rb" data-p="'+b+'" style="left:'+pc(b)+'%" aria-label="'+b+'쪽 책갈피"></button>'}).join("")+MP.map(function(m){return'<em class="md" style="left:'+pc(mpg(m))+'%;background:'+m[2]+'" aria-label="'+m[0]+' '+mpg(m)+'쪽">'+m[0].charAt(0)+'</em>'}).join("")+'</div><span>'+TOT+'p</span></div><p class="pc">'+Math.round(pc(pg))+'% · '+MP.map(function(m){return m[0]+" "+mpg(m)+"p"}).join(" · ")+'</p>'}
