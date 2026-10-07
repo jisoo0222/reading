@@ -750,6 +750,11 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 #mfi{display:none!important}.mep .fadd{flex:none;white-space:nowrap;padding:9px 16px}.mep{gap:16px}
 .sel .ser{padding:6px 10px}
 .mfe{margin-top:14px}.mfe .och{margin-top:6px;gap:6px}.mfe .och button{font-size:13px;padding:7px 12px}
+.pbx2{padding:14px 14px 12px}.pbx2 .pbt{display:flex;align-items:center;gap:12px}.pbx2 .av3{margin:0;width:54px;height:54px;font-size:20px;border:0;flex:none}.pbx2 .pnm{flex:1;min-width:0}.pbx2 .pnm h2{font-size:19px}.pbx2 .pnm small{font-size:12px;color:var(--sub)}
+.pmb{width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line)!important;background:var(--bg)!important;display:grid!important;place-items:center;flex:none;color:var(--pri)!important}.pmb .ic{width:16px!important;height:16px!important}
+.ptc2{display:flex;align-items:center;gap:8px;width:100%;margin-top:12px;padding:10px 12px;background:var(--bg);border:0;border-radius:12px;font:inherit;color:var(--ink);text-align:left;cursor:pointer}.ptc2>small{font-size:11px;color:var(--sub);flex:none}.ptl{flex:1;min-width:0;display:flex;align-items:center;gap:8px}.ptl b{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ptc2 .ptk{font-style:normal;padding:3px 7px;font-size:11px;border-radius:7px}.ptc2>.ic{width:16px;height:16px;color:var(--sub);flex:none}
+.pfb .fs{margin-top:16px}.pfl{padding:10px 14px}.pfc span{width:44px;height:44px;font-size:16px}.pfb #pst .box{padding:10px 12px}
+.ptl{flex-direction:column;align-items:flex-start;gap:4px}.ptl>small{font-size:11px;color:var(--sub)}.ptr{display:flex;align-items:center;gap:8px;max-width:100%}.ptr b{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 </style>
 </head>
 <body>
@@ -994,8 +999,8 @@ function profile(){
  var hh=hm.map(function(h,i){return'<button class="hc" data-k="'+i+'"><span>'+ic(h[0])+'</span>'+h[1]+'</button>'}).join("");
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","프로필"]].map(function(t){return'<button'+(t[0]==="person"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
  app.innerHTML='<div class="bn" id="bn" role="button" tabindex="0" aria-label="내 책장 펼쳐 보기"></div>'
- +'<div class="pfb"><button class="pfg" id="pfg" aria-label="책장 펼치기"><i></i></button><section class="box pbx"><div class="pbt"><div class="av3" style="'+avS()+'">'+(MEP?'':esc(ME).charAt(0))+'</div><div class="pnm"><h2>'+esc(ME)+'</h2><button class="pme" id="pme">내 프로필'+ic("next")+'</button></div></div>'
- +'<button class="rp" id="rp">AI 독서 성향 분석'+ic("next")+'</button></section>'
+ +'<div class="pfb"><button class="pfg" id="pfg" aria-label="책장 펼치기"><i></i></button><section class="box pbx2"><div class="pbt"><div class="av3" style="'+avS()+'">'+(MEP?'':esc(ME).charAt(0))+'</div><div class="pnm"><h2>'+esc(ME)+'</h2><small>'+(AGE!==null?AGES[AGE]+' · ':'')+'하루 '+(GOAL||10)+'쪽 목표</small></div><button class="pme pmb" id="pme" aria-label="프로필 편집">'+ic("pen")+'</button></div>'
+ +(function(){var k=RKEY||(ans.indexOf(null)<0?calcType().key:""),t=k&&T[k];return'<button class="ptc2" id="rp"><span class="ptl"><small>AI 독서 성향</small><span class="ptr">'+(t?'<em class="ptk">'+k+'</em><b>'+t[0]+'</b>':'<b>나의 독서 유형 알아보기</b>')+'</span></span>'+ic("next")+'</button>'})()+'</section>'
  +'<section class="fs"><div class="fsh"><h3>내 친구 '+fc+'</h3><button class="pme" id="pfr">자세히 보기'+ic("next")+'</button></div><div class="box pfl">'+(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):'<p class="pfe">아직 친구가 없어요.</p><button class="pfc pfa" id="pfa"><span>'+ic("plus")+'</span><b>친구 찾기</b></button>')+'</div></section>'
  +'<section class="fs" id="pst" role="button" tabindex="0" style="cursor:pointer" aria-label="독서 우표 보러 가기"><div class="fsh"><h3>'+esc(ME)+' 님의 독서 우표</h3></div><div class="box"><div class="stg">'+(function(){var t="";for(var q=0;q<4;q++)t+=stamp(BC[q%3],1);return t})()+'</div></div></section></div>'
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
