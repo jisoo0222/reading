@@ -655,6 +655,14 @@ button.cd{font:inherit;color:var(--ink);background:none;cursor:pointer;padding:0
 .bpv{display:grid;place-items:center;margin:4px 0 4px}.bpg{position:relative;width:120px;height:150px;background:var(--bg);border:1.5px solid var(--line);border-radius:6px;padding:28px 14px 0;display:flex;flex-direction:column;gap:9px}.bpg i{position:absolute;top:0;right:16px;width:16px;height:30px}.bpg span{height:4px;border-radius:2px;background:var(--line)}.bpg span.s{width:60%}
 .bcl{display:flex;gap:10px;flex-wrap:wrap}.bcl button{width:30px;height:30px;border-radius:50%;border:2px solid var(--card);box-shadow:0 0 0 1.5px var(--line);cursor:pointer}.bcl button[aria-pressed="true"]{box-shadow:0 0 0 2.5px var(--pri)}
 .ctv{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:1px}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g3 .hlr{grid-column:1/-1}
+.hpx{padding:12px 0 12px 14px}.hps{font-size:13px;color:var(--sub);margin:0 14px 10px 0}.hps b{color:var(--pri)}
+.hpl{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-right:14px}.hpl::-webkit-scrollbar{display:none}
+.hpm{flex:none;width:64px;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}.hpm span{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--pri);color:var(--pri);display:grid;place-items:center}.hpm span .ic{width:20px;height:20px}
+.hpm b{font-size:11px;font-weight:600;white-space:nowrap}.hpm small{font-size:11px;color:var(--sec);font-weight:700}.hpm.dn span{background:var(--sec);border-color:var(--sec);color:#F8F0E0}.hpm.dn small{color:var(--sub);font-weight:500}
+.hpx{padding:10px 0 10px 14px}.hps{margin-bottom:8px}.hpm span{width:34px;height:34px}.hpm span .ic{width:17px;height:17px}.hpm{gap:2px}
+.mpt+.cats,.mpt~#gr .cats{margin-top:14px}
+.app.hm .blk{margin-top:18px}
 </style>
 </head>
 <body>
@@ -909,7 +917,7 @@ function meEdit(){
   document.getElementById("mdn").onclick=main}
  o.onclick=x;app.appendChild(o);app.appendChild(d);d.onkeydown=function(e){if(e.key==="Escape")x()};
  main()}
-var PT=1700,OWN={TH0:1},SC="ALL",CS={},OP={},STB=0,MY=[],SLOT=[],
+var PT=1700,OWN={TH0:1},SC="ALL",CS={},OP={},STB=1,MY=[],SLOT=[],
 RDB=[["느리게 읽는 밤","이서윤",224,"2026.08.12"],["나의 작은 서재","박하은",180,"2026.07.03"],["여행의 이유","김도현",256,"2026.06.14"],["마음의 구조","최유진",312,"2026.05.20"],["한 줄의 추리","정민우",288,"2026.04.08"],["작은 습관의 지도","한서진",200,"2026.03.11"],["밤의 도서관","오지윤",340,"2026.02.02"],["달의 정원","윤서하",208,"2026.01.10"]],
 CAT=[["ALL","전체","grid"],["NEW","신규","new"],["HL","형광펜","pen"],["PN","메모지","memo"]],
 COL=["#E9D58B","#E3B7B0","#B9C7A5","#C5B3D1","#BFD0D8"],
@@ -934,7 +942,7 @@ function lst(c){var r=[];["PN","HL"].forEach(function(k){if(c==="ALL"||c==="NEW"
 function shop(){
  app.className="app";
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","프로필"]].map(function(t){return'<button'+(t[0]==="basket"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="sh2"><span class="sp3"></span><h2>포인트 샵</h2><span class="sp3"></span></div><div class="mpt"><b>나의 포인트 :</b><span class="pt" id="ptx"></span><button class="vl" id="vlt">보관함</button></div><div class="stb" role="tablist"><button role="tab" data-t="0">오늘의 포인트</button><button role="tab" data-t="1">커스터마이징</button></div><div id="gr"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav><div id="ov"></div><div id="sheet" role="dialog"></div>';
+ app.innerHTML='<div class="sh2"><span class="sp3"></span><h2>문구점</h2><span class="sp3"></span></div><div class="mpt"><b>나의 포인트 :</b><span class="pt" id="ptx"></span><button class="vl" id="vlt">보관함</button></div><div id="gr"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav><div id="ov"></div><div id="sheet" role="dialog"></div>';
  app.firstChild.style.paddingBottom="76px";
  var fab=document.createElement("button"),fm=document.createElement("div");fab.className="fab";fab.setAttribute("aria-label","추가");fab.innerHTML=ic("plus");fm.className="fm";fm.innerHTML='<button id="m1">제작하기</button><button id="m2">내 모음집</button><button id="m3">공유</button>';app.appendChild(fab);app.appendChild(fm);
  var sheet=document.getElementById("sheet"),ov=document.getElementById("ov"),g=document.getElementById("gr");
@@ -961,7 +969,7 @@ function shop(){
   sheet.classList.add("on");ov.classList.add("on")}
  draw();
  ov.onclick=cl;
- document.querySelector(".stb").onclick=function(e){var b=e.target.closest("button");if(b){STB=+b.dataset.t;draw()}};
+ 
  g.onclick=function(e){var b=e.target.closest("button");if(!b)return;if(b.dataset.i!==undefined)detail(b.dataset.c,+b.dataset.i);else if(b.dataset.c){SC=b.dataset.c;draw()}};
  fab.onclick=function(){fm.classList.toggle("on")};
  document.getElementById("m1").onclick=craft;document.getElementById("m2").onclick=function(){album()};document.getElementById("m3").onclick=function(){album(1)};
@@ -1190,10 +1198,10 @@ function home(){
  app.innerHTML='<header class="hd"><button class="ib nbl" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'">'+ic(unread()?"bellOn":"bell")+(unread()?'<i class="nbd"></i>':'')+'</button><span class="nick">'+esc(ME)+'</span><button class="ib" aria-label="검색">'+ic("search")+'</button><button class="ib" id="hmn" aria-label="설정 열기">'+ic("menu")+'</button></header>'
  +hero
  +'<section class="blk"><div class="sh"><h3>이번 주 기록</h3><button class="pme" id="hdt">달력'+ic("next")+'</button></div><div class="box wkx"><div class="wks"><b>'+rd+'일</b> 읽었어요<span>이번 주 목표 달성률 '+wp+'% · 하루 목표 '+G+'쪽</span></div><div class="wkr">'+bars+'</div></div></section>'
- +'<section class="blk"><div class="sh"><h3>독서 메이트</h3></div><div class="hmt">'+M.map(function(m,i){return'<button class="hmc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>'}).join("")+'</div></section>'
+ +'<section class="blk"><div class="sh"><h3>오늘의 포인트</h3><button class="pme" id="hpt">'+PT+'P'+ic("next")+'</button></div><div class="box hpx"><p class="hps">미션 <b>'+MS.filter(function(x){return x[3]}).length+' / '+MS.length+'</b> 완료 · 오늘 +'+MS.filter(function(x){return x[3]}).reduce(function(a,x){return a+x[2]},0)+'P</p><div class="hpl">'+MS.map(function(x,i){return[x,i]}).sort(function(a,b){return a[0][3]-b[0][3]}).map(function(r){var x=r[0];return'<div class="hpm'+(x[3]?" dn":"")+'"><span>'+ic(x[3]?"check":x[1])+'</span><b>'+x[0]+'</b><small>'+(x[3]?"완료":"+"+x[2]+"P")+'</small></div>'}).join("")+'</div></div></section>'
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  if(REC)app.querySelectorAll(".rck").forEach(function(b){b.onclick=function(){PICKED=1;DEF=+b.dataset.k;reader(DEF)}});else document.getElementById("hgo").onclick=function(){reader()};
- app.querySelectorAll(".hmc").forEach(function(b){b.onclick=function(){friend(+b.dataset.i)}});
+ document.getElementById("hpt").onclick=shop;
  var tb=app.querySelectorAll(".tab button");tb[0].onclick=community;tb[1].onclick=shop;tb[3].onclick=tabStamp;tb[4].onclick=profile;
  document.getElementById("hmn").onclick=drawer;document.getElementById("hbl").onclick=inbox;
  document.getElementById("hdt").onclick=function(){calendar()};
