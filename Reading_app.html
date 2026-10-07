@@ -718,6 +718,11 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .sfl{display:block;height:12px;border-radius:3px;background:var(--line);box-shadow:0 4px 0 rgba(36,29,38,.08)}
 .sfs{flex:0 0 42px;border:0;border-radius:4px 4px 0 0;writing-mode:vertical-rl;font:inherit;font-size:12px;font-weight:600;letter-spacing:.04em;display:flex;align-items:center;justify-content:flex-start;padding:12px 0;overflow:hidden;white-space:nowrap;cursor:pointer;position:relative}
 .sfs::before{content:"";position:absolute;left:0;right:0;top:8px;height:2px;background:rgba(248,240,224,.35)}.sfs:focus-visible{outline:3px solid var(--sec);outline-offset:2px}
+#shf{position:absolute;inset:0;z-index:0;background:var(--bg);overflow-y:auto;padding:12px 16px 90px;visibility:hidden;transition:visibility 0s .5s}.app.pfo #shf{visibility:visible;transition:none}
+.app.pf .sc{position:relative;z-index:1;background:var(--bg);transition:transform .5s cubic-bezier(.2,.8,.2,1)}.app.pfo .sc{transform:translateY(100%)}
+.shu{display:flex;align-items:center;justify-content:center;gap:6px;margin:22px auto 0;padding:10px 18px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);font:inherit;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer}.shu .ic{width:16px;height:16px;transform:rotate(90deg)}
+@media (prefers-reduced-motion:reduce){.app.pf .sc{transition:none}}
+.app.pf .tab{z-index:5}
 </style>
 </head>
 <body>
@@ -941,12 +946,10 @@ I.check="M5 12l5 5 9-10";
 var MYT=["#슬로우리더","#논리·분석","#재미형"],MYX=["#소설","#에세이","#새벽독서"],ME="",MEP="",SHB=[0,1,2,3,4,5,6],SHMAX=7;
 function myShelf(){if(BK!==DEF)useBk(DEF);var d=LB[DEF];return[{t:d[0],a:d[1],c:d[2],s:"읽는 중 · "+Math.round(pg*100/TOT)+"%",k:DEF}].concat(RDB.map(function(b,k){return{t:b[0],a:b[1],c:BC[k%3],s:"완독 "+b[3]}}))}
 function bkTile(b){return'<div class="bkm"><div class="c" style="background:'+b.c+'"></div><p>'+b.t+'</p><small>'+b.s+'</small></div>'}
-function shelfFull(){
- app.className="app";var L=myShelf(),H=[128,112,136,120,104,132,116,124,108,130],rows=[];for(var i=0;i<L.length;i+=6)rows.push(L.slice(i,i+6));while(rows.length<3)rows.push([]);
- app.innerHTML='<div class="sh2"><button class="ib" id="sf0" aria-label="뒤로">'+ic("back")+'</button><h2>'+esc(ME||"나")+'의 책장</h2><span class="sp3"></span></div><p class="spc">책 '+L.length+'권 · 책등을 누르면 정보를 볼 수 있어요</p><div class="sfw">'
- +rows.map(function(r,ri){return'<div class="sfr"><div class="sfb">'+r.map(function(b,j){var k=ri*6+j,lt=b.c==="#B8A07A";return'<button class="sfs" data-i="'+k+'" style="height:'+H[k%10]+'px;background:'+b.c+';color:'+(lt?"#2E2530":"#F8F0E0")+'" aria-label="'+b.t+' 정보 보기"><span>'+b.t+'</span></button>'}).join("")+'</div><i class="sfl"></i></div>'}).join("")+'</div>';
- document.getElementById("sf0").onclick=profile;
- app.querySelectorAll(".sfs").forEach(function(btn){btn.onclick=function(){var b=L[+btn.dataset.i];var x=pop('<div class="bi"><div class="bc" style="background:'+b.c+'"></div><div><h3 style="margin:0">'+b.t+'</h3><p style="margin:6px 0 0">'+b.a+'</p><p style="margin:4px 0 0;font-size:13px">'+b.s+'</p></div></div><button class="btn ghost" id="sfx" style="width:100%;margin-top:16px">닫기</button>');document.getElementById("sfx").onclick=x}})}
+function shelfHTML(L){var H=[128,112,136,120,104,132,116,124,108,130],rows=[];for(var i=0;i<L.length;i+=6)rows.push(L.slice(i,i+6));while(rows.length<3)rows.push([]);
+ return'<p class="spc">책 '+L.length+'권 · 책등을 누르면 정보를 볼 수 있어요</p><div class="sfw">'
++rows.map(function(r,ri){return'<div class="sfr"><div class="sfb">'+r.map(function(b,j){var k=ri*6+j,lt=b.c==="#B8A07A";return'<button class="sfs" data-i="'+k+'" style="height:'+H[k%10]+'px;background:'+b.c+';color:'+(lt?"#2E2530":"#F8F0E0")+'" aria-label="'+b.t+' 정보 보기"><span>'+b.t+'</span></button>'}).join("")+'</div><i class="sfl"></i></div>'}).join("")+'</div>'}
+function shelfBind(root,L){root.querySelectorAll(".sfs").forEach(function(btn){btn.onclick=function(){var b=L[+btn.dataset.i];var x=pop('<div class="bi"><div class="bc" style="background:'+b.c+'"></div><div><h3 style="margin:0">'+b.t+'</h3><p style="margin:6px 0 0">'+b.a+'</p><p style="margin:4px 0 0;font-size:13px">'+b.s+'</p></div></div><button class="btn ghost" id="sfx" style="width:100%;margin-top:16px">닫기</button>');document.getElementById("sfx").onclick=x}})}
 function shelfPg(){
  app.className="app";var L=myShelf();
  app.innerHTML='<div class="sh2"><button class="ib" id="sp0" aria-label="뒤로">'+ic("back")+'</button><h2>내 책장</h2><span class="sp3"></span></div><p class="spc">총 '+L.length+'권</p><div class="spg">'+L.map(bkTile).join("")+'</div>';
@@ -974,7 +977,11 @@ function profile(){
  app.firstChild.style.paddingBottom="76px";
 
  app.querySelectorAll(".hc").forEach(function(b){b.onclick=function(){var k=+b.dataset.k;if(k===0){SPF=1;stampPg()}else vault(k,profile)}});
- var bnn=document.getElementById("bn");bnn.onclick=shelfFull;bnn.onkeydown=function(e){if(e.key==="Enter")shelfFull()};
+ app.classList.add("pf");var SL=myShelf(),shf=document.createElement("div");shf.id="shf";shf.setAttribute("aria-hidden","true");
+ shf.innerHTML='<div class="sh2"><span class="sp3"></span><h2>'+esc(ME||"나")+'의 책장</h2><span class="sp3"></span></div>'+shelfHTML(SL)+'<button class="shu" id="shu">'+ic("back")+'내 프로필로 돌아가기</button>';app.insertBefore(shf,app.firstChild);shelfBind(shf,SL);
+ function sOpen(){app.classList.add("pfo");shf.setAttribute("aria-hidden","false");document.querySelector(".sc").setAttribute("aria-hidden","true")}
+ function sClose(){app.classList.remove("pfo");shf.setAttribute("aria-hidden","true");document.querySelector(".sc").removeAttribute("aria-hidden")}
+ var bnn=document.getElementById("bn");bnn.onclick=sOpen;bnn.onkeydown=function(e){if(e.key==="Enter")sOpen()};document.getElementById("shu").onclick=sClose;
  document.getElementById("rp").onclick=typePg;
  document.getElementById("pme").onclick=meEdit;
  document.getElementById("shd").onclick=shelfPg;
