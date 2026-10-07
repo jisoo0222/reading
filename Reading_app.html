@@ -644,6 +644,8 @@ html,body{background:#2B242D}
 .lgs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.lgs div{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px 6px;text-align:center}.lgs b{display:block;font-size:20px;color:var(--pri)}.lgs small{font-size:12px;color:var(--sub)}
 .lgh{font-size:13px;color:var(--sub);margin:16px 0 8px}.lgl{padding:4px 14px}.lgc .pst small{font-size:11px;color:var(--sub)}.lgc .pst p{margin:4px 0 0;font-size:14px}
 .wkd em{position:relative;overflow:hidden;height:42px;background:var(--bg);border:1.5px solid var(--line)}.wkd em i{position:absolute;left:0;right:0;bottom:0;background:var(--sec)}.wkd em b{position:relative;font-size:10px;color:var(--sub)}.wkd em.wok b{color:var(--bg)}.wkd.td em{outline:none;border-color:var(--pri)}.wkd.fu em{border-style:dashed}
+button.cd{font:inherit;color:var(--ink);background:none;cursor:pointer;padding:0}button.cd.on{color:var(--onpri);background:var(--pri)}.cd.sel{border-color:var(--sec);border-width:2px;box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--sec)}
+.clg i.sl{border:2px solid var(--sec);background:none}.lgs.l2{grid-template-columns:repeat(2,1fr)}
 </style>
 </head>
 <body>
@@ -1109,30 +1111,36 @@ function drawer(){
  o.onclick=cl;d.onkeydown=function(e){if(e.key==="Escape")cl()};
  r();app.appendChild(o);app.appendChild(d);
  requestAnimationFrame(function(){requestAnimationFrame(function(){o.classList.add("on");d.classList.add("on");d.querySelector("#dcl").focus({preventScroll:true});app.scrollLeft=0})})}
-function calendar(y,m){
+function calendar(y,m,sd){
  var now=new Date();if(y===undefined){y=now.getFullYear();m=now.getMonth()}
  var dt=new Date(y,m,1);y=dt.getFullYear();m=dt.getMonth();
  app.className="app";
- var first=dt.getDay(),dim=new Date(y,m+1,0).getDate(),past=y<now.getFullYear()||(y===now.getFullYear()&&m<now.getMonth()),cur=y===now.getFullYear()&&m===now.getMonth(),td=now.getDate(),cnt=0,pgs=0,cells="",tdp=RDY.d===todayStr()?Object.keys(RDY.p).length:0;
- function rd(d){return(past||(cur&&d<=td))&&(d*7+m*3)%5!==0}
- function dp(d){return cur&&d===td?tdp:5+(d*13+m*7)%20}
+ var first=dt.getDay(),dim=new Date(y,m+1,0).getDate(),past=y<now.getFullYear()||(y===now.getFullYear()&&m<now.getMonth()),cur=y===now.getFullYear()&&m===now.getMonth(),td=now.getDate(),cells="",tdp=RDY.d===todayStr()?Object.keys(RDY.p).length:0,G=GOAL||10;
+ function ok(d){return past||(cur&&d<=td)}
+ var z=function(n){return(n<10?"0":"")+n},dk=function(d){return y+"."+z(m+1)+"."+z(d)},ev={};RDB.forEach(function(b){ev[b[3]]=1});CMTS.forEach(function(c){ev[c.d]=1});
+ function rd(d){return ok(d)&&(cur&&d===td?tdp>0||!!ev[dk(d)]:(d*7+m*3)%5!==0||!!ev[dk(d)])}
+ function dp(d){return !rd(d)?0:cur&&d===td?tdp:5+(d*13+m*7)%20}
+ if(sd===undefined){sd=cur?td:0;if(!cur)for(var q=dim;q>0;q--)if(rd(q)){sd=q;break}}
  for(var i=0;i<first;i++)cells+='<span></span>';
- for(var d=1;d<=dim;d++){var on=rd(d)&&dp(d)>0;if(on){cnt++;pgs+=dp(d)}cells+='<span class="cd'+(on?" on":"")+(cur&&d===td?" td":"")+(!past&&!(cur&&d<=td)?" fu":"")+'"'+(cur&&d===td?' aria-label="오늘"':'')+'>'+d+'</span>'}
- var ym=y+"."+(m<9?"0":"")+(m+1),bks=RDB.map(function(b,k){return{t:b[0],a:b[1],c:BC[k%3],s:"완독 "+b[3].slice(5),d:b[3]}}).filter(function(b){return b.d.indexOf(ym)===0});
- if(cur){var D=LB[DEF];bks.unshift({t:D[0],a:D[1],c:D[2],s:"읽는 중 · "+Math.round(pg*100/TOT)+"%"})}
- var done=bks.filter(function(b){return b.d}).length,cms=CMTS.filter(function(c){return c.d.indexOf(ym)===0});
+ for(var d=1;d<=dim;d++){var on=rd(d);cells+=(ok(d)?'<button class="cd'+(on?" on":"")+(cur&&d===td?" td":"")+(d===sd?" sel":"")+'" data-d="'+d+'" aria-pressed="'+(d===sd)+'" aria-label="'+(m+1)+'월 '+d+'일'+(on?" 읽은 날":"")+'">'+d+'</button>':'<span class="cd fu">'+d+'</span>')}
+ var ds=dk(sd),pgs=dp(sd),pc=Math.round(pgs*100/G);
+ var bk=null;if(rd(sd)){if(cur&&sd===td){var D=LB[DEF];bk={t:D[0],a:D[1],c:D[2],s:"읽는 중 · "+Math.round(pg*100/TOT)+"%"}}else{var L=RDB.map(function(b,k){return{t:b[0],a:b[1],c:BC[k%3],d:b[3]}}).filter(function(b){return b.d>=ds}).sort(function(a,b){return a.d<b.d?-1:1})[0];if(L)bk={t:L.t,a:L.a,c:L.c,s:L.d===ds?"이 날 완독했어요":"읽는 중"};else{var D2=LB[DEF];bk={t:D2[0],a:D2[1],c:D2[2],s:"읽는 중"}}}}
+ var cms=CMTS.filter(function(c){return c.d===ds});
  var pm=new Date(y,m-1,1).getMonth()+1,nm=new Date(y,m+1,1).getMonth()+1;
  app.innerHTML='<div class="sh2"><button class="ib" id="cb0" aria-label="뒤로">'+ic("back")+'</button><h2>독서 달력</h2><span class="sp3"></span></div>'
  +'<section class="box cbx"><div class="cmn"><button class="cmb" id="cpv" aria-label="이전 달">'+ic("back")+pm+'월</button><b>'+y+'년 '+(m+1)+'월</b><button class="cmb" id="cnx" aria-label="다음 달">'+nm+'월'+ic("next")+'</button></div>'
- +'<div class="cgd cwk">'+"일월화수목금토".split("").map(function(w){return'<span>'+w+'</span>'}).join("")+'</div><div class="cgd">'+cells+'</div>'
- +'<div class="clg"><span><i class="on"></i>읽은 날</span><span><i class="td"></i>오늘</span></div></section>'
- +'<section class="fs"><div class="fsh"><h3>'+(m+1)+'월 독서 로그</h3></div>'
- +'<div class="lgs"><div><b>'+cnt+'</b><small>읽은 날</small></div><div><b>'+pgs+'</b><small>읽은 쪽</small></div><div><b>'+done+'</b><small>완독한 책</small></div></div>'
- +'<h4 class="lgh">읽은 책</h4>'+(bks.length?'<div class="box lgl">'+bks.map(function(b){return'<div class="shi"><i style="background:'+b.c+'"></i><div><b>'+b.t+'</b><small>'+b.a+' · '+b.s+'</small></div></div>'}).join("")+'</div>':'<div class="emp">이 달에 읽은 책이 없어요.</div>')
- +'<h4 class="lgh">남긴 코멘트</h4>'+(cms.length?'<div class="lgc">'+cms.map(function(c){return'<div class="pst"><small>'+c.d.slice(5)+' · '+esc(c.b)+'</small><p>'+esc(c.t)+'</p></div>'}).join(""):'<div class="emp">이 달에 남긴 코멘트가 없어요.</div>')+(cms.length?'</div>':'')+'</section>';
+ +'<div class="cgd cwk">'+"일월화수목금토".split("").map(function(w){return'<span>'+w+'</span>'}).join("")+'</div><div class="cgd" id="cgd">'+cells+'</div>'
+ +'<div class="clg"><span><i class="on"></i>읽은 날</span><span><i class="td"></i>오늘</span><span><i class="sl"></i>선택한 날</span></div></section>'
+ +'<section class="fs"><div class="fsh"><h3>'+(sd?(m+1)+'월 '+sd+'일 독서 로그':'독서 로그')+'</h3></div>'
+ +(!sd?'<div class="emp">날짜를 눌러 그날의 기록을 확인해 보세요.</div>':!rd(sd)?'<div class="emp">'+(cur&&sd===td?"오늘은 아직 읽지 않았어요. 한 쪽만 가볍게 시작해 볼까요?":"이 날은 쉬어 갔어요.")+'</div>'
+ :'<div class="lgs l2"><div><b>'+pgs+'쪽</b><small>읽은 쪽</small></div><div><b>'+pc+'%</b><small>목표 '+G+'쪽 대비</small></div></div>'
+ +'<h4 class="lgh">읽은 책</h4><div class="box lgl"><div class="shi"><i style="background:'+bk.c+'"></i><div><b>'+bk.t+'</b><small>'+bk.a+' · '+bk.s+'</small></div></div></div>'
+ +'<h4 class="lgh">남긴 코멘트</h4>'+(cms.length?'<div class="lgc">'+cms.map(function(c){return'<div class="pst"><small>'+esc(c.b)+'</small><p>'+esc(c.t)+'</p></div>'}).join("")+'</div>':'<div class="emp">이 날 남긴 코멘트가 없어요.</div>'))
+ +'</section>';
  document.getElementById("cb0").onclick=home;
  document.getElementById("cpv").onclick=function(){calendar(y,m-1)};
  document.getElementById("cnx").onclick=function(){calendar(y,m+1)};
+ document.getElementById("cgd").onclick=function(e){var b=e.target.closest("button");if(b){var st=document.querySelector(".sc").scrollTop;calendar(y,m,+b.dataset.d);document.querySelector(".sc").scrollTop=st}};
 }
 var WK=[14,9,0,18,12,7,11];
 function home(){
