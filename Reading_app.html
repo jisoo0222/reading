@@ -618,6 +618,7 @@ html,body{background:#2B242D}
 .rck i{width:56px;aspect-ratio:3/4;border-radius:6px;margin-bottom:4px}.rck b{font-size:13px;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rck small{font-size:11px;color:var(--sec);font-weight:600}
 .tcard{margin-top:14px}.tcard svg{display:block;width:100%;height:auto}
 .tbt{display:flex;gap:10px;margin-top:12px}.tbt .btn,.tbt .btn.ghost{flex:1}
+.tdm{display:flex;margin:16px auto 0;font-size:13px}.tdl .ax{background:var(--bg);margin-top:12px}.tdl .ax:first-child{margin-top:0}
 </style>
 </head>
 <body>
@@ -668,7 +669,7 @@ function load(){
  app.innerHTML=ost(3)+bar(Q.length)+'<div class="center" role="status"><div class="ring"></div><h1>독서 성향을 분석하고 있어요</h1><p class="hint">답변을 바탕으로 프로필을 만드는 중이에요.</p></div>';
  setTimeout(result,1600);
 }
-function result(){
+function calcType(){
  var V=[-2,-1,1,2],sum=[0,0,0,0],last=[0,0,0,0],key="",names=[],rows="";
  ans.forEach(function(v,i){var x=Q[i].a;sum[x]+=V[v];last[x]=V[v]});
  for(var i=0;i<4;i++){
@@ -677,11 +678,8 @@ function result(){
   var p=strong?100:62;if(!side)p=100-p;
   rows+='<div class="ax"><div class="lb"><span'+(side?'>'+AX[i][0]:'><b>'+AX[i][0]+'</b>')+'</span><span>'+(side?'<b>'+AX[i][1]+'</b>':AX[i][1])+'</span></div><div class="trk"><i style="left:'+p+'%"></i></div><h4>'+(strong?'뚜렷한 '+nm:nm+'에 가까움')+'</h4><p>'+D[i][side]+'</p></div>';
  }
- var t=T[key];RKEY=key;
- app.innerHTML=bar(Q.length)+'<h1>독서 성향이 분석되었어요</h1><div class="tcard" id="tcd">'+typeSVG(key,t,names)+'</div><div class="tbt"><button class="btn ghost" id="tsv">저장하기</button><button class="btn" id="tsh">공유하기</button></div>'
- +recBox(key)+'<div class="sec"><h3>성향 분석</h3>'+rows+'</div>'
- +'<div class="foot"><button class="btn ghost" id="re">다시 하기</button><button class="btn" id="go">홈으로 가기</button></div>';
- document.getElementById("go").onclick=home;
+ return{key:key,t:T[key],names:names,rows:rows}}
+function cardWire(key,t,names){
  var svg=typeSVG(key,t,names),fn="독서유형_"+key+".png",msg="나의 독서 유형은 "+key+" ‘"+t[0]+"’ — "+t[1];
  function note(h){var x=pop('<h3>'+h+'</h3><button class="btn" id="tok" style="width:100%;margin-top:14px">확인</button>');document.getElementById("tok").onclick=x}
  document.getElementById("tsv").onclick=function(){cardPNG(svg,function(b){var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=fn;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},1000);note("카드 이미지를 저장했어요")})};
@@ -689,7 +687,19 @@ function result(){
   if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],title:"나의 독서 유형",text:msg}).catch(function(){});
   else if(navigator.share)navigator.share({title:"나의 독서 유형",text:msg}).catch(function(){});
   else if(navigator.clipboard)navigator.clipboard.writeText(msg).then(function(){note("유형 소개를 복사했어요")},function(){note("이 기기에서는 공유를 지원하지 않아요")});
-  else note("이 기기에서는 공유를 지원하지 않아요")})};
+  else note("이 기기에서는 공유를 지원하지 않아요")})}}
+function typePg(){
+ app.className="app";var c=calcType();
+ app.innerHTML='<div class="sh2"><button class="ib" id="ty0" aria-label="뒤로">'+ic("back")+'</button><h2>AI 독서 성향 분석</h2><span class="sp3"></span></div><div class="tcard">'+typeSVG(c.key,c.t,c.names)+'</div><div class="tbt"><button class="btn ghost" id="tsv">저장하기</button><button class="btn" id="tsh">공유하기</button></div><button class="pme tdm" id="tdm">성향 분석 자세히 보기'+ic("next")+'</button>';
+ document.getElementById("ty0").onclick=profile;cardWire(c.key,c.t,c.names);
+ document.getElementById("tdm").onclick=function(){var x=pop('<h3>성향 분석</h3><div class="tdl">'+c.rows+'</div><button class="btn ghost" id="tdx" style="width:100%;margin-top:14px">닫기</button>');document.getElementById("tdx").onclick=x}}
+function result(){
+ var c=calcType(),key=c.key,t=c.t,names=c.names,rows=c.rows;RKEY=key;
+ app.innerHTML=bar(Q.length)+'<h1>독서 성향이 분석되었어요</h1><div class="tcard" id="tcd">'+typeSVG(key,t,names)+'</div><div class="tbt"><button class="btn ghost" id="tsv">저장하기</button><button class="btn" id="tsh">공유하기</button></div>'
+ +recBox(key)+'<div class="sec"><h3>성향 분석</h3>'+rows+'</div>'
+ +'<div class="foot"><button class="btn ghost" id="re">다시 하기</button><button class="btn" id="go">홈으로 가기</button></div>';
+ document.getElementById("go").onclick=home;
+ cardWire(key,t,names);
  app.querySelectorAll(".rbk").forEach(function(b){b.onclick=function(){bookDt(+b.dataset.k,result)}});
  document.getElementById("re").onclick=function(){step=0;ans=[null,null,null,null];ask()};
 }
@@ -809,19 +819,19 @@ function profile(){
  var hm=[["stamp","독서우표"],["chat","커뮤니티"],["basket","문구점"],["clock","타임머신"]];
  var hh=hm.map(function(h,i){return'<button class="hc" data-k="'+i+'"><span>'+ic(h[0])+'</span>'+h[1]+'</button>'}).join("");
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","프로필"]].map(function(t){return'<button'+(t[0]==="person"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="bn"><button class="ib" id="pb" aria-label="뒤로">'+ic("back")+'</button><div class="sps" role="group" aria-label="내 책장">'+sp+'</div></div>'
+ app.innerHTML='<div class="bn"><div class="sps" role="group" aria-label="내 책장">'+sp+'</div></div>'
  +'<section class="box pbx"><div class="pbt"><div class="av3" style="'+avS()+'">'+(MEP?'':esc(ME).charAt(0))+'</div><div class="pnm"><h2>'+esc(ME)+'</h2><button class="pme" id="pme">내 프로필'+ic("next")+'</button></div>'
  +'<button class="pfr" id="pfr" aria-label="내 친구 '+fc+'명 보기"><small>내 친구</small><b>'+fc+'</b></button></div>'
  +'<div class="chips">'+chips(MYT)+'<button class="chip" id="tg" aria-label="태그 3개 더 보기">+3</button></div>'
- +'<button class="rp" id="rp">AI 분석 리포트'+ic("next")+'</button></section>'
+ +'<button class="rp" id="rp">AI 독서 성향 분석'+ic("next")+'</button></section>'
  +'<section class="fs"><div class="fsh"><h3>내 책장</h3><button class="pme" id="shd">자세히 보기'+ic("next")+'</button></div><div class="box"><div class="shs">'+bk+'</div></div></section>'
  +'<section class="fs"><div class="fsh"><h3>보관함</h3></div><div class="box"><div class="mh">'+hh+'</div></div></section>'
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.firstChild.style.paddingBottom="76px";
- document.getElementById("pb").onclick=home;
+
  app.querySelectorAll(".hc").forEach(function(b){b.onclick=function(){var k=+b.dataset.k;if(k===0){SPF=1;stampPg()}else vault(k,profile)}});
  app.querySelectorAll(".sp").forEach(function(b){b.onclick=function(){bookInfo(+b.dataset.k)}});
- document.getElementById("rp").onclick=result;
+ document.getElementById("rp").onclick=typePg;
  document.getElementById("pme").onclick=meEdit;
  document.getElementById("shd").onclick=shelfPg;
  var tg=document.getElementById("tg");tg.onclick=function(){tg.insertAdjacentHTML("beforebegin",chips(MYX));tg.remove()};
@@ -882,7 +892,7 @@ function lst(c){var r=[];["PN","HL","BM","TH"].forEach(function(k){if(c==="ALL"|
 function shop(){
  app.className="app";
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","프로필"]].map(function(t){return'<button'+(t[0]==="basket"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="sh2"><button class="ib" id="sb" aria-label="뒤로">'+ic("back")+'</button><h2>포인트 샵</h2><span class="sp3"></span></div><div class="mpt"><b>나의 포인트 :</b><span class="pt" id="ptx"></span><button class="vl" id="vlt">보관함</button></div><div class="stb" role="tablist"><button role="tab" data-t="0">오늘의 포인트</button><button role="tab" data-t="1">커스터마이징</button></div><div id="gr"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav><div id="ov"></div><div id="sheet" role="dialog"></div>';
+ app.innerHTML='<div class="sh2"><span class="sp3"></span><h2>포인트 샵</h2><span class="sp3"></span></div><div class="mpt"><b>나의 포인트 :</b><span class="pt" id="ptx"></span><button class="vl" id="vlt">보관함</button></div><div class="stb" role="tablist"><button role="tab" data-t="0">오늘의 포인트</button><button role="tab" data-t="1">커스터마이징</button></div><div id="gr"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav><div id="ov"></div><div id="sheet" role="dialog"></div>';
  app.firstChild.style.paddingBottom="76px";
  var fab=document.createElement("button"),fm=document.createElement("div");fab.className="fab";fab.setAttribute("aria-label","추가");fab.innerHTML=ic("plus");fm.className="fm";fm.innerHTML='<button id="m1">제작하기</button><button id="m2">내 모음집</button><button id="m3">공유</button>';app.appendChild(fab);app.appendChild(fm);
  var sheet=document.getElementById("sheet"),ov=document.getElementById("ov"),g=document.getElementById("gr");
@@ -918,7 +928,7 @@ function shop(){
   else if(b.dataset.k!==undefined){CS[id]=+b.dataset.k;detail(c,i)}
   else if(b.id==="go")vault(2,shop);
   else if(b.id==="buy"&&!OWN[id]&&PT>=pc(c,i)){PT-=pc(c,i);OWN[id]=1;draw();detail(c,i)}};
- document.getElementById("sb").onclick=home;document.getElementById("vlt").onclick=function(){vault(2,shop)};
+ document.getElementById("vlt").onclick=function(){vault(2,shop)};
  var tb=app.querySelectorAll(".tab button");tb[0].onclick=community;tb[2].onclick=home;tb[3].onclick=tabStamp;tb[4].onclick=profile;
 }
 function pop(h){var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.innerHTML=h;function x(){o.remove();d.remove()}o.onclick=x;app.appendChild(o);app.appendChild(d);d.onkeydown=function(e){if(e.key==="Escape")x()};return x}
@@ -978,7 +988,7 @@ function lbWire(back){
 function library(){
  app.className="app";
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","프로필"]].map(function(t){return'<button'+(t[0]==="book"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="sh2"><button class="ib" id="lb0" aria-label="뒤로">'+ic("back")+'</button><h2>도서관</h2><span class="sp3"></span></div>'
+ app.innerHTML='<div class="sh2"><span class="sp3"></span><h2>도서관</h2><span class="sp3"></span></div>'
  +'<div class="thb"><button class="ib" id="tp" aria-label="이전 테마">'+ic("back")+'</button><button class="thn" id="tn"><small>이달 테마</small><b id="tt">'+THM[TI]+'</b></button><button class="ib" id="tx" aria-label="다음 테마">'+ic("next")+'</button></div>'
  +'<section class="fs"><div class="fsh"><h3>인기 급상승 오늘의 책</h3><button class="pme" id="rkm">자세히 보기'+ic("next")+'</button></div><div class="box"><div class="shs pps">'+popRank().slice(0,10).map(function(k,i){return bcard(k,i+1)}).join("")+'</div></div></section>'
  +'<div class="sh" style="margin-top:20px"><h3>카테고리</h3></div>'+shelf()+'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
@@ -986,7 +996,7 @@ function library(){
  function th(d){TI=(TI+d+THM.length)%THM.length;document.getElementById("tt").textContent=THM[TI]}
  document.getElementById("tp").onclick=function(){th(-1)};document.getElementById("tx").onclick=function(){th(1)};
  document.getElementById("tn").onclick=themeList;document.getElementById("rkm").onclick=rankPg;
- document.getElementById("lb0").onclick=home;
+
  lbWire(library);
  app.querySelectorAll(".sv").forEach(function(b){b.onclick=function(){catPg(+b.dataset.k)}});
  var tb=app.querySelectorAll(".tab button");tb[0].onclick=community;tb[1].onclick=shop;tb[2].onclick=home;tb[4].onclick=profile;
@@ -1103,7 +1113,7 @@ function colOf(n){for(var i=0;i<M.length;i++)if(M[i][0]===n)return M[i][2];retur
 function community(){
  app.className="app";
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","프로필"]].map(function(t){return'<button'+(t[0]==="chat"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="sh2"><button class="ib" id="c0" aria-label="뒤로">'+ic("back")+'</button><h2>커뮤니티</h2><button class="ib" id="cm" aria-label="내 활동 메뉴">'+ic("menu")+'</button></div>'
+ app.innerHTML='<div class="sh2"><span class="sp3"></span><h2>커뮤니티</h2><button class="ib" id="cm" aria-label="내 활동 메뉴">'+ic("menu")+'</button></div>'
  +'<div class="sh"><h3>추천 친구</h3></div><div class="frs">'+M.map(function(m,i){return'<button class="fr" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span>'+m[0]+'</button>'}).join("")+'</div>'
  +'<div class="ctb" role="tablist" id="tyb"></div><div id="feed"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.firstChild.style.paddingBottom="90px";
@@ -1165,7 +1175,7 @@ function community(){
  app.querySelector(".frs").onclick=function(e){var b=e.target.closest(".fr");if(b)friend(+b.dataset.i,2)};
  fb.onclick=compose;
  document.getElementById("cm").onclick=act;
- document.getElementById("c0").onclick=home;
+
  var tb=app.querySelectorAll(".tab button");tb[1].onclick=shop;tb[2].onclick=home;tb[3].onclick=tabStamp;tb[4].onclick=profile;
 }
 I.stamp="M7 21h10M5 18h14v-3a4 4 0 0 0-4-4h-1V7a2 2 0 1 0-4 0v4H9a4 4 0 0 0-4 4z";
