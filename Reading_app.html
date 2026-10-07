@@ -646,6 +646,15 @@ html,body{background:#2B242D}
 .wkd em{position:relative;overflow:hidden;height:42px;background:var(--bg);border:1.5px solid var(--line)}.wkd em i{position:absolute;left:0;right:0;bottom:0;background:var(--sec)}.wkd em b{position:relative;font-size:10px;color:var(--sub)}.wkd em.wok b{color:var(--bg)}.wkd.td em{outline:none;border-color:var(--pri)}.wkd.fu em{border-style:dashed}
 button.cd{font:inherit;color:var(--ink);background:none;cursor:pointer;padding:0}button.cd.on{color:var(--onpri);background:var(--pri)}.cd.sel{border-color:var(--sec);border-width:2px;box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--sec)}
 .clg i.sl{border:2px solid var(--sec);background:none}.lgs.l2{grid-template-columns:repeat(2,1fr)}
+.drv{display:flex;align-items:center;gap:2px;font-size:12px;font-weight:500;color:var(--sub)}
+.tpv{margin:4px 0 12px}.tmk{border:1.5px solid;border-radius:16px;padding:12px}.tmh{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:8px}.tmh i{width:16px;height:3px;border-radius:2px;box-shadow:0 5px 0 currentColor}
+.tmc{display:flex;gap:10px;border:1.5px solid;border-radius:12px;padding:10px}.tmv{width:34px;aspect-ratio:3/4;border-radius:4px;flex:none}.tmc div{flex:1;min-width:0}.tmc b{display:block;font-size:13px}.tmc small{display:block;font-size:11px;margin:2px 0 8px}.tmb{display:block;height:5px;border-radius:3px;overflow:hidden}.tmb i{display:block;width:40%;height:100%}
+.tmo{margin-top:10px;border-radius:10px;text-align:center;font-size:13px;font-weight:700;padding:9px}
+.tgd{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.tsw{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;border:1.5px solid var(--line);border-radius:12px;background:none;font:inherit;font-size:12px;color:var(--ink);cursor:pointer}.tsw[aria-pressed="true"]{border-color:var(--pri);border-width:2px;font-weight:700}
+.tsw span{width:44px;height:30px;border-radius:8px;border:1.5px solid;display:flex;align-items:center;justify-content:center;gap:4px}.tsw span i{width:10px;height:10px;border-radius:50%}
+.bpv{display:grid;place-items:center;margin:4px 0 4px}.bpg{position:relative;width:120px;height:150px;background:var(--bg);border:1.5px solid var(--line);border-radius:6px;padding:28px 14px 0;display:flex;flex-direction:column;gap:9px}.bpg i{position:absolute;top:0;right:16px;width:16px;height:30px}.bpg span{height:4px;border-radius:2px;background:var(--line)}.bpg span.s{width:60%}
+.bcl{display:flex;gap:10px;flex-wrap:wrap}.bcl button{width:30px;height:30px;border-radius:50%;border:2px solid var(--card);box-shadow:0 0 0 1.5px var(--line);cursor:pointer}.bcl button[aria-pressed="true"]{box-shadow:0 0 0 2.5px var(--pri)}
+.ctv{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:1px}
 </style>
 </head>
 <body>
@@ -902,7 +911,7 @@ function meEdit(){
  main()}
 var PT=1700,OWN={TH0:1},SC="ALL",CS={},OP={},STB=0,MY=[],SLOT=[],
 RDB=[["느리게 읽는 밤","이서윤",224,"2026.08.12"],["나의 작은 서재","박하은",180,"2026.07.03"],["여행의 이유","김도현",256,"2026.06.14"],["마음의 구조","최유진",312,"2026.05.20"],["한 줄의 추리","정민우",288,"2026.04.08"],["작은 습관의 지도","한서진",200,"2026.03.11"],["밤의 도서관","오지윤",340,"2026.02.02"],["달의 정원","윤서하",208,"2026.01.10"]],
-CAT=[["ALL","전체","grid"],["NEW","신규","new"],["HL","형광펜","pen"],["PN","메모지","memo"],["BM","책갈피","bm"],["TH","테마","theme"]],
+CAT=[["ALL","전체","grid"],["NEW","신규","new"],["HL","형광펜","pen"],["PN","메모지","memo"]],
 COL=["#E9D58B","#E3B7B0","#B9C7A5","#C5B3D1","#BFD0D8"],
 ITM={PN:[["접힌 메모",0,200],["타원 메모",1,200],["테이프 메모",2,250],["리스트 메모",3,250],["클립 메모",4,250],["하트 메모",5,300],["스프링 노트",6,300],["마스킹 메모",7,300],["말풍선 메모",8,350]],
 HL:[["펜",5,150],["마커",14,200],["연필",8,150],["테마펜",10,250],["붓펜",16,300],["점선펜",6,250]],
@@ -921,7 +930,7 @@ function pv(c,i,col){var t=ITM[c][i];
  if(c==="BM")return'<div class="pvb" style="background:'+col+';'+BS[t[1]]+'"></div>';
  if(c==="TH")return'<div class="pvt" style="background:'+t[3]+'"><i style="background:'+t[1]+'"></i><i style="background:'+t[2]+'"></i></div>';
  return'<svg viewBox="0 0 120 30" aria-hidden="true"><path d="M8 15Q22 3 36 15T64 15T92 15T112 15" stroke="'+col+'" stroke-width="'+t[1]+'" stroke-linecap="'+(i===4?"butt":"round")+'" fill="none" opacity="'+(i===2?".45":".8")+'"'+(i===5?' stroke-dasharray="1 12"':'')+'/></svg>'}
-function lst(c){var r=[];["PN","HL","BM","TH"].forEach(function(k){if(c==="ALL"||c==="NEW"||c===k)ITM[k].forEach(function(t,i){if(c!=="NEW"||NEWS[k+i])r.push([k,i])})});return r}
+function lst(c){var r=[];["PN","HL"].forEach(function(k){if(c==="ALL"||c==="NEW"||c===k)ITM[k].forEach(function(t,i){if(c!=="NEW"||NEWS[k+i])r.push([k,i])})});return r}
 function shop(){
  app.className="app";
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","프로필"]].map(function(t){return'<button'+(t[0]==="basket"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
@@ -1071,6 +1080,30 @@ function inbox(){
  document.getElementById("nb0").onclick=home;NTF.forEach(function(n){n.rd=1});
  app.querySelectorAll(".ntr").forEach(function(b){b.onclick=function(){var n=NTF[+b.dataset.i];n.rd=1;
   if(n.k==="fr"){inbox();friend(n.u)}else if(n.k==="rm"||n.k==="pp")reader();else if(n.k==="pt")shop();else inbox()}})}
+var PLT={L:["#F1E4CC","#F8F0E0","#2E2530","#6B5E6B","#D9C9AA","#7A637A","#F8F0E0","#788165"],D:["#241D26","#302833","#F1E4CC","#B9AAB4","#4A3F4D","#A58CA5","#241D26","#9AA384"]},
+TOPT=[["시스템",0,0],["라이트",1,0],["다크",2,0],["새벽",1,1],["숲",1,2],["노을",1,3]],BMN=["리본","깃발","탭","화살표"];
+function tCur(){for(var i=0;i<TOPT.length;i++)if(TOPT[i][1]===DM&&TOPT[i][2]===THI)return i;return 0}
+function tPal(i){var o=TOPT[i];if(o[2])return THV[o[2]];if(o[1]===2||(o[1]===0&&matchMedia("(prefers-color-scheme: dark)").matches))return PLT.D;return PLT.L}
+function themePop(done){
+ var sel=tCur();
+ var x=pop('<h3>테마</h3><div class="tpv" id="tpv"></div><div class="tgd" id="tgd"></div><div class="dbt"><button class="btn ghost" id="tcx">취소</button><button class="btn" id="tap">적용</button></div>');
+ function r(){var P=tPal(sel);
+  document.getElementById("tpv").innerHTML='<div class="tmk" style="background:'+P[0]+';color:'+P[2]+';border-color:'+P[4]+'"><div class="tmh"><b>'+esc(ME||"나")+'</b><i style="background:'+P[3]+'"></i></div><div class="tmc" style="background:'+P[1]+';border-color:'+P[4]+'"><span class="tmv" style="background:'+P[7]+'"></span><div><b>지금 읽는 책</b><small style="color:'+P[3]+'">미리보기 화면이에요</small><span class="tmb" style="background:'+P[4]+'"><i style="background:'+P[5]+'"></i></span></div></div><div class="tmo" style="background:'+P[5]+';color:'+P[6]+'">이어 읽기</div></div>';
+  document.getElementById("tgd").innerHTML=TOPT.map(function(o,i){var Q=tPal(i);return'<button class="tsw" data-i="'+i+'" aria-pressed="'+(i===sel)+'"><span style="background:'+Q[0]+';border-color:'+Q[4]+'"><i style="background:'+Q[5]+'"></i><i style="background:'+Q[7]+'"></i></span>'+o[0]+'</button>'}).join("")}
+ r();
+ document.getElementById("tgd").onclick=function(e){var b=e.target.closest(".tsw");if(b){sel=+b.dataset.i;r()}};
+ document.getElementById("tcx").onclick=x;
+ document.getElementById("tap").onclick=function(){var o=TOPT[sel];DM=o[1];THI=o[2];try{localStorage.setItem("rd_dm",DM)}catch(e){}applyDM();thm();x();if(done)done()}}
+function bmPop(done){
+ var c=BMV.c||"",p=BMV.p?BP.indexOf(BMV.p):0;if(p<0)p=0;var CL=[""].concat(COL);
+ var x=pop('<h3>책갈피</h3><div class="bpv" id="bpv"></div><h4 class="lgh">모양</h4><div class="och" id="bsh">'+BMN.map(function(n,i){return'<button data-i="'+i+'" aria-pressed="'+(i===p)+'">'+n+'</button>'}).join("")+'</div><h4 class="lgh">색</h4><div class="bcl" id="bcl">'+CL.map(function(v,i){return'<button data-i="'+i+'" aria-label="'+(v?"색상 "+i:"기본 색")+'" aria-pressed="'+(v===c)+'" style="background:'+(v||"var(--pri)")+'"></button>'}).join("")+'</div><div class="dbt"><button class="btn ghost" id="bcx">취소</button><button class="btn" id="bap">적용</button></div>');
+ function r(){document.getElementById("bpv").innerHTML='<div class="bpg"><i style="background:'+(c||"var(--pri)")+';clip-path:'+BP[p]+'"></i><span></span><span></span><span></span><span class="s"></span></div>';
+  document.querySelectorAll("#bsh button").forEach(function(b){b.setAttribute("aria-pressed",+b.dataset.i===p)});document.querySelectorAll("#bcl button").forEach(function(b){b.setAttribute("aria-pressed",CL[+b.dataset.i]===c)})}
+ r();
+ document.getElementById("bsh").onclick=function(e){var b=e.target.closest("button");if(b){p=+b.dataset.i;r()}};
+ document.getElementById("bcl").onclick=function(e){var b=e.target.closest("button");if(b){c=CL[+b.dataset.i];r()}};
+ document.getElementById("bcx").onclick=x;
+ document.getElementById("bap").onclick=function(){BMV={c:c,p:p?BP[p]:""};AP.BM=null;x();if(done)done()}}
 var ALM={rm:1,pp:1,cm:1,fr:0,pt:0},
 AL=[["rm","독서 리마인드","매일 저녁 9시에 이어 읽기를 알려줘요"],["pp","핑퐁 알림","메이트가 코멘트를 남기면 알려줘요"],["cm","커뮤니티 알림","내 글의 댓글과 좋아요를 알려줘요"],["fr","친구 요청","친구 요청과 독서 메이트 추천을 알려줘요"],["pt","포인트·이벤트","포인트 적립과 이벤트 소식을 알려줘요"]];
 function alarm(){
@@ -1098,14 +1131,16 @@ function drawer(){
  function art(a){return a.map(function(x){return'<p class="sm"><b>'+x[0]+'</b><br><span style="color:var(--sub);font-size:13px">'+x[1]+'</span></p>'}).join("")}
  var note='<p class="dnote">※ 샘플 문구예요. 실제 서비스에서는 확정된 내용으로 교체해야 해요.</p>';
  function seg(){return'<div class="dg"><b>화면 모드</b><div>'+["시스템","라이트","다크"].map(function(t,i){return'<button data-i="'+i+'" aria-pressed="'+(DM===i)+'">'+t+'</button>'}).join("")+'</div></div><p class="dnote" style="margin:-4px 0 14px">시스템은 기기 설정을 따라가요.</p>'}
- function r(){d.innerHTML='<div class="dh2"><h3>설정</h3><button class="ib" id="dcl" aria-label="설정 닫기">'+ic("next")+'</button></div><h4>화면</h4>'+seg()+'<h4>알림</h4><button class="drow" data-a="al">알림 설정'+ic("next")+'</button><h4>정보</h4><button class="drow" data-a="nt">공지사항'+ic("next")+'</button><button class="drow" data-a="tm">이용약관'+ic("next")+'</button><button class="drow" data-a="pv">개인정보 처리방침'+ic("next")+'</button><button class="drow" data-a="cs">고객센터'+ic("next")+'</button><p class="dnote" style="text-align:center;margin-top:8px">버전 1.0.0</p>';
+ function r(){d.innerHTML='<div class="dh2"><h3>설정</h3><button class="ib" id="dcl" aria-label="설정 닫기">'+ic("next")+'</button></div><h4>화면</h4><button class="drow" data-a="th">테마<span class="drv">'+TOPT[tCur()][0]+ic("next")+'</span></button><button class="drow" data-a="bm">책갈피<span class="drv">'+(BMV.p?BMN[BP.indexOf(BMV.p)]:"리본")+ic("next")+'</span></button><h4>알림</h4><button class="drow" data-a="al">알림 설정'+ic("next")+'</button><h4>정보</h4><button class="drow" data-a="nt">공지사항'+ic("next")+'</button><button class="drow" data-a="tm">이용약관'+ic("next")+'</button><button class="drow" data-a="pv">개인정보 처리방침'+ic("next")+'</button><button class="drow" data-a="cs">고객센터'+ic("next")+'</button><p class="dnote" style="text-align:center;margin-top:8px">버전 1.0.0</p>';
   d.querySelectorAll(".dg button").forEach(function(b){b.onclick=function(){DM=+b.dataset.i;try{localStorage.setItem("rd_dm",DM)}catch(e){}applyDM();r()}});
   d.querySelectorAll(".drow").forEach(function(b){b.onclick=function(){var a=b.dataset.a;
    if(a==="nt")infoPop("공지사항",NT.map(function(n){return'<p class="sm"><b>'+n[0]+'</b> <small style="color:var(--sub)">'+n[1]+'</small><br><span style="color:var(--sub);font-size:13px">'+n[2]+'</span></p>'}).join(""));
    if(a==="tm")infoPop("이용약관",art(TM)+note);
    if(a==="pv")infoPop("개인정보 처리방침",art(PV)+note);
    if(a==="cs")csPop();
-   if(a==="al")alarm()}});
+   if(a==="al")alarm();
+   if(a==="th")themePop(r);
+   if(a==="bm")bmPop(r)}});
   d.querySelector("#dcl").onclick=cl}
  function cl(){o.classList.remove("on");d.classList.remove("on");setTimeout(function(){o.remove();d.remove()},300)}
  o.onclick=cl;d.onkeydown=function(e){if(e.key==="Escape")cl()};
@@ -1275,7 +1310,7 @@ function vault(t,back){
   if(t===1){var mine=[],cm=[],lk3=[];
    PO.forEach(function(p){if(p.mine)mine.push(esc(p.x)+'<small class="dt"> '+p.tm+'</small>');p.c.forEach(function(c){if(c[3])cm.push(esc(c[1])+'<small class="dt"> ← '+esc(p.x.slice(0,16))+'…</small>')});if(LKD[p.id])lk3.push(esc(p.x))});
    h=sec("내가 쓴 글",rows(mine))+sec("내가 쓴 댓글",rows(cm))+sec("내가 남긴 코멘트",CMTS.map(function(c){return'<div class="cr"><small class="dt">'+c.d+' · '+esc(c.b)+'</small><br>'+esc(c.t)+'</div>'}).join(""))+sec("좋아요 누른 글",rows(lk3))}
-  if(t===2){var ids=Object.keys(OWN).filter(function(id){return OWN[id]});
+  if(t===2){var ids=Object.keys(OWN).filter(function(id){return OWN[id]&&/^(PN|HL)/.test(id)});
    h='<p class="sm" style="color:var(--sub);font-size:13px">산 아이템을 적용하면 독서 화면과 앱 전체에 반영돼요.</p>'+ids.map(function(id){var c=id.slice(0,2),i=+id.slice(2),it=ITM[c][i],on=c==="TH"?THI===i:AP[c]===id;return'<div class="vi"><div class="pvw vp">'+pv(c,i,COL[(id in CS)?CS[id]:i%5])+'</div><div class="vn"><b>'+it[0]+'</b><small>'+CN[c]+'</small></div><button class="fadd" data-a="'+id+'" aria-pressed="'+on+'">'+(on?"적용 중":"적용")+'</button></div>'}).join("")}
   if(t===3){if(TMI<0||TMI>=CMTS.length)TMI=CMTS.length-1;
    var m=CMTS[TMI],pp=m.d.split("."),dd=Math.round((new Date(todayStr().replace(/\./g,"-"))-new Date(m.d.replace(/\./g,"-")))/864e5);
@@ -1356,7 +1391,7 @@ function reader(k){
  function toast(t){hn.textContent=t;hn.classList.add("on");clearTimeout(tt);tt=setTimeout(function(){hn.textContent=TH[tool];hn.classList.toggle("on",!!tool)},1600)}
  function pH(pi){return PAGES[pi].map(function(p,pj){return'<p class="pp">'+p.map(function(x,si){
   var id=pi+"-"+pj+"-"+si,h=nmr(esc(x.t));
-  var tg=x.c!==undefined?'<button class="ct" data-c="'+x.c+'">남의 코멘트'+(S.s===0&&CM[x.c].sp?" (스포주의)":"")+'</button>':'';
+  var tg=x.c!==undefined?'<button class="ct" data-c="'+x.c+'"><i class="ctv" style="background:'+CM[x.c].c+'"></i>'+CM[x.c].n+(S.s===0&&CM[x.c].sp?" (스포주의)":"")+'</button>':'';
   if(my[id])tg+='<button class="ct me" data-m="'+id+'">내 코멘트'+(my[id].sp?" (스포 방지)":"")+'</button>';
   return'<span class="s'+(und[id]?" ud":"")+(x.c!==undefined?" cm":"")+'" data-id="'+id+'">'+h+'</span>'+tg+' '}).join("")+'</p>'}).join("")+(BM.indexOf(PGN[pi])>-1?'<i class="crn"></i>':'')+(MMO[pi]||[]).map(function(m,j){return mmH(m,pi+"-"+j)}).join("")+'<div class="fol">'+PGN[pi]+'</div>'}
  function rt(){nmx();lf.innerHTML=pH(cur);gck()}
