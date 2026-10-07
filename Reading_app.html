@@ -696,6 +696,7 @@ button.cd{font:inherit;color:var(--ink);background:none;cursor:pointer;padding:0
 .s.cm{background:none;text-decoration:underline;text-decoration-color:var(--cmc,var(--pri));text-decoration-thickness:1.5px;text-underline-offset:5px}.zen .s.cm{text-decoration:none}
 mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break:clone;box-decoration-break:clone;position:relative;box-shadow:inset 0 calc(var(--ulh,.7em) * -1) 0 var(--ulc,rgba(214,190,120,.55))}.app.rd[style*="--ulo"] mark.hl{opacity:var(--ulo)}
 
+.hpv{font-size:15px!important;color:var(--ink)!important;background:var(--bg);border-radius:12px;padding:14px;margin:4px 0 12px;line-height:1.9}.hsw{display:grid!important;place-items:center;background:var(--bg);width:34px!important;aspect-ratio:auto!important;height:34px;border-radius:8px!important;font-style:normal;font-size:15px;font-weight:700;color:var(--ink)}
 </style>
 </head>
 <body>
@@ -1579,9 +1580,18 @@ function reader(k){
  var cy0=null;document.getElementById("cph").addEventListener("pointerdown",function(e){cy0=e.clientY;e.currentTarget.setPointerCapture(e.pointerId)});
  document.getElementById("cph").addEventListener("pointerup",function(e){if(cy0!==null&&(e.clientY-cy0>30||Math.abs(e.clientY-cy0)<5))cpClose();cy0=null});
  var gy0=null;grb.addEventListener("pointerdown",function(e){gy0=e.clientY});grb.addEventListener("pointerup",function(e){if(gy0!==null&&gy0-e.clientY>20)cpOpen();gy0=null});
+ function hlPop(){
+  var own=ITM.HL.map(function(_,i){return i}).filter(function(i){return OWN["HL"+i]}),sel=AP.HL&&OWN[AP.HL]?+AP.HL.slice(2):-1;
+  function sty(i){if(i<0)return"";var t=ITM.HL[i],k=("HL"+i) in CS?CS["HL"+i]:i%5;return"--ulc:"+COL[k]+";--ulh:"+Math.min(1.25,.4+t[1]/18).toFixed(2)+"em"+(i===2?";opacity:.55":"")}
+  var x=pop('<h3>형광펜</h3><p class="hpv">책 속 문장에 <mark class="hl" id="hpm">이렇게 칠해져요</mark>.</p><div class="mpl" id="hpl">'+[-1].concat(own).map(function(i){return'<button class="mpi" data-i="'+i+'" aria-pressed="'+(i===sel)+'"><i class="hsw"><mark class="hl" style="'+sty(i)+'">가</mark></i><span><b>'+(i<0?"기본 형광펜":ITM.HL[i][0])+'</b><small>'+(i<0?"노란 형광펜":"문구점에서 산 펜")+'</small></span><em aria-hidden="true">'+(i===sel?ic("check"):"")+'</em></button>'}).join("")+'</div>'+(own.length?'':'<p class="sm" style="font-size:12px;margin-top:10px">문구점에서 펜을 사면 여기서 골라 쓸 수 있어요.</p>')+'<div class="dbt"><button class="btn ghost" id="hpx">취소</button><button class="btn" id="hpa">적용</button></div>');
+  function pv(){document.getElementById("hpm").setAttribute("style",sty(sel));document.querySelectorAll("#hpl .mpi").forEach(function(b){var on=+b.dataset.i===sel;b.setAttribute("aria-pressed",on);b.querySelector("em").innerHTML=on?ic("check"):""})}
+  pv();
+  document.getElementById("hpl").onclick=function(e){var b=e.target.closest(".mpi");if(b){sel=+b.dataset.i;pv()}};
+  document.getElementById("hpx").onclick=x;
+  document.getElementById("hpa").onclick=function(){if(sel<0)unapply("HL");else applyItem("HL",sel);ap();rt();x();toast("형광펜을 바꿨어요")}}
  function shareText(t){if(navigator.share)navigator.share({title:BT,text:t}).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){toast("문장을 복사했어요")},function(){toast("공유를 지원하지 않는 기기예요")});else toast("공유를 지원하지 않는 기기예요")}
  cp.querySelector(".cpg").onclick=function(e){var b=e.target.closest(".cpt");if(!b)return;var a=b.dataset.a;cpClose();
-  if(a==="hl")tset(1);else if(a==="cm")tset(3);else if(a==="memo")memo();
+  if(a==="hl")hlPop();else if(a==="cm")tset(3);else if(a==="memo")memo();
   else if(a==="bm"){var i=BM.indexOf(pg);i>-1?BM.splice(i,1):BM.push(pg);rt();pr();toast(i>-1?pg+"쪽 책갈피를 뺐어요":pg+"쪽에 책갈피를 꽂았어요")}
   else if(a==="wd"){so('<h3 class="dh">단어 사전</h3><form class="dsr" role="search"><input id="wi" type="search" placeholder="찾을 단어를 입력하세요" aria-label="찾을 단어" autocomplete="off"><button aria-label="검색">'+ic("search")+'</button></form><div id="wr" aria-live="polite"></div>');wsr();document.getElementById("wi").focus()}
   else if(a==="ch")dic();else if(a==="sh")shareText("『"+BT+"』을 읽고 있어요. ("+pg+" / "+TOT+"쪽)");else if(a==="set")st()};
