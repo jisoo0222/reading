@@ -643,6 +643,7 @@ html,body{background:#2B242D}
 .cbx .clg{margin-top:10px}
 .lgs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.lgs div{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:12px 6px;text-align:center}.lgs b{display:block;font-size:20px;color:var(--pri)}.lgs small{font-size:12px;color:var(--sub)}
 .lgh{font-size:13px;color:var(--sub);margin:16px 0 8px}.lgl{padding:4px 14px}.lgc .pst small{font-size:11px;color:var(--sub)}.lgc .pst p{margin:4px 0 0;font-size:14px}
+.wkd em{position:relative;overflow:hidden;height:42px;background:var(--bg);border:1.5px solid var(--line)}.wkd em i{position:absolute;left:0;right:0;bottom:0;background:var(--sec)}.wkd em b{position:relative;font-size:10px;color:var(--sub)}.wkd em.wok b{color:var(--bg)}.wkd.td em{outline:none;border-color:var(--pri)}.wkd.fu em{border-style:dashed}
 </style>
 </head>
 <body>
@@ -1138,7 +1139,7 @@ function home(){
  app.className="app hm";window.scrollTo(0,0);if(BK!==DEF)useBk(DEF);
  var REC=!PICKED&&!!RKEY,pct=Math.round(pg*100/TOT),DB=LB[DEF],ti=new Date().getDay(),G=GOAL||10,tdp=RDY.d===todayStr()?Object.keys(RDY.p).length:0;
  var wv="일월화수목금토".split("").map(function(w,i){return i<ti?WK[i]:i===ti?tdp:null}),mx=Math.max(G,Math.max.apply(null,wv.map(function(v){return v||0}))),rd=wv.filter(function(v){return v}).length,sm=wv.reduce(function(a,v){return a+(v||0)},0);
- var bars="일월화수목금토".split("").map(function(w,i){var v=wv[i],pc=v===null?null:Math.round(v*100/G);return'<div class="wkd'+(i===ti?" td":"")+(v===null?" fu":"")+'"><span>'+w+'</span><em class="'+(pc>=100?"wok":pc>0?"wmd":"")+'">'+(pc===null?"–":pc+"%")+'</em></div>'}).join(""),wp=Math.round(sm*100/(G*(ti+1)));
+ var bars="일월화수목금토".split("").map(function(w,i){var v=wv[i],pc=v===null?null:Math.round(v*100/G);return'<div class="wkd'+(i===ti?" td":"")+(v===null?" fu":"")+'"><span>'+w+'</span><em class="'+(pc>=55?"wok":"")+'"'+(pc===null?'':' role="img" aria-label="'+w+'요일 목표의 '+pc+'%"')+'><i style="height:'+Math.min(100,pc||0)+'%"></i><b>'+(pc===null?"–":pc+"%")+'</b></em></div>'}).join(""),wp=Math.round(sm*100/(G*(ti+1)));
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","프로필"]].map(function(t){return'<button'+(t[0]==="home"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
  var hero=REC?'<section class="hero hrc"><small>추천 독서</small><h2>'+esc(ME)+'님께 맞는<br>첫 책을 골라 보세요</h2><div class="hrl">'+recList(RKEY).map(function(r){var b=LB[r.k];return'<button class="rck" data-k="'+r.k+'" aria-label="'+b[0]+' 읽기 시작"><i style="background:'+b[2]+'"></i><b>'+b[0]+'</b><small>일치도 '+r.m.length*25+'%</small></button>'}).join("")+'</div></section>'
   :'<section class="hero" id="rc"><div class="htp"><div class="hcv" style="background:'+DB[2]+'"><b>'+DB[0]+'</b></div><div class="hif"><small>지금 읽는 책</small><h2>'+DB[0]+'</h2><p>'+DB[1]+'</p><div class="hpg" role="progressbar" aria-label="진행률" aria-valuenow="'+pct+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+pct+'%"></i></div><p class="hpt"><b>'+pct+'%</b> · '+pg+' / '+TOT+'쪽</p></div></div>'
