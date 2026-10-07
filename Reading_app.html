@@ -701,6 +701,8 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .qth{display:flex;justify-content:center;gap:10px;margin-bottom:10px}.qth button{width:36px;height:36px;border-radius:50%;border:2px solid var(--card);box-shadow:0 0 0 1.5px var(--line);font:inherit;font-size:13px;font-weight:700;cursor:pointer}.qth button[aria-pressed="true"]{box-shadow:0 0 0 2.5px var(--pri)}
 .qdl .och{justify-content:center;margin-bottom:4px}
 .qdl .dbt .btn,.qdl .dbt .btn.ghost{flex:1}
+.lgt li{gap:10px}.lgt li>time{width:38px;flex:none;padding-top:6px;font-size:11px;font-weight:700;color:var(--sub);text-align:right;font-variant-numeric:tabular-nums}
+.lgt li:not(:last-child)::before{left:61px}
 </style>
 </head>
 <body>
@@ -1239,25 +1241,30 @@ function calendar(y,m,sd){
  for(var d=1;d<=dim;d++){var on=rd(d);cells+=(ok(d)?'<button class="cd'+(on?" on":"")+(cur&&d===td?" td":"")+(d===sd?" sel":"")+'" data-d="'+d+'" aria-pressed="'+(d===sd)+'" aria-label="'+(m+1)+'월 '+d+'일'+(on?" 읽은 날":"")+'">'+d+'</button>':'<span class="cd fu">'+d+'</span>')}
  var ds=dk(sd),pgs=dp(sd),pc=Math.round(pgs*100/G);
  var bk=null;if(rd(sd)){if(cur&&sd===td){var D=LB[DEF];bk={t:D[0],a:D[1],c:D[2],s:"읽는 중 · "+Math.round(pg*100/TOT)+"%"}}else{var L=RDB.map(function(b,k){return{t:b[0],a:b[1],c:BC[k%3],d:b[3]}}).filter(function(b){return b.d>=ds}).sort(function(a,b){return a.d<b.d?-1:1})[0];if(L)bk={t:L.t,a:L.a,c:L.c,s:L.d===ds?"이 날 완독했어요":"읽는 중"};else{var D2=LB[DEF];bk={t:D2[0],a:D2[1],c:D2[2],s:"읽는 중"}}}}
- var cms=CMTS.filter(function(c){return c.d===ds});
+ var cms=CMTS.filter(function(c){return c.d===ds}),tl=[];
+ if(sd&&rd(sd)){var z2=function(n){return(n<10?"0":"")+n},bkh=function(t){return'<div class="lgb"><span style="background:'+bk.c+'"></span><p><b>'+t+'</b><small>'+bk.a+' · '+bk.s+'</small></p></div>'};
+  var R=(cur&&sd===td?RLOG[ds]:null)||[];
+  if(R.length)R.forEach(function(v){if(v.k==="o")tl.push({tm:v.tm,ts:v.ts,ic:"book",h:'<b>읽기 시작</b>'+bkh(v.b)});else tl.push({tm:v.tm,ts:v.ts,ic:"stack",h:'<b>읽기 종료</b><p>'+v.n+'쪽 읽음</p>'})});
+  else{var oh=19+sd%4,om=(sd*7+m*11)%50,dur=18+(sd*5)%27,cm2=om+dur,ch=oh+Math.floor(cm2/60);cm2%=60;
+   tl.push({tm:z2(oh)+":"+z2(om),ic:"book",h:'<b>읽기 시작</b>'+bkh(bk.t)});tl.push({tm:z2(ch)+":"+z2(cm2),ic:"stack",h:'<b>읽기 종료</b><p>'+pgs+'쪽 읽음 · '+dur+'분</p>'})}
+  cms.forEach(function(c,i){var t=c.tm;if(!t&&tl.length>1){var a2=tl[0].tm.split(":"),mm=+a2[0]*60+(+a2[1])+8+i*3;t=z2(Math.floor(mm/60))+":"+z2(mm%60)}tl.push({tm:t||"",ts:c.ts,ic:"chat",h:'<b>코멘트 작성</b><p class="lgq">“'+esc(c.t)+'”</p><small>'+esc(c.b)+'</small>'})});
+  var kk=function(v){if(v.ts)return v.ts;var q=(v.tm||"0:0").split(":");return(+q[0]*60+(+q[1]))*60000};tl.sort(function(a,b){return kk(a)-kk(b)});
+  tl.push({c:pc>=100?"goal":"next",ic:pc>=100?"check":"next",h:'<b>'+(pc>=100?"하루 목표 달성":"목표까지 "+(G-pgs)+"쪽")+'</b><p>하루 목표 '+G+'쪽 중 '+pgs+'쪽 ('+pc+'%)</p>'})}
  var pm=new Date(y,m-1,1).getMonth()+1,nm=new Date(y,m+1,1).getMonth()+1;
  app.innerHTML='<div class="sh2"><button class="ib" id="cb0" aria-label="뒤로">'+ic("back")+'</button><h2>독서 달력</h2><span class="sp3"></span></div>'
  +'<section class="box cbx"><div class="cmn cmc"><button class="cmo" id="cpv" aria-label="이전 달 ('+pm+'월)">'+ic("back")+'</button><b>'+y+'년 '+(m+1)+'월</b><button class="cmo" id="cnx" aria-label="다음 달 ('+nm+'월)">'+ic("next")+'</button></div>'
  +'<div class="cgd cwk">'+"일월화수목금토".split("").map(function(w){return'<span>'+w+'</span>'}).join("")+'</div><div class="cgd" id="cgd">'+cells+'</div>'
  +'<div class="clg"><span><i class="on"></i>읽은 날</span><span><i class="td"></i>오늘</span><span><i class="sl"></i>선택한 날</span></div></section>'
- +'<section class="lgw"><div class="lgt-h"><h3>'+(sd?(m+1)+'월 '+sd+'일의 독서 길':'독서 길')+'</h3>'+(sd&&rd(sd)?'<span class="lgp'+(pc>=100?" ok":"")+'">'+pgs+'쪽 · '+pc+'%</span>':'')+'</div>'
- +(!sd?'<p class="lge">날짜를 눌러 그날의 기록을 걸어 보세요.</p>':!rd(sd)?'<ol class="lgt"><li class="rest"><i>'+ic("clock")+'</i><div><b>'+(cur&&sd===td?"아직 출발 전이에요":"쉬어 간 날")+'</b><p>'+(cur&&sd===td?"한 쪽만 가볍게 시작해 볼까요?":"쉬는 날도 독서 습관의 일부예요.")+'</p></div></li></ol>'
- :'<ol class="lgt"><li><i>'+ic("book")+'</i><div><b>책을 펼쳤어요</b><div class="lgb"><span style="background:'+bk.c+'"></span><p><b>'+bk.t+'</b><small>'+bk.a+' · '+bk.s+'</small></p></div></div></li>'
- +'<li><i>'+ic("stack")+'</i><div><b>'+pgs+'쪽을 걸었어요</b><div class="lgg"><span style="width:'+Math.min(100,pc)+'%"></span></div><p>하루 목표 '+G+'쪽의 '+pc+'%</p></div></li>'
- +cms.map(function(c){return'<li><i>'+ic("chat")+'</i><div><b>코멘트를 남겼어요</b><p class="lgq">“'+esc(c.t)+'”</p><small>'+esc(c.b)+'</small></div></li>'}).join("")
- +'<li class="'+(pc>=100?"goal":"next")+'"><i>'+ic(pc>=100?"check":"next")+'</i><div><b>'+(pc>=100?"하루 목표에 도착했어요":"목표까지 "+(G-pgs)+"쪽 남았어요")+'</b></div></li></ol>')
+ +'<section class="lgw"><div class="lgt-h"><h3>'+(sd?(m+1)+'월 '+sd+'일 독서 기록':'독서 기록')+'</h3>'+(sd&&rd(sd)?'<span class="lgp'+(pc>=100?" ok":"")+'">'+pgs+'쪽 · '+pc+'%</span>':'')+'</div>'
+ +(!sd?'<p class="lge">날짜를 누르면 그날의 기록을 볼 수 있어요.</p>':!rd(sd)?'<ol class="lgt"><li class="rest"><time></time><i>'+ic("clock")+'</i><div><b>'+(cur&&sd===td?"오늘은 아직 기록이 없어요":"기록 없음")+'</b><p>'+(cur&&sd===td?"책을 펼치면 여기에 기록돼요.":"이 날은 책을 읽지 않았어요.")+'</p></div></li></ol>'
+ :'<ol class="lgt">'+tl.map(function(v){return'<li class="'+(v.c||"")+'"><time>'+(v.tm||"")+'</time><i>'+ic(v.ic)+'</i><div>'+v.h+'</div></li>'}).join("")+'</ol>')
  +'</section>';
  document.getElementById("cb0").onclick=home;
  document.getElementById("cpv").onclick=function(){calendar(y,m-1)};
  document.getElementById("cnx").onclick=function(){calendar(y,m+1)};
  document.getElementById("cgd").onclick=function(e){var b=e.target.closest("button");if(b){var st=document.querySelector(".sc").scrollTop;calendar(y,m,+b.dataset.d);document.querySelector(".sc").scrollTop=st}};
 }
-var WK=[14,9,0,18,12,7,11];
+var WK=[14,9,0,18,12,7,11],RLOG={};function hm(){var d=new Date(),z=function(n){return(n<10?"0":"")+n};return z(d.getHours())+":"+z(d.getMinutes())}
 function home(){
  app.className="app hm";window.scrollTo(0,0);if(BK!==DEF)useBk(DEF);
  var REC=!PICKED&&!!RKEY,pct=Math.round(pg*100/TOT),DB=LB[DEF],ti=new Date().getDay(),G=GOAL||10,tdp=RDY.d===todayStr()?Object.keys(RDY.p).length:0;
@@ -1545,6 +1552,7 @@ function reader(k){
    rt()};
   ta.focus()}
  function tset(t){tool=tool===t?0:t;hn.textContent=TH[tool];hn.classList.toggle("on",!!tool)}
+ var s0=RDY.d===todayStr()?Object.keys(RDY.p).length:0,lgd=todayStr();(RLOG[lgd]=RLOG[lgd]||[]).push({k:"o",tm:hm(),b:BT,ts:Date.now()});
  rt();pr();ap();
  var x0=0,sw=false;
  var y0=0;tx.addEventListener("pointerdown",function(e){x0=e.clientX;y0=e.clientY;sw=false});
@@ -1586,7 +1594,7 @@ function reader(k){
   else if(b.dataset.cs!==undefined){csp=b.dataset.cs==="1";b.parentNode.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-pressed",x===b)})}
   else if(b.dataset.k){S[b.dataset.k]=+b.dataset.i;ap();rt();st()}
   else if(b.classList.contains("hrt"))b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")!=="true");
-  else if(b.id==="sv"){var v=document.getElementById("ta").value.trim();if(v){my[cid]={t:v,sp:csp};CMTS.unshift({b:BT,t:v,d:todayStr()});rt()}sc()}
+  else if(b.id==="sv"){var v=document.getElementById("ta").value.trim();if(v){my[cid]={t:v,sp:csp};CMTS.unshift({b:BT,t:v,d:todayStr(),tm:hm(),ts:Date.now()});rt()}sc()}
  });
  function wsr(){var w=document.getElementById("wi");if(!w)return;var v=w.value.trim(),r=document.getElementById("wr");
   if(!v){r.innerHTML='<p class="dmt">모르는 단어를 검색해 보세요.</p>';return}
@@ -1594,7 +1602,7 @@ function reader(k){
  sheet.addEventListener("input",function(e){if(e.target.id==="wi")wsr()});
  sheet.addEventListener("submit",function(e){e.preventDefault();wsr()});
  ov.onclick=sc;
- document.getElementById("bk2").onclick=home;
+ document.getElementById("bk2").onclick=function(){var n=(RDY.d===todayStr()?Object.keys(RDY.p).length:0)-(lgd===todayStr()?s0:0);(RLOG[todayStr()]=RLOG[todayStr()]||[]).push({k:"c",tm:hm(),b:BT,n:Math.max(0,n),ts:Date.now()});home()};
  document.getElementById("mt").onclick=function(){so('<div class="who">같이 읽는 메이트</div><p class="sm">'+MP.map(function(m){return m[0]+" "+mpg(m)+"쪽"}).join(", ")+'</p>')};
  document.getElementById("pg").onclick=function(e){var b=e.target.closest(".rb");if(b)fl(PGN.indexOf(+b.dataset.p))};
  document.getElementById("pg").addEventListener("pointerdown",function(e){var tk=e.target.closest(".tk");if(!tk||e.target.closest(".rb")||busy)return;e.preventDefault();var r=tk.getBoundingClientRect(),pe=document.getElementById("pg");
