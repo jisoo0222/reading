@@ -663,6 +663,9 @@ button.cd{font:inherit;color:var(--ink);background:none;cursor:pointer;padding:0
 .hpx{padding:10px 0 10px 14px}.hps{margin-bottom:8px}.hpm span{width:34px;height:34px}.hpm span .ic{width:17px;height:17px}.hpm{gap:2px}
 .mpt+.cats,.mpt~#gr .cats{margin-top:14px}
 .app.hm .blk{margin-top:18px}
+.hpm{cursor:pointer}.mtp{position:absolute;z-index:12;max-width:200px;background:var(--ink);color:var(--bg);font-size:12px;line-height:1.45;padding:8px 11px;border-radius:12px;display:none;pointer-events:none}.mtp.on{display:block}.mtp b{display:block;font-size:12px;margin-bottom:2px}
+.mtp::after{content:"";position:absolute;left:var(--ax,50%);bottom:-5px;width:10px;height:10px;margin-left:-5px;background:var(--ink);transform:rotate(45deg);border-radius:2px}
+.hpm{-webkit-tap-highlight-color:transparent;border-radius:10px}.hpm:focus{outline:none}.hpm:focus-visible{outline:2px solid var(--pri)}
 </style>
 </head>
 <body>
@@ -931,7 +934,7 @@ BS=["clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%)","clip-path:polygon(
 I.clock="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2";I.stack="M4 8l8-4 8 4-8 4zM4 12l8 4 8-4M4 16l8 4 8-4";I.notes="M6 3h12v18H6zM9 8h6M9 12h6M9 16h4";I.cal="M5 6h14v14H5zM5 10h14M9 4v4M15 4v4M9 15l2 2 4-4";I.gift="M4 11h16v9H4zM3 8h18v3H3zM12 8v12M12 8c-3 0-4-3-2-3.5 2-.5 2 3.5 2 3.5zM12 8c3 0 4-3 2-3.5-2-.5-2 3.5-2 3.5z";
 I.talk="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01";
 I.grid="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z";I.memo="M5 4h14v11l-5 5H5zM14 20v-5h5";I.theme="M5 5h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z";I.eraser="M4 16l9-9 6 6-6 6H8zM9 11l6 6M12 19h8";I.trash="M5 7h14M10 4h4M7 7l1 13h8l1-13";
-var MS=[["다독","book",100,0],["토론 참여","chat",50,0],["지속 독서","clock",100,1],["공유","talk",30,1],["완독","stack",200,0],["정독","notes",100,0],["출석","cal",10,1],["선물","gift",50,0],["코멘트","cmt",20,0]];
+var MSD=["하루에 두 권 이상 책을 펼쳐 읽으면 달성돼요.","커뮤니티 글에 댓글을 남기면 달성돼요.","3일 연속으로 책을 읽으면 달성돼요.","문장이나 독서 유형 카드를 공유하면 달성돼요.","책 한 권을 끝까지 읽으면 달성돼요.","오늘의 목표 쪽수를 채우면 달성돼요.","오늘 앱에 들어오면 달성돼요.","친구에게 독서 우표를 선물하면 달성돼요.","책 속 문장에 코멘트를 남기면 달성돼요."],MS=[["다독","book",100,0],["토론 참여","chat",50,0],["지속 독서","clock",100,1],["공유","talk",30,1],["완독","stack",200,0],["정독","notes",100,0],["출석","cal",10,1],["선물","gift",50,0],["코멘트","cmt",20,0]];
 function pc(c,i){var t=ITM[c][i];return c==="TH"?t[4]:t[2]}
 function pv(c,i,col){var t=ITM[c][i];
  if(c==="PN")return'<div class="pvn" style="background:'+col+';'+PS[t[1]]+'"></div>';
@@ -1198,10 +1201,19 @@ function home(){
  app.innerHTML='<header class="hd"><button class="ib nbl" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'">'+ic(unread()?"bellOn":"bell")+(unread()?'<i class="nbd"></i>':'')+'</button><span class="nick">'+esc(ME)+'</span><button class="ib" aria-label="검색">'+ic("search")+'</button><button class="ib" id="hmn" aria-label="설정 열기">'+ic("menu")+'</button></header>'
  +hero
  +'<section class="blk"><div class="sh"><h3>이번 주 기록</h3><button class="pme" id="hdt">달력'+ic("next")+'</button></div><div class="box wkx"><div class="wks"><b>'+rd+'일</b> 읽었어요<span>이번 주 목표 달성률 '+wp+'% · 하루 목표 '+G+'쪽</span></div><div class="wkr">'+bars+'</div></div></section>'
- +'<section class="blk"><div class="sh"><h3>오늘의 포인트</h3><button class="pme" id="hpt">'+PT+'P'+ic("next")+'</button></div><div class="box hpx"><p class="hps">미션 <b>'+MS.filter(function(x){return x[3]}).length+' / '+MS.length+'</b> 완료 · 오늘 +'+MS.filter(function(x){return x[3]}).reduce(function(a,x){return a+x[2]},0)+'P</p><div class="hpl">'+MS.map(function(x,i){return[x,i]}).sort(function(a,b){return a[0][3]-b[0][3]}).map(function(r){var x=r[0];return'<div class="hpm'+(x[3]?" dn":"")+'"><span>'+ic(x[3]?"check":x[1])+'</span><b>'+x[0]+'</b><small>'+(x[3]?"완료":"+"+x[2]+"P")+'</small></div>'}).join("")+'</div></div></section>'
+ +'<section class="blk"><div class="sh"><h3>오늘의 포인트</h3><button class="pme" id="hpt">'+PT+'P'+ic("next")+'</button></div><div class="box hpx"><p class="hps">미션 <b>'+MS.filter(function(x){return x[3]}).length+' / '+MS.length+'</b> 완료 · 오늘 +'+MS.filter(function(x){return x[3]}).reduce(function(a,x){return a+x[2]},0)+'P</p><div class="hpl">'+MS.map(function(x,i){return[x,i]}).sort(function(a,b){return a[0][3]-b[0][3]}).map(function(r){var x=r[0];return'<div class="hpm'+(x[3]?" dn":"")+'" data-i="'+r[1]+'" tabindex="0" role="button" aria-label="'+x[0]+' 미션: '+MSD[r[1]]+'"><span>'+ic(x[3]?"check":x[1])+'</span><b>'+x[0]+'</b><small>'+(x[3]?"완료":"+"+x[2]+"P")+'</small></div>'}).join("")+'</div></div></section>'
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  if(REC)app.querySelectorAll(".rck").forEach(function(b){b.onclick=function(){PICKED=1;DEF=+b.dataset.k;reader(DEF)}});else document.getElementById("hgo").onclick=function(){reader()};
  document.getElementById("hpt").onclick=shop;
+ var tip=document.createElement("div");tip.className="mtp";tip.setAttribute("role","tooltip");app.appendChild(tip);
+ function tshow(el){var i=+el.dataset.i,a=app.getBoundingClientRect(),r=el.getBoundingClientRect();tip.innerHTML='<b>'+MS[i][0]+' 포인트 · +'+MS[i][2]+'P</b>'+MSD[i];tip.classList.add("on");tip.dataset.i=i;
+  var w=tip.offsetWidth,cx=r.left-a.left+r.width/2,l=Math.min(Math.max(8,cx-w/2),a.width-w-8);tip.style.left=l+"px";tip.style.top=(r.top-a.top-tip.offsetHeight-10)+"px";tip.style.setProperty("--ax",(cx-l)+"px")}
+ function thide(){tip.classList.remove("on");tip.dataset.i=""}
+ app.querySelectorAll(".hpm").forEach(function(el){
+  el.onpointerenter=function(e){if(e.pointerType==="mouse")tshow(el)};el.onpointerleave=function(e){if(e.pointerType==="mouse")thide()};
+  el.onclick=function(e){e.stopPropagation();tshow(el)};
+  el.onkeydown=function(e){if(e.key==="Enter")el.onclick(e);if(e.key==="Escape")thide()}});
+ app.querySelector(".hpl").addEventListener("scroll",thide);document.querySelector(".sc").addEventListener("click",thide);
  var tb=app.querySelectorAll(".tab button");tb[0].onclick=community;tb[1].onclick=shop;tb[3].onclick=tabStamp;tb[4].onclick=profile;
  document.getElementById("hmn").onclick=drawer;document.getElementById("hbl").onclick=inbox;
  document.getElementById("hdt").onclick=function(){calendar()};
