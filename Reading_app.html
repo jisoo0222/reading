@@ -723,6 +723,12 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .shu{display:flex;align-items:center;justify-content:center;gap:6px;margin:22px auto 0;padding:10px 18px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);font:inherit;font-size:13px;font-weight:600;color:var(--ink);cursor:pointer}.shu .ic{width:16px;height:16px;transform:rotate(90deg)}
 @media (prefers-reduced-motion:reduce){.app.pf .sc{transition:none}}
 .app.pf .tab{z-index:5}
+.app.pf .sc{background:transparent}.app.pf .bn{background:transparent;padding:0}.pfb{background:var(--bg);margin:0 calc(var(--px,16px)*-1);padding:12px var(--px,16px) 0;min-height:calc(100% - 118px)}
+#shf{visibility:visible;padding:0 16px 90px;transition:none}#shf .sfw{margin-top:0;gap:22px}#shf .sfb{min-height:118px}
+.shb{position:absolute;top:12px;left:8px;z-index:2;background:var(--card);opacity:0;pointer-events:none;transition:opacity .3s}.app.pfo .shb{opacity:1;pointer-events:auto}
+.app.pfo .bn{pointer-events:none}.sfc{text-align:center;margin-top:18px}
+#shf{padding-top:14px}.app.pf .bn{height:146px;min-height:146px}.pfb{min-height:calc(100% - 146px)}.shb{left:auto;right:10px;top:14px}.shb .ic{transform:rotate(90deg)}
+.app.pf .bn{height:166px;min-height:166px}.pfb{min-height:calc(100% - 166px)}
 </style>
 </head>
 <body>
@@ -946,9 +952,9 @@ I.check="M5 12l5 5 9-10";
 var MYT=["#슬로우리더","#논리·분석","#재미형"],MYX=["#소설","#에세이","#새벽독서"],ME="",MEP="",SHB=[0,1,2,3,4,5,6],SHMAX=7;
 function myShelf(){if(BK!==DEF)useBk(DEF);var d=LB[DEF];return[{t:d[0],a:d[1],c:d[2],s:"읽는 중 · "+Math.round(pg*100/TOT)+"%",k:DEF}].concat(RDB.map(function(b,k){return{t:b[0],a:b[1],c:BC[k%3],s:"완독 "+b[3]}}))}
 function bkTile(b){return'<div class="bkm"><div class="c" style="background:'+b.c+'"></div><p>'+b.t+'</p><small>'+b.s+'</small></div>'}
-function shelfHTML(L){var H=[128,112,136,120,104,132,116,124,108,130],rows=[];for(var i=0;i<L.length;i+=6)rows.push(L.slice(i,i+6));while(rows.length<3)rows.push([]);
- return'<p class="spc">책 '+L.length+'권 · 책등을 누르면 정보를 볼 수 있어요</p><div class="sfw">'
-+rows.map(function(r,ri){return'<div class="sfr"><div class="sfb">'+r.map(function(b,j){var k=ri*6+j,lt=b.c==="#B8A07A";return'<button class="sfs" data-i="'+k+'" style="height:'+H[k%10]+'px;background:'+b.c+';color:'+(lt?"#2E2530":"#F8F0E0")+'" aria-label="'+b.t+' 정보 보기"><span>'+b.t+'</span></button>'}).join("")+'</div><i class="sfl"></i></div>'}).join("")+'</div>'}
+function shelfHTML(L){var H=[128,112,136,120,104,132,116,124,108,130],rows=[];for(var i=0;i<L.length;i+=5)rows.push(L.slice(i,i+5));while(rows.length<3)rows.push([]);
+ return'<div class="sfw">'
++rows.map(function(r,ri){return'<div class="sfr"><div class="sfb">'+r.map(function(b,j){var k=ri*5+j,lt=b.c==="#B8A07A";return'<button class="sfs" data-i="'+k+'" style="height:'+H[k%10]+'px;background:'+b.c+';color:'+(lt?"#2E2530":"#F8F0E0")+'" aria-label="'+b.t+' 정보 보기"><span>'+b.t+'</span></button>'}).join("")+'</div><i class="sfl"></i></div>'}).join("")+'</div><p class="spc sfc">책 '+L.length+'권 · 책등을 누르면 정보를 볼 수 있어요</p>'}
 function shelfBind(root,L){root.querySelectorAll(".sfs").forEach(function(btn){btn.onclick=function(){var b=L[+btn.dataset.i];var x=pop('<div class="bi"><div class="bc" style="background:'+b.c+'"></div><div><h3 style="margin:0">'+b.t+'</h3><p style="margin:6px 0 0">'+b.a+'</p><p style="margin:4px 0 0;font-size:13px">'+b.s+'</p></div></div><button class="btn ghost" id="sfx" style="width:100%;margin-top:16px">닫기</button>');document.getElementById("sfx").onclick=x}})}
 function shelfPg(){
  app.className="app";var L=myShelf();
@@ -966,22 +972,22 @@ function profile(){
  var hm=[["stamp","독서우표"],["chat","커뮤니티"],["basket","문구점"],["clock","타임머신"]];
  var hh=hm.map(function(h,i){return'<button class="hc" data-k="'+i+'"><span>'+ic(h[0])+'</span>'+h[1]+'</button>'}).join("");
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","프로필"]].map(function(t){return'<button'+(t[0]==="person"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="bn" id="bn" role="button" tabindex="0" aria-label="내 책장 크게 보기"><div class="sps" role="group" aria-label="내 책장">'+sp+'</div></div>'
- +'<section class="box pbx"><div class="pbt"><div class="av3" style="'+avS()+'">'+(MEP?'':esc(ME).charAt(0))+'</div><div class="pnm"><h2>'+esc(ME)+'</h2><button class="pme" id="pme">내 프로필'+ic("next")+'</button></div>'
+ app.innerHTML='<div class="bn" id="bn" role="button" tabindex="0" aria-label="내 책장 펼쳐 보기"></div>'
+ +'<div class="pfb"><section class="box pbx"><div class="pbt"><div class="av3" style="'+avS()+'">'+(MEP?'':esc(ME).charAt(0))+'</div><div class="pnm"><h2>'+esc(ME)+'</h2><button class="pme" id="pme">내 프로필'+ic("next")+'</button></div>'
  +'<button class="pfr" id="pfr" aria-label="내 친구 '+fc+'명 보기"><small>내 친구</small><b>'+fc+'</b></button></div>'
  +'<div class="chips">'+chips(MYT)+'<button class="chip" id="tg" aria-label="태그 3개 더 보기">+3</button></div>'
  +'<button class="rp" id="rp">AI 독서 성향 분석'+ic("next")+'</button></section>'
  +'<section class="fs"><div class="fsh"><h3>내 책장</h3><button class="pme" id="shd">자세히 보기'+ic("next")+'</button></div><div class="box"><div class="shs">'+bk+'</div></div></section>'
- +'<section class="fs"><div class="fsh"><h3>보관함</h3></div><div class="box"><div class="mh">'+hh+'</div></div></section>'
+ +'<section class="fs"><div class="fsh"><h3>보관함</h3></div><div class="box"><div class="mh">'+hh+'</div></div></section></div>'
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.firstChild.style.paddingBottom="76px";
 
  app.querySelectorAll(".hc").forEach(function(b){b.onclick=function(){var k=+b.dataset.k;if(k===0){SPF=1;stampPg()}else vault(k,profile)}});
- app.classList.add("pf");var SL=myShelf(),shf=document.createElement("div");shf.id="shf";shf.setAttribute("aria-hidden","true");
- shf.innerHTML='<div class="sh2"><span class="sp3"></span><h2>'+esc(ME||"나")+'의 책장</h2><span class="sp3"></span></div>'+shelfHTML(SL)+'<button class="shu" id="shu">'+ic("back")+'내 프로필로 돌아가기</button>';app.insertBefore(shf,app.firstChild);shelfBind(shf,SL);
- function sOpen(){app.classList.add("pfo");shf.setAttribute("aria-hidden","false");document.querySelector(".sc").setAttribute("aria-hidden","true")}
- function sClose(){app.classList.remove("pfo");shf.setAttribute("aria-hidden","true");document.querySelector(".sc").removeAttribute("aria-hidden")}
- var bnn=document.getElementById("bn");bnn.onclick=sOpen;bnn.onkeydown=function(e){if(e.key==="Enter")sOpen()};document.getElementById("shu").onclick=sClose;
+ app.classList.add("pf");var SL=SHB.map(function(k){var b=RDB[k];return{t:b[0],a:b[1],c:BC[k%3],s:"완독 "+b[3]}}),shf=document.createElement("div");shf.id="shf";
+ shf.innerHTML='<button class="ib shb" id="shb" aria-label="내 프로필로 돌아가기">'+ic("back")+'</button>'+shelfHTML(SL)+'<button class="shu" id="shu">'+ic("back")+'내 프로필로 돌아가기</button>';app.insertBefore(shf,app.firstChild);shelfBind(shf,SL);
+ function sOpen(){app.classList.add("pfo");document.querySelector(".sc").setAttribute("aria-hidden","true")}
+ function sClose(){app.classList.remove("pfo");document.querySelector(".sc").removeAttribute("aria-hidden")}
+ var bnn=document.getElementById("bn");bnn.onclick=sOpen;bnn.onkeydown=function(e){if(e.key==="Enter")sOpen()};document.getElementById("shu").onclick=sClose;document.getElementById("shb").onclick=sClose;
  document.getElementById("rp").onclick=typePg;
  document.getElementById("pme").onclick=meEdit;
  document.getElementById("shd").onclick=shelfPg;
