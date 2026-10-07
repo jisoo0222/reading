@@ -682,7 +682,7 @@ button.cd{font:inherit;color:var(--ink);background:none;cursor:pointer;padding:0
 .app.rd .bkw{margin-bottom:0}
 .app.rd.cpo #hn{display:none}
 #pov{position:absolute;inset:0;z-index:6;background:rgba(36,29,38,.35);opacity:0;pointer-events:none;transition:opacity .25s}#pov.on{opacity:1;pointer-events:auto}
-#cp{position:absolute;left:0;right:0;bottom:0;z-index:8;background:var(--card);border-top:1.5px solid var(--line);border-radius:22px 22px 0 0;padding:0 16px 14px;transform:translateY(105%);transition:transform .28s ease}#cp.on{transform:none}
+.app.rd #cp{position:absolute;left:0;right:0;bottom:0;z-index:8;background:var(--card);border-top:1.5px solid var(--line);border-radius:22px 22px 0 0;padding:0 16px 14px;transform:translateY(105%);transition:transform .28s ease}.app.rd #cp.on{transform:none}
 .cph{display:grid;place-items:center;height:26px;cursor:grab;touch-action:none}.cph i,#grb i{display:block;width:40px;height:5px;border-radius:3px;background:var(--line)}
 .cpg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px 4px;padding-bottom:12px;border-bottom:1.5px solid var(--line)}
 .cpt{display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 0;background:none;border:0;font:inherit;font-size:12px;color:var(--ink);cursor:pointer}.cpt span{width:44px;height:44px;border-radius:14px;background:var(--bg);color:var(--pri);display:grid;place-items:center}.cpt span .ic{width:21px;height:21px}
@@ -1182,10 +1182,10 @@ function album(h){
 }
 function stampPg(){
  app.className="app";
- app.innerHTML='<div class="sh2"><button class="ib" id="tb0" aria-label="뒤로">'+ic("back")+'</button><h2>나만의 독서 우표</h2><span class="sp3"></span></div><div class="slg" id="sl"></div><div class="sbt"><div><button class="btn" id="mk">제작하기</button><small>P.1000</small></div><div><button class="btn" id="gf">선물하기</button><small>P.1000</small></div></div><p style="text-align:center;color:var(--sub);font-size:12px;margin:0 0 8px">독서 우표 8장을 채우면 제작하거나 선물할 수 있어요.</p><div class="cpn"><button class="hdl" id="hd" aria-expanded="true" aria-label="독서 우표 목록 접기/펼치기">'+ic("next")+'</button><b>나의 모은 독서 우표</b><div class="cps" id="cp"></div></div>'+tabNav("stamp");
+ app.innerHTML='<div class="sh2"><button class="ib" id="tb0" aria-label="뒤로">'+ic("back")+'</button><h2>나만의 독서 우표</h2><span class="sp3"></span></div><div class="slg" id="sl"></div><div class="sbt"><div><button class="btn" id="mk">제작하기</button><small>P.1000</small></div><div><button class="btn" id="gf">선물하기</button><small>P.1000</small></div></div><p style="text-align:center;color:var(--sub);font-size:12px;margin:0 0 8px">독서 우표 8장을 채우면 제작하거나 선물할 수 있어요.</p><div class="cpn"><button class="hdl" id="hd" aria-expanded="true" aria-label="독서 우표 목록 접기/펼치기">'+ic("next")+'</button><b>나의 모은 독서 우표</b><div class="cps" id="stcp"></div></div>'+tabNav("stamp");
  function draw(){
   document.getElementById("sl").innerHTML=[0,1,2,3,4,5,6,7].map(function(k){var b=SLOT[k];return'<button class="slot" data-k="'+k+'" aria-label="'+(b===undefined?"빈 칸":RDB[b][0]+" 우표")+'">'+(b===undefined?"":stamp(BC[b%3],1))+'</button>'}).join("");
-  document.getElementById("cp").innerHTML=RDB.map(function(b,k){return'<button class="cst" data-k="'+k+'"'+(SLOT.indexOf(k)>-1?' style="opacity:.4"':'')+'>'+stamp(BC[k%3],1)+'<small>'+b[0]+'</small></button>'}).join("");
+  document.getElementById("stcp").innerHTML=RDB.map(function(b,k){return'<button class="cst" data-k="'+k+'"'+(SLOT.indexOf(k)>-1?' style="opacity:.4"':'')+'>'+stamp(BC[k%3],1)+'<small>'+b[0]+'</small></button>'}).join("");
   var f=SLOT.length<8;document.getElementById("mk").disabled=f;document.getElementById("gf").disabled=f}
  draw();
  function conf(t,m,dn){var x=pop('<h3>'+t+'</h3><p>'+m+'</p><div class="dbt"><button class="btn ghost" id="n">취소</button><button class="btn" id="y">확인</button></div>');
@@ -1193,10 +1193,10 @@ function stampPg(){
  document.getElementById("sl").onclick=function(e){var b=e.target.closest(".slot");if(!b)return;var k=+b.dataset.k,v=SLOT[k];if(v===undefined)return;
   var x=pop('<h3>'+RDB[v][0]+'</h3><p>'+RDB[v][1]+' · '+RDB[v][2]+'쪽 · 완독 '+RDB[v][3]+'</p><div class="dbt"><button class="btn ghost" id="n">닫기</button><button class="btn" id="y">칸에서 빼기</button></div>');
   document.getElementById("n").onclick=x;document.getElementById("y").onclick=function(){SLOT.splice(k,1);x();draw()}};
- document.getElementById("cp").onclick=function(e){var b=e.target.closest(".cst");if(!b)return;var k=+b.dataset.k;if(SLOT.indexOf(k)<0&&SLOT.length<8){SLOT.push(k);draw()}};
+ document.getElementById("stcp").onclick=function(e){var b=e.target.closest(".cst");if(!b)return;var k=+b.dataset.k;if(SLOT.indexOf(k)<0&&SLOT.length<8){SLOT.push(k);draw()}};
  document.getElementById("mk").onclick=function(){conf("독서 우표 제작","1000P로 나만의 독서 우표를 제작할까요?","제작을 신청했어요")};
  document.getElementById("gf").onclick=function(){conf("독서 우표 선물","1000P로 독서 우표를 선물할까요?","선물을 신청했어요")};
- document.getElementById("hd").onclick=function(){var h=document.getElementById("hd"),o=h.getAttribute("aria-expanded")==="true";h.setAttribute("aria-expanded",!o);document.getElementById("cp").style.display=o?"none":"grid"};
+ document.getElementById("hd").onclick=function(){var h=document.getElementById("hd"),o=h.getAttribute("aria-expanded")==="true";h.setAttribute("aria-expanded",!o);document.getElementById("stcp").style.display=o?"none":"grid"};
  document.getElementById("tb0").onclick=function(){(SPF?profile:home)()};app.firstChild.style.paddingBottom="76px";tabBind();
 }
 var THM=["청춘","가을","사랑","여행"],TI=0,LB=[["별 헤는 밤","윤동주","#7A637A",38],["느리게 읽는 밤","이서윤","#788165",21],["지금, 여기, 행복","김수현","#B8A07A",57],["나의 작은 서재","박하은","#6B5E6B",12]],
