@@ -771,6 +771,7 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .tis span{display:block;white-space:nowrap}
 .box.hpx{padding:10px 0}.hpx .hps{padding:0 14px}.hpl{padding:0 14px;scroll-padding:0 14px}
 .box.ppx{padding:12px 0}.ppx .pps{padding:0 12px;scroll-padding:0 12px}
+.tlx .pps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 12px}
 </style>
 </head>
 <body>
@@ -1259,8 +1260,8 @@ function library(){
  app.querySelectorAll(".sv").forEach(function(b){b.onclick=function(){catPg(+b.dataset.k)}});
  var tb=app.querySelectorAll(".tab button");tb[0].onclick=community;tb[1].onclick=shop;tb[2].onclick=home;tb[4].onclick=profile;
 }
-function autoSl(el){if(!el)return;var t;function go(){if(!el.isConnected)return;var c=el.children[0];if(!c)return;var st=3*c.offsetWidth+3*(parseFloat(getComputedStyle(el).columnGap)||0),mx=el.scrollWidth-el.clientWidth;el.scrollTo({left:el.scrollLeft>=mx-2?0:Math.min(mx,(Math.round(el.scrollLeft/(st/3))+3)*st/3),behavior:"smooth"});t=setTimeout(go,20000)}
- el.addEventListener("pointerdown",function(){clearTimeout(t);t=setTimeout(go,20000)});el.addEventListener("touchstart",function(){clearTimeout(t);t=setTimeout(go,20000)},{passive:true});t=setTimeout(go,20000)}
+function autoSl(el){if(!el)return;var t;function go(){if(!el.isConnected)return;var c=el.children[0];if(!c)return;var st=3*c.offsetWidth+3*(parseFloat(getComputedStyle(el).columnGap)||0),mx=el.scrollWidth-el.clientWidth;el.scrollTo({left:el.scrollLeft>=mx-2?0:Math.min(mx,(Math.round(el.scrollLeft/(st/3))+3)*st/3),behavior:"smooth"});t=setTimeout(go,10000)}
+ el.addEventListener("pointerdown",function(){clearTimeout(t);t=setTimeout(go,10000)});el.addEventListener("touchstart",function(){clearTimeout(t);t=setTimeout(go,10000)},{passive:true});t=setTimeout(go,10000)}
 KD.push(["","논문"]);
 LB.push(["백치 아다다","계용묵","#7A637A",14],["동백꽃","김유정","#788165",23],["날개","김해경(이상)","#B8A07A",9],["홍경래전","이명선","#7A637A",6],["죄와 벌","이무영","#788165",11],["메밀꽃 필 무렵","이효석","#B8A07A",31],["운수 좋은 날","현진건","#7A637A",18]);
 var CB={"8":[4,5,6,7,8,9,10]};
@@ -1272,7 +1273,7 @@ function catPg(k){
  document.getElementById("cg0").onclick=library;lbWire(function(){catPg(k)})}
 function themeList(){
  app.className="app";
- app.innerHTML='<div class="sh2"><button class="ib" id="tl0" aria-label="뒤로">'+ic("back")+'</button><h2>테마 독서 · '+THM[TI]+'</h2><span class="sp3"></span></div><div class="gd g2">'+[0,1,2,3].map(function(k){return bcard(k,k+1)}).join("")+'</div>';
+ app.innerHTML='<div class="sh2"><button class="ib" id="tl0" aria-label="뒤로">'+ic("back")+'</button><h2>테마 독서 · '+THM[TI]+'</h2><span class="sp3"></span></div><div class="box tlx"><div class="pps">'+[0,1,2,3].map(function(k){return bcard(k,k+1)}).join("")+'</div></div>';
  document.getElementById("tl0").onclick=library;lbWire(themeList);
 }
 function bookDt(k,back){
@@ -1811,6 +1812,17 @@ function reader(k){
 }
 useBk(DEF);
 info();
+
+(function(){var D=null;
+function hs(t){for(var e=t;e&&e.nodeType===1&&e!==document.body;e=e.parentElement){var o=getComputedStyle(e).overflowX;if((o==="auto"||o==="scroll")&&e.scrollWidth>e.clientWidth+1)return e}return null}
+document.addEventListener("mousedown",function(ev){if(ev.button!==0||ev.target.closest("input,textarea,select,[contenteditable]"))return;var el=hs(ev.target);if(!el)return;
+ D={el:el,x:ev.clientX,l:el.scrollLeft,m:0,sn:el.style.scrollSnapType,sb:el.style.scrollBehavior}},true);
+document.addEventListener("mousemove",function(ev){if(!D)return;var dx=ev.clientX-D.x;if(!D.m&&Math.abs(dx)>5){D.m=1;D.el.style.scrollSnapType="none";D.el.style.scrollBehavior="auto";D.el.style.cursor="grabbing"}
+ if(D.m){ev.preventDefault();D.el.scrollLeft=D.l-dx}},true);
+document.addEventListener("mouseup",function(){if(!D)return;var d=D;D=null;if(!d.m)return;d.el.style.cursor="";
+ var l=d.el.scrollLeft;d.el.style.scrollSnapType=d.sn;d.el.scrollLeft=l;d.el.style.scrollBehavior=d.sb;
+ function k(e){e.stopPropagation();e.preventDefault();document.removeEventListener("click",k,true)}document.addEventListener("click",k,true);setTimeout(function(){document.removeEventListener("click",k,true)},0)},true);
+})();
 </script>
 </body>
 </html>
