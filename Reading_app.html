@@ -768,6 +768,7 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .opt>span:first-child{padding-right:12px}
 .gin{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink)}.gin input{width:76px;font:inherit;font-size:16px;font-weight:700;text-align:center;padding:8px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--pri)}.gin input:focus{outline:none;border-color:var(--pri)}
 #dlg .gin input{display:inline-block;width:76px;margin:0;padding:8px}
+.tis span{display:block;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -884,7 +885,7 @@ function goal(){
 function tiIntro(){
  app.className="app";
  app.innerHTML=ost(3)+'<div class="tin"><svg viewBox="0 0 200 160" width="168" height="134" aria-hidden="true"><circle cx="100" cy="82" r="70" fill="var(--card)"/><path d="M100 58c-14-7-32-7-44-2v54c12-5 30-5 44 2z" fill="var(--bg)" stroke="var(--pri)" stroke-width="3" stroke-linejoin="round"/><path d="M100 58c14-7 32-7 44-2v54c-12-5-30-5-44 2z" fill="var(--bg)" stroke="var(--pri)" stroke-width="3" stroke-linejoin="round"/><path d="M100 58v54" stroke="var(--pri)" stroke-width="3"/><circle cx="148" cy="40" r="15" fill="none" stroke="var(--sec)" stroke-width="3"/><path d="M144 40a4 4 0 1 1 6 3.5c-1.5 1-2 1.8-2 3.5M148 51v.5" fill="none" stroke="var(--sec)" stroke-width="3" stroke-linecap="round"/></svg>'
- +'<p class="tik">거의 다 왔어요</p><h1>이제 나의 독서TI를<br>알아볼게요!</h1><p class="hint">질문 4개에 답하면 나에게 맞는 책과 독서 메이트를 찾아 드려요. 1분이면 충분해요.</p></div>'
+ +'<p class="tik">거의 다 왔어요</p><h1>나의 독서TI 검사!</h1><p class="hint tis"><span>질문 4개로 나의 독서 성향을 알아봐요.</span><span>이걸 통해 책과 독서메이트를 추천해줘요!</span><span>1분이면 충분해요.</span></p></div>'
  +'<div class="foot"><button class="btn ghost" id="tib">이전</button><button class="btn" id="tig">시작하기</button></div>';
  document.getElementById("tib").onclick=goal;document.getElementById("tig").onclick=function(){step=0;ask()}}
 var RK={4:"FEDJ",5:"SEWJ",6:"FADJ",7:"FADI",8:"FADI",9:"FEDJ",10:"SAWJ"},RKEY="",PICKED=0;
