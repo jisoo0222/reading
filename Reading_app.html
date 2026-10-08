@@ -769,6 +769,8 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .gin{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink)}.gin input{width:76px;font:inherit;font-size:16px;font-weight:700;text-align:center;padding:8px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--pri)}.gin input:focus{outline:none;border-color:var(--pri)}
 #dlg .gin input{display:inline-block;width:76px;margin:0;padding:8px}
 .tis span{display:block;white-space:nowrap}
+.box.hpx{padding:10px 0}.hpx .hps{padding:0 14px}.hpl{padding:0 14px;scroll-padding:0 14px}
+.box.ppx{padding:12px 0}.ppx .pps{padding:0 12px;scroll-padding:0 12px}
 </style>
 </head>
 <body>
@@ -1245,7 +1247,7 @@ function library(){
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","프로필"]].map(function(t){return'<button'+(t[0]==="book"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
  app.innerHTML='<div class="sh2"><span class="sp3"></span><h2>도서관</h2><span class="sp3"></span></div>'
  +'<div class="thb"><button class="ib" id="tp" aria-label="이전 테마">'+ic("back")+'</button><button class="thn" id="tn"><small>이달 테마</small><b id="tt">'+THM[TI]+'</b></button><button class="ib" id="tx" aria-label="다음 테마">'+ic("next")+'</button></div>'
- +'<section class="fs"><div class="fsh"><h3>인기 급상승 오늘의 책</h3><button class="pme" id="rkm">자세히 보기'+ic("next")+'</button></div><div class="box"><div class="shs pps">'+popRank().slice(0,10).map(function(k,i){return bcard(k,i+1)}).join("")+'</div></div></section>'
+ +'<section class="fs"><div class="fsh"><h3>인기 급상승 오늘의 책</h3><button class="pme" id="rkm">자세히 보기'+ic("next")+'</button></div><div class="box ppx"><div class="shs pps">'+popRank().slice(0,10).map(function(k,i){return bcard(k,i+1)}).join("")+'</div></div></section>'
  +'<div class="sh" style="margin-top:20px"><h3>카테고리</h3></div>'+shelf()+'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.firstChild.style.paddingBottom="76px";
  function th(d){TI=(TI+d+THM.length)%THM.length;document.getElementById("tt").textContent=THM[TI]}
@@ -1253,9 +1255,12 @@ function library(){
  document.getElementById("tn").onclick=themeList;document.getElementById("rkm").onclick=rankPg;
 
  lbWire(library);
+ autoSl(app.querySelector(".pps"));
  app.querySelectorAll(".sv").forEach(function(b){b.onclick=function(){catPg(+b.dataset.k)}});
  var tb=app.querySelectorAll(".tab button");tb[0].onclick=community;tb[1].onclick=shop;tb[2].onclick=home;tb[4].onclick=profile;
 }
+function autoSl(el){if(!el)return;var t;function go(){if(!el.isConnected)return;var c=el.children[0];if(!c)return;var st=3*c.offsetWidth+3*(parseFloat(getComputedStyle(el).columnGap)||0),mx=el.scrollWidth-el.clientWidth;el.scrollTo({left:el.scrollLeft>=mx-2?0:Math.min(mx,(Math.round(el.scrollLeft/(st/3))+3)*st/3),behavior:"smooth"});t=setTimeout(go,20000)}
+ el.addEventListener("pointerdown",function(){clearTimeout(t);t=setTimeout(go,20000)});el.addEventListener("touchstart",function(){clearTimeout(t);t=setTimeout(go,20000)},{passive:true});t=setTimeout(go,20000)}
 KD.push(["","논문"]);
 LB.push(["백치 아다다","계용묵","#7A637A",14],["동백꽃","김유정","#788165",23],["날개","김해경(이상)","#B8A07A",9],["홍경래전","이명선","#7A637A",6],["죄와 벌","이무영","#788165",11],["메밀꽃 필 무렵","이효석","#B8A07A",31],["운수 좋은 날","현진건","#7A637A",18]);
 var CB={"8":[4,5,6,7,8,9,10]};
