@@ -885,7 +885,7 @@ function goal(){
 function tiIntro(){
  app.className="app";
  app.innerHTML=ost(3)+'<div class="tin"><svg viewBox="0 0 200 160" width="168" height="134" aria-hidden="true"><circle cx="100" cy="82" r="70" fill="var(--card)"/><path d="M100 58c-14-7-32-7-44-2v54c12-5 30-5 44 2z" fill="var(--bg)" stroke="var(--pri)" stroke-width="3" stroke-linejoin="round"/><path d="M100 58c14-7 32-7 44-2v54c-12-5-30-5-44 2z" fill="var(--bg)" stroke="var(--pri)" stroke-width="3" stroke-linejoin="round"/><path d="M100 58v54" stroke="var(--pri)" stroke-width="3"/><circle cx="148" cy="40" r="15" fill="none" stroke="var(--sec)" stroke-width="3"/><path d="M144 40a4 4 0 1 1 6 3.5c-1.5 1-2 1.8-2 3.5M148 51v.5" fill="none" stroke="var(--sec)" stroke-width="3" stroke-linecap="round"/></svg>'
- +'<h1>독서 TI 검사</h1><p class="hint tis"><span>질문 4개로 나의 독서 성향을 알아봐요.</span><span>이걸 통해 책과 독서메이트를 추천해줘요.</span></p></div>'
+ +'<h1>독서TI 검사</h1><p class="hint tis"><span>질문 4개로 나의 독서 성향을 알아봐요.</span><span>이걸 통해 책과 독서메이트를 추천해줘요.</span></p></div>'
  +'<div class="foot"><button class="btn ghost" id="tib">이전</button><button class="btn" id="tig">시작하기</button></div>';
  document.getElementById("tib").onclick=goal;document.getElementById("tig").onclick=function(){step=0;ask()}}
 var RK={4:"FEDJ",5:"SEWJ",6:"FADJ",7:"FADI",8:"FADI",9:"FEDJ",10:"SAWJ"},RKEY="",PICKED=0;
