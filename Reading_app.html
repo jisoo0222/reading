@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AI 독서 프로필 생성</title>
+<title>독독</title>
 <style>
 :root{--bg:#F3EDE7;--card:#F6F1EC;--ink:#4F3A4F;--sub:#8A6A8A;--pri:#6A4F6A;--onpri:#F6F1EC;--sec:#9B7F9B;--line:#E6DCD2;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -778,6 +778,11 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .sv{white-space:nowrap;overflow:hidden;gap:4px;font-size:12px;letter-spacing:-.04em}.sv b{font-size:11px}
 .bcv:not([style*="6A4F6A"]),.bcv:not([style*="6A4F6A"]) *,.hcv:not([style*="6A4F6A"]),.hcv:not([style*="6A4F6A"]) *,.cv:not([style*="6A4F6A"]),.cv:not([style*="6A4F6A"]) *,.bk .c:not([style*="6A4F6A"]),.bk .c:not([style*="6A4F6A"]) *,.bc:not([style*="6A4F6A"]),.bc:not([style*="6A4F6A"]) *,.bc2:not([style*="6A4F6A"]),.bc2:not([style*="6A4F6A"]) *,.ctv:not([style*="6A4F6A"]),.ctv:not([style*="6A4F6A"]) *{color:#4F3A4F!important}
 .bk .num.dk{color:#4F3A4F!important}
+.app.spl{background:var(--bg)}.spw{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:100%;padding-bottom:40px;cursor:pointer}
+.spw h1{font-size:44px;font-weight:800;color:var(--pri);margin:14px 0 0;letter-spacing:.02em}.dke{margin:2px 0 0;font-size:13px;font-weight:700;letter-spacing:.42em;color:var(--sec);text-indent:.42em}.dks{margin:18px 0 0;font-size:14px;color:var(--sub)}
+.spw .kn{opacity:0;animation:knk 1s ease-out infinite}.spw .k2{animation-delay:.25s}@keyframes knk{0%{opacity:0}20%{opacity:1}60%{opacity:0}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.spw .kn{animation:none;opacity:1}}
+.spw{position:absolute;inset:0;z-index:5;background:var(--bg);padding:0 0 40px}.spw .dke{margin:2px 0 0!important}.spw .dks{margin:18px 0 0!important}.spw svg{margin:0}
 </style>
 </head>
 <body>
@@ -986,7 +991,7 @@ function lk(v){return'<svg class="ic l'+v+'" viewBox="0 0 24 24" aria-hidden="tr
 function friend(i,pf){
  var m=M[i],n=m[0],P=PF[n],fr0=!!FR[n];
  function sec(t,v,h){var ok=v===2||(v===1&&FR[n]);return'<section class="fs"><div class="fsh"><h3>'+t+'</h3><span class="lkt l'+v+'">'+lk(v)+VL[v]+'</span></div>'+(ok?h:'<div class="lkb">'+lk(v)+'<span>'+(v===0?"비공개 설정 중입니다.":"친구에게만 공개돼요.")+'</span></div>')+'</section>'}
- var shelf=P.b.length?'<div class="box fsp"><div class="sps" role="list" aria-label="'+n+' 님의 책장">'+P.b.map(function(t,k){return'<span role="listitem" style="height:'+[92,110,100,106,96,104][k%6]+'px;background:'+BC[k%3]+';color:'+(k%3===2?"#4F3A4F":"#F6F1EC")+'">'+t+'</span>'}).join("")+'</div></div>':'<p class="sm" style="color:var(--sub)">아직 책장에 책이 없어요.</p>';
+ var shelf=P.b.length?'<div class="box fsp"><div class="dks" role="list" aria-label="'+n+' 님의 책장">'+P.b.map(function(t,k){return'<span role="listitem" style="height:'+[92,110,100,106,96,104][k%6]+'px;background:'+BC[k%3]+';color:'+(k%3===2?"#4F3A4F":"#F6F1EC")+'">'+t+'</span>'}).join("")+'</div></div>':'<p class="sm" style="color:var(--sub)">아직 책장에 책이 없어요.</p>';
  var posts=P.p.length?P.p.map(function(t){return'<div class="pst">'+t+'</div>'}).join(""):'<p class="sm" style="color:var(--sub)">아직 쓴 글이 없어요.</p>';
  var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.className="fdl";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label",n+" 프로필");
  function x(){o.remove();d.remove();if(!!FR[n]!==fr0){if(pf===1)profile();else if(pf===2)community()}}
@@ -1818,7 +1823,10 @@ function reader(k){
   else if(b.dataset.s==="sh")quoteShare(txt,BT,BK>=0?LB[BK][1]:"")};
 }
 useBk(DEF);
-info();
+function splash(){app.className="app spl";
+ app.innerHTML='<div class="spw" role="img" aria-label="독독, 책으로 서로의 마음을 두드리다"><svg viewBox="0 0 120 100" width="120" height="100" aria-hidden="true"><path d="M60 30c-12-7-28-7-40-2v50c12-5 28-5 40 2z" fill="var(--card)" stroke="var(--pri)" stroke-width="3.5" stroke-linejoin="round"/><path d="M60 30c12-7 28-7 40-2v50c-12-5-28-5-40 2z" fill="var(--card)" stroke="var(--pri)" stroke-width="3.5" stroke-linejoin="round"/><path d="M60 30v50" stroke="var(--pri)" stroke-width="3.5"/><path class="kn k1" d="M88 14l6-8M98 20l9-4" stroke="var(--sec)" stroke-width="3.5" stroke-linecap="round"/><path class="kn k2" d="M32 14l-6-8M22 20l-9-4" stroke="var(--sec)" stroke-width="3.5" stroke-linecap="round"/></svg><h1>독독</h1><p class="dke">DOKDOK</p><p class="dks">책으로 서로의 마음을 두드리다</p></div>';
+ var t=setTimeout(go,2200);function go(){clearTimeout(t);app.onclick=null;info()}app.onclick=go}
+splash();
 
 (function(){var D=null;
 function hs(t){for(var e=t;e&&e.nodeType===1&&e!==document.body;e=e.parentElement){var o=getComputedStyle(e).overflowX;if((o==="auto"||o==="scroll")&&e.scrollWidth>e.clientWidth+1)return e}return null}
