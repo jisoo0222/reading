@@ -772,6 +772,10 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .box.hpx{padding:10px 0}.hpx .hps{padding:0 14px}.hpl{padding:0 14px;scroll-padding:0 14px}
 .box.ppx{padding:12px 0}.ppx .pps{padding:0 12px;scroll-padding:0 12px}
 .tlx .pps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 12px}
+.sfs.drg{outline:3px solid var(--ink);outline-offset:2px;box-shadow:0 0 0 7px color-mix(in srgb,var(--bg) 70%,transparent),0 14px 26px rgba(36,29,38,.38);filter:brightness(1.08);opacity:1}
+.sfs.tgt{outline:3px dashed var(--ink);outline-offset:3px}
+.sfb.tgt{outline:3px dashed var(--ink);outline-offset:4px;background:color-mix(in srgb,var(--bg) 35%,transparent)}
+.sv{white-space:nowrap;overflow:hidden;gap:4px;font-size:12px;letter-spacing:-.04em}.sv b{font-size:11px}
 </style>
 </head>
 <body>
@@ -1039,7 +1043,7 @@ function profile(){
    +'<div class="box sfx"><span>총 <b>'+SHB.length+'권</b>의 책</span><button class="fadd" id="sfe">수정하기</button></div>';
   document.getElementById("sfe").onclick=shelfEdit;
   shf.querySelectorAll(".sfs").forEach(function(el){var tm=null,x0,y0,drag=false,moved=false;
-   el.addEventListener("pointerdown",function(e){x0=e.clientX;y0=e.clientY;moved=false;drag=false;tm=setTimeout(function(){drag=true;window.SDRAG=1;el.classList.add("drg");try{el.setPointerCapture(e.pointerId)}catch(_){}if(navigator.vibrate)navigator.vibrate(15)},420)});
+   el.addEventListener("pointerdown",function(e){x0=e.clientX;y0=e.clientY;moved=false;drag=false;tm=setTimeout(function(){drag=true;window.SDRAG=1;el.classList.add("drg");try{el.setPointerCapture(e.pointerId)}catch(_){}if(navigator.vibrate)navigator.vibrate(15)},200)});
    function tgt(e){var best=null,bd=1e9;shf.querySelectorAll(".sfs").forEach(function(o){if(o===el)return;var r=o.getBoundingClientRect(),d=Math.hypot(r.left+r.width/2-e.clientX,r.top+r.height/2-e.clientY);if(d<bd){bd=d;best=o}});if(best&&bd<70)return{el:best};
     var row=null;shf.querySelectorAll(".sfr").forEach(function(o){var r=o.getBoundingClientRect();if(e.clientY>=r.top-10&&e.clientY<=r.bottom+10)row=o});return row?{row:row}:null}
    el.addEventListener("pointermove",function(e){if(!drag){if(Math.abs(e.clientX-x0)+Math.abs(e.clientY-y0)>8){clearTimeout(tm);moved=true}return}e.preventDefault();el.style.transform="translate("+(e.clientX-x0)+"px,"+(e.clientY-y0)+"px) rotate(-3deg)";
@@ -1061,7 +1065,7 @@ function profile(){
     function up(e){if(!on)return;on=false;var L=[].slice.call(d.querySelectorAll("#sel2 .ser")),from=L.indexOf(it),to=from;L.forEach(function(o,i){var q=o.getBoundingClientRect();if(o!==it&&e.clientY>q.top&&e.clientY<q.bottom)to=i});var k=v.splice(from,1)[0];v.splice(to,0,k);r()}
     h.addEventListener("pointerup",up);h.addEventListener("pointercancel",up)})}
   r();
-  document.getElementById("sx2").onclick=x;document.getElementById("ss2").onclick=function(){SHR=[[],[],[]];v.forEach(function(k,i){SHR[Math.min(2,Math.floor(i/6))].push(k)});x();rShelf()}}
+  document.getElementById("sx2").onclick=x;document.getElementById("ss2").onclick=function(){var O=SHR,N=[[],[],[]],rw={};O.forEach(function(r,ri){r.forEach(function(k){rw[k]=ri})});v.forEach(function(k){if(k in rw)N[rw[k]].push(k)});v.forEach(function(k){if(k in rw)return;for(var i=0;i<3;i++)if(N[i].length<6){N[i].push(k);return}});SHR=N;x();rShelf()}}
  rShelf();
  function sOpen(){var sc0=document.querySelector(".sc");app.style.setProperty("--pfy",(app.clientHeight-106-document.getElementById("bn").offsetHeight+sc0.scrollTop)+"px");app.classList.add("pfo");document.querySelector(".sc").setAttribute("aria-hidden","true")}
  function sClose(){app.classList.remove("pfo");document.querySelector(".sc").removeAttribute("aria-hidden")}
@@ -1516,7 +1520,8 @@ COLD=["#B8993A","#C4756B","#788165","#7A637A","#5F8696"],
 BP=["polygon(0 0,100% 0,100% 100%,50% 75%,0 100%)","polygon(0 0,100% 0,78% 50%,100% 100%,0 100%)","polygon(0 0,100% 0,100% 100%,0 100%)","polygon(0 0,100% 0,100% 68%,50% 100%,0 68%)"],
 CMTS=[{b:"지금, 여기, 행복",t:"밤에 읽으니 문장이 더 천천히 스며들어요.",d:"2026.08.12"},{b:"느리게 읽는 밤",t:"책장 정리하는 장면에서 괜히 내 방이 떠올랐다.",d:"2026.07.03"},{b:"별 헤는 밤",t:"떠나는 이유가 꼭 거창하지 않아도 된다는 말이 좋았다.",d:"2026.06.14"}];
 function todayStr(){var d=new Date(),z=function(n){return(n<10?"0":"")+n};return d.getFullYear()+"."+z(d.getMonth()+1)+"."+z(d.getDate())}
-function thm(){var K=["--bg","--card","--ink","--sub","--line","--pri","--onpri","--sec"];K.forEach(function(k){app.style.removeProperty(k)});var v=THV[THI];if(v&&!app.classList.contains("dk")&&!app.classList.contains("night"))K.forEach(function(k,i){app.style.setProperty(k,v[i])})}
+function thm(){var K=["--bg","--card","--ink","--sub","--line","--pri","--onpri","--sec"];K.forEach(function(k){app.style.removeProperty(k)});var v=THV[THI];if(v&&!app.classList.contains("dk")&&!app.classList.contains("night"))K.forEach(function(k,i){app.style.setProperty(k,v[i])});app.style.removeProperty("--wall");app.style.removeProperty("--shelf");if(v&&!app.classList.contains("dk")&&!app.classList.contains("night")){app.style.setProperty("--wall",cmix(v[0],v[4],.6));app.style.setProperty("--shelf",cmix(v[4],v[2],.25))}}
+function cmix(a,b,t){function h(c,i){return parseInt(c.substr(1+i*2,2),16)}var o="#";for(var i=0;i<3;i++){var n=Math.round(h(a,i)*(1-t)+h(b,i)*t);o+=(n<16?"0":"")+n.toString(16)}return o}
 function gback(){var b=app.querySelector('[aria-label="뒤로"]');if(b){b.click();return}
  if(document.getElementById("nx")){if(step>0){step--;ask()}return}
  if(app.querySelector(".ring")||document.getElementById("re")){step=Q.length-1;ask();return}
