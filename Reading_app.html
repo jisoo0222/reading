@@ -953,7 +953,7 @@ function typeSVG(key,t,names){
  var bk=LB[recList(key)[0].k][0],mk=key.charAt(0)+key.charAt(1)+(key.charAt(2)==="D"?"W":"D")+key.charAt(3),mt=[mk,T[mk][0]],e=function(x){return esc(String(x))},F='font-family="Pretendard,Apple SD Gothic Neo,Noto Sans KR,sans-serif"';
  var d=tWrap(t[1],16).map(function(l,i){return'<text x="360" y="'+(586+i*38)+'" text-anchor="middle" font-size="27" fill="#4F3A4F" '+F+'>'+e(l)+'</text>'}).join(""),dy=586+tWrap(t[1],16).length*38;
  var cw=150,cx=360-(names.length*cw+(names.length-1)*12)/2;
- var ch=names.map(function(n,i){var x=cx+i*(cw+12);return'<rect x="'+x+'" y="'+(dy+6)+'" width="'+cw+'" height="46" rx="23" fill="none" stroke="#B2A5D6" stroke-width="2"/><text x="'+(x+cw/2)+'" y="'+(dy+37)+'" text-anchor="middle" font-size="24" font-weight="600" fill="#B2A5D6" '+F+'>'+e(n)+'</text>'}).join("");
+ var ch=names.map(function(n,i){var x=cx+i*(cw+12);return'<rect x="'+x+'" y="'+(dy+6)+'" width="'+cw+'" height="46" rx="23" fill="none" stroke="#6A4F6A" stroke-width="2"/><text x="'+(x+cw/2)+'" y="'+(dy+37)+'" text-anchor="middle" font-size="24" font-weight="600" fill="#6A4F6A" '+F+'>'+e(n)+'</text>'}).join("");
  var by=dy+96;
  return'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 '+(by+210)+'" width="720" height="'+(by+210)+'" role="img" aria-label="나의 독서 유형 카드: '+e(t[0])+'">'
  +'<rect x="2" y="2" width="716" height="'+(by+206)+'" rx="40" fill="#F6F1EC" stroke="#E6DCD2" stroke-width="3"/>'
