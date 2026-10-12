@@ -785,6 +785,14 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .spw{position:absolute;inset:0;z-index:5;background:var(--bg);padding:0 0 40px}.spw .dke{margin:2px 0 0!important}.spw .dks{margin:18px 0 0!important}.spw svg{margin:0}
 .opts .opt span:first-child{word-break:keep-all}
 .foot.rsf{position:sticky;bottom:-24px;z-index:20;background:var(--bg);margin:20px calc(-1 * var(--px,16px)) 0;padding:12px var(--px,16px) 24px;margin-bottom:-24px;border-top:1px solid var(--line);box-shadow:0 4px 0 var(--bg)}
+.gcu .gsl{flex-direction:column;align-items:stretch;gap:12px}.gcu .gsl .gin input{flex:none}
+.grw{display:flex;flex-direction:column;gap:2px}.grl{display:flex;justify-content:space-between}.grl small{font-size:11px;color:var(--sub)}
+#grg{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;margin:0;cursor:pointer;touch-action:pan-y}
+#grg::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:var(--line)}
+#grg::-moz-range-track{height:6px;border-radius:3px;background:var(--line)}
+#grg::-moz-range-progress{height:6px;border-radius:3px;background:var(--pri)}
+#grg::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;margin-top:-9px;border-radius:50%;background:var(--pri);border:3px solid var(--card);box-shadow:0 1px 4px rgba(79,58,79,.3)}
+#grg::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--pri);border:3px solid var(--card)}
 </style>
 </head>
 <body>
@@ -887,14 +895,16 @@ function goal(){
  app.className="app";
  var cu=GOAL!==null&&GO.every(function(g){return g[0]!==GOAL}),cv=cu?GOAL:20;
  var o=GO.map(function(g){return'<button class="opt" data-v="'+g[0]+'" aria-pressed="'+(!cu&&GOAL===g[0])+'"><span>하루 '+g[0]+'쪽<small>'+gTip(g[0])+'</small></span><span class="mk"></span></button>'}).join("")
-  +'<div class="opt gcu'+(cu?" on":"")+'" role="button" tabindex="0" data-c="1" aria-pressed="'+cu+'"><span style="flex:1">직접 설정<span class="gsl"><span class="gin">하루 <input type="number" id="gsr" inputmode="numeric" min="1" max="300" value="'+(cu?cv:"")+'" placeholder="0" aria-label="하루 목표 쪽수"> 쪽</span></span></span><span class="mk"></span></div>';
+  +'<div class="opt gcu'+(cu?" on":"")+'" role="button" tabindex="0" data-c="1" aria-pressed="'+cu+'"><span style="flex:1">직접 설정<span class="gsl"><span class="gin">하루 <input type="number" id="gsr" inputmode="numeric" min="1" max="300" value="'+(cu?cv:"")+'" placeholder="0" aria-label="하루 목표 쪽수"> 쪽</span><span class="grw"><input type="range" id="grg" min="1" max="100" step="1" value="'+Math.min(100,cu?cv:20)+'" aria-label="하루 목표 쪽수 조절"><span class="grl"><small>1쪽</small><small>100쪽</small></span></span></span></span><span class="mk"></span></div>';
  app.innerHTML=ost(2)+'<h1>하루에 얼마나<br>읽어 볼까요?</h1><p class="hint">하루에 읽을 페이지 수를 정해 주세요. 목표를 채우면 알려 드려요.</p>'
  +'<div class="opts">'+o+'</div><div class="foot"><button class="btn ghost" id="bk1">이전</button><button class="btn" id="nx2">다음</button></div>';
  var nx=document.getElementById("nx2"),cb=app.querySelector(".gcu"),sr=document.getElementById("gsr");nx.disabled=GOAL===null;
  function pick(b){app.querySelectorAll(".opt").forEach(function(c){c.setAttribute("aria-pressed",c===b)});cb.classList.toggle("on",b===cb);nx.disabled=false}
  app.querySelectorAll(".opt[data-v]").forEach(function(b){b.onclick=function(){GOAL=+b.dataset.v;pick(b)}});
- function cset(){var v=Math.round(+sr.value);if(v>=1&&v<=300){GOAL=v;nx.disabled=false}else{nx.disabled=true}}
- cb.onclick=function(e){if(e.target===sr)return;pick(cb);sr.focus();cset()};cb.onkeydown=function(e){if(e.key==="Enter"&&e.target!==sr)cb.onclick(e)};
+ var rg=document.getElementById("grg");
+ function cset(){var v=Math.round(+sr.value);if(v>=1&&v<=300){GOAL=v;nx.disabled=false;rg.value=Math.min(100,v)}else{nx.disabled=true}}
+ rg.oninput=function(){sr.value=rg.value;if(!cb.classList.contains("on"))pick(cb);cset()};rg.onclick=function(e){e.stopPropagation()};
+ cb.onclick=function(e){if(e.target===sr||e.target===rg)return;if(!sr.value)sr.value=rg.value;pick(cb);cset()};cb.onkeydown=function(e){if(e.key==="Enter"&&e.target!==sr)cb.onclick(e)};
  sr.onfocus=function(){if(!cb.classList.contains("on")){pick(cb)}cset()};sr.oninput=cset;
  document.getElementById("bk1").onclick=info;
  nx.onclick=tiIntro}
