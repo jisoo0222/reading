@@ -865,6 +865,11 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 #ivl .lgh{margin:14px 0 4px}.ive{font-size:13px;color:var(--sub);margin:4px 2px;word-break:keep-all}
 .ivr{cursor:default}.ivb{flex:none;font:inherit;font-size:13px;font-weight:600;padding:7px 14px;border-radius:999px;border:1.5px solid var(--pri);background:var(--pri);color:var(--onpri);cursor:pointer}.ivb.on{background:none;color:var(--pri)}
 .bshv:not([style*="6A4F6A"]) b{color:#4F3A4F}
+.mts{display:flex;flex-direction:row-reverse;justify-content:flex-start;overflow-x:auto;padding:6px 4px 12px;scrollbar-width:none}.mts::-webkit-scrollbar{display:none}
+.mtc{flex:none;width:100px;margin:0!important;flex-direction:column;justify-content:flex-start;gap:4px!important;padding:14px 6px 12px!important;border:1.5px solid var(--line)!important;border-radius:16px;background:var(--card)!important;box-shadow:-4px 4px 10px rgba(79,58,79,.12);text-align:center!important;position:relative}
+.mtc+.mtc{margin-right:-14px!important}.mtc .mav{width:48px;height:48px;font-size:18px;margin:0 auto 4px}.mtc b{font-size:14px}.mtc small{font-size:12px;color:var(--pri);font-weight:600}
+.mtc em{position:absolute;top:6px;right:6px;font-style:normal;font-size:9px;font-weight:700;padding:1px 6px;border-radius:999px;background:var(--bg);color:var(--sec);border:1px solid var(--line)}
+.mtc.wt{border-style:dashed!important;background:var(--bg)!important}.mtc.wt .mav{opacity:.55}.mtc.wt small{color:var(--sub)}
 </style>
 </head>
 <body>
@@ -1073,8 +1078,8 @@ function mIdx(n){for(var i=0;i<M.length;i++)if(M[i][0]===n)return i;return -1}
 function matePop(bt){
  var iv=INV[bt]||{},L=Object.keys(iv);
  var row=function(n,c,sub,tag){return'<button class="mtr2" data-n="'+esc(n)+'"><span class="mav" style="background:'+c+'">'+esc(n).charAt(0)+'</span><span class="mtt"><b>'+esc(n)+(tag?'<em>'+tag+'</em>':'')+'</b><small>'+sub+'</small></span>'+(mIdx(n)>-1?ic("next"):'')+'</button>'};
- var x=pop('<h3>같이 읽는 메이트 '+MP.length+'</h3><div class="mtl">'+MP.map(function(m){return row(m[0],m[2],mpg(m)+"쪽 읽는 중",FR[m[0]]?"친구":"")}).join("")+'</div>'
-  +(L.length?'<h4 class="lgh">초대를 보냈어요</h4><div class="mtl">'+L.map(function(n){var c=iv[n];return row(n,c,"수락을 기다리는 중",FR[n]?"친구":"")}).join("")+'</div>':'')
+ var card=function(n,c,sub,cl){return'<button class="mtc mtr2'+(cl||"")+'" data-n="'+esc(n)+'"><span class="mav" style="background:'+c+'">'+esc(n).charAt(0)+'</span><b>'+esc(n)+'</b><small>'+sub+'</small>'+(FR[n]?'<em>친구</em>':'')+'</button>'};
+ var x=pop('<h3>같이 읽는 메이트 '+MP.length+'</h3><div class="mts">'+MP.map(function(m){return card(m[0],m[2],mpg(m)+"쪽 읽는 중")}).concat(L.map(function(n){return card(n,iv[n],"초대 중"," wt")})).join("")+'</div>'
   +'<button class="btn" id="mti" style="width:100%;margin-top:14px">'+ic("plus")+' 같이 읽을 사람 초대하기</button><button class="btn ghost" id="mtx" style="width:100%;margin-top:8px">닫기</button>');
  document.getElementById("mtx").onclick=x;
  document.getElementById("mti").onclick=function(){x();invitePop(bt)};
