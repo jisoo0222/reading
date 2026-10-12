@@ -870,6 +870,11 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .mtc+.mtc{margin-right:-14px!important}.mtc .mav{width:48px;height:48px;font-size:18px;margin:0 auto 4px}.mtc b{font-size:14px}.mtc small{font-size:12px;color:var(--pri);font-weight:600}
 .mtc em{position:absolute;top:6px;right:6px;font-style:normal;font-size:9px;font-weight:700;padding:1px 6px;border-radius:999px;background:var(--bg);color:var(--sec);border:1px solid var(--line)}
 .mtc.wt{border-style:dashed!important;background:var(--bg)!important}.mtc.wt .mav{opacity:.55}.mtc.wt small{color:var(--sub)}
+.mts{flex-direction:row!important;overflow:visible!important;padding:6px 0 12px!important}
+.mtc{flex:0 0 calc((100% + 24px) / 4)!important;width:auto!important;box-shadow:-3px 3px 8px rgba(79,58,79,.14)!important;padding:12px 4px 10px!important}
+.mtc+.mtc{margin-right:0!important;margin-left:-8px!important}.mtc .mav{width:42px;height:42px;font-size:16px}.mtc b{font-size:13px}.mtc small{font-size:11px;letter-spacing:-.02em;white-space:nowrap}
+.mtad{border-style:dashed!important;background:var(--bg)!important;cursor:pointer;color:var(--pri)}.mtad .mav{background:none;border:1.5px dashed var(--pri);color:var(--pri)}.mtad .mav .ic{width:20px;height:20px}.mtad small{color:var(--sub)!important;font-weight:500!important}
+.ivf{font-size:12px;color:var(--sec);margin:10px 2px 0;word-break:keep-all}.ivb:disabled{opacity:.35;cursor:not-allowed}
 </style>
 </head>
 <body>
@@ -1079,22 +1084,24 @@ function matePop(bt){
  var iv=INV[bt]||{},L=Object.keys(iv);
  var row=function(n,c,sub,tag){return'<button class="mtr2" data-n="'+esc(n)+'"><span class="mav" style="background:'+c+'">'+esc(n).charAt(0)+'</span><span class="mtt"><b>'+esc(n)+(tag?'<em>'+tag+'</em>':'')+'</b><small>'+sub+'</small></span>'+(mIdx(n)>-1?ic("next"):'')+'</button>'};
  var card=function(n,c,sub,cl){return'<button class="mtc mtr2'+(cl||"")+'" data-n="'+esc(n)+'"><span class="mav" style="background:'+c+'">'+esc(n).charAt(0)+'</span><b>'+esc(n)+'</b><small>'+sub+'</small>'+(FR[n]?'<em>친구</em>':'')+'</button>'};
- var x=pop('<h3>같이 읽는 메이트 '+MP.length+'</h3><div class="mts">'+MP.map(function(m){return card(m[0],m[2],mpg(m)+"쪽 읽는 중")}).concat(L.map(function(n){return card(n,iv[n],"초대 중"," wt")})).join("")+'</div>'
-  +'<button class="btn" id="mti" style="width:100%;margin-top:14px">'+ic("plus")+' 같이 읽을 사람 초대하기</button><button class="btn ghost" id="mtx" style="width:100%;margin-top:8px">닫기</button>');
+ var C=MP.map(function(m){return card(m[0],m[2],mpg(m)+"쪽 읽는 중")}).concat(L.map(function(n){return card(n,iv[n],"초대 중"," wt")}));if(C.length<4)C.push('<button class="mtc mtad" id="mti"><span class="mav">'+ic("plus")+'</span><b>초대하기</b><small>'+(4-C.length)+'자리 남음</small></button>');
+ var x=pop('<h3>같이 읽는 메이트 '+MP.length+'</h3><p class="sm" style="font-size:12px;margin:-2px 0 10px">최대 4명까지 함께 읽을 수 있어요.</p><div class="mts">'+C.join("")+'</div>'
+  +'<button class="btn ghost" id="mtx" style="width:100%;margin-top:10px">닫기</button>');
  document.getElementById("mtx").onclick=x;
- document.getElementById("mti").onclick=function(){x();invitePop(bt)};
+ var mi=document.getElementById("mti");if(mi)mi.onclick=function(){x();invitePop(bt)};
  document.querySelectorAll("#dlg .mtr2").forEach(function(b){b.onclick=function(){var i=mIdx(b.dataset.n);if(i<0)return;x();friend(i,4)}})}
 function invitePop(bt){
  var q="",iv=INV[bt]=INV[bt]||{},on=MP.map(function(m){return m[0]});
  var x=pop('<h3>같이 읽을 사람 초대</h3><p class="sm" style="font-size:13px;margin:-2px 0 10px">『'+esc(bt)+'』를 함께 읽을 사람을 초대해요.</p><input id="ivq" type="search" placeholder="닉네임으로 찾기" aria-label="닉네임으로 찾기" autocomplete="off"><div id="ivl"></div><button class="btn ghost" id="ivx" style="width:100%;margin-top:12px">완료</button>'),d=document.getElementById("dlg");
- function row(n,c,sub){var s=!!iv[n];return'<div class="ivr"><span class="mav" style="background:'+c+'">'+esc(n).charAt(0)+'</span><span class="mtt"><b>'+esc(n)+'</b><small>'+sub+'</small></span><button class="ivb'+(s?" on":"")+'" data-n="'+esc(n)+'" data-c="'+c+'" aria-pressed="'+s+'">'+(s?"초대함":"초대")+'</button></div>'}
+ function full(){return MP.length+Object.keys(iv).length>=4}
+ function row(n,c,sub){var s=!!iv[n],dis=!s&&full();return'<div class="ivr"><span class="mav" style="background:'+c+'">'+esc(n).charAt(0)+'</span><span class="mtt"><b>'+esc(n)+'</b><small>'+sub+'</small></span><button class="ivb'+(s?" on":"")+'" data-n="'+esc(n)+'" data-c="'+c+'" aria-pressed="'+s+'"'+(dis?" disabled":"")+'>'+(s?"초대함":"초대")+'</button></div>'}
  function r(){var k=q.trim(),f=function(n){return !k||n.indexOf(k)>-1};
   var F=M.filter(function(m){return FR[m[0]]&&on.indexOf(m[0])<0&&f(m[0])}),N=M.filter(function(m){return !FR[m[0]]&&on.indexOf(m[0])<0&&f(m[0])}).map(function(m){return[m[0],m[2],"취향 일치도 "+m[1]+"%"]}).concat(OTR.filter(function(o){return f(o[0])}).map(function(o){return[o[0],o[1],"독독 독자"]}));
-  document.getElementById("ivl").innerHTML='<h4 class="lgh">친구 '+F.length+'</h4>'+(F.length?'<div class="ivs">'+F.map(function(m){return row(m[0],m[2],"친구 · 취향 일치도 "+m[1]+"%")}).join("")+'</div>':'<p class="ive">'+(k?"검색된 친구가 없어요.":"초대할 수 있는 친구가 없어요. 프로필에서 친구를 추가해 보세요.")+'</p>')
-   +'<h4 class="lgh">친구가 아닌 독자</h4>'+(N.length?'<div class="ivs">'+N.map(function(o){return row(o[0],o[1],o[2])}).join("")+'</div>':'<p class="ive">‘'+esc(k)+'’ 님을 찾을 수 없어요.</p>')}
+  document.getElementById("ivl").innerHTML=(full()?'<p class="ivf">4명이 모두 찼어요. 초대를 취소하면 다른 사람을 초대할 수 있어요.</p>':'<p class="ivf">'+(4-MP.length-Object.keys(iv).length)+'명 더 초대할 수 있어요.</p>')+'<h4 class="lgh">친구 '+F.length+'</h4>'+(F.length?'<div class="ivs">'+F.map(function(m){return row(m[0],m[2],"친구 · 취향 일치도 "+m[1]+"%")}).join("")+'</div>':'<p class="ive">'+(k?"검색된 친구가 없어요.":"초대할 수 있는 친구가 없어요. 프로필에서 친구를 추가해 보세요.")+'</p>')
+   +'<h4 class="lgh">추천 메이트</h4>'+(N.length?'<div class="ivs">'+N.map(function(o){return row(o[0],o[1],o[2])}).join("")+'</div>':'<p class="ive">‘'+esc(k)+'’ 님을 찾을 수 없어요.</p>')}
  r();
  var qi=document.getElementById("ivq");qi.oninput=function(){q=qi.value;r()};
- document.getElementById("ivl").onclick=function(e){var b=e.target.closest(".ivb");if(!b)return;var n=b.dataset.n;if(iv[n])delete iv[n];else iv[n]=b.dataset.c;r()};
+ document.getElementById("ivl").onclick=function(e){var b=e.target.closest(".ivb");if(!b)return;var n=b.dataset.n;if(iv[n])delete iv[n];else if(!full())iv[n]=b.dataset.c;r()};
  document.getElementById("ivx").onclick=function(){x();matePop(bt)}}
 function recList(key){return Object.keys(RK).map(function(k){var m=[];for(var i=0;i<4;i++)if(RK[k].charAt(i)===key.charAt(i))m.push(1);return{k:+k,m:m}}).sort(function(a,b){return b.m.length-a.m.length||a.k-b.k}).slice(0,3)}
 function recBox(key){
