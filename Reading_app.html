@@ -881,6 +881,9 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 #mfi.mfi2{display:block!important;position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0);pointer-events:none}
 .mphl{display:inline-flex;align-items:center;justify-content:center;cursor:pointer}.mep{position:relative}
 .mrc{display:flex!important;flex-direction:row!important;align-items:center;gap:12px;justify-content:space-between;margin-top:14px}.mrc>div{display:flex;flex-direction:column;gap:2px}.mrc b{font-size:14px;color:var(--ink)}.mrc small{font-size:12px;color:var(--sub);line-height:1.45;word-break:keep-all;font-weight:400}.mrc .swc{flex:none}
+.sfs[style*="#6A4F6A"],.sv[style*="#6A4F6A"],.ser i[style*="#6A4F6A"]{background:var(--bk0,#6A4F6A)!important;color:var(--bk0t,#F6F1EC)!important}
+.sfs[style*="#B2A5D6"],.sv[style*="#B2A5D6"],.ser i[style*="#B2A5D6"]{background:var(--bk1,#B2A5D6)!important;color:var(--bk1t,#4F3A4F)!important}
+.sfs[style*="#C9B3C9"],.sv[style*="#C9B3C9"],.ser i[style*="#C9B3C9"]{background:var(--bk2,#C9B3C9)!important;color:var(--bk2t,#4F3A4F)!important}
 </style>
 </head>
 <body>
@@ -1771,7 +1774,8 @@ COLD=["#B8993A","#C4756B","#B2A5D6","#6A4F6A","#5F8696"],
 BP=["polygon(0 0,100% 0,100% 100%,50% 75%,0 100%)","polygon(0 0,100% 0,78% 50%,100% 100%,0 100%)","polygon(0 0,100% 0,100% 100%,0 100%)","polygon(0 0,100% 0,100% 68%,50% 100%,0 68%)"],
 CMTS=[{b:"지금, 여기, 행복",t:"밤에 읽으니 문장이 더 천천히 스며들어요.",d:"2026.08.12"},{b:"느리게 읽는 밤",t:"책장 정리하는 장면에서 괜히 내 방이 떠올랐다.",d:"2026.07.03"},{b:"별 헤는 밤",t:"떠나는 이유가 꼭 거창하지 않아도 된다는 말이 좋았다.",d:"2026.06.14"}];
 function todayStr(){var d=new Date(),z=function(n){return(n<10?"0":"")+n};return d.getFullYear()+"."+z(d.getMonth()+1)+"."+z(d.getDate())}
-function thm(){var K=["--bg","--card","--ink","--sub","--line","--pri","--onpri","--sec"];K.forEach(function(k){app.style.removeProperty(k)});var v=THV[THI];if(v&&!app.classList.contains("dk")&&!app.classList.contains("night"))K.forEach(function(k,i){app.style.setProperty(k,v[i])});app.style.removeProperty("--wall");app.style.removeProperty("--shelf");if(v&&!app.classList.contains("dk")&&!app.classList.contains("night")){app.style.setProperty("--wall",cmix(v[0],v[4],.6));app.style.setProperty("--shelf",cmix(v[4],v[2],.25))}}
+function thm(){var K=["--bg","--card","--ink","--sub","--line","--pri","--onpri","--sec"];K.forEach(function(k){app.style.removeProperty(k)});var v=THV[THI];if(v&&!app.classList.contains("dk")&&!app.classList.contains("night"))K.forEach(function(k,i){app.style.setProperty(k,v[i])});["--wall","--shelf","--bk0","--bk1","--bk2","--bk0t","--bk1t","--bk2t"].forEach(function(k){app.style.removeProperty(k)});if(v&&!app.classList.contains("dk")&&!app.classList.contains("night")){app.style.setProperty("--wall",cmix(v[0],v[4],.6));app.style.setProperty("--shelf",cmix(v[4],v[2],.25));var dk=lum(v[2])<.5?v[2]:v[0],bk=[v[5],cmix(v[5],v[7],.6),cmix(v[5],v[0],.5)];bk.forEach(function(c,i){app.style.setProperty("--bk"+i,c);app.style.setProperty("--bk"+i+"t",lum(c)>.55?dk:"#F6F1EC")})}}
+function lum(c){var r=parseInt(c.substr(1,2),16),g=parseInt(c.substr(3,2),16),b=parseInt(c.substr(5,2),16);return(.299*r+.587*g+.114*b)/255}
 function cmix(a,b,t){function h(c,i){return parseInt(c.substr(1+i*2,2),16)}var o="#";for(var i=0;i<3;i++){var n=Math.round(h(a,i)*(1-t)+h(b,i)*t);o+=(n<16?"0":"")+n.toString(16)}return o}
 function gback(){var b=app.querySelector('[aria-label="뒤로"]');if(b){b.click();return}
  if(document.getElementById("nx")){if(step>0){step--;ask()}return}
