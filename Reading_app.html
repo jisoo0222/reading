@@ -891,6 +891,7 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 #ptt{position:fixed;left:50%;bottom:96px;transform:translate(-50%,10px);max-width:320px;width:max-content;padding:10px 16px;border-radius:12px;background:var(--ink);color:var(--bg);font-size:13px;line-height:1.45;text-align:center;word-break:keep-all;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:999}#ptt.on{opacity:1;transform:translate(-50%,0)}
 .hpx .hph{padding:0 14px}.hpx .hpg2{margin:8px 14px}.hpx .hpr{margin:0 14px 12px}
 .hpx .hpl{padding-top:8px}.hpb{top:-6px!important;right:0!important}
+.gfto{margin:12px 0 4px;display:flex;flex-direction:column;gap:8px}.gfto b{font-size:13px}.gfto small{font-size:12px;color:var(--sub);word-break:keep-all;line-height:1.5}
 </style>
 </head>
 <body>
@@ -1125,7 +1126,7 @@ function doneBk(k){var b=LB[k];if(!b)return;bonusDone(k);
 /* ===== 포인트 규칙 설정 (여기 숫자만 바꾸면 조건·보상이 바뀌어요) ===== */
 var PCFG={
  DAILY_CAP:300,
- ACT:{da:{p:100,books:2,minPages:2},talk:{p:50},jeong:{p:100},gift:{p:50},cmt:{p:20},share:{p:30},att:{p:10}},
+ ACT:{da:{p:50,books:2,minPages:2},talk:{p:50},jeong:{p:100,minGoal:10},gift:{p:50},cmt:{p:20},share:{p:20},att:{p:10}},
  BONUS:{done:{p:200,perDay:1},streak:{p:100,days:3}}
 };
 var MK=["da","talk","streak","share","done","jeong","att","gift","cmt"];
@@ -1338,7 +1339,7 @@ BS=["clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%)","clip-path:polygon(
 I.clock="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2";I.stack="M4 8l8-4 8 4-8 4zM4 12l8 4 8-4M4 16l8 4 8-4";I.notes="M6 3h12v18H6zM9 8h6M9 12h6M9 16h4";I.cal="M5 6h14v14H5zM5 10h14M9 4v4M15 4v4M9 15l2 2 4-4";I.gift="M4 11h16v9H4zM3 8h18v3H3zM12 8v12M12 8c-3 0-4-3-2-3.5 2-.5 2 3.5 2 3.5zM12 8c3 0 4-3 2-3.5-2-.5-2 3.5-2 3.5z";
 I.talk="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01";
 I.grid="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z";I.memo="M5 4h14v11l-5 5H5zM14 20v-5h5";I.theme="M5 5h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z";I.eraser="M4 16l9-9 6 6-6 6H8zM9 11l6 6M12 19h8";I.trash="M5 7h14M10 4h4M7 7l1 13h8l1-13";
-var MSD=["하루에 책 2권을 각각 2쪽 이상 읽으면 달성돼요. 책을 펼치기만 해서는 달성되지 않아요.","커뮤니티 글에 댓글을 남기면 달성돼요. 하루 한 번만 지급돼요.","3일 연속으로 책을 읽으면 달성돼요. 일일 상한과 별도로 주는 보너스예요.","문장 카드나 책을 공유하면 달성돼요. 하루 한 번만 지급돼요.","책 한 권을 끝까지 읽으면 달성돼요. 일일 상한과 별도로 주는 보너스예요(같은 책 1회, 하루 1권).","오늘의 목표 쪽수를 채우면 달성돼요.","오늘 앱에 들어오면 달성돼요.","친구에게 독서 우표를 선물하면 달성돼요. 하루 한 번만 지급돼요.","책 속 문장에 코멘트를 남기면 달성돼요. 하루 한 번만 지급돼요."],MS=[["다독","book",100,0],["토론 참여","chat",50,0],["지속 독서","clock",100,1],["공유","talk",30,1],["완독","stack",200,0],["정독","notes",100,0],["출석","cal",10,1],["선물","gift",50,0],["코멘트","cmt",20,0]];
+var MSD=["하루에 책 2권을 각각 2쪽 이상 읽으면 달성돼요. 책을 펼치기만 해서는 달성되지 않아요.","커뮤니티 글에 댓글을 남기면 달성돼요. 하루 한 번만 지급돼요.","3일 연속으로 책을 읽으면 달성돼요. 일일 상한과 별도로 주는 보너스예요.","문장 카드나 책을 공유하면 달성돼요. 하루 한 번만 지급돼요.","책 한 권을 끝까지 읽으면 달성돼요. 일일 상한과 별도로 주는 보너스예요(같은 책 1회, 하루 1권).","오늘 설정한 목표 쪽수에 도달하면 달성돼요. 목표가 10쪽보다 적으면 10쪽을 읽어야 해요.","오늘 앱에 들어오면 달성돼요.","친구에게 독서 우표를 선물하면 달성돼요. 나에게 보내면 지급되지 않고, 하루 한 번만 지급돼요.","책 속 문장에 코멘트를 남기면 달성돼요. 하루 한 번만 지급돼요."],MS=[["다독","book",50,0],["토론 참여","chat",50,0],["지속 독서","clock",100,0],["공유","talk",20,0],["완독","stack",200,0],["정독","notes",100,0],["출석","cal",10,0],["선물","gift",50,0],["코멘트","cmt",20,0]];
 function pc(c,i){var t=ITM[c][i];return c==="TH"?t[4]:t[2]}
 function pv(c,i,col){var t=ITM[c][i];
  if(c==="PN")return'<div class="pvn" style="background:'+col+';'+PS[t[1]]+'"></div>';
@@ -1444,8 +1445,9 @@ function stampPg(){
   document.getElementById("stcp").innerHTML=RDB.map(function(b,k){return'<button class="cst" data-k="'+k+'"'+(SLOT.indexOf(k)>-1?' style="opacity:.4"':'')+'>'+stamp(BC[k%3],1,k)+'<small>'+b[0]+'</small></button>'}).join("");
   var f=SLOT.length<8;document.getElementById("mk").disabled=f;document.getElementById("gf").disabled=f}
  draw();
- function conf(t,m,dn,mkf){var x=pop('<h3>'+t+'</h3><p>'+m+'</p><div class="dbt"><button class="btn ghost" id="n">취소</button><button class="btn" id="y">확인</button></div>');
-  document.getElementById("n").onclick=x;document.getElementById("y").onclick=function(){var d=document.getElementById("dlg");if(PT<1000){d.querySelector("p").textContent="포인트가 부족해요. (내 포인트 "+PT+"P)";return}PT-=1000;if(!mkf)award("gift");if(mkf){var dt=new Date();ORD.unshift({id:Date.now(),b:SLOT.slice(),st:0,tm:dt.getFullYear()+"."+("0"+(dt.getMonth()+1)).slice(-2)+"."+("0"+dt.getDate()).slice(-2)})}d.innerHTML='<h3>'+dn+'</h3><p>1000P를 사용했어요. 남은 포인트 '+PT+'P'+(mkf?' 진행 상황은 내 프로필에서 확인할 수 있어요.':'')+'</p><button class="btn" id="o" style="width:100%;margin-top:14px">확인</button>';document.getElementById("o").onclick=x}}
+ function conf(t,m,dn,mkf){var to=null,FL=M.filter(function(f){return FR[f[0]]}).map(function(f){return f[0]});var x=pop('<h3>'+t+'</h3><p>'+m+'</p>'+(mkf?'':'<div class="gfto"><b>받는 사람</b><div class="och" id="gto">'+FL.concat(['나에게']).map(function(n){return'<button data-n="'+esc(n)+'" aria-pressed="false">'+esc(n)+'</button>'}).join('')+'</div><small>'+(FL.length?'':'아직 친구가 없어요. 친구를 추가하면 친구에게 보낼 수 있어요. ')+'나에게 보내면 선물 포인트가 지급되지 않아요.</small></div>')+'<div class="dbt"><button class="btn ghost" id="n">취소</button><button class="btn" id="y">확인</button></div>');
+  var gt=document.getElementById("gto");if(gt)gt.onclick=function(e){var b=e.target.closest("button");if(!b)return;to=b.dataset.n;gt.querySelectorAll("button").forEach(function(c){c.setAttribute("aria-pressed",c===b)})};
+  document.getElementById("n").onclick=x;document.getElementById("y").onclick=function(){var d=document.getElementById("dlg");if(!mkf&&!to){d.querySelector("p").textContent="받는 사람을 골라 주세요.";return}if(PT<1000){d.querySelector("p").textContent="포인트가 부족해요. (내 포인트 "+PT+"P)";return}PT-=1000;if(!mkf&&to!=="나에게")award("gift");if(!mkf)dn=(to==="나에게"?"나에게":to+" 님에게")+" "+dn;if(mkf){var dt=new Date();ORD.unshift({id:Date.now(),b:SLOT.slice(),st:0,tm:dt.getFullYear()+"."+("0"+(dt.getMonth()+1)).slice(-2)+"."+("0"+dt.getDate()).slice(-2)})}d.innerHTML='<h3>'+dn+'</h3><p>1000P를 사용했어요. 남은 포인트 '+PT+'P'+(mkf?' 진행 상황은 내 프로필에서 확인할 수 있어요.':'')+'</p><button class="btn" id="o" style="width:100%;margin-top:14px">확인</button>';document.getElementById("o").onclick=x}}
  document.getElementById("sl").onclick=function(e){var b=e.target.closest(".slot");if(!b)return;var k=+b.dataset.k,v=SLOT[k];if(v===undefined)return;
   var x=pop('<h3>'+RDB[v][0]+'</h3><p>'+RDB[v][1]+' · '+RDB[v][2]+'쪽 · 완독 '+RDB[v][3]+'</p><div class="dbt"><button class="btn ghost" id="n">닫기</button><button class="btn" id="y">칸에서 빼기</button></div>');
   document.getElementById("n").onclick=x;document.getElementById("y").onclick=function(){SLOT.splice(k,1);x();draw()}};
@@ -1936,7 +1938,7 @@ function reader(k){
  function hSub(a,s,e){var o=[];a.forEach(function(r){if(r[1]<=s||r[0]>=e)o.push(r);else{if(r[0]<s)o.push([r[0],s]);if(r[1]>e)o.push([e,r[1]])}});return o}
  function hOff(el,node,off){var q=document.createRange();q.setStart(el,0);q.setEnd(node,off);return q.toString().length}
  function rt(){nmx();lf.innerHTML=pH(cur);gck()}
- function gck(){if(BK>=0&&pg>=TOT&&!DNB[BK]){DNB[BK]=1;var dk=BK;setTimeout(function(){doneBk(dk)},450)}var t=todayStr();if(RDY.d!==t)RDY={d:t,p:{},ok:0};RDY.p[BK+"-"+pg]=1;readToday();if(GOAL&&!RDY.ok&&Object.keys(RDY.p).length>=GOAL){RDY.ok=1;award("jeong");var g=document.getElementById("gl");g.textContent="오늘의 목표 "+GOAL+"쪽을 달성했어요!";g.classList.add("on");setTimeout(function(){g.classList.remove("on")},3200)}}
+ function gck(){if(BK>=0&&pg>=TOT&&!DNB[BK]){DNB[BK]=1;var dk=BK;setTimeout(function(){doneBk(dk)},450)}var t=todayStr();if(RDY.d!==t)RDY={d:t,p:{},ok:0};RDY.p[BK+"-"+pg]=1;readToday();if(Object.keys(RDY.p).length>=Math.max(GOAL||0,PCFG.ACT.jeong.minGoal))award("jeong");if(GOAL&&!RDY.ok&&Object.keys(RDY.p).length>=GOAL){RDY.ok=1;var g=document.getElementById("gl");g.textContent="오늘의 목표 "+GOAL+"쪽을 달성했어요!";g.classList.add("on");setTimeout(function(){g.classList.remove("on")},3200)}}
  function pr(){var pc=function(v){return v*100/TOT};document.getElementById("pg").innerHTML='<div class="pr"><span>'+pg+'p</span><div class="tk"><i style="width:'+pc(pg)+'%"></i><b class="th" style="left:'+pc(pg)+'%" role="slider" aria-label="진행도" aria-valuemin="1" aria-valuemax="'+TOT+'" aria-valuenow="'+pg+'"></b>'+BM.map(function(b){return'<button class="rb" data-p="'+b+'" style="left:'+pc(b)+'%" aria-label="'+b+'쪽 책갈피"></button>'}).join("")+MP.map(function(m){return'<em class="md" style="left:'+pc(mpg(m))+'%;background:'+m[2]+'" aria-label="'+m[0]+' '+mpg(m)+'쪽">'+m[0].charAt(0)+'</em>'}).join("")+'</div><span>'+TOT+'p</span></div><p class="pc">'+Math.round(pc(pg))+'% · '+MP.map(function(m){return m[0]+" "+mpg(m)+"p"}).join(" · ")+'</p>'}
  function fl(n){if(busy||n<0||n>=PGN.length||n===cur)return;busy=true;eid=null;var d=n>cur?1:-1;pg=PGN[n];
   function fin(){cur=n;lf.style.transition="none";lf.style.transform="none";lf.classList.remove("flip");rt();un.innerHTML="";busy=false;pr()}
