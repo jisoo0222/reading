@@ -884,6 +884,13 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .sfs[style*="#6A4F6A"],.sv[style*="#6A4F6A"],.ser i[style*="#6A4F6A"]{background:var(--bk0,#6A4F6A)!important;color:var(--bk0t,#F6F1EC)!important}
 .sfs[style*="#B2A5D6"],.sv[style*="#B2A5D6"],.ser i[style*="#B2A5D6"]{background:var(--bk1,#B2A5D6)!important;color:var(--bk1t,#4F3A4F)!important}
 .sfs[style*="#C9B3C9"],.sv[style*="#C9B3C9"],.ser i[style*="#C9B3C9"]{background:var(--bk2,#C9B3C9)!important;color:var(--bk2t,#4F3A4F)!important}
+.hph{display:flex;justify-content:space-between;align-items:baseline;padding-right:14px;font-size:13px;color:var(--sub)}.hph .hpp{font-size:16px}.hpd b{color:var(--pri);font-size:15px}
+.hpg2{height:8px;border-radius:4px;background:var(--line);margin:8px 14px 8px 0;overflow:hidden}.hpg2 i{display:block;height:100%;background:var(--pri);border-radius:4px;transition:width .3s}
+.hpr{list-style:none;margin:0 14px 10px 0;padding:0;display:flex;flex-direction:column;gap:3px}.hpr li{display:flex;justify-content:space-between;font-size:12px;color:var(--sub)}.hpr b{color:var(--ink);font-weight:600}
+.hpm{position:relative}.hpb{position:absolute;top:-4px;right:2px;font-style:normal;font-size:9px;font-weight:700;padding:0 5px;border-radius:999px;background:var(--sec);color:var(--onpri)}
+#ptt{position:fixed;left:50%;bottom:96px;transform:translate(-50%,10px);max-width:320px;width:max-content;padding:10px 16px;border-radius:12px;background:var(--ink);color:var(--bg);font-size:13px;line-height:1.45;text-align:center;word-break:keep-all;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:999}#ptt.on{opacity:1;transform:translate(-50%,0)}
+.hpx .hph{padding:0 14px}.hpx .hpg2{margin:8px 14px}.hpx .hpr{margin:0 14px 12px}
+.hpx .hpl{padding-top:8px}.hpb{top:-6px!important;right:0!important}
 </style>
 </head>
 <body>
@@ -1071,7 +1078,7 @@ function quoteShare(q,bt,au){
  r();
  document.getElementById("qth").onclick=function(e){var b=e.target.closest("button");if(b){th=+b.dataset.i;r()}};
  document.getElementById("qff").onclick=function(e){var b=e.target.closest("button");if(b){sf=+b.dataset.f;r()}};
- function mis(){if(!MS[3][3]){MS[3][3]=1;PT+=MS[3][2]}}
+ function mis(){award("share")}
  var fn="문장카드_"+bt+".png";
  document.getElementById("qsv").onclick=function(){cardPNG(svg(),function(b){var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=fn;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},1000);mis()},1)};
  document.getElementById("qsh").onclick=function(){cardPNG(svg(),function(b){var f=new File([b],fn,{type:"image/png"}),t="“"+q+"” — 『"+bt+"』";mis();
@@ -1085,8 +1092,8 @@ function bookShare(bt,au,col){
  var x=pop('<h3>책 공유하기</h3><div class="bshc"><span class="bshv" style="background:'+col+'"><b>'+esc(bt)+'</b></span><span class="bsht"><small>독독에서 함께 읽어요</small><b>'+esc(bt)+'</b><em>'+esc(au)+'</em><i>지금 '+cnt+'명이 같이 읽는 중</i></span></div>'
   +'<div class="bsho"><button id="bsl">'+ic("link")+'<span>링크 복사</span></button><button id="bsa">'+ic("bksh")+'<span>다른 앱으로 공유</span></button></div><p class="bshm" id="bsm" role="status"></p><button class="btn ghost" id="bsx" style="width:100%;margin-top:6px">닫기</button>');
  var m=document.getElementById("bsm"),t="『"+bt+"』 "+au+" — 독독에서 같이 읽어요\n"+url;
- document.getElementById("bsl").onclick=function(){if(navigator.clipboard)navigator.clipboard.writeText(url).catch(function(){});m.textContent="책 링크를 복사했어요."};
- document.getElementById("bsa").onclick=function(){if(navigator.share)navigator.share({title:bt,text:t,url:url}).catch(function(){});else{if(navigator.clipboard)navigator.clipboard.writeText(t).catch(function(){});m.textContent="공유할 수 있는 앱이 없어서 링크를 복사했어요."}};
+ document.getElementById("bsl").onclick=function(){award("share");if(navigator.clipboard)navigator.clipboard.writeText(url).catch(function(){});m.textContent="책 링크를 복사했어요."};
+ document.getElementById("bsa").onclick=function(){award("share");if(navigator.share)navigator.share({title:bt,text:t,url:url}).catch(function(){});else{if(navigator.clipboard)navigator.clipboard.writeText(t).catch(function(){});m.textContent="공유할 수 있는 앱이 없어서 링크를 복사했어요."}};
  document.getElementById("bsx").onclick=x}
 function mIdx(n){for(var i=0;i<M.length;i++)if(M[i][0]===n)return i;return -1}
 function matePop(bt){
@@ -1112,9 +1119,39 @@ function invitePop(bt){
  var qi=document.getElementById("ivq");qi.oninput=function(){q=qi.value;r()};
  document.getElementById("ivl").onclick=function(e){var b=e.target.closest(".ivb");if(!b)return;var n=b.dataset.n;if(iv[n])delete iv[n];else if(!full())iv[n]=b.dataset.c;r()};
  document.getElementById("ivx").onclick=function(){x();matePop(bt)}}
-function doneBk(k){var b=LB[k];if(!b)return;
+function doneBk(k){var b=LB[k];if(!b)return;bonusDone(k);
  var x=pop('<div class="dnb"><span class="dnc" style="background:'+b[2]+'"><b>'+esc(b[0])+'</b></span><h3>『'+esc(b[0])+'』'+((b[0].charCodeAt(b[0].length-1)-44032)%28?'을':'를')+' 다 읽었어요!</h3><dl class="dnd"><div><dt>처음 읽기 시작한 날</dt><dd>'+(SDT[k]||ymd())+'</dd></div><div><dt>완독한 날</dt><dd>'+ymd()+'</dd></div></dl><p class="dnm">커뮤니티에 글을 남겨보세요!</p></div><div class="dbt"><button class="btn ghost" id="dnh">홈으로 가기</button><button class="btn" id="dnc">커뮤니티</button></div>');
  document.getElementById("dnh").onclick=function(){x();home()};document.getElementById("dnc").onclick=function(){x();community()}}
+/* ===== 포인트 규칙 설정 (여기 숫자만 바꾸면 조건·보상이 바뀌어요) ===== */
+var PCFG={
+ DAILY_CAP:300,
+ ACT:{da:{p:100,books:2,minPages:2},talk:{p:50},jeong:{p:100},gift:{p:50},cmt:{p:20},share:{p:30},att:{p:10}},
+ BONUS:{done:{p:200,perDay:1},streak:{p:100,days:3}}
+};
+var MK=["da","talk","streak","share","done","jeong","att","gift","cmt"];
+var PS=null,DONEPAID={},STRK={paidEnd:""},RDAYS={};
+function dstr(d){var z=function(n){return(n<10?"0":"")+n};return d.getFullYear()+"."+z(d.getMonth()+1)+"."+z(d.getDate())}
+function dparse(t){var a=t.split(".");return new Date(+a[0],+a[1]-1,+a[2])}
+function dshift(t,n){var d=dparse(t);d.setDate(d.getDate()+n);return dstr(d)}
+function psDay(){var t=todayStr();if(!PS||PS.d!==t)PS={d:t,act:0,got:{},bonus:{done:0,streak:0}};return PS}
+function ptToast(m){var t=document.getElementById("ptt");if(!t){t=document.createElement("div");t.id="ptt";t.setAttribute("role","status");document.body.appendChild(t)}t.textContent=m;t.classList.add("on");clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove("on")},2600)}
+function msSync(){var s=psDay();MS.forEach(function(m,i){var k=MK[i];m[2]=k==="done"?PCFG.BONUS.done.p:k==="streak"?PCFG.BONUS.streak.p:PCFG.ACT[k].p;m[3]=k==="done"?(s.bonus.done>0?1:0):k==="streak"?(s.bonus.streak>0?1:0):(k in s.got?1:0)})}
+function award(k,quiet){var s=psDay(),c=PCFG.ACT[k];if(!c||(k in s.got))return 0;
+ var give=Math.max(0,Math.min(c.p,PCFG.DAILY_CAP-s.act));s.got[k]=give;s.act+=give;PT+=give;msSync();
+ var nm=MS[MK.indexOf(k)][0];
+ if(quiet){}else if(give<c.p)ptToast("오늘의 활동 포인트 상한까지 "+give+"P가 지급되었습니다.");else ptToast(nm+" 미션 달성 · +"+give+"P");
+ if(typeof hpRef==="function")hpRef();return give}
+function bonusDone(bk){var s=psDay();if(bk==null||DONEPAID[bk]||s.bonus.done>=PCFG.BONUS.done.p*PCFG.BONUS.done.perDay)return 0;DONEPAID[bk]=1;s.bonus.done+=PCFG.BONUS.done.p;PT+=PCFG.BONUS.done.p;msSync();ptToast("완독 보너스 +"+PCFG.BONUS.done.p+"P");return PCFG.BONUS.done.p}
+function readToday(){var s=psDay(),t=s.d;RDAYS[t]=1;
+ var n=0,d=t;while(RDAYS[d]){n++;d=dshift(d,-1)}
+ var N=PCFG.BONUS.streak.days,start=dshift(t,-(N-1));
+ if(n>=N&&(!STRK.paidEnd||STRK.paidEnd<start)){STRK.paidEnd=t;s.bonus.streak+=PCFG.BONUS.streak.p;PT+=PCFG.BONUS.streak.p;msSync();ptToast("지속 독서 보너스 +"+PCFG.BONUS.streak.p+"P ("+N+"일 연속)")}
+ var books={};Object.keys(RDY.p||{}).forEach(function(x){var b=x.split("-")[0];books[b]=(books[b]||0)+1});
+ if(Object.keys(books).filter(function(b){return books[b]>=PCFG.ACT.da.minPages}).length>=PCFG.ACT.da.books)award("da")}
+(function(){var t=todayStr();RDAYS[dshift(t,-1)]=1;RDAYS[dshift(t,-2)]=1})();
+function hpHead(){var s=psDay(),c=PCFG.DAILY_CAP,pc=Math.round(s.act*100/c);msSync();
+ return'<div class="hph"><span class="hpt">보유 <b class="hpp">'+PT+'P</b></span><span class="hpd">오늘 <b>'+s.act+'P</b> / '+c+'P</span></div><div class="hpg2" role="progressbar" aria-label="오늘의 활동 포인트" aria-valuenow="'+s.act+'" aria-valuemin="0" aria-valuemax="'+c+'"><i style="width:'+pc+'%"></i></div>'
+ +'<ul class="hpr"><li><span>일일 활동 포인트</span><b>'+s.act+'P / '+c+'P</b></li><li><span>완독 보너스</span><b>+'+s.bonus.done+'P</b></li><li><span>지속 독서 보너스</span><b>+'+s.bonus.streak+'P</b></li></ul>'}
 function recList(key){return Object.keys(RK).map(function(k){var m=[];for(var i=0;i<4;i++)if(RK[k].charAt(i)===key.charAt(i))m.push(1);return{k:+k,m:m}}).sort(function(a,b){return b.m.length-a.m.length||a.k-b.k}).slice(0,3)}
 function recBox(key){
  var L=Object.keys(RK).map(function(k){var m=[];for(var i=0;i<4;i++)if(RK[k].charAt(i)===key.charAt(i))m.push(AX[i]["FSAEDWIJ".indexOf(key.charAt(i))%2]);return{k:+k,m:m}}).sort(function(a,b){return b.m.length-a.m.length||a.k-b.k}).slice(0,3);
@@ -1301,7 +1338,7 @@ BS=["clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%)","clip-path:polygon(
 I.clock="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2";I.stack="M4 8l8-4 8 4-8 4zM4 12l8 4 8-4M4 16l8 4 8-4";I.notes="M6 3h12v18H6zM9 8h6M9 12h6M9 16h4";I.cal="M5 6h14v14H5zM5 10h14M9 4v4M15 4v4M9 15l2 2 4-4";I.gift="M4 11h16v9H4zM3 8h18v3H3zM12 8v12M12 8c-3 0-4-3-2-3.5 2-.5 2 3.5 2 3.5zM12 8c3 0 4-3 2-3.5-2-.5-2 3.5-2 3.5z";
 I.talk="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01";
 I.grid="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z";I.memo="M5 4h14v11l-5 5H5zM14 20v-5h5";I.theme="M5 5h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z";I.eraser="M4 16l9-9 6 6-6 6H8zM9 11l6 6M12 19h8";I.trash="M5 7h14M10 4h4M7 7l1 13h8l1-13";
-var MSD=["하루에 두 권 이상 책을 펼쳐 읽으면 달성돼요.","커뮤니티 글에 댓글을 남기면 달성돼요.","3일 연속으로 책을 읽으면 달성돼요.","문장이나 독서 유형 카드를 공유하면 달성돼요.","책 한 권을 끝까지 읽으면 달성돼요.","오늘의 목표 쪽수를 채우면 달성돼요.","오늘 앱에 들어오면 달성돼요.","친구에게 독서 우표를 선물하면 달성돼요.","책 속 문장에 코멘트를 남기면 달성돼요."],MS=[["다독","book",100,0],["토론 참여","chat",50,0],["지속 독서","clock",100,1],["공유","talk",30,1],["완독","stack",200,0],["정독","notes",100,0],["출석","cal",10,1],["선물","gift",50,0],["코멘트","cmt",20,0]];
+var MSD=["하루에 책 2권을 각각 2쪽 이상 읽으면 달성돼요. 책을 펼치기만 해서는 달성되지 않아요.","커뮤니티 글에 댓글을 남기면 달성돼요. 하루 한 번만 지급돼요.","3일 연속으로 책을 읽으면 달성돼요. 일일 상한과 별도로 주는 보너스예요.","문장 카드나 책을 공유하면 달성돼요. 하루 한 번만 지급돼요.","책 한 권을 끝까지 읽으면 달성돼요. 일일 상한과 별도로 주는 보너스예요(같은 책 1회, 하루 1권).","오늘의 목표 쪽수를 채우면 달성돼요.","오늘 앱에 들어오면 달성돼요.","친구에게 독서 우표를 선물하면 달성돼요. 하루 한 번만 지급돼요.","책 속 문장에 코멘트를 남기면 달성돼요. 하루 한 번만 지급돼요."],MS=[["다독","book",100,0],["토론 참여","chat",50,0],["지속 독서","clock",100,1],["공유","talk",30,1],["완독","stack",200,0],["정독","notes",100,0],["출석","cal",10,1],["선물","gift",50,0],["코멘트","cmt",20,0]];
 function pc(c,i){var t=ITM[c][i];return c==="TH"?t[4]:t[2]}
 function pv(c,i,col){var t=ITM[c][i];
  if(c==="PN")return'<div class="pvn" style="background:'+col+';'+PS[t[1]]+'"></div>';
@@ -1408,7 +1445,7 @@ function stampPg(){
   var f=SLOT.length<8;document.getElementById("mk").disabled=f;document.getElementById("gf").disabled=f}
  draw();
  function conf(t,m,dn,mkf){var x=pop('<h3>'+t+'</h3><p>'+m+'</p><div class="dbt"><button class="btn ghost" id="n">취소</button><button class="btn" id="y">확인</button></div>');
-  document.getElementById("n").onclick=x;document.getElementById("y").onclick=function(){var d=document.getElementById("dlg");if(PT<1000){d.querySelector("p").textContent="포인트가 부족해요. (내 포인트 "+PT+"P)";return}PT-=1000;if(mkf){var dt=new Date();ORD.unshift({id:Date.now(),b:SLOT.slice(),st:0,tm:dt.getFullYear()+"."+("0"+(dt.getMonth()+1)).slice(-2)+"."+("0"+dt.getDate()).slice(-2)})}d.innerHTML='<h3>'+dn+'</h3><p>1000P를 사용했어요. 남은 포인트 '+PT+'P'+(mkf?' 진행 상황은 내 프로필에서 확인할 수 있어요.':'')+'</p><button class="btn" id="o" style="width:100%;margin-top:14px">확인</button>';document.getElementById("o").onclick=x}}
+  document.getElementById("n").onclick=x;document.getElementById("y").onclick=function(){var d=document.getElementById("dlg");if(PT<1000){d.querySelector("p").textContent="포인트가 부족해요. (내 포인트 "+PT+"P)";return}PT-=1000;if(!mkf)award("gift");if(mkf){var dt=new Date();ORD.unshift({id:Date.now(),b:SLOT.slice(),st:0,tm:dt.getFullYear()+"."+("0"+(dt.getMonth()+1)).slice(-2)+"."+("0"+dt.getDate()).slice(-2)})}d.innerHTML='<h3>'+dn+'</h3><p>1000P를 사용했어요. 남은 포인트 '+PT+'P'+(mkf?' 진행 상황은 내 프로필에서 확인할 수 있어요.':'')+'</p><button class="btn" id="o" style="width:100%;margin-top:14px">확인</button>';document.getElementById("o").onclick=x}}
  document.getElementById("sl").onclick=function(e){var b=e.target.closest(".slot");if(!b)return;var k=+b.dataset.k,v=SLOT[k];if(v===undefined)return;
   var x=pop('<h3>'+RDB[v][0]+'</h3><p>'+RDB[v][1]+' · '+RDB[v][2]+'쪽 · 완독 '+RDB[v][3]+'</p><div class="dbt"><button class="btn ghost" id="n">닫기</button><button class="btn" id="y">칸에서 빼기</button></div>');
   document.getElementById("n").onclick=x;document.getElementById("y").onclick=function(){SLOT.splice(k,1);x();draw()}};
@@ -1612,7 +1649,7 @@ function home(){
  app.innerHTML='<header class="hd"><span class="nick">'+esc(ME)+'</span><button class="ib nbl" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'">'+ic(unread()?"bellOn":"bell")+(unread()?'<i class="nbd"></i>':'')+'</button><button class="ib" id="hmn" aria-label="설정 열기">'+ic("menu")+'</button></header>'
  +hero
  +'<section class="blk"><div class="sh"><h3>이번 주 기록</h3><button class="pme" id="hdt">달력'+ic("next")+'</button></div><div class="box wkx"><div class="wks"><b>'+rd+'일</b> 읽었어요<span>이번 주 목표 달성률 '+wp+'% · 하루 목표 '+G+'쪽</span></div><div class="wkr">'+bars+'</div></div></section>'
- +'<section class="blk"><div class="sh"><h3>오늘의 포인트</h3><button class="pme" id="hpt">디지털 문구점'+ic("next")+'</button></div><div class="box hpx"><p class="hps"><b class="hpp">'+PT+'P</b> (오늘 +'+MS.filter(function(x){return x[3]}).reduce(function(a,x){return a+x[2]},0)+'P) · 미션 <b>'+MS.filter(function(x){return x[3]}).length+' / '+MS.length+'</b> 완료</p><div class="hpl">'+MS.map(function(x,i){return[x,i]}).sort(function(a,b){return a[0][3]-b[0][3]}).map(function(r){var x=r[0];return'<div class="hpm'+(x[3]?" dn":"")+'" data-i="'+r[1]+'" tabindex="0" role="button" aria-label="'+x[0]+' 미션: '+MSD[r[1]]+'"><span>'+ic(x[3]?"check":x[1])+'</span><b>'+x[0]+'</b><small>'+(x[3]?"완료":"+"+x[2]+"P")+'</small></div>'}).join("")+'</div></div></section>'
+ +'<section class="blk"><div class="sh"><h3>오늘의 포인트</h3><button class="pme" id="hpt">디지털 문구점'+ic("next")+'</button></div><div class="box hpx" id="hpx">'+hpHead()+'<div class="hpl">'+MS.map(function(x,i){return[x,i]}).sort(function(a,b){return a[0][3]-b[0][3]}).map(function(r){var x=r[0];return'<div class="hpm'+(x[3]?" dn":"")+'" data-i="'+r[1]+'" tabindex="0" role="button" aria-label="'+x[0]+' 미션: '+MSD[r[1]]+'"><span>'+ic(x[3]?"check":x[1])+'</span><b>'+x[0]+'</b><small>'+(x[3]?(MK[r[1]]==="done"||MK[r[1]]==="streak"||psDay().got[MK[r[1]]]===x[2]?"완료":"완료 +"+psDay().got[MK[r[1]]]+"P"):"+"+x[2]+"P")+'</small>'+(MK[r[1]]==="done"||MK[r[1]]==="streak"?'<em class="hpb">보너스</em>':'')+'</div>'}).join("")+'</div></div></section>'
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  if(REC)app.querySelectorAll(".rck").forEach(function(b){b.onclick=function(){PICKED=1;DEF=+b.dataset.k;reader(DEF)}});else app.querySelectorAll(".hgo").forEach(function(b){b.onclick=function(){if(HSM)return;reader(+b.dataset.k)}});
  var hsk=document.getElementById("hsk");if(hsk)hsk.onclick=function(){step=0;ans=[null,null,null,null];ask()};
@@ -1625,6 +1662,7 @@ function home(){
   window.addEventListener("pointermove",function(e){if(!dn||!hs.isConnected)return;var d=e.clientX-dx;if(Math.abs(d)>5){HSM=true;hs.style.scrollSnapType="none";hs.scrollLeft=sl0-d}});
   window.addEventListener("pointerup",function(){if(!dn)return;dn=false;if(hs.isConnected){var i=Math.round(hs.scrollLeft/hs.clientWidth);hs.style.scrollSnapType="";hs.scrollTo({left:i*hs.clientWidth,behavior:"smooth"})}setTimeout(function(){HSM=false},0)})}
  document.getElementById("hpt").onclick=shop;
+ window.hpRef=function(){var h=document.getElementById("hpx");if(!h||!h.isConnected)return;var sy=document.querySelector(".sc")?document.querySelector(".sc").scrollTop:0;home();var sc2=document.querySelector(".sc");if(sc2)sc2.scrollTop=sy};award("att",1);
  var tip=document.createElement("div");tip.className="mtp";tip.setAttribute("role","tooltip");app.appendChild(tip);
  function tshow(el){var i=+el.dataset.i,a=app.getBoundingClientRect(),r=el.getBoundingClientRect();tip.innerHTML='<b>'+MS[i][0]+' 포인트 · +'+MS[i][2]+'P</b>'+MSD[i];tip.classList.add("on");tip.dataset.i=i;
   var w=tip.offsetWidth,cx=r.left-a.left+r.width/2,l=Math.min(Math.max(8,cx-w/2),a.width-w-8);tip.style.left=l+"px";tip.style.top=(r.top-a.top-tip.offsetHeight-10)+"px";tip.style.setProperty("--ax",(cx-l)+"px")}
@@ -1703,7 +1741,7 @@ function community(){
   function rd(){dp.innerHTML=post(p,true)+'<h3 class="cmh">댓글 '+p.c.length+'</h3>'+(p.c.length?p.c.map(function(c){var n=c[3]?ME:c[0];return'<div class="cmr">'+(c[3]?'<span class="pav2 s" style="'+avBg(n)+'">'+avTx(n)+'</span>':'<button class="pav2 s" data-u="'+esc(n)+'" aria-label="'+esc(n)+' 프로필 보기" style="background:'+colOf(n)+'">'+esc(n).charAt(0)+'</button>')+'<div><b>'+esc(n)+'</b><p>'+esc(c[1])+'</p></div></div>'}).join(""):'<div class="emp">첫 댓글을 남겨 보세요.</div>')}
   ref=rd;rd();
   dp.onclick=pclk;
-  bar.onsubmit=function(e){e.preventDefault();var v=ci.value.trim();if(!v)return;p.c.push([ME,v,0,1]);ci.value="";rd();document.querySelector(".sc").scrollTop=1e6};
+  bar.onsubmit=function(e){e.preventDefault();var v=ci.value.trim();if(!v)return;p.c.push([ME,v,0,1]);ci.value="";rd();award("talk");document.querySelector(".sc").scrollTop=1e6};
   document.getElementById("d0").onclick=community;
   var dm=document.getElementById("dmn");if(dm)dm.onclick=function(){menu(id,true)};
   if(foc)ci.focus()}
@@ -1898,7 +1936,7 @@ function reader(k){
  function hSub(a,s,e){var o=[];a.forEach(function(r){if(r[1]<=s||r[0]>=e)o.push(r);else{if(r[0]<s)o.push([r[0],s]);if(r[1]>e)o.push([e,r[1]])}});return o}
  function hOff(el,node,off){var q=document.createRange();q.setStart(el,0);q.setEnd(node,off);return q.toString().length}
  function rt(){nmx();lf.innerHTML=pH(cur);gck()}
- function gck(){if(BK>=0&&pg>=TOT&&!DNB[BK]){DNB[BK]=1;var dk=BK;setTimeout(function(){doneBk(dk)},450)}var t=todayStr();if(RDY.d!==t)RDY={d:t,p:{},ok:0};RDY.p[BK+"-"+pg]=1;if(GOAL&&!RDY.ok&&Object.keys(RDY.p).length>=GOAL){RDY.ok=1;var g=document.getElementById("gl");g.textContent="오늘의 목표 "+GOAL+"쪽을 달성했어요!";g.classList.add("on");setTimeout(function(){g.classList.remove("on")},3200)}}
+ function gck(){if(BK>=0&&pg>=TOT&&!DNB[BK]){DNB[BK]=1;var dk=BK;setTimeout(function(){doneBk(dk)},450)}var t=todayStr();if(RDY.d!==t)RDY={d:t,p:{},ok:0};RDY.p[BK+"-"+pg]=1;readToday();if(GOAL&&!RDY.ok&&Object.keys(RDY.p).length>=GOAL){RDY.ok=1;award("jeong");var g=document.getElementById("gl");g.textContent="오늘의 목표 "+GOAL+"쪽을 달성했어요!";g.classList.add("on");setTimeout(function(){g.classList.remove("on")},3200)}}
  function pr(){var pc=function(v){return v*100/TOT};document.getElementById("pg").innerHTML='<div class="pr"><span>'+pg+'p</span><div class="tk"><i style="width:'+pc(pg)+'%"></i><b class="th" style="left:'+pc(pg)+'%" role="slider" aria-label="진행도" aria-valuemin="1" aria-valuemax="'+TOT+'" aria-valuenow="'+pg+'"></b>'+BM.map(function(b){return'<button class="rb" data-p="'+b+'" style="left:'+pc(b)+'%" aria-label="'+b+'쪽 책갈피"></button>'}).join("")+MP.map(function(m){return'<em class="md" style="left:'+pc(mpg(m))+'%;background:'+m[2]+'" aria-label="'+m[0]+' '+mpg(m)+'쪽">'+m[0].charAt(0)+'</em>'}).join("")+'</div><span>'+TOT+'p</span></div><p class="pc">'+Math.round(pc(pg))+'% · '+MP.map(function(m){return m[0]+" "+mpg(m)+"p"}).join(" · ")+'</p>'}
  function fl(n){if(busy||n<0||n>=PGN.length||n===cur)return;busy=true;eid=null;var d=n>cur?1:-1;pg=PGN[n];
   function fin(){cur=n;lf.style.transition="none";lf.style.transform="none";lf.classList.remove("flip");rt();un.innerHTML="";busy=false;pr()}
@@ -1998,7 +2036,7 @@ function reader(k){
   else if(b.dataset.cs!==undefined){csp=b.dataset.cs==="1";b.parentNode.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-pressed",x===b)})}
   else if(b.dataset.k){S[b.dataset.k]=+b.dataset.i;ap();rt();st()}
   else if(b.classList.contains("hrt"))b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")!=="true");
-  else if(b.id==="sv"){var v=document.getElementById("ta").value.trim();if(v){my[cid]={t:v,sp:csp};CMTS.unshift({b:BT,t:v,d:todayStr(),tm:hm(),ts:Date.now()});rt()}sc()}
+  else if(b.id==="sv"){var v=document.getElementById("ta").value.trim();if(v){award("cmt");my[cid]={t:v,sp:csp};CMTS.unshift({b:BT,t:v,d:todayStr(),tm:hm(),ts:Date.now()});rt()}sc()}
  });
  function wsr(){var w=document.getElementById("wi");if(!w)return;var v=w.value.trim(),r=document.getElementById("wr");
   if(!v){r.innerHTML='<p class="dmt">모르는 단어를 검색해 보세요.</p>';return}
