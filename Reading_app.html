@@ -813,6 +813,7 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .trk i.bone{top:-14px;width:34px;height:34px;margin-left:-17px}
 .trk i.dog{top:-17px;width:40px;height:40px;margin-left:-20px}.trk i.dog svg{fill:none;stroke:none}
 .ax .trk{margin-top:28px;margin-bottom:24px}
+.trk i.ckp{top:-15px;width:36px;height:36px;margin-left:-18px}.trk i.ckp svg{stroke:none}.trk i.ckp .ck{fill:#C9B3C9;stroke:#C9B3C9;stroke-width:5.5;stroke-linejoin:round}.trk i.ckp .ci{fill:none;stroke:#6A4F6A;stroke-width:1.3}
 </style>
 </head>
 <body>
@@ -870,7 +871,7 @@ function calcType(){
   var sd=sum[i]!==0?sum[i]:last[i],side=sd<0?0:1,m=Math.abs(sum[i]),strong=m>=2;
   var nm=AX[i][side];key+="FSAEDWIJ".charAt(i*2+side);names.push(nm);
   var p=strong?100:62;if(!side)p=100-p;
-  rows+='<div class="ax"><div class="lb"><span'+(side?'>'+AX[i][0]:'><b>'+AX[i][0]+'</b>')+'</span><span>'+(side?'<b>'+AX[i][1]+'</b>':AX[i][1])+'</span></div><div class="trk"><i class="paw dog" style="left:'+p+'%"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M9 17C6 11 6 5 9 3c3-1 7 3 10 8z" fill="#F7EEE3" stroke="var(--pri)" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 14c-1.5-3.5-1.5-7 0-8.5 1.8-.6 4 2 5.5 5z" fill="#E9B8B8"/><path d="M31 17c3-6 3-12 0-14-3-1-7 3-10 8z" fill="#CDB49A" stroke="var(--pri)" stroke-width="1.6" stroke-linejoin="round"/><ellipse cx="20" cy="23" rx="13" ry="11.5" fill="#F7EEE3" stroke="var(--pri)" stroke-width="1.6"/><ellipse cx="20" cy="27.5" rx="5" ry="3.8" fill="#D9C2A8"/><circle cx="15" cy="22.5" r="1.7" fill="#4F3A4F"/><circle cx="25" cy="22.5" r="1.7" fill="#4F3A4F"/><path d="M18.2 25.6c0-.9.9-1.2 1.8-1.2s1.8.3 1.8 1.2c0 .8-1 1.6-1.8 1.6s-1.8-.8-1.8-1.6z" fill="#4F3A4F"/></svg></i></div><h4>'+(strong?'뚜렷한 '+nm:nm+'에 가까움')+'</h4><p>'+D[i][side]+'</p></div>';
+  rows+='<div class="ax"><div class="lb"><span'+(side?'>'+AX[i][0]:'><b>'+AX[i][0]+'</b>')+'</span><span>'+(side?'<b>'+AX[i][1]+'</b>':AX[i][1])+'</span></div><div class="trk"><i class="paw ckp" style="left:'+p+'%"><svg viewBox="0 0 40 40" aria-hidden="true"><g class="ck"><path d="M20 18c-5 0-11 6.5-11 11.5 0 4 3 5 6 5 2 0 3-1 5-1s3 1 5 1c3 0 6-1 6-5 0-5-6-11.5-11-11.5z"/><ellipse cx="8" cy="17" rx="3.3" ry="4.4" transform="rotate(-22 8 17)"/><ellipse cx="15" cy="9.5" rx="3.5" ry="4.7" transform="rotate(-6 15 9.5)"/><ellipse cx="25" cy="9.5" rx="3.5" ry="4.7" transform="rotate(6 25 9.5)"/><ellipse cx="32" cy="17" rx="3.3" ry="4.4" transform="rotate(22 32 17)"/></g><g class="ci"><path d="M20 18c-5 0-11 6.5-11 11.5 0 4 3 5 6 5 2 0 3-1 5-1s3 1 5 1c3 0 6-1 6-5 0-5-6-11.5-11-11.5z"/><ellipse cx="8" cy="17" rx="3.3" ry="4.4" transform="rotate(-22 8 17)"/><ellipse cx="15" cy="9.5" rx="3.5" ry="4.7" transform="rotate(-6 15 9.5)"/><ellipse cx="25" cy="9.5" rx="3.5" ry="4.7" transform="rotate(6 25 9.5)"/><ellipse cx="32" cy="17" rx="3.3" ry="4.4" transform="rotate(22 32 17)"/></g></svg></i></div><h4>'+(strong?'뚜렷한 '+nm:nm+'에 가까움')+'</h4><p>'+D[i][side]+'</p></div>';
  }
  return{key:key,t:T[key],names:names,rows:rows}}
 function cardWire(key,t,names){
