@@ -808,6 +808,7 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .gwh #gsr::-webkit-inner-spin-button,.gwh #gsr::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 .tin .tis{max-width:none;width:100%;margin-left:auto;margin-right:auto;letter-spacing:-.02em}
 .gwt span{display:block;white-space:nowrap}
+.trk i.paw{top:-11px;width:28px;height:28px;margin-left:-14px;border:0;border-radius:0;background:none}.trk i.paw svg{width:100%;height:100%;display:block;fill:var(--pri);stroke:var(--card);stroke-width:1.6;paint-order:stroke;overflow:visible}
 </style>
 </head>
 <body>
@@ -865,7 +866,7 @@ function calcType(){
   var sd=sum[i]!==0?sum[i]:last[i],side=sd<0?0:1,m=Math.abs(sum[i]),strong=m>=2;
   var nm=AX[i][side];key+="FSAEDWIJ".charAt(i*2+side);names.push(nm);
   var p=strong?100:62;if(!side)p=100-p;
-  rows+='<div class="ax"><div class="lb"><span'+(side?'>'+AX[i][0]:'><b>'+AX[i][0]+'</b>')+'</span><span>'+(side?'<b>'+AX[i][1]+'</b>':AX[i][1])+'</span></div><div class="trk"><i style="left:'+p+'%"></i></div><h4>'+(strong?'뚜렷한 '+nm:nm+'에 가까움')+'</h4><p>'+D[i][side]+'</p></div>';
+  rows+='<div class="ax"><div class="lb"><span'+(side?'>'+AX[i][0]:'><b>'+AX[i][0]+'</b>')+'</span><span>'+(side?'<b>'+AX[i][1]+'</b>':AX[i][1])+'</span></div><div class="trk"><i class="paw" style="left:'+p+'%"><svg viewBox="-11 -11 22 22" aria-hidden="true"><path d="M0 0.5c-2.8 0-6.2 3.6-6.2 6.2 0 2 1.6 2.8 3.2 2.8 1.2 0 2-.7 3-.7s1.8.7 3 .7c1.6 0 3.2-.8 3.2-2.8 0-2.6-3.4-6.2-6.2-6.2z"/><ellipse cx="-7.2" cy="-1.6" rx="1.9" ry="2.6" transform="rotate(-28 -7.2 -1.6)"/><ellipse cx="-2.6" cy="-5.4" rx="2" ry="2.8" transform="rotate(-8 -2.6 -5.4)"/><ellipse cx="2.6" cy="-5.4" rx="2" ry="2.8" transform="rotate(8 2.6 -5.4)"/><ellipse cx="7.2" cy="-1.6" rx="1.9" ry="2.6" transform="rotate(28 7.2 -1.6)"/></svg></i></div><h4>'+(strong?'뚜렷한 '+nm:nm+'에 가까움')+'</h4><p>'+D[i][side]+'</p></div>';
  }
  return{key:key,t:T[key],names:names,rows:rows}}
 function cardWire(key,t,names){
