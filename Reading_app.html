@@ -784,6 +784,7 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 @media (prefers-reduced-motion:reduce){.spw .kn{animation:none;opacity:1}}
 .spw{position:absolute;inset:0;z-index:5;background:var(--bg);padding:0 0 40px}.spw .dke{margin:2px 0 0!important}.spw .dks{margin:18px 0 0!important}.spw svg{margin:0}
 .opts .opt span:first-child{word-break:keep-all}
+.foot.rsf{position:sticky;bottom:-24px;z-index:20;background:var(--bg);margin:20px calc(-1 * var(--px,16px)) 0;padding:12px var(--px,16px) 24px;margin-bottom:-24px;border-top:1px solid var(--line);box-shadow:0 4px 0 var(--bg)}
 </style>
 </head>
 <body>
@@ -862,7 +863,7 @@ function result(){
  var c=calcType(),key=c.key,t=c.t,names=c.names,rows=c.rows;RKEY=key;
  app.innerHTML=bar(Q.length)+'<h1>독서 성향이 분석되었어요</h1><div class="tcard" id="tcd">'+typeSVG(key,t,names)+'</div><div class="tbt"><button class="btn ghost" id="tsv">저장하기</button><button class="btn" id="tsh">공유하기</button></div>'
  +recBox(key)+'<div class="sec"><h3>성향 분석</h3>'+rows+'</div>'
- +'<div class="foot"><button class="btn ghost" id="re">다시 하기</button><button class="btn" id="go">홈으로 가기</button></div>';
+ +'<div class="foot rsf"><button class="btn ghost" id="re">다시 하기</button><button class="btn" id="go">홈으로 가기</button></div>';
  document.getElementById("go").onclick=home;
  cardWire(key,t,names);
  app.querySelectorAll(".rbk").forEach(function(b){b.onclick=function(){bookDt(+b.dataset.k,result)}});
