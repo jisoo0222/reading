@@ -849,6 +849,7 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .rbs{flex:none;font-style:normal;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;border:1.5px solid var(--pri);color:var(--pri)}.rbs.dn{background:var(--sec);border-color:var(--sec);color:var(--onpri)}
 .tsk{display:block;margin:20px auto 0;background:none;border:0;font:inherit;font-size:13px;color:var(--sub);text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px 10px}
 .hsk h2{margin-bottom:16px}
+.hd .nick:first-child{margin-left:-4px}
 </style>
 </head>
 <body>
@@ -1465,7 +1466,7 @@ function drawer(){
  function art(a){return a.map(function(x){return'<p class="sm"><b>'+x[0]+'</b><br><span style="color:var(--sub);font-size:13px">'+x[1]+'</span></p>'}).join("")}
  var note='<p class="dnote">※ 샘플 문구예요. 실제 서비스에서는 확정된 내용으로 교체해야 해요.</p>';
  function seg(){return'<div class="dg"><b>화면 모드</b><div>'+["시스템","라이트","다크"].map(function(t,i){return'<button data-i="'+i+'" aria-pressed="'+(DM===i)+'">'+t+'</button>'}).join("")+'</div></div><p class="dnote" style="margin:-4px 0 14px">시스템은 기기 설정을 따라가요.</p>'}
- function r(){d.innerHTML='<div class="dh2"><h3>설정</h3><button class="ib" id="dcl" aria-label="설정 닫기">'+ic("next")+'</button></div><h4>화면</h4><button class="drow" data-a="th">테마<span class="drv">'+TOPT[tCur()][0]+ic("next")+'</span></button><button class="drow" data-a="bm">책갈피<span class="drv">'+(BMV.p?BMN[BP.indexOf(BMV.p)]:"리본")+ic("next")+'</span></button><h4>알림</h4><button class="drow" data-a="al">알림 설정'+ic("next")+'</button><h4>정보</h4><button class="drow" data-a="nt">공지사항'+ic("next")+'</button><button class="drow" data-a="tm">이용약관'+ic("next")+'</button><button class="drow" data-a="pv">개인정보 처리방침'+ic("next")+'</button><button class="drow" data-a="cs">고객센터'+ic("next")+'</button><p class="dnote" style="text-align:center;margin-top:8px">버전 1.0.0</p>';
+ function r(){d.innerHTML='<div class="dh2"><h3>설정</h3><button class="ib" id="dcl" aria-label="설정 닫기">'+ic("next")+'</button></div><h4>화면</h4><button class="drow" data-a="th">테마<span class="drv">'+TOPT[tCur()][0]+ic("next")+'</span></button><h4>알림</h4><button class="drow" data-a="al">알림 설정'+ic("next")+'</button><h4>정보</h4><button class="drow" data-a="nt">공지사항'+ic("next")+'</button><button class="drow" data-a="tm">이용약관'+ic("next")+'</button><button class="drow" data-a="pv">개인정보 처리방침'+ic("next")+'</button><button class="drow" data-a="cs">고객센터'+ic("next")+'</button><p class="dnote" style="text-align:center;margin-top:8px">버전 1.0.0</p>';
   d.querySelectorAll(".dg button").forEach(function(b){b.onclick=function(){DM=+b.dataset.i;try{localStorage.setItem("rd_dm",DM)}catch(e){}applyDM();r()}});
   d.querySelectorAll(".drow").forEach(function(b){b.onclick=function(){var a=b.dataset.a;
    if(a==="nt")infoPop("공지사항",NT.map(function(n){return'<p class="sm"><b>'+n[0]+'</b> <small style="color:var(--sub)">'+n[1]+'</small><br><span style="color:var(--sub);font-size:13px">'+n[2]+'</span></p>'}).join(""));
@@ -1528,7 +1529,7 @@ function home(){
   :(function(){var L=RLs().slice(0,3),h=L.map(function(k,i){var B=LB[k],q=bprog(k);return'<section class="hero"'+(i?'':' id="rc"')+'><div class="htp"><div class="hcv" style="background:'+B[2]+'"><b>'+B[0]+'</b></div><div class="hif"><small>'+(i?"최근에 읽던 책":"지금 읽는 책")+'</small><h2>'+B[0]+'</h2><p>'+B[1]+'</p><div class="hpg" role="progressbar" aria-label="진행률" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div><p class="hpt"><b>'+q.c+'%</b> · '+q.p+' / '+q.t+'쪽</p></div></div>'
   +'<div class="hgl"><span>오늘 목표</span><div class="hgm"><i style="width:'+Math.min(100,Math.round(tdp*100/G))+'%"></i></div><b>'+tdp+' / '+G+'쪽</b></div><button class="hgo" data-k="'+k+'">이어 읽기 · '+q.p+'쪽부터</button></section>'}).join("");
   return L.length>1?'<div class="rcwrap"><div class="rcscroll" id="rcscroll" aria-label="최근에 읽던 책, 옆으로 넘겨 보기">'+h+'</div><div class="rcdots" id="hdots">'+L.map(function(_,i){return'<button aria-label="'+(i+1)+'번째 책 보기" aria-current="'+(i===0)+'"></button>'}).join("")+'</div></div>':h})();
- app.innerHTML='<header class="hd"><button class="ib nbl" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'">'+ic(unread()?"bellOn":"bell")+(unread()?'<i class="nbd"></i>':'')+'</button><span class="nick">'+esc(ME)+'</span><button class="ib" aria-label="검색">'+ic("search")+'</button><button class="ib" id="hmn" aria-label="설정 열기">'+ic("menu")+'</button></header>'
+ app.innerHTML='<header class="hd"><span class="nick">'+esc(ME)+'</span><button class="ib nbl" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'">'+ic(unread()?"bellOn":"bell")+(unread()?'<i class="nbd"></i>':'')+'</button><button class="ib" id="hmn" aria-label="설정 열기">'+ic("menu")+'</button></header>'
  +hero
  +'<section class="blk"><div class="sh"><h3>이번 주 기록</h3><button class="pme" id="hdt">달력'+ic("next")+'</button></div><div class="box wkx"><div class="wks"><b>'+rd+'일</b> 읽었어요<span>이번 주 목표 달성률 '+wp+'% · 하루 목표 '+G+'쪽</span></div><div class="wkr">'+bars+'</div></div></section>'
  +'<section class="blk"><div class="sh"><h3>오늘의 포인트</h3><button class="pme" id="hpt">디지털 문구점'+ic("next")+'</button></div><div class="box hpx"><p class="hps"><b class="hpp">'+PT+'P</b> (오늘 +'+MS.filter(function(x){return x[3]}).reduce(function(a,x){return a+x[2]},0)+'P) · 미션 <b>'+MS.filter(function(x){return x[3]}).length+' / '+MS.length+'</b> 완료</p><div class="hpl">'+MS.map(function(x,i){return[x,i]}).sort(function(a,b){return a[0][3]-b[0][3]}).map(function(r){var x=r[0];return'<div class="hpm'+(x[3]?" dn":"")+'" data-i="'+r[1]+'" tabindex="0" role="button" aria-label="'+x[0]+' 미션: '+MSD[r[1]]+'"><span>'+ic(x[3]?"check":x[1])+'</span><b>'+x[0]+'</b><small>'+(x[3]?"완료":"+"+x[2]+"P")+'</small></div>'}).join("")+'</div></div></section>'
@@ -1705,7 +1706,6 @@ function tabBind(){var tb=app.querySelectorAll(".tab button");tb[0].onclick=comm
 function unapply(c){AP[c]=null;if(c==="HL")UL={c:"",w:2,bg:0};if(c==="BM")BMV={c:"",p:""};if(c==="PN")MMC=""}
 function applyItem(c,i){var id=c+i,t=ITM[c][i],k=(id in CS)?CS[id]:i%5;AP[c]=id;
  if(c==="HL")UL={c:COL[k],w:Math.max(2,Math.round(t[1]/3)),bg:1,h:Math.min(1.25,.4+t[1]/18).toFixed(2)+"em",o:i===2?.55:1};
- if(c==="BM")BMV={c:COL[k],p:BP[t[1]]};
  if(c==="PN")MMC=COL[k];
  if(c==="TH")THI=i}
 function vault(t,back){
