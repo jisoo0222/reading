@@ -1992,7 +1992,7 @@ function reader(k){
   var n=at(e.clientX);show(n);tk.setPointerCapture(e.pointerId);
   tk.onpointermove=function(v){n=at(v.clientX);show(n)};
   tk.onpointerup=tk.onpointercancel=function(){tk.onpointermove=tk.onpointerup=tk.onpointercancel=null;if(n!==cur){eid=null;nmx();cur=n;pg=PGN[n];rt();un.innerHTML=""}pr()}});
- var CPT=[["hl","형광펜","ul"],["memo","스티커","memo"],["bm","책갈피","bm"],["wd","단어 사전","dict"],["ch","인물 사전","person"],["sh","책 공유","bksh"],["set","읽기 설정","set"],["dn",S.n===1?"낮 모드":"밤 모드",S.n===1?"sun":"moon"]];
+ var CPT=[["hl","형광펜","ul"],["memo","스티커","memo"],["bm","책갈피","bm"],["dn",S.n===1?"낮 모드":"밤 모드",S.n===1?"sun":"moon"],["wd","단어 사전","dict"],["ch","인물 사전","person"],["sh","책 공유","bksh"],["set","읽기 설정","set"]];
  var cp=document.createElement("div");cp.id="cp";cp.setAttribute("role","dialog");cp.setAttribute("aria-label","읽기 도구");
  cp.innerHTML='<div class="cph" id="cph"><i></i></div><div class="cpg">'+CPT.map(function(t){return'<button class="cpt" data-a="'+t[0]+'"><span>'+ic(t[2])+'</span>'+t[1]+'</button>'}).join("")+'</div>';
  cp.appendChild(document.getElementById("pg"));
