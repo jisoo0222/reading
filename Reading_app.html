@@ -1149,33 +1149,32 @@ function doneBk(k){var b=LB[k];if(!b)return;bonusDone(k);
 /* ===== 포인트 규칙 설정 (여기 숫자만 바꾸면 조건·보상이 바뀌어요) ===== */
 var PCFG={
  DAILY_CAP:300,
- ACT:{da:{p:50,books:2,minPages:2},talk:{p:50},jeong:{p:100,minGoal:10},gift:{p:50},cmt:{p:20},share:{p:20},att:{p:10}},
- BONUS:{done:{p:200,perDay:1},streak:{p:100,days:3}}
+ ACT:{da:{p:50,books:2,minPages:2},talk:{p:50},jeong:{p:100,minGoal:10},gift:{p:50},cmt:{p:20},share:{p:20},att:{p:10},done:{p:200},streak:{p:100,days:3}}
 };
 var MK=["da","talk","streak","share","done","jeong","att","gift","cmt"];
 var PS=null,DONEPAID={},STRK={paidEnd:""},RDAYS={};
 function dstr(d){var z=function(n){return(n<10?"0":"")+n};return d.getFullYear()+"."+z(d.getMonth()+1)+"."+z(d.getDate())}
 function dparse(t){var a=t.split(".");return new Date(+a[0],+a[1]-1,+a[2])}
 function dshift(t,n){var d=dparse(t);d.setDate(d.getDate()+n);return dstr(d)}
-function psDay(){var t=todayStr();if(!PS||PS.d!==t)PS={d:t,act:0,got:{},bonus:{done:0,streak:0}};return PS}
+function psDay(){var t=todayStr();if(!PS||PS.d!==t)PS={d:t,act:0,got:{}};return PS}
 function ptToast(m){var t=document.getElementById("ptt");if(!t){t=document.createElement("div");t.id="ptt";t.setAttribute("role","status");document.body.appendChild(t)}t.textContent=m;t.classList.add("on");clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove("on")},2600)}
-function msSync(){var s=psDay();MS.forEach(function(m,i){var k=MK[i];m[2]=k==="done"?PCFG.BONUS.done.p:k==="streak"?PCFG.BONUS.streak.p:PCFG.ACT[k].p;m[3]=k==="done"?(s.bonus.done>0?1:0):k==="streak"?(s.bonus.streak>0?1:0):(k in s.got?1:0)})}
+function msSync(){var s=psDay();MS.forEach(function(m,i){var k=MK[i];m[2]=PCFG.ACT[k].p;m[3]=k in s.got?1:0})}
 function award(k,quiet){var s=psDay(),c=PCFG.ACT[k];if(!c||(k in s.got))return 0;
  var give=Math.max(0,Math.min(c.p,PCFG.DAILY_CAP-s.act));s.got[k]=give;s.act+=give;PT+=give;msSync();
  var nm=MS[MK.indexOf(k)][0];
  if(quiet){}else if(give<c.p)ptToast("오늘의 활동 포인트 상한까지 "+give+"P가 지급되었습니다.");else ptToast(nm+" 미션 달성 · +"+give+"P");
  if(typeof hpRef==="function")hpRef();return give}
-function bonusDone(bk){var s=psDay();if(bk==null||DONEPAID[bk]||s.bonus.done>=PCFG.BONUS.done.p*PCFG.BONUS.done.perDay)return 0;DONEPAID[bk]=1;s.bonus.done+=PCFG.BONUS.done.p;PT+=PCFG.BONUS.done.p;msSync();ptToast("완독 보너스 +"+PCFG.BONUS.done.p+"P");return PCFG.BONUS.done.p}
+function bonusDone(bk){if(bk==null||DONEPAID[bk]||("done" in psDay().got))return 0;DONEPAID[bk]=1;return award("done")}
 function readToday(){var s=psDay(),t=s.d;RDAYS[t]=1;
  var n=0,d=t;while(RDAYS[d]){n++;d=dshift(d,-1)}
- var N=PCFG.BONUS.streak.days,start=dshift(t,-(N-1));
- if(n>=N&&(!STRK.paidEnd||STRK.paidEnd<start)){STRK.paidEnd=t;s.bonus.streak+=PCFG.BONUS.streak.p;PT+=PCFG.BONUS.streak.p;msSync();ptToast("지속 독서 보너스 +"+PCFG.BONUS.streak.p+"P ("+N+"일 연속)")}
+ var N=PCFG.ACT.streak.days,start=dshift(t,-(N-1));
+ if(n>=N&&(!STRK.paidEnd||STRK.paidEnd<start)){STRK.paidEnd=t;award("streak")}
  var books={};Object.keys(RDY.p||{}).forEach(function(x){var b=x.split("-")[0];books[b]=(books[b]||0)+1});
  if(Object.keys(books).filter(function(b){return books[b]>=PCFG.ACT.da.minPages}).length>=PCFG.ACT.da.books)award("da")}
 (function(){var t=todayStr();RDAYS[dshift(t,-1)]=1;RDAYS[dshift(t,-2)]=1})();
 function hpHead(){var s=psDay(),c=PCFG.DAILY_CAP,pc=Math.round(s.act*100/c);msSync();
  return'<div class="hph"><span class="hpt">보유 <b class="hpp">'+PT+'P</b></span><span class="hpd">오늘 <b>'+s.act+'P</b> / '+c+'P</span></div><div class="hpg2" role="progressbar" aria-label="오늘의 활동 포인트" aria-valuenow="'+s.act+'" aria-valuemin="0" aria-valuemax="'+c+'"><i style="width:'+pc+'%"></i></div>'
- +'<ul class="hpr"><li><span>일일 활동 포인트</span><b>'+s.act+'P / '+c+'P</b></li><li><span>완독 보너스</span><b>+'+s.bonus.done+'P</b></li><li><span>지속 독서 보너스</span><b>+'+s.bonus.streak+'P</b></li></ul>'}
+ +'<ul class="hpr"><li><span>일일 활동 포인트</span><b>'+s.act+'P / '+c+'P</b></li></ul>'}
 function recList(key){return Object.keys(RK).map(function(k){var m=[];for(var i=0;i<4;i++)if(RK[k].charAt(i)===key.charAt(i))m.push(1);return{k:+k,m:m}}).sort(function(a,b){return b.m.length-a.m.length||a.k-b.k}).slice(0,3)}
 function recBox(key){
  var L=Object.keys(RK).map(function(k){var m=[];for(var i=0;i<4;i++)if(RK[k].charAt(i)===key.charAt(i))m.push(AX[i]["FSAEDWIJ".indexOf(key.charAt(i))%2]);return{k:+k,m:m}}).sort(function(a,b){return b.m.length-a.m.length||a.k-b.k}).slice(0,3);
@@ -1378,7 +1377,7 @@ BS=["clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%)","clip-path:polygon(
 I.clock="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7v5l3 2";I.stack="M4 8l8-4 8 4-8 4zM4 12l8 4 8-4M4 16l8 4 8-4";I.notes="M6 3h12v18H6zM9 8h6M9 12h6M9 16h4";I.cal="M5 6h14v14H5zM5 10h14M9 4v4M15 4v4M9 15l2 2 4-4";I.gift="M4 11h16v9H4zM3 8h18v3H3zM12 8v12M12 8c-3 0-4-3-2-3.5 2-.5 2 3.5 2 3.5zM12 8c3 0 4-3 2-3.5-2-.5-2 3.5-2 3.5z";
 I.talk="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM8.5 10.5h.01M12 10.5h.01M15.5 10.5h.01";
 I.grid="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z";I.memo="M5 4h14v11l-5 5H5zM14 20v-5h5";I.theme="M5 5h14a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z";I.eraser="M4 16l9-9 6 6-6 6H8zM9 11l6 6M12 19h8";I.trash="M5 7h14M10 4h4M7 7l1 13h8l1-13";
-var MSD=["하루에 책 2권을 각각 2쪽 이상 읽으면 달성돼요. 책을 펼치기만 해서는 달성되지 않아요.","커뮤니티 글에 댓글을 남기면 달성돼요. 하루 한 번만 지급돼요.","3일 연속으로 책을 읽으면 달성돼요. 일일 상한과 별도로 주는 보너스예요.","문장 카드나 책을 공유하면 달성돼요. 하루 한 번만 지급돼요.","책 한 권을 끝까지 읽으면 달성돼요. 일일 상한과 별도로 주는 보너스예요(같은 책 1회, 하루 1권).","오늘 설정한 목표 쪽수에 도달하면 달성돼요. 목표가 10쪽보다 적으면 10쪽을 읽어야 해요.","오늘 앱에 들어오면 달성돼요.","친구에게 독서 우표를 선물하면 달성돼요. 나에게 보내면 지급되지 않고, 하루 한 번만 지급돼요.","책 속 문장에 코멘트를 남기면 달성돼요. 하루 한 번만 지급돼요."],MS=[["다독","book",50,0],["토론 참여","chat",50,0],["지속 독서","clock",100,0],["공유","talk",20,0],["완독","stack",200,0],["정독","notes",100,0],["출석","cal",10,0],["선물","gift",50,0],["코멘트","cmt",20,0]];
+var MSD=["하루에 책 2권을 각각 2쪽 이상 읽으면 달성돼요. 책을 펼치기만 해서는 달성되지 않아요.","커뮤니티 글에 댓글을 남기면 달성돼요. 하루 한 번만 지급돼요.","3일 연속으로 책을 읽으면 달성돼요. 하루 한 번만 지급돼요.","문장 카드나 책을 공유하면 달성돼요. 하루 한 번만 지급돼요.","책 한 권을 끝까지 읽으면 달성돼요. 같은 책은 한 번만, 하루 한 번만 지급돼요.","오늘 설정한 목표 쪽수에 도달하면 달성돼요. 목표가 10쪽보다 적으면 10쪽을 읽어야 해요.","오늘 앱에 들어오면 달성돼요.","친구에게 독서 우표를 선물하면 달성돼요. 나에게 보내면 지급되지 않고, 하루 한 번만 지급돼요.","책 속 문장에 코멘트를 남기면 달성돼요. 하루 한 번만 지급돼요."],MS=[["다독","book",50,0],["토론 참여","chat",50,0],["지속 독서","clock",100,0],["공유","talk",20,0],["완독","stack",200,0],["정독","notes",100,0],["출석","cal",10,0],["선물","gift",50,0],["코멘트","cmt",20,0]];
 function pc(c,i){var t=ITM[c][i];return c==="TH"?t[4]:t[2]}
 function pv(c,i,col){var t=ITM[c][i];
  if(c==="PN")return'<div class="pvn" style="background:'+col+';'+PS[t[1]]+'"></div>';
@@ -1690,7 +1689,7 @@ function home(){
  app.innerHTML='<header class="hd"><span class="nick">'+esc(ME)+'</span><button class="ib nbl" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'">'+ic(unread()?"bellOn":"bell")+(unread()?'<i class="nbd"></i>':'')+'</button><button class="ib" id="hmn" aria-label="설정 열기">'+ic("menu")+'</button></header>'
  +hero
  +'<section class="blk"><div class="sh"><h3>이번 주 기록</h3><button class="pme" id="hdt">달력'+ic("next")+'</button></div><div class="box wkx"><div class="wks"><b>'+rd+'일</b> 읽었어요<span>이번 주 목표 달성률 '+wp+'% · 하루 목표 '+G+'쪽</span></div><div class="wkr">'+bars+'</div></div></section>'
- +'<section class="blk"><div class="sh"><h3>오늘의 포인트</h3><button class="pme" id="hpt">디지털 문구점'+ic("next")+'</button></div><div class="box hpx" id="hpx">'+hpHead()+'<div class="hpl">'+MS.map(function(x,i){return[x,i]}).sort(function(a,b){return a[0][3]-b[0][3]}).map(function(r){var x=r[0];return'<div class="hpm'+(x[3]?" dn":"")+'" data-i="'+r[1]+'" tabindex="0" role="button" aria-label="'+x[0]+' 미션: '+MSD[r[1]]+'"><span>'+ic(x[3]?"check":x[1])+'</span><b>'+x[0]+'</b><small>'+(x[3]?(MK[r[1]]==="done"||MK[r[1]]==="streak"||psDay().got[MK[r[1]]]===x[2]?"완료":"완료 +"+psDay().got[MK[r[1]]]+"P"):"+"+x[2]+"P")+'</small>'+(MK[r[1]]==="done"||MK[r[1]]==="streak"?'<em class="hpb">보너스</em>':'')+'</div>'}).join("")+'</div></div></section>'
+ +'<section class="blk"><div class="sh"><h3>오늘의 포인트</h3><button class="pme" id="hpt">디지털 문구점'+ic("next")+'</button></div><div class="box hpx" id="hpx">'+hpHead()+'<div class="hpl">'+MS.map(function(x,i){return[x,i]}).sort(function(a,b){return a[0][3]-b[0][3]}).map(function(r){var x=r[0];return'<div class="hpm'+(x[3]?" dn":"")+'" data-i="'+r[1]+'" tabindex="0" role="button" aria-label="'+x[0]+' 미션: '+MSD[r[1]]+'"><span>'+ic(x[3]?"check":x[1])+'</span><b>'+x[0]+'</b><small>'+(x[3]?(MK[r[1]]==="done"||MK[r[1]]==="streak"||psDay().got[MK[r[1]]]===x[2]?"완료":"완료 +"+psDay().got[MK[r[1]]]+"P"):"+"+x[2]+"P")+'</small>'+'</div>'}).join("")+'</div></div></section>'
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  if(REC)app.querySelectorAll(".rck").forEach(function(b){b.onclick=function(){PICKED=1;DEF=+b.dataset.k;reader(DEF)}});else app.querySelectorAll(".hgo").forEach(function(b){b.onclick=function(){if(HSM)return;reader(+b.dataset.k)}});
  var hsk=document.getElementById("hsk");if(hsk)hsk.onclick=function(){testPg()};
