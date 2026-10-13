@@ -1726,7 +1726,7 @@ var PO=[
 {id:2,t:"코멘트",u:"지민",tm:"1시간 전",v:0,x:"친구들이랑 읽었는데 남주가 쓰레기 발언할 때마다 코멘트로 패줘서 너무 시원했다 ㅋㅋ 그 코멘트들이 궁금하면 책 열어 봐요. 같이 읽는 재미가 확실히 달라요.",b:1,l:48,c:[["은우","3장 남주 대사에 ‘이게 사람이냐’ 달아 놓은 거 레전드",32],["하린","여주 편 들어주는 코멘트가 제일 웃겼어요",14]]},
 {id:3,t:"밸런스",u:"은우",tm:"3시간 전",v:0,x:"밸런스 게임! 이 책에서 더 빌런은 누구일까요?",b:2,o:["남주의 거짓말","여주의 침묵"],n:[62,38],l:9,c:[]},
 {id:4,t:"자유",u:"도윤",tm:"어제",v:1,x:"요즘 출퇴근길에 한 챕터씩 읽는 습관이 생겼어요. 짧게라도 매일 읽으니 휴대폰을 덜 보게 돼요.",l:7,c:[]}],
-TY=[["all","전체"],["같이","같이 읽어요"],["코멘트","코멘트 공유"],["밸런스","밸런스 게임"],["자유","자유글"],["mine","내가 쓴 글"]],
+TY=[["all","전체"],["같이","같이 읽어요"],["코멘트","코멘트 공유"],["밸런스","밸런스 게임"],["friend","친구"],["mine","내가 쓴 글"]],
 TD={자유:"책을 고르지 않고 독서 습관, 일상, 내가 만든 꾸미기 등을 나누는 글이에요.",같이:"함께 읽을 사람을 모으는 글이에요. 책을 골라야 해요.",코멘트:"책에 남긴 내 코멘트를 소개하는 글이에요. 책을 골라야 해요.",밸런스:"책에 대한 두 가지 선택지로 투표를 받는 글이에요. 책을 골라야 해요."},
 TN={자유:"자유글",같이:"같이 읽어요",코멘트:"코멘트 공유",밸런스:"밸런스 게임"},
 VIS=[["globe","전체공개"],["users","친구공개"],["lock","나만보기"]],LKD={},VT={},CF="all";
@@ -1756,8 +1756,8 @@ function community(){
   return((b?b[0]+" "+b[1]+" ":"")+p.x+" "+(p.o||[]).join(" ")).toLowerCase().indexOf(q)>-1}
  function feed(){
   document.getElementById("tyb").innerHTML=TY.map(function(c){return'<button role="tab" aria-selected="'+(CF===c[0])+'" data-t="'+c[0]+'">'+c[1]+'</button>'}).join("");
-  var h=PO.filter(function(p){return(CF==="all"||(CF==="mine"?p.mine:CF==="mycm"?p.c.some(function(c){return c[3]}):p.t===CF))&&(p.v===0||p.mine||(p.v===1&&FR[p.u]))&&cqm(p)}).map(post).join("");
-  document.getElementById("feed").innerHTML=h||'<div class="emp">'+(CQ.trim()?"‘"+esc(CQ.trim())+"’에 대한 글이 없어요.":CF==="mine"?"아직 쓴 글이 없어요.":CF==="mycm"?"아직 댓글을 단 글이 없어요.":"아직 올라온 글이 없어요.")+'</div>'}
+  var h=PO.filter(function(p){return(CF==="all"||(CF==="mine"?p.mine:CF==="friend"?!p.mine&&!!FR[p.u]:CF==="mycm"?p.c.some(function(c){return c[3]}):p.t===CF))&&(p.v===0||p.mine||(p.v===1&&FR[p.u]))&&cqm(p)}).map(post).join("");
+  document.getElementById("feed").innerHTML=h||'<div class="emp">'+(CQ.trim()?"‘"+esc(CQ.trim())+"’에 대한 글이 없어요.":CF==="mine"?"아직 쓴 글이 없어요.":CF==="friend"?"아직 친구가 쓴 글이 없어요.":CF==="mycm"?"아직 댓글을 단 글이 없어요.":"아직 올라온 글이 없어요.")+'</div>'}
  function byId(id){return PO.filter(function(p){return p.id===id})[0]}
  var inD=false,FCB=null,ref=function(){feed()};
  function menu(id,fd){
@@ -1839,11 +1839,11 @@ function community(){
     bl.onclick=function(e){var b=e.target.closest(".bsi");if(!b)return;sv();bk=CATB[+b.dataset.c];bq="";bf=false;msg="";r()}}}
   pop("");d=document.getElementById("dlg");r()}
  function act(){
-  var x=pop('<h3>내 활동</h3><div class="sg"><div><button data-a="0" aria-pressed="true">내가 쓴 글</button><button data-a="1" aria-pressed="false">내가 쓴 댓글</button><button data-a="2" aria-pressed="false">좋아요 누른 글</button></div></div><div id="al"></div><button class="btn ghost" id="n" style="width:100%;margin-top:12px;flex:none">닫기</button>');
+  var x=pop('<h3>내 활동</h3><div class="sg"><div><button data-a="1" aria-pressed="true">내가 쓴 댓글</button><button data-a="2" aria-pressed="false">좋아요 누른 글</button></div></div><div id="al"></div><button class="btn ghost" id="n" style="width:100%;margin-top:12px;flex:none">닫기</button>');
   function show(k){var L=[];
-   PO.forEach(function(p){if(k===0&&p.mine)L.push(p.x);if(k===1)p.c.forEach(function(c){if(c[3])L.push(c[1])});if(k===2&&LKD[p.id])L.push(p.x)});
+   PO.forEach(function(p){if(k===1)p.c.forEach(function(c){if(c[3])L.push(c[1])});if(k===2&&LKD[p.id])L.push(p.x)});
    document.getElementById("al").innerHTML=L.length?L.map(function(t){return'<div class="cr">'+esc(t)+'</div>'}).join(""):'<p class="sm" style="color:var(--sub)">아직 없어요.</p>'}
-  show(0);document.getElementById("n").onclick=x;
+  show(1);document.getElementById("n").onclick=x;
   document.querySelectorAll("#dlg .sg button").forEach(function(b){b.onclick=function(){document.querySelectorAll("#dlg .sg button").forEach(function(c){c.setAttribute("aria-pressed",c===b)});show(+b.dataset.a)}})}
  feed();
  document.getElementById("tyb").onclick=function(e){var b=e.target.closest("button");if(b){CF=b.dataset.t;feed()}};
