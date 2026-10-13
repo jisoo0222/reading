@@ -894,6 +894,7 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .hpx .hpl{padding-top:8px}.hpb{top:-6px!important;right:0!important}
 .gfto{margin:12px 0 4px;display:flex;flex-direction:column;gap:8px}.gfto b{font-size:13px}.gfto small{font-size:12px;color:var(--sub);word-break:keep-all;line-height:1.5}
 html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
+.rgh{font-size:13px;font-weight:700;color:var(--pri);margin:14px 0 6px 4px}.rgh:first-of-type{margin-top:4px}
 </style>
 </head>
 <body>
@@ -1281,13 +1282,26 @@ function profile(){
  document.getElementById("rp").onclick=typePg;
  document.getElementById("pme").onclick=meEdit;
  app.querySelectorAll(".pfc[data-i]").forEach(function(b){b.onclick=function(){friend(+b.dataset.i,1)}});var pfa=document.getElementById("pfa");if(pfa)pfa.onclick=frList;
- var rbm=document.getElementById("rbm");if(rbm)rbm.onclick=function(){var o=document.getElementById("rbl").classList.toggle("open");rbm.textContent=o?"접기":"전체 보기"};
+ var rbm=document.getElementById("rbm");if(rbm)rbm.onclick=function(){readPg(1)};
  app.querySelectorAll(".ordr").forEach(function(b){b.onclick=function(){ordPg(+b.dataset.o)}});
  var pst=document.getElementById("pst");pst.onclick=function(){SPF=1;stampPg()};pst.onkeydown=function(e){if(e.key==="Enter")pst.onclick()};
 
  document.getElementById("pfr").onclick=frList;
  app.querySelectorAll(".tab button")[2].onclick=home;app.querySelectorAll(".tab button")[0].onclick=community;app.querySelectorAll(".tab button")[1].onclick=shop;app.querySelectorAll(".tab button")[3].onclick=tabStamp;
 }
+function readPg(srt){
+ var CHO="ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ",BS={"ㄲ":"ㄱ","ㄸ":"ㄷ","ㅃ":"ㅂ","ㅆ":"ㅅ","ㅉ":"ㅈ"};
+ function ini(t){var c=t.charCodeAt(0);if(c>=0xAC00&&c<=0xD7A3){var h=CHO.charAt(Math.floor((c-0xAC00)/588));return BS[h]||h}return/[A-Za-z]/.test(t.charAt(0))?"A-Z":"기타"}
+ var L=readList(),row=function(b){return'<div class="rbk"><i style="background:'+b.c+'"></i><span class="rbt"><b>'+esc(b.t)+'</b><small>'+esc(b.a)+'</small></span><em class="rbs'+(b.done?" dn":"")+'">'+b.s+'</em></div>'},h="";
+ if(srt){var G={},O=[];L.slice().sort(function(x,y){return x.t.localeCompare(y.t,"ko")}).forEach(function(b){var k=ini(b.t);if(!G[k]){G[k]=[];O.push(k)}G[k].push(b)});
+  h=O.map(function(k){return'<h4 class="rgh">'+k+'</h4><div class="rbl">'+G[k].map(row).join("")+'</div>'}).join("")}
+ else h='<div class="rbl">'+L.map(row).join("")+'</div>';
+ app.className="app";
+ app.innerHTML='<div class="sh2"><button class="ib" id="rp0" aria-label="뒤로">'+ic("back")+'</button><h2>읽은 책 '+L.length+'권</h2><span class="sp3"></span></div>'
+ +'<div class="ctb" role="tablist"><button role="tab" aria-selected="'+!!srt+'" data-s="1">가나다 순</button><button role="tab" aria-selected="'+!srt+'" data-s="0">최근 읽은 순</button></div>'+h;
+ app.firstChild.style.paddingBottom="30px";
+ document.getElementById("rp0").onclick=profile;
+ app.querySelectorAll(".ctb button").forEach(function(b){b.onclick=function(){readPg(+b.dataset.s);app.scrollTop=0}})}
 function frList(){
  var row=function(m,i){return'<button class="frw" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>취향 일치도 '+m[1]+'%</small>'+ic("next")+'</button>'},F=[],R=[];
  M.forEach(function(m,i){(FR[m[0]]?F:R).push(row(m,i))});
