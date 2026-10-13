@@ -13,6 +13,8 @@ import android.util.Base64;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -32,6 +34,7 @@ import java.io.OutputStream;
  */
 public class MainActivity extends Activity {
     private static final int REQ_FILE = 41;
+    private static final String ASSET_URL = "file:///android_asset/index.html";
     private WebView web;
     private ValueCallback<Uri[]> fileCb;
 
@@ -56,6 +59,16 @@ public class MainActivity extends Activity {
             public void onPageFinished(WebView v, String url) {
                 v.evaluateJavascript(SHIM, null);
             }
+
+            @Override
+            public void onReceivedError(WebView v, WebResourceRequest r, WebResourceError e) {
+                // 개발 서버에 연결하지 못하면 앱 안의 화면으로 바꿔 띄워요.
+                if (r.isForMainFrame() && !BuildConfig.DEV_URL.isEmpty()
+                        && r.getUrl().toString().startsWith(BuildConfig.DEV_URL)) {
+                    toast("개발 서버가 꺼져 있어서 앱에 들어 있는 화면을 띄웠어요");
+                    v.loadUrl(ASSET_URL);
+                }
+            }
         });
         web.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -76,7 +89,7 @@ public class MainActivity extends Activity {
         });
 
         if (state != null) web.restoreState(state);
-        else web.loadUrl("file:///android_asset/index.html");
+        else web.loadUrl(BuildConfig.DEV_URL.isEmpty() ? ASSET_URL : BuildConfig.DEV_URL);
     }
 
     @Override

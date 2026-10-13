@@ -10,8 +10,16 @@ android {
         versionCode 1
         versionName '0.1'
     }
+    buildFeatures { buildConfig true }
     buildTypes {
-        release { minifyEnabled false }
+        // 디버그(Android Studio에서 Run ▶): 컴퓨터의 개발 서버(node dev-server.js)를 먼저 불러와요.
+        // 서버가 꺼져 있으면 앱 안에 들어 있는 화면을 대신 띄워요.
+        debug { buildConfigField 'String', 'DEV_URL', '"http://10.0.2.2:5173/"' }
+        // 배포용: 항상 앱 안에 들어 있는 화면만 써요.
+        release {
+            minifyEnabled false
+            buildConfigField 'String', 'DEV_URL', '""'
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
