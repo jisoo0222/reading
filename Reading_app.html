@@ -897,6 +897,7 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .rgh{font-size:13px;font-weight:700;color:var(--pri);margin:14px 0 6px 4px}.rgh:first-of-type{margin-top:4px}
 .rso{display:flex;justify-content:flex-end;gap:4px;margin:-4px 0 6px}.rso button{font:inherit;font-size:13px;background:none;border:0;padding:4px 6px;color:var(--sub);cursor:pointer}.rso button[aria-pressed="true"]{color:var(--pri);font-weight:700}.rso button+button::before{content:"·";margin-right:8px;color:var(--line);font-weight:400}
 .tsh{justify-content:center;margin:-8px 0 10px}.tsh h2{flex:none}.tq{margin-bottom:22px}.tq h3{font-size:16px;line-height:1.45;margin:0 0 10px;word-break:keep-all}.tq h3 em{display:block;font-style:normal;font-size:13px;color:var(--sec);font-weight:700;margin-bottom:2px}
+.tsh~h1{word-break:keep-all}
 </style>
 </head>
 <body>
@@ -971,15 +972,14 @@ function typePg(){
  app.innerHTML='<div class="sh2"><button class="ib" id="ty0" aria-label="뒤로">'+ic("back")+'</button><h2>AI 독서 성향 분석</h2><span class="sp3"></span></div><div class="tcard">'+typeSVG(c.key,c.t,c.names)+'</div><div class="tbt"><button class="btn ghost" id="tsv">저장하기</button><button class="btn" id="tsh">공유하기</button></div><button class="btn ghost tre" id="tre">다시 하기</button><button class="pme tdm" id="tdm">성향 분석 자세히 보기'+ic("next")+'</button>';
  document.getElementById("ty0").onclick=profile;document.getElementById("tre").onclick=function(){step=0;ans=[null,null,null,null];tiIntro()};cardWire(c.key,c.t,c.names);
  document.getElementById("tdm").onclick=function(){var x=pop('<h3>성향 분석</h3><div class="tdl">'+c.rows+'</div><button class="btn ghost" id="tdx" style="width:100%;margin-top:14px">닫기</button>');document.getElementById("tdx").onclick=x}}
-function testPg(){
- var a=[null,null,null,null];app.className="app";
- app.innerHTML='<div class="sh2 tsh"><h2>테스트</h2></div><p class="hint" style="margin:0 0 18px">질문마다 나와 가장 가까운 행동을 하나씩 골라 주세요.</p>'
- +Q.map(function(q,n){return'<section class="tq" data-n="'+n+'"><h3><em>Q'+(n+1)+'</em>'+q.t+'</h3><div class="opts">'+q.o.map(function(x,i){return'<button class="opt" data-i="'+i+'" aria-pressed="false"><span>'+x+'</span><span class="mk"></span></button>'}).join("")+'</div></section>'}).join("")
- +'<button class="btn" id="tqg" style="width:100%;margin-top:6px" disabled>결과 보기</button>';
- app.firstChild.style.paddingBottom="30px";window.scrollTo(0,0);app.scrollTop=0;
- var g=document.getElementById("tqg");
- app.querySelectorAll(".tq").forEach(function(sc){var n=+sc.dataset.n;sc.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){a[n]=+b.dataset.i;sc.querySelectorAll(".opt").forEach(function(c){c.setAttribute("aria-pressed",c===b)});g.disabled=a.indexOf(null)>-1}})});
- g.onclick=function(){ans=a.slice();app.innerHTML='<div class="sh2 tsh"><h2>테스트</h2></div><div class="center" role="status"><div class="ring"></div><h1>독서 성향을 분석하고 있어요</h1><p class="hint">답변을 바탕으로 결과를 만드는 중이에요.</p></div>';setTimeout(testRes,1600)}}
+function testPg(n,a){
+ n=n||0;a=a||[null,null,null,null];var q=Q[n];app.className="app";
+ app.innerHTML='<div class="sh2 tsh"><h2>테스트</h2></div>'+bar(n+1)+'<h1>'+q.t+'</h1><p class="hint">'+q.h+'</p><div class="opts">'+q.o.map(function(x,i){return'<button class="opt" data-i="'+i+'" aria-pressed="'+(a[n]===i)+'"><span>'+x+'</span><span class="mk"></span></button>'}).join("")+'</div><div class="foot"><button class="btn" id="tqg">'+(n===Q.length-1?"결과 보기":"다음")+'</button></div>';
+ window.scrollTo(0,0);app.scrollTop=0;
+ var g=document.getElementById("tqg");g.disabled=a[n]===null;
+ app.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){a[n]=+b.dataset.i;app.querySelectorAll(".opt").forEach(function(c){c.setAttribute("aria-pressed",c===b)});g.disabled=false}});
+ g.onclick=function(){if(n<Q.length-1){testPg(n+1,a);return}
+  ans=a.slice();app.innerHTML='<div class="sh2 tsh"><h2>테스트</h2></div>'+bar(Q.length)+'<div class="center" role="status"><div class="ring"></div><h1>독서 성향을 분석하고 있어요</h1><p class="hint">답변을 바탕으로 결과를 만드는 중이에요.</p></div>';setTimeout(testRes,1600)}}
 function testRes(){
  var c=calcType();RKEY=c.key;app.className="app";
  app.innerHTML='<div class="sh2 tsh"><h2>테스트 결과</h2></div><div class="tcard">'+typeSVG(c.key,c.t,c.names)+'</div><div class="tbt"><button class="btn ghost" id="tsv">저장하기</button><button class="btn" id="tsh">공유하기</button></div>'
@@ -988,7 +988,7 @@ function testRes(){
  window.scrollTo(0,0);app.scrollTop=0;
  document.getElementById("go").onclick=home;cardWire(c.key,c.t,c.names);
  app.querySelectorAll(".rbk").forEach(function(b){b.onclick=function(){bookDt(+b.dataset.k,testRes)}});
- document.getElementById("re").onclick=testPg}
+ document.getElementById("re").onclick=function(){testPg()}}
 function result(){
  var c=calcType(),key=c.key,t=c.t,names=c.names,rows=c.rows;RKEY=key;
  app.innerHTML=bar(Q.length)+'<h1>독서 성향이 분석되었어요</h1><div class="tcard" id="tcd">'+typeSVG(key,t,names)+'</div><div class="tbt"><button class="btn ghost" id="tsv">저장하기</button><button class="btn" id="tsh">공유하기</button></div>'
@@ -1693,7 +1693,7 @@ function home(){
  +'<section class="blk"><div class="sh"><h3>오늘의 포인트</h3><button class="pme" id="hpt">디지털 문구점'+ic("next")+'</button></div><div class="box hpx" id="hpx">'+hpHead()+'<div class="hpl">'+MS.map(function(x,i){return[x,i]}).sort(function(a,b){return a[0][3]-b[0][3]}).map(function(r){var x=r[0];return'<div class="hpm'+(x[3]?" dn":"")+'" data-i="'+r[1]+'" tabindex="0" role="button" aria-label="'+x[0]+' 미션: '+MSD[r[1]]+'"><span>'+ic(x[3]?"check":x[1])+'</span><b>'+x[0]+'</b><small>'+(x[3]?(MK[r[1]]==="done"||MK[r[1]]==="streak"||psDay().got[MK[r[1]]]===x[2]?"완료":"완료 +"+psDay().got[MK[r[1]]]+"P"):"+"+x[2]+"P")+'</small>'+(MK[r[1]]==="done"||MK[r[1]]==="streak"?'<em class="hpb">보너스</em>':'')+'</div>'}).join("")+'</div></div></section>'
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  if(REC)app.querySelectorAll(".rck").forEach(function(b){b.onclick=function(){PICKED=1;DEF=+b.dataset.k;reader(DEF)}});else app.querySelectorAll(".hgo").forEach(function(b){b.onclick=function(){if(HSM)return;reader(+b.dataset.k)}});
- var hsk=document.getElementById("hsk");if(hsk)hsk.onclick=testPg;
+ var hsk=document.getElementById("hsk");if(hsk)hsk.onclick=function(){testPg()};
  var HSM=false,hs=document.getElementById("rcscroll");
  if(hs){var dd=app.querySelectorAll("#hdots button");
   hs.addEventListener("scroll",function(){var i=Math.round(hs.scrollLeft/hs.clientWidth);dd.forEach(function(d,j){d.setAttribute("aria-current",j===i)})});
