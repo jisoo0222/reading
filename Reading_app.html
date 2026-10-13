@@ -1082,13 +1082,15 @@ function quoteSVG(q,bt,au,th,serif){
  var T=QTH[th],e=function(x){return esc(String(x))},F=serif?'font-family="Noto Serif KR,Nanum Myeongjo,Batang,serif"':'font-family="Pretendard,Apple SD Gothic Neo,Noto Sans KR,sans-serif"',S='font-family="Pretendard,Apple SD Gothic Neo,Noto Sans KR,sans-serif"';
  if(q.length>150)q=q.slice(0,148)+"…";
  var fs=q.length>90?52:q.length>50?58:66,n=Math.floor(900/fs),L=qWrap(q,n),lh=Math.round(fs*1.62),h=L.length*lh,y0=Math.round(910-h/2+fs*.35);
+ /* 여는·닫는 따옴표를 문장 글자 윗선·아랫선에서 같은 간격(56)만큼 띄워 문장이 따옴표 사이 가운데 오게 */
+ var qm=serif?[133,82]:[138,94],qo=Math.round(y0-fs*.76-56+qm[1]),qc=Math.round(y0+h-lh+fs*.14+56+qm[0]);
  return'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="1080" height="1920" role="img" aria-label="문장 카드">'
  +'<rect width="1080" height="1920" fill="'+T[1]+'"/>'
  +'<rect x="60" y="60" width="960" height="1800" rx="36" fill="none" stroke="'+T[3]+'" stroke-opacity=".45" stroke-width="3"/>'
  +'<text x="540" y="250" text-anchor="middle" font-size="34" letter-spacing="10" fill="'+T[4]+'" '+S+'>오늘의 문장</text>'
- +'<text x="540" y="'+(y0-fs+40)+'" text-anchor="middle" font-size="200" fill="'+T[3]+'" '+F+'>“</text>'
+ +'<text x="540" y="'+qo+'" text-anchor="middle" font-size="200" fill="'+T[3]+'" '+F+'>“</text>'
  +L.map(function(l,i){return'<text x="540" y="'+(y0+i*lh)+'" text-anchor="middle" font-size="'+fs+'" fill="'+T[2]+'" '+F+'>'+e(l)+'</text>'}).join("")
- +'<text x="540" y="'+(y0+h-lh+170)+'" text-anchor="middle" font-size="200" fill="'+T[3]+'" '+F+'>”</text>'
+ +'<text x="540" y="'+qc+'" text-anchor="middle" font-size="200" fill="'+T[3]+'" '+F+'>”</text>'
  +'<rect x="500" y="'+(y0+h+130)+'" width="80" height="4" rx="2" fill="'+T[3]+'"/>'
  +'<text x="540" y="'+(y0+h+220)+'" text-anchor="middle" font-size="42" font-weight="700" fill="'+T[2]+'" '+S+'>『'+e(bt)+'』</text>'
  +'<text x="540" y="'+(y0+h+276)+'" text-anchor="middle" font-size="32" fill="'+T[4]+'" '+S+'>'+e(au)+'</text>'
