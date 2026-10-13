@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 독독 아이콘: 라벤더색 펼친 책 위의 흰 강아지 발바닥 (108dp 적응형 아이콘, 가운데 72dp 안에 배치) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#B2A5D6" android:strokeColor="#6A4F6A" android:strokeWidth="2"
+        android:pathData="M54,40c-8,-4 -18,-5 -26,-2v32c8,-3 18,-2 26,2z" />
+    <path android:fillColor="#B2A5D6" android:strokeColor="#6A4F6A" android:strokeWidth="2"
+        android:pathData="M54,40c8,-4 18,-5 26,-2v32c-8,-3 -18,-2 -26,2z" />
+    <path android:strokeColor="#6A4F6A" android:strokeWidth="2.5" android:pathData="M54,40v32" />
+    <path android:fillColor="#F6F1EC"
+        android:pathData="M67,52c-2.8,0 -6.2,3.6 -6.2,6.2 0,2 1.6,2.8 3.2,2.8 1.2,0 2,-0.7 3,-0.7s1.8,0.7 3,0.7c1.6,0 3.2,-0.8 3.2,-2.8 0,-2.6 -3.4,-6.2 -6.2,-6.2z" />
+    <path android:fillColor="#F6F1EC" android:pathData="M59.8,50.8a1.9,2.6 0,1 0,3.8 0a1.9,2.6 0,1 0,-3.8 0z" />
+    <path android:fillColor="#F6F1EC" android:pathData="M62.4,47a2,2.8 0,1 0,4 0a2,2.8 0,1 0,-4 0z" />
+    <path android:fillColor="#F6F1EC" android:pathData="M67.6,47a2,2.8 0,1 0,4 0a2,2.8 0,1 0,-4 0z" />
+    <path android:fillColor="#F6F1EC" android:pathData="M70.4,50.8a1.9,2.6 0,1 0,3.8 0a1.9,2.6 0,1 0,-3.8 0z" />
+</vector>

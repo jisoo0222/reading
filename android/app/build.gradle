@@ -1,0 +1,29 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'app.dokdok.reader'
+    compileSdk 34
+    defaultConfig {
+        applicationId 'app.dokdok.reader'
+        minSdk 26
+        targetSdk 34
+        versionCode 1
+        versionName '0.1'
+    }
+    buildTypes {
+        release { minifyEnabled false }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+// 저장소 루트의 Reading_app.html 을 빌드할 때마다 앱 안(assets/index.html)으로 복사해요.
+// 웹 프로토타입 파일 하나만 고치면 앱에도 그대로 반영돼요.
+def copyWebApp = tasks.register('copyWebApp', Copy) {
+    from(rootProject.file('../Reading_app.html'))
+    into(layout.projectDirectory.dir('src/main/assets'))
+    rename { 'index.html' }
+}
+tasks.named('preBuild') { dependsOn copyWebApp }
