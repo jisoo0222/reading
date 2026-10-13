@@ -895,6 +895,7 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .gfto{margin:12px 0 4px;display:flex;flex-direction:column;gap:8px}.gfto b{font-size:13px}.gfto small{font-size:12px;color:var(--sub);word-break:keep-all;line-height:1.5}
 html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .rgh{font-size:13px;font-weight:700;color:var(--pri);margin:14px 0 6px 4px}.rgh:first-of-type{margin-top:4px}
+.rso{display:flex;justify-content:flex-end;gap:4px;margin:-4px 0 6px}.rso button{font:inherit;font-size:13px;background:none;border:0;padding:4px 6px;color:var(--sub);cursor:pointer}.rso button[aria-pressed="true"]{color:var(--pri);font-weight:700}.rso button+button::before{content:"·";margin-right:8px;color:var(--line);font-weight:400}
 </style>
 </head>
 <body>
@@ -1289,19 +1290,22 @@ function profile(){
  document.getElementById("pfr").onclick=frList;
  app.querySelectorAll(".tab button")[2].onclick=home;app.querySelectorAll(".tab button")[0].onclick=community;app.querySelectorAll(".tab button")[1].onclick=shop;app.querySelectorAll(".tab button")[3].onclick=tabStamp;
 }
-function readPg(srt){
+function readPg(srt,flt){flt=flt||0;
  var CHO="ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ",BS={"ㄲ":"ㄱ","ㄸ":"ㄷ","ㅃ":"ㅂ","ㅆ":"ㅅ","ㅉ":"ㅈ"};
  function ini(t){var c=t.charCodeAt(0);if(c>=0xAC00&&c<=0xD7A3){var h=CHO.charAt(Math.floor((c-0xAC00)/588));return BS[h]||h}return/[A-Za-z]/.test(t.charAt(0))?"A-Z":"기타"}
- var L=readList(),row=function(b){return'<div class="rbk"><i style="background:'+b.c+'"></i><span class="rbt"><b>'+esc(b.t)+'</b><small>'+esc(b.a)+'</small></span><em class="rbs'+(b.done?" dn":"")+'">'+b.s+'</em></div>'},h="";
+ var A=readList(),L=A.filter(function(b){return!flt||(flt===1?!b.done:b.done)}),row=function(b){return'<div class="rbk"><i style="background:'+b.c+'"></i><span class="rbt"><b>'+esc(b.t)+'</b><small>'+esc(b.a)+'</small></span><em class="rbs'+(b.done?" dn":"")+'">'+b.s+'</em></div>'},h="";
  if(srt){var G={},O=[];L.slice().sort(function(x,y){return x.t.localeCompare(y.t,"ko")}).forEach(function(b){var k=ini(b.t);if(!G[k]){G[k]=[];O.push(k)}G[k].push(b)});
   h=O.map(function(k){return'<h4 class="rgh">'+k+'</h4><div class="rbl">'+G[k].map(row).join("")+'</div>'}).join("")}
  else h='<div class="rbl">'+L.map(row).join("")+'</div>';
  app.className="app";
- app.innerHTML='<div class="sh2"><button class="ib" id="rp0" aria-label="뒤로">'+ic("back")+'</button><h2>읽은 책 '+L.length+'권</h2><span class="sp3"></span></div>'
- +'<div class="ctb" role="tablist"><button role="tab" aria-selected="'+!!srt+'" data-s="1">가나다 순</button><button role="tab" aria-selected="'+!srt+'" data-s="0">최근 읽은 순</button></div>'+h;
+ app.innerHTML='<div class="sh2"><button class="ib" id="rp0" aria-label="뒤로">'+ic("back")+'</button><h2>읽은 책 '+A.length+'권</h2><span class="sp3"></span></div>'
+ +'<div class="ctb" role="tablist">'+[["전체",A.length],["읽는 중",A.filter(function(b){return!b.done}).length],["완독",A.filter(function(b){return b.done}).length]].map(function(f,i){return'<button role="tab" aria-selected="'+(i===flt)+'" data-f="'+i+'">'+f[0]+' '+f[1]+'</button>'}).join("")+'</div>'
+ +'<div class="rso" role="group" aria-label="정렬">'+[["1","가나다 순"],["0","최근 읽은 순"]].map(function(o){return'<button aria-pressed="'+(+o[0]===+!!srt)+'" data-s="'+o[0]+'">'+o[1]+'</button>'}).join("")+'</div>'
+ +(L.length?h:'<p class="pfe" style="text-align:center;padding:40px 0">'+(flt===1?"지금 읽는 중인 책이 없어요.":"아직 완독한 책이 없어요.")+'</p>');
  app.firstChild.style.paddingBottom="30px";
  document.getElementById("rp0").onclick=profile;
- app.querySelectorAll(".ctb button").forEach(function(b){b.onclick=function(){readPg(+b.dataset.s);app.scrollTop=0}})}
+ app.querySelectorAll(".ctb button").forEach(function(b){b.onclick=function(){readPg(srt,+b.dataset.f)}});
+ app.querySelectorAll(".rso button").forEach(function(b){b.onclick=function(){readPg(+b.dataset.s,flt)}})}
 function frList(){
  var row=function(m,i){return'<button class="frw" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>취향 일치도 '+m[1]+'%</small>'+ic("next")+'</button>'},F=[],R=[];
  M.forEach(function(m,i){(FR[m[0]]?F:R).push(row(m,i))});
