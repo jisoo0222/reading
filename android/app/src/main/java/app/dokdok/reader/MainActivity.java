@@ -15,6 +15,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -24,6 +25,8 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 독독 웹 프로토타입(Reading_app.html)을 그대로 띄우는 안드로이드 화면.
@@ -35,6 +38,8 @@ import java.io.OutputStream;
 public class MainActivity extends Activity {
     private static final int REQ_FILE = 41;
     private static final String ASSET_URL = "file:///android_asset/index.html";
+    /** 앱에 들어 있는 Pretendard 글꼴을 웹 화면에 건네줄 때 쓰는 가상 주소 */
+    private static final String FONT_URL = "https://dokdok.app.font/PretendardVariable.woff2";
     private WebView web;
     private ValueCallback<Uri[]> fileCb;
 
@@ -63,6 +68,23 @@ public class MainActivity extends Activity {
             @Override
             public void onPageFinished(WebView v, String url) {
                 v.evaluateJavascript(SHIM, null);
+            }
+
+            @Override
+            public WebResourceResponse shouldInterceptRequest(WebView v, WebResourceRequest r) {
+                // 웹 화면이 Pretendard를 요청하면 앱 안의 글꼴 파일을 그대로 넘겨줘요.
+                if (FONT_URL.equals(r.getUrl().toString())) {
+                    try {
+                        Map<String, String> h = new HashMap<>();
+                        h.put("Access-Control-Allow-Origin", "*");
+                        h.put("Cache-Control", "max-age=31536000");
+                        return new WebResourceResponse("font/woff2", null, 200, "OK", h,
+                                getAssets().open("fonts/PretendardVariable.woff2"));
+                    } catch (Exception e) {
+                        return null;
+                    }
+                }
+                return super.shouldInterceptRequest(v, r);
             }
 
             @Override
@@ -168,10 +190,12 @@ public class MainActivity extends Activity {
      * 페이지가 열린 뒤 넣는 작은 연결 코드.
      * - 웹뷰는 navigator.share 가 없어서 안드로이드 공유 창으로 연결
      * - 'blob:' 이미지 다운로드 링크를 가로채 사진 앱에 저장
+     * - 기기에 Pretendard가 없어도 같은 글씨로 보이도록 앱 안의 글꼴을 연결
      * 웹 파일(Reading_app.html)은 고치지 않아요.
      */
     private static final String SHIM =
         "(function(){if(window.__dk)return;window.__dk=1;var B=window.AndroidBridge;if(!B)return;" +
+        "var fs=document.createElement('style');fs.textContent=\"@font-face{font-family:Pretendard;src:url('" + FONT_URL + "') format('woff2');font-weight:45 920;font-style:normal;font-display:swap}\";document.head.appendChild(fs);" +
         "navigator.share=function(d){d=d||{};B.shareText(d.title||'',[d.text,d.url].filter(Boolean).join('\\n'));return Promise.resolve()};" +
         "navigator.canShare=function(){return false};" +
         "var oc=HTMLAnchorElement.prototype.click;HTMLAnchorElement.prototype.click=function(){" +
