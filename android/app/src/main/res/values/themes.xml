@@ -1,0 +1,10 @@
+<resources>
+    <style name="Theme.DokDok" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:statusBarColor">@color/bg</item>
+        <item name="android:navigationBarColor">@color/bg</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+    <color name="bg">#F3EDE7</color>
+    <color name="plum">#6A4F6A</color>
+</resources>
