@@ -12,7 +12,9 @@ const SYNC = !process.argv.includes('--local');
 const REPO = 'jisoo0222/reading';
 const BRANCH = 'claude/ai-reading-habit-app-dss6gh';
 const SYNC_MS = 60 * 1000; // GitHub 무료 확인 횟수(시간당 60번)를 넘지 않게 1분 간격
-const FILE = path.join(__dirname, 'Reading_app.html');
+// dev-server.js 가 저장소 폴더에 있든 android 폴더 안에 있든 Reading_app.html 을 알아서 찾아요.
+const FILE = [path.join(__dirname, 'Reading_app.html'), path.join(__dirname, '..', 'Reading_app.html')]
+  .find((f) => fs.existsSync(f)) || path.join(__dirname, path.basename(__dirname) === 'android' ? '..' : '.', 'Reading_app.html');
 const clients = new Set();
 
 // 화면에 몰래 넣는 새로고침 코드 (파일 자체는 바꾸지 않아요)
@@ -41,6 +43,7 @@ http.createServer((req, res) => {
   console.log('독독 개발 서버가 켜졌어요.');
   console.log('  컴퓨터 브라우저: http://localhost:' + PORT);
   console.log('  안드로이드 에뮬레이터: 앱을 디버그로 실행하면 자동으로 연결돼요 (http://10.0.2.2:' + PORT + ')');
+  console.log('사용하는 파일: ' + FILE);
   console.log('Reading_app.html 을 저장하면 열린 화면이 자동으로 새로고침돼요.');
 });
 
