@@ -51,6 +51,11 @@ public class MainActivity extends Activity {
         s.setAllowFileAccess(true);
         s.setMediaPlaybackRequiresUserGesture(false);
         s.setTextZoom(100); // 시스템 글꼴 크기 때문에 레이아웃이 깨지지 않게 고정
+        // 화면 설계(폭 360px)를 기기 폭에 맞춰 통째로 확대해서 Pixel 등 큰 화면을 꽉 채워요.
+        s.setUseWideViewPort(true);
+        s.setLoadWithOverviewMode(true);
+        s.setSupportZoom(false);
+        s.setBuiltInZoomControls(false);
         web.setOverScrollMode(View.OVER_SCROLL_NEVER);
         web.addJavascriptInterface(new Bridge(), "AndroidBridge");
 

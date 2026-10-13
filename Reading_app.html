@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>/* 안드로이드 앱 안에서는 360px 설계 화면을 기기 폭에 맞춰 통째로 확대 */if(window.AndroidBridge){document.querySelector('meta[name="viewport"]').setAttribute("content","width=360, user-scalable=no, viewport-fit=cover");document.documentElement.classList.add("and")}</script>
 <title>독독</title>
 <style>
 :root{--bg:#F3EDE7;--card:#F6F1EC;--ink:#4F3A4F;--sub:#8A6A8A;--pri:#6A4F6A;--onpri:#F6F1EC;--sec:#9B7F9B;--line:#E6DCD2;
@@ -892,6 +893,7 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .hpx .hph{padding:0 14px}.hpx .hpg2{margin:8px 14px}.hpx .hpr{margin:0 14px 12px}
 .hpx .hpl{padding-top:8px}.hpb{top:-6px!important;right:0!important}
 .gfto{margin:12px 0 4px;display:flex;flex-direction:column;gap:8px}.gfto b{font-size:13px}.gfto small{font-size:12px;color:var(--sub);word-break:keep-all;line-height:1.5}
+html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 </style>
 </head>
 <body>
