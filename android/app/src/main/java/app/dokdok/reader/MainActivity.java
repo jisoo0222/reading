@@ -29,10 +29,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 독독 웹 프로토타입(Reading_app.html)을 그대로 띄우는 안드로이드 화면.
+ * 똑독 웹 프로토타입(Reading_app.html)을 그대로 띄우는 안드로이드 화면.
  * - 시스템 뒤로가기 → 앱 안의 '뒤로' 버튼(gback)과 연결
  * - 프로필 사진 고르기 → 갤러리 선택 창
- * - 이미지 저장(문장 카드·독서 유형 카드·스티커) → 사진 앱(Pictures/DokDok)에 저장
+ * - 이미지 저장(문장 카드·독서 유형 카드·스티커) → 사진 앱(Pictures/DdokDok)에 저장
  * - 공유하기 → 안드로이드 공유 창
  */
 public class MainActivity extends Activity {
@@ -151,16 +151,16 @@ public class MainActivity extends Activity {
             try {
                 String b64 = dataUrl.substring(dataUrl.indexOf(',') + 1);
                 byte[] bytes = Base64.decode(b64, Base64.DEFAULT);
-                String fn = name == null || name.isEmpty() ? "dokdok.png" : name;
+                String fn = name == null || name.isEmpty() ? "ddokdok.png" : name;
                 if (Build.VERSION.SDK_INT >= 29) {
                     ContentValues cv = new ContentValues();
                     cv.put(MediaStore.Images.Media.DISPLAY_NAME, fn);
                     cv.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
-                    cv.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/DokDok");
+                    cv.put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/DdokDok");
                     Uri u = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, cv);
                     try (OutputStream os = getContentResolver().openOutputStream(u)) { os.write(bytes); }
                 } else {
-                    File dir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "DokDok");
+                    File dir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "DdokDok");
                     dir.mkdirs();
                     try (FileOutputStream os = new FileOutputStream(new File(dir, fn))) { os.write(bytes); }
                 }

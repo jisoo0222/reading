@@ -1,4 +1,4 @@
-// 독독 개발용 서버: Reading_app.html 을 띄우고, 파일을 저장하면 열린 화면(에뮬레이터 앱 포함)을 자동으로 새로고침해요.
+// 똑독 개발용 서버: Reading_app.html 을 띄우고, 파일을 저장하면 열린 화면(에뮬레이터 앱 포함)을 자동으로 새로고침해요.
 // 사용법: 저장소 폴더에서  node dev-server.js   (끄려면 Ctrl + C)
 // 외부 패키지 없이 Node.js 기본 기능만 써요.
 const http = require('http');
@@ -40,7 +40,7 @@ http.createServer((req, res) => {
   }
   res.writeHead(404); res.end();
 }).listen(PORT, '0.0.0.0', () => {
-  console.log('독독 개발 서버가 켜졌어요.');
+  console.log('똑독 개발 서버가 켜졌어요.');
   console.log('  컴퓨터 브라우저: http://localhost:' + PORT);
   console.log('  안드로이드 에뮬레이터: 앱을 디버그로 실행하면 자동으로 연결돼요 (http://10.0.2.2:' + PORT + ')');
   console.log('사용하는 파일: ' + FILE);
