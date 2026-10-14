@@ -1286,7 +1286,7 @@ function profile(){
   var H=[128,112,136,120,104,132,116,124,108,130];
   shf.innerHTML='<div class="sfw">'+SHR.map(function(r,ri){return'<div class="sfr" data-r="'+ri+'"><div class="sfb">'+r.map(function(k,j){var b=bkOf(k),lt=b.c!=="#6A4F6A";return'<button class="sfs" data-k="'+k+'" data-r="'+ri+'" data-j="'+j+'" style="height:'+H[(ri*6+j)%10]+'px;background:'+b.c+';color:'+(lt?"#4F3A4F":"#F6F1EC")+'" aria-label="'+b.t+' 정보 보기, 길게 눌러 옮기거나 빼기"><span>'+b.t+'</span></button>'}).join("")+(ri===ar?'<button class="sfa" id="sfa" aria-label="책장에 책 꽂기">'+ic("plus")+'</button>':'')+'</div><i class="sfl"></i></div>'}).join("")+'</div>';
   var sfa=document.getElementById("sfa");if(sfa)sfa.onclick=shelfAdd;
-  /* 길게 눌렀다 그대로 떼면 책 위에 말풍선(빼기)이 떠요. 끌면 지금처럼 자리 옮기기 */
+  /* 꾹 누르고 있으면 그 순간 책 위에 말풍선(빼기)이 떠요. 누른 채 끌면 말풍선이 사라지고 자리 옮기기 */
   var sbb=document.createElement("div");sbb.id="sbb";sbb.setAttribute("role","toolbar");sbb.setAttribute("aria-label","선택한 책");sbb.innerHTML='<button id="sbx">'+ic("minus")+'빼기</button>';shf.appendChild(sbb);
   function sbHide(){sbb.classList.remove("on");shf.querySelectorAll(".sfs.sbs").forEach(function(o){o.classList.remove("sbs")})}
   function sbShow(el){sbHide();el.classList.add("sbs");sbb.dataset.r=el.dataset.r;sbb.dataset.j=el.dataset.j;sbb.classList.add("on");
@@ -1298,12 +1298,12 @@ function profile(){
   shf.onclick=function(e){if(!e.target.closest("#sbb,.sfs.sbs"))sbHide()};
   shf.addEventListener("scroll",sbHide);
   shf.querySelectorAll(".sfs").forEach(function(el){var tm=null,x0,y0,drag=false,moved=false,dmv=false;
-   el.addEventListener("pointerdown",function(e){x0=e.clientX;y0=e.clientY;moved=false;drag=false;tm=setTimeout(function(){drag=true;dmv=false;window.SDRAG=1;sbHide();el.classList.add("drg");try{el.setPointerCapture(e.pointerId)}catch(_){}if(navigator.vibrate)navigator.vibrate(15)},200)});
+   el.addEventListener("pointerdown",function(e){x0=e.clientX;y0=e.clientY;moved=false;drag=false;tm=setTimeout(function(){drag=true;dmv=false;window.SDRAG=1;el.classList.add("drg");sbShow(el);try{el.setPointerCapture(e.pointerId)}catch(_){}if(navigator.vibrate)navigator.vibrate(15)},200)});
    function tgt(e){var best=null,bd=1e9;shf.querySelectorAll(".sfs").forEach(function(o){if(o===el)return;var r=o.getBoundingClientRect(),d=Math.hypot(r.left+r.width/2-e.clientX,r.top+r.height/2-e.clientY);if(d<bd){bd=d;best=o}});if(best&&bd<70)return{el:best};
     var row=null;shf.querySelectorAll(".sfr").forEach(function(o){var r=o.getBoundingClientRect();if(e.clientY>=r.top-10&&e.clientY<=r.bottom+10)row=o});return row?{row:row}:null}
-   el.addEventListener("pointermove",function(e){if(!drag){if(Math.abs(e.clientX-x0)+Math.abs(e.clientY-y0)>8){clearTimeout(tm);moved=true}return}if(!dmv&&Math.abs(e.clientX-x0)+Math.abs(e.clientY-y0)<8)return;dmv=true;e.preventDefault();el.style.transform="translate("+(e.clientX-x0)+"px,"+(e.clientY-y0)+"px) rotate(-3deg)";
+   el.addEventListener("pointermove",function(e){if(!drag){if(Math.abs(e.clientX-x0)+Math.abs(e.clientY-y0)>8){clearTimeout(tm);moved=true}return}if(!dmv&&Math.abs(e.clientX-x0)+Math.abs(e.clientY-y0)<8)return;if(!dmv)sbHide();dmv=true;e.preventDefault();el.style.transform="translate("+(e.clientX-x0)+"px,"+(e.clientY-y0)+"px) rotate(-3deg)";
     shf.querySelectorAll(".tgt").forEach(function(o){o.classList.remove("tgt")});var t=tgt(e);if(t)(t.el||t.row.querySelector(".sfb")).classList.add("tgt")});
-   function end(e){clearTimeout(tm);if(!drag)return;drag=false;if(!dmv){el.classList.remove("drg");setTimeout(function(){window.SDRAG=0},50);el.dataset.nd="1";sbShow(el);return}var t=tgt(e),r0=+el.dataset.r,j0=+el.dataset.j,k=+el.dataset.k;el.classList.remove("drg");el.style.transform="";setTimeout(function(){window.SDRAG=0},50);el.dataset.nd="1";
+   function end(e){clearTimeout(tm);if(!drag)return;drag=false;if(!dmv){el.classList.remove("drg");setTimeout(function(){window.SDRAG=0},50);el.dataset.nd="1";return}var t=tgt(e),r0=+el.dataset.r,j0=+el.dataset.j,k=+el.dataset.k;el.classList.remove("drg");el.style.transform="";setTimeout(function(){window.SDRAG=0},50);el.dataset.nd="1";
     if(t&&t.el){var r1=+t.el.dataset.r,j1=+t.el.dataset.j;if(r1!==r0&&SHR[r1].length>=6){var k1=SHR[r1][j1];SHR[r1][j1]=k;SHR[r0][j0]=k1}else{SHR[r0].splice(j0,1);if(r1===r0&&j1>j0)j1--;SHR[r1].splice(r1===r0&&j1>=j0?j1+1:j1,0,k)}rShelf();return}
     if(t&&t.row){var r2=+t.row.dataset.r;if(r2!==r0&&SHR[r2].length<6){SHR[r0].splice(j0,1);SHR[r2].push(k);rShelf();return}if(r2===r0){SHR[r0].splice(j0,1);SHR[r0].push(k);rShelf();return}}
     shf.querySelectorAll(".tgt").forEach(function(o){o.classList.remove("tgt")})}
