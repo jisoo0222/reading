@@ -1291,7 +1291,7 @@ function profile(){
   function sbHide(){sbb.classList.remove("on");shf.querySelectorAll(".sfs.sbs").forEach(function(o){o.classList.remove("sbs")})}
   function sbShow(el){sbHide();el.classList.add("sbs");sbb.dataset.r=el.dataset.r;sbb.dataset.j=el.dataset.j;sbb.classList.add("on");
    var a=shf.getBoundingClientRect(),q=el.getBoundingClientRect(),w=sbb.offsetWidth,cx=q.left-a.left+q.width/2,l=Math.min(Math.max(6,cx-w/2),a.width-w-6);
-   var tp=q.top-a.top+shf.scrollTop-sbb.offsetHeight-10,dn=tp<shf.scrollTop+4;if(dn)tp=q.bottom-a.top+shf.scrollTop+10;sbb.classList.toggle("dn",dn);
+   var tp=q.top-a.top+shf.scrollTop-sbb.offsetHeight-10,dn=q.top-sbb.offsetHeight-10<Math.max(a.top,0)+4;if(dn)tp=q.bottom-a.top+shf.scrollTop+10;sbb.classList.toggle("dn",dn);
    sbb.style.left=l+"px";sbb.style.top=tp+"px";sbb.style.setProperty("--ax",(cx-l)+"px")}
   document.getElementById("sbx").onclick=function(e){e.stopPropagation();SHR[+sbb.dataset.r].splice(+sbb.dataset.j,1);rShelf()};
   sbb.addEventListener("pointerdown",function(e){e.stopPropagation()});
