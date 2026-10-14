@@ -907,11 +907,11 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .sfa{flex:0 0 42px;height:104px;align-self:flex-end;border:2px dashed var(--pri);border-bottom:0;border-radius:4px 4px 0 0;background:color-mix(in srgb,var(--bg) 55%,transparent);color:var(--pri);display:grid;place-items:center;cursor:pointer;padding:0}
 .sfa .ic{width:20px;height:20px}
 .sea{width:100%;font:inherit;text-align:left;cursor:pointer;color:var(--ink)}.sea>.ic{width:18px;height:18px;color:var(--pri);flex:none}
-#sbb{position:absolute;z-index:11;display:none;background:var(--ink);border-radius:14px;padding:4px}#sbb.on{display:flex}
-#sbb::after{content:"";position:absolute;left:var(--ax,50%);bottom:-6px;margin-left:-6px;border:6px solid transparent;border-bottom:0;border-top-color:var(--ink)}
-#sbb button{display:flex;align-items:center;gap:4px;background:none;border:0;color:var(--bg);font:inherit;font-size:12px;font-weight:600;padding:7px 12px;border-radius:10px;cursor:pointer}#sbb button .ic{width:15px;height:15px}
-.sfs.sbs{outline:3px solid var(--ink);outline-offset:2px}
-#sbb.dn::after{bottom:auto;top:-6px;border:6px solid transparent;border-top:0;border-bottom-color:var(--ink)}
+#stb{position:absolute;left:50%;z-index:12;display:flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;background:var(--card);color:var(--sub);border:2px dashed var(--sub);font-size:13px;font-weight:600;white-space:nowrap;pointer-events:none;opacity:0;transform:translate(-50%,10px) scale(.96);transition:opacity .15s,transform .15s,background .15s,color .15s}
+#stb .ic{width:20px;height:20px}
+#stb.on{opacity:1;transform:translate(-50%,0)}
+#stb.hot{background:var(--ink);color:var(--bg);border-style:solid;border-color:var(--ink);transform:translate(-50%,0) scale(1.08)}
+.sfs.trs{opacity:.55!important}
 </style>
 </head>
 <body>
@@ -1284,28 +1284,22 @@ function profile(){
   var ar=-1;for(var q=2;q>=0;q--)if(SHR[q].length){ar=SHR[q].length<6?q:q+1;break}if(ar<0)ar=0;if(ar>2)ar=-1;
 
   var H=[128,112,136,120,104,132,116,124,108,130];
-  shf.innerHTML='<div class="sfw">'+SHR.map(function(r,ri){return'<div class="sfr" data-r="'+ri+'"><div class="sfb">'+r.map(function(k,j){var b=bkOf(k),lt=b.c!=="#6A4F6A";return'<button class="sfs" data-k="'+k+'" data-r="'+ri+'" data-j="'+j+'" style="height:'+H[(ri*6+j)%10]+'px;background:'+b.c+';color:'+(lt?"#4F3A4F":"#F6F1EC")+'" aria-label="'+b.t+' 정보 보기, 길게 눌러 옮기거나 빼기"><span>'+b.t+'</span></button>'}).join("")+(ri===ar?'<button class="sfa" id="sfa" aria-label="책장에 책 꽂기">'+ic("plus")+'</button>':'')+'</div><i class="sfl"></i></div>'}).join("")+'</div>';
+  shf.innerHTML='<div class="sfw">'+SHR.map(function(r,ri){return'<div class="sfr" data-r="'+ri+'"><div class="sfb">'+r.map(function(k,j){var b=bkOf(k),lt=b.c!=="#6A4F6A";return'<button class="sfs" data-k="'+k+'" data-r="'+ri+'" data-j="'+j+'" style="height:'+H[(ri*6+j)%10]+'px;background:'+b.c+';color:'+(lt?"#4F3A4F":"#F6F1EC")+'" aria-label="'+b.t+' 정보 보기, 길게 눌러 옮기거나 휴지통에 놓아 빼기"><span>'+b.t+'</span></button>'}).join("")+(ri===ar?'<button class="sfa" id="sfa" aria-label="책장에 책 꽂기">'+ic("plus")+'</button>':'')+'</div><i class="sfl"></i></div>'}).join("")+'</div>';
   var sfa=document.getElementById("sfa");if(sfa)sfa.onclick=shelfAdd;
   /* 제목이 책등보다 길면 두 줄로 나누고, 그래도 넘치면 글자를 조금씩 줄여 책등 안에 들어가게 */
   shf.querySelectorAll(".sfs").forEach(function(el){var sp=el.firstChild,f=12,ov=function(){return sp.scrollHeight>el.clientHeight-20};if(ov()){el.style.whiteSpace="normal";sp.style.lineHeight="1.35"}while(f>8&&ov()){f-=.5;el.style.fontSize=f+"px"}});
-  /* 꾹 누르고 있으면 그 순간 책 위에 말풍선(빼기)이 떠요. 누른 채 끌면 말풍선이 사라지고 자리 옮기기 */
-  var sbb=document.createElement("div");sbb.id="sbb";sbb.setAttribute("role","toolbar");sbb.setAttribute("aria-label","선택한 책");sbb.innerHTML='<button id="sbx">'+ic("minus")+'빼기</button>';shf.appendChild(sbb);
-  function sbHide(){sbb.classList.remove("on");shf.querySelectorAll(".sfs.sbs").forEach(function(o){o.classList.remove("sbs")})}
-  function sbShow(el){sbHide();el.classList.add("sbs");sbb.dataset.r=el.dataset.r;sbb.dataset.j=el.dataset.j;sbb.classList.add("on");
-   var a=shf.getBoundingClientRect(),q=el.getBoundingClientRect(),w=sbb.offsetWidth,cx=q.left-a.left+q.width/2,l=Math.min(Math.max(6,cx-w/2),a.width-w-6);
-   var tp=q.top-a.top+shf.scrollTop-sbb.offsetHeight-10,dn=q.top-sbb.offsetHeight-10<Math.max(a.top,0)+4;if(dn)tp=q.bottom-a.top+shf.scrollTop+10;sbb.classList.toggle("dn",dn);
-   sbb.style.left=l+"px";sbb.style.top=tp+"px";sbb.style.setProperty("--ax",(cx-l)+"px")}
-  document.getElementById("sbx").onclick=function(e){e.stopPropagation();SHR[+sbb.dataset.r].splice(+sbb.dataset.j,1);rShelf()};
-  sbb.addEventListener("pointerdown",function(e){e.stopPropagation()});
-  shf.onclick=function(e){if(!e.target.closest("#sbb,.sfs.sbs"))sbHide()};
-  shf.addEventListener("scroll",sbHide);
-  shf.querySelectorAll(".sfs").forEach(function(el){var tm=null,x0,y0,drag=false,moved=false,dmv=false;
-   el.addEventListener("pointerdown",function(e){x0=e.clientX;y0=e.clientY;moved=false;drag=false;tm=setTimeout(function(){drag=true;dmv=false;window.SDRAG=1;el.classList.add("drg");sbShow(el);try{el.setPointerCapture(e.pointerId)}catch(_){}if(navigator.vibrate)navigator.vibrate(15)},200)});
+  /* 꾹 눌러 옮기는 동안 책장 아래에 휴지통이 떠요. 휴지통에 놓으면 책장에서 빠져요 */
+  var stb=document.getElementById("stb");if(!stb){stb=document.createElement("div");stb.id="stb";stb.setAttribute("aria-hidden","true");stb.innerHTML=ic("trash")+'<span>여기에 놓으면 책장에서 빼요</span>';app.appendChild(stb)}
+  function tbShow(){var a=app.getBoundingClientRect(),sc=app.querySelector(".pfb")||document.querySelector(".sc"),b=sc?sc.getBoundingClientRect().top:a.bottom;b=Math.min(b,a.bottom)-a.top;stb.style.top=(b-stb.offsetHeight-14)+"px";stb.classList.add("on")}
+  function tbHide(){stb.classList.remove("on","hot")}
+  function onTb(e){if(!stb.classList.contains("on"))return false;var r=stb.getBoundingClientRect();return e.clientX>=r.left-10&&e.clientX<=r.right+10&&e.clientY>=r.top-16&&e.clientY<=r.bottom+10}
+  shf.querySelectorAll(".sfs").forEach(function(el){var tm=null,x0,y0,drag=false,moved=false;
+   el.addEventListener("pointerdown",function(e){x0=e.clientX;y0=e.clientY;moved=false;drag=false;tm=setTimeout(function(){drag=true;window.SDRAG=1;el.classList.add("drg");tbShow();try{el.setPointerCapture(e.pointerId)}catch(_){}if(navigator.vibrate)navigator.vibrate(15)},200)});
    function tgt(e){var best=null,bd=1e9;shf.querySelectorAll(".sfs").forEach(function(o){if(o===el)return;var r=o.getBoundingClientRect(),d=Math.hypot(r.left+r.width/2-e.clientX,r.top+r.height/2-e.clientY);if(d<bd){bd=d;best=o}});if(best&&bd<70)return{el:best};
     var row=null;shf.querySelectorAll(".sfr").forEach(function(o){var r=o.getBoundingClientRect();if(e.clientY>=r.top-10&&e.clientY<=r.bottom+10)row=o});return row?{row:row}:null}
-   el.addEventListener("pointermove",function(e){if(!drag){if(Math.abs(e.clientX-x0)+Math.abs(e.clientY-y0)>8){clearTimeout(tm);moved=true}return}if(!dmv&&Math.abs(e.clientX-x0)+Math.abs(e.clientY-y0)<8)return;if(!dmv)sbHide();dmv=true;e.preventDefault();el.style.transform="translate("+(e.clientX-x0)+"px,"+(e.clientY-y0)+"px) rotate(-3deg)";
-    shf.querySelectorAll(".tgt").forEach(function(o){o.classList.remove("tgt")});var t=tgt(e);if(t)(t.el||t.row.querySelector(".sfb")).classList.add("tgt")});
-   function end(e){clearTimeout(tm);if(!drag)return;drag=false;if(!dmv){el.classList.remove("drg");setTimeout(function(){window.SDRAG=0},50);el.dataset.nd="1";return}var t=tgt(e),r0=+el.dataset.r,j0=+el.dataset.j,k=+el.dataset.k;el.classList.remove("drg");el.style.transform="";setTimeout(function(){window.SDRAG=0},50);el.dataset.nd="1";
+   el.addEventListener("pointermove",function(e){if(!drag){if(Math.abs(e.clientX-x0)+Math.abs(e.clientY-y0)>8){clearTimeout(tm);moved=true}return}e.preventDefault();el.style.transform="translate("+(e.clientX-x0)+"px,"+(e.clientY-y0)+"px) rotate(-3deg)";
+    shf.querySelectorAll(".tgt").forEach(function(o){o.classList.remove("tgt")});var ht=onTb(e);stb.classList.toggle("hot",ht);el.classList.toggle("trs",ht);if(ht)return;var t=tgt(e);if(t)(t.el||t.row.querySelector(".sfb")).classList.add("tgt")});
+   function end(e){clearTimeout(tm);if(!drag)return;drag=false;var del=onTb(e);tbHide();if(del){SHR[+el.dataset.r].splice(+el.dataset.j,1);setTimeout(function(){window.SDRAG=0},50);rShelf();return}el.classList.remove("trs");var t=tgt(e),r0=+el.dataset.r,j0=+el.dataset.j,k=+el.dataset.k;el.classList.remove("drg");el.style.transform="";setTimeout(function(){window.SDRAG=0},50);el.dataset.nd="1";
     if(t&&t.el){var r1=+t.el.dataset.r,j1=+t.el.dataset.j;if(r1!==r0&&SHR[r1].length>=6){var k1=SHR[r1][j1];SHR[r1][j1]=k;SHR[r0][j0]=k1}else{SHR[r0].splice(j0,1);if(r1===r0&&j1>j0)j1--;SHR[r1].splice(r1===r0&&j1>=j0?j1+1:j1,0,k)}rShelf();return}
     if(t&&t.row){var r2=+t.row.dataset.r;if(r2!==r0&&SHR[r2].length<6){SHR[r0].splice(j0,1);SHR[r2].push(k);rShelf();return}if(r2===r0){SHR[r0].splice(j0,1);SHR[r0].push(k);rShelf();return}}
     shf.querySelectorAll(".tgt").forEach(function(o){o.classList.remove("tgt")})}
