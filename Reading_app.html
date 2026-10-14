@@ -903,7 +903,7 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .drw{width:calc(100% - 112px);padding:16px 18px 24px}.drw .dh2 h3{font-size:20px}.drw h4{font-size:13px;margin:8px 0 10px}.drw .drow{font-size:15px;padding:15px 14px;margin-bottom:12px}.drw .drow .ic{width:18px;height:18px}.drw .drv{font-size:14px}.drw .dnote{font-size:12px}
 .drw.stpg{position:static;width:auto;transform:none;border:0;background:none;padding:0;overflow:visible}.drw.stpg h4{margin-top:4px}
 .pqb{display:flex;gap:8px;margin-top:10px}.pqb button{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;gap:8px;font:inherit;font-size:14px;font-weight:600;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;cursor:pointer}.pqb button .ic{width:18px;height:18px;color:var(--pri);flex:none}.pqb small{margin-left:auto;font-size:12px;font-weight:500;color:var(--sub)}
-#shf .sfs{overflow:visible}
+
 .sfa{flex:0 0 42px;height:104px;align-self:flex-end;border:2px dashed var(--pri);border-bottom:0;border-radius:4px 4px 0 0;background:color-mix(in srgb,var(--bg) 55%,transparent);color:var(--pri);display:grid;place-items:center;cursor:pointer;padding:0}
 .sfa .ic{width:20px;height:20px}
 .sea{width:100%;font:inherit;text-align:left;cursor:pointer;color:var(--ink)}.sea>.ic{width:18px;height:18px;color:var(--pri);flex:none}
@@ -1286,6 +1286,8 @@ function profile(){
   var H=[128,112,136,120,104,132,116,124,108,130];
   shf.innerHTML='<div class="sfw">'+SHR.map(function(r,ri){return'<div class="sfr" data-r="'+ri+'"><div class="sfb">'+r.map(function(k,j){var b=bkOf(k),lt=b.c!=="#6A4F6A";return'<button class="sfs" data-k="'+k+'" data-r="'+ri+'" data-j="'+j+'" style="height:'+H[(ri*6+j)%10]+'px;background:'+b.c+';color:'+(lt?"#4F3A4F":"#F6F1EC")+'" aria-label="'+b.t+' 정보 보기, 길게 눌러 옮기거나 빼기"><span>'+b.t+'</span></button>'}).join("")+(ri===ar?'<button class="sfa" id="sfa" aria-label="책장에 책 꽂기">'+ic("plus")+'</button>':'')+'</div><i class="sfl"></i></div>'}).join("")+'</div>';
   var sfa=document.getElementById("sfa");if(sfa)sfa.onclick=shelfAdd;
+  /* 제목이 책등보다 길면 두 줄로 나누고, 그래도 넘치면 글자를 조금씩 줄여 책등 안에 들어가게 */
+  shf.querySelectorAll(".sfs").forEach(function(el){var sp=el.firstChild,f=12,ov=function(){return sp.scrollHeight>el.clientHeight-20};if(ov()){el.style.whiteSpace="normal";sp.style.lineHeight="1.35"}while(f>8&&ov()){f-=.5;el.style.fontSize=f+"px"}});
   /* 꾹 누르고 있으면 그 순간 책 위에 말풍선(빼기)이 떠요. 누른 채 끌면 말풍선이 사라지고 자리 옮기기 */
   var sbb=document.createElement("div");sbb.id="sbb";sbb.setAttribute("role","toolbar");sbb.setAttribute("aria-label","선택한 책");sbb.innerHTML='<button id="sbx">'+ic("minus")+'빼기</button>';shf.appendChild(sbb);
   function sbHide(){sbb.classList.remove("on");shf.querySelectorAll(".sfs.sbs").forEach(function(o){o.classList.remove("sbs")})}
