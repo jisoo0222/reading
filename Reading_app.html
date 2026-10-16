@@ -912,8 +912,8 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 #stb.on{opacity:1;transform:translate(-50%,0)}
 #stb.hot{background:var(--ink);color:var(--bg);border-style:solid;border-color:var(--ink);transform:translate(-50%,0) scale(1.08)}
 .sfs.trs{opacity:.55!important}
-.hero{box-shadow:0 12px 26px rgba(79,58,79,.18),0 3px 8px rgba(79,58,79,.10)}
-.rcscroll{padding:2px 2px 22px;margin:0 -2px -14px}
+.hero{box-shadow:0 4px 12px rgba(79,58,79,.10),0 1px 3px rgba(79,58,79,.06)}
+.rcscroll{padding:2px 2px 14px;margin:0 -2px -8px}.rcscroll>.hero{flex:0 0 calc(100% - 34px)}
 .hav{width:32px;height:32px;border-radius:50%;flex:none;display:grid;place-items:center;color:#F6F1EC;font-size:14px;font-weight:700;margin-right:8px}
 .hd .hav:first-child{margin-left:-4px}.hd .nick{margin-left:0!important}
 .hdu{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -933,6 +933,7 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .hmr>div{flex:1;min-width:0}.hmr b{display:block;font-size:14px}.hmr small{display:block;font-size:11px;color:var(--sub);line-height:1.4;word-break:keep-all}
 .hmr em{font-style:normal;font-size:12px;font-weight:700;color:var(--sec);white-space:nowrap}
 .hmr.dn>span{background:var(--sec);border-color:var(--sec);color:#F6F1EC}.hmr.dn em{color:var(--sub);font-weight:500}
+.ckfx{position:absolute;width:0;height:0;pointer-events:none;z-index:9999}.ckfx i{position:absolute;left:0;top:0;display:block}
 </style>
 </head>
 <body>
@@ -1743,13 +1744,13 @@ function home(){
  if(REC)app.querySelectorAll(".rck").forEach(function(b){b.onclick=function(){PICKED=1;DEF=+b.dataset.k;reader(DEF)}});else app.querySelectorAll(".hgo").forEach(function(b){b.onclick=function(){if(HSM)return;reader(+b.dataset.k)}});
  var hsk=document.getElementById("hsk");if(hsk)hsk.onclick=function(){TFROM=home;testPg()};
  var HSM=false,hs=document.getElementById("rcscroll");
- if(hs){var dd=app.querySelectorAll("#hdots button");
-  hs.addEventListener("scroll",function(){var i=Math.round(hs.scrollLeft/hs.clientWidth);dd.forEach(function(d,j){d.setAttribute("aria-current",j===i)})});
-  dd.forEach(function(d,j){d.onclick=function(){hs.scrollTo({left:j*hs.clientWidth,behavior:"smooth"})}});
+ if(hs){var hsw=function(){var c=hs.querySelector(".hero");return c?c.offsetWidth+12:hs.clientWidth},dd=app.querySelectorAll("#hdots button");
+  hs.addEventListener("scroll",function(){var i=Math.round(hs.scrollLeft/hsw());dd.forEach(function(d,j){d.setAttribute("aria-current",j===i)})});
+  dd.forEach(function(d,j){d.onclick=function(){hs.scrollTo({left:j*hsw(),behavior:"smooth"})}});
   var dx=0,sl0=0,dn=false;
   hs.addEventListener("pointerdown",function(e){if(e.pointerType!=="mouse")return;dn=true;dx=e.clientX;sl0=hs.scrollLeft;HSM=false});
   window.addEventListener("pointermove",function(e){if(!dn||!hs.isConnected)return;var d=e.clientX-dx;if(Math.abs(d)>5){HSM=true;hs.style.scrollSnapType="none";hs.scrollLeft=sl0-d}});
-  window.addEventListener("pointerup",function(){if(!dn)return;dn=false;if(hs.isConnected){var i=Math.round(hs.scrollLeft/hs.clientWidth);hs.style.scrollSnapType="";hs.scrollTo({left:i*hs.clientWidth,behavior:"smooth"})}setTimeout(function(){HSM=false},0)})}
+  window.addEventListener("pointerup",function(){if(!dn)return;dn=false;if(hs.isConnected){var i=Math.round(hs.scrollLeft/hsw());hs.style.scrollSnapType="";hs.scrollTo({left:i*hsw(),behavior:"smooth"})}setTimeout(function(){HSM=false},0)})}
  document.getElementById("hpx").onclick=hMis;document.getElementById("hpx").onkeydown=function(e){if(e.key==="Enter")hMis()};
  var hpo=document.getElementById("hpo");hpo.onclick=function(){OPENP=+hpo.dataset.id||0;community()};hpo.onkeydown=function(e){if(e.key==="Enter")hpo.onclick()};
  window.hpRef=function(){var h=document.getElementById("hpx");if(!h||!h.isConnected)return;var sy=document.querySelector(".sc")?document.querySelector(".sc").scrollTop:0;home();var sc2=document.querySelector(".sc");if(sc2)sc2.scrollTop=sy};award("att",1);
@@ -2228,6 +2229,19 @@ document.addEventListener("mouseup",function(){if(!D)return;var d=D;D=null;if(!d
  var l=d.el.scrollLeft;d.el.style.scrollSnapType=d.sn;d.el.scrollLeft=l;d.el.style.scrollBehavior=d.sb;
  function k(e){e.stopPropagation();e.preventDefault();document.removeEventListener("click",k,true)}document.addEventListener("click",k,true);setTimeout(function(){document.removeEventListener("click",k,true)},0)},true);
 })();
+
+/* 클릭 효과(sniper): 누른 자리에서 십자 선 4개와 작은 점 8개가 메인 색으로 퍼져요. 책 본문(책장 넘기는 곳)에서는 쓰지 않아요 */
+(function(){var SZ=64,DUR=300,SW=2,L=SZ*.2,A=[0,90,180,270],P=[60,120,240,300,30,150,210,330];
+ if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ document.addEventListener("click",function(e){if(!e.isTrusted||(e.clientX===0&&e.clientY===0))return;var ap=document.getElementById("app");if(!ap)return;
+  if(e.target.closest&&e.target.closest(".app.rd .bkw"))return;
+  var r=ap.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,c=getComputedStyle(ap).getPropertyValue("--pri").trim()||"#6A4F6A";
+  var w=document.createElement("div");w.className="ckfx";w.style.left=x+"px";w.style.top=y+"px";
+  A.forEach(function(a){var d=document.createElement("i");d.style.cssText="width:"+L+"px;height:"+SW+"px;margin-top:"+(-SW/2)+"px;background:"+c+";transform-origin:0 50%";w.appendChild(d);
+   d.animate([{transform:"rotate("+(-a)+"deg) translateX(5px) translateX("+L+"px) scaleX(1) translateX("+(-L)+"px)",opacity:1},{opacity:1,offset:.6},{transform:"rotate("+(-a)+"deg) translateX("+(10+L)+"px) translateX("+L+"px) scaleX(0) translateX("+(-L)+"px)",opacity:0}],{duration:DUR,easing:"cubic-bezier(.33,1,.68,1)",fill:"forwards"})});
+  P.forEach(function(a){var d=document.createElement("i"),t=a*Math.PI/180;d.style.cssText="width:"+SW+"px;height:"+SW+"px;margin:"+(-SW/2)+"px 0 0 "+(-SW/2)+"px;background:"+c;w.appendChild(d);
+   d.animate([{transform:"translate(0,0) scale(1)"},{transform:"translate("+(Math.cos(t)*SZ*.24)+"px,"+(Math.sin(t)*SZ*.24)+"px) scale(1)",offset:.6},{transform:"translate("+(Math.cos(t)*SZ*.4)+"px,"+(Math.sin(t)*SZ*.4)+"px) scale(0)"}],{duration:DUR,easing:"cubic-bezier(.33,1,.68,1)",fill:"forwards"})});
+  ap.appendChild(w);setTimeout(function(){w.remove()},DUR+60)},true)})();
 </script>
 </body>
 </html>
