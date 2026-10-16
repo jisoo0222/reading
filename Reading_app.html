@@ -959,6 +959,17 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .mcr small em{font-style:normal;font-weight:700;color:var(--sec);margin-right:6px}.mcr>.ic{width:16px;height:16px;color:var(--sub);flex:none}
 .cmx{display:flex;gap:10px;margin-top:4px}.cmx button{font:inherit;font-size:12px;color:var(--sub);background:none;border:0;padding:2px 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
 .cmr>div{flex:1;min-width:0}.cmn{display:flex;align-items:center;gap:8px}.cmn .cmx{margin:0 0 0 auto}
+.cpg{grid-template-columns:repeat(3,1fr)}
+.app.cpo #bmf,.app.zen .mm .mro{position:absolute;left:-9px;top:-9px;width:18px;height:18px;border-radius:50%;background:var(--card);border:2px solid var(--pri);cursor:grab;touch-action:none}
+.mm .mro::after{content:"";position:absolute;inset:3px;border-radius:50%;border:1.5px solid var(--pri);border-right-color:transparent}
+.mm .mdn{transform:translateX(-50%) rotate(calc(-1 * var(--mr,0deg)))}
+.mm .mdn{top:auto;bottom:-38px}
+.mm .mtb{position:absolute;left:50%;top:-40px;display:flex;gap:2px;padding:3px;background:var(--ink);border-radius:999px;transform:translateX(-50%) rotate(calc(-1 * var(--mr,0deg)));white-space:nowrap;z-index:6}
+.mm .mtb button{font:inherit;font-size:12px;font-weight:600;color:var(--bg);background:none;border:0;border-radius:999px;padding:4px 10px;cursor:pointer}
+.crn{border:0;padding:0;cursor:pointer;z-index:4;width:16px;height:30px;background:var(--line);transition:background .2s,transform .2s;transform-origin:top center}
+.crb{position:absolute;top:0;right:12px;width:40px;height:46px;border:0;padding:0;background:none;cursor:pointer;z-index:4}.crb .crn{top:0;right:12px}
+.crn.on{background:var(--bmc,var(--pri))}
+.crn.pop{animation:crnp .32s ease-out}@keyframes crnp{0%{transform:scaleY(.6)}60%{transform:scaleY(1.12)}100%{transform:scaleY(1)}}
 </style>
 </head>
 <body>
@@ -2077,7 +2088,7 @@ function reader(k){
   var id=pi+"-"+pj+"-"+si,h=hlH(x.t,id);
   var tg=x.c!==undefined?'<button class="ct" data-c="'+x.c+'"><i class="ctv" style="background:'+CM[x.c].c+'"></i>'+CM[x.c].n+(S.s===0&&CM[x.c].sp?" (스포주의)":"")+'</button>':'';
   if(my[id])tg+='<button class="ct me" data-m="'+id+'">내 코멘트'+(my[id].sp?" (스포 방지)":"")+'</button>';
-  return'<span class="s'+(x.c!==undefined?" cm":"")+(my[id]?" me":"")+'" data-id="'+id+'"'+(x.c!==undefined?' style="--cmc:'+CM[x.c].c+'"':'')+'>'+h+'</span>'+tg+' '}).join("")+'</p>'}).join("")+(BM.indexOf(PGN[pi])>-1?'<i class="crn"></i>':'')+(MMO[pi]||[]).map(function(m,j){return mmH(m,pi+"-"+j)}).join("")+'<div class="fol">'+PGN[pi]+'</div>'}
+  return'<span class="s'+(x.c!==undefined?" cm":"")+(my[id]?" me":"")+'" data-id="'+id+'"'+(x.c!==undefined?' style="--cmc:'+CM[x.c].c+'"':'')+'>'+h+'</span>'+tg+' '}).join("")+'</p>'}).join("")+'<button class="crb" aria-pressed="'+(BM.indexOf(PGN[pi])>-1)+'" aria-label="'+PGN[pi]+'쪽 책갈피'+(BM.indexOf(PGN[pi])>-1?" 빼기":" 꽂기")+'"><i class="crn'+(BM.indexOf(PGN[pi])>-1?" on":"")+'"></i></button>'+(MMO[pi]||[]).map(function(m,j){return mmH(m,pi+"-"+j)}).join("")+'<div class="fol">'+PGN[pi]+'</div>'}
  function hR(id,len){var v=und[id];return v===true?[[0,len]]:(v||[])}
  function hlH(t,id){var R=hR(id,t.length);if(!R.length)return nmr(esc(t));var o="",p=0;R.forEach(function(r){if(r[0]>p)o+=nmr(esc(t.slice(p,r[0])));o+='<mark class="hl">'+nmr(esc(t.slice(r[0],r[1])))+'</mark>';p=r[1]});if(p<t.length)o+=nmr(esc(t.slice(p)));return o}
  function hMerge(a){a=a.filter(function(r){return r[1]>r[0]}).sort(function(x,y){return x[0]-y[0]});var o=[];a.forEach(function(r){var l=o[o.length-1];if(l&&r[0]<=l[1])l[1]=Math.max(l[1],r[1]);else o.push([r[0],r[1]])});return o}
@@ -2094,7 +2105,7 @@ function reader(k){
   else{un.innerHTML=pH(cur);lf.style.transition="none";lf.innerHTML=pH(n);lf.style.transform="rotateY(-100deg)";void lf.offsetWidth;lf.style.transition="transform .6s ease";lf.style.transform="none"}
   setTimeout(fin,620)}
  function sg(l,k,o){return'<div class="sg"><b>'+l+'</b><div>'+o.map(function(t,i){return'<button data-k="'+k+'" data-i="'+i+'" aria-pressed="'+(S[k]===i)+'">'+t+'</button>'}).join("")+'</div></div>'}
- function st(){so(sg("리딩 모드","m",["넘김","스크롤"])+sg("글자 크기","f",["작게","보통","크게"])+sg("글씨체","ff",["명조체","고딕"])+sg("스포 방지","s",["켜짐","꺼짐"]))}
+ function st(){so(sg("화면 모드","n",["낮","밤"])+sg("리딩 모드","m",["넘김","스크롤"])+sg("글자 크기","f",["작게","보통","크게"])+sg("글씨체","ff",["명조체","고딕"])+sg("스포 방지","s",["켜짐","꺼짐"]))}
  function nm(el){if(app.classList.contains("zen"))return;var k=+el.dataset.k;np.innerHTML='<div class="who"><i style="background:'+AVC[k%4]+'">'+esc(CH[k][0]).charAt(0)+'</i>'+esc(CH[k][0])+'</div><p>'+esc(CH[k][1])+'</p>';np.classList.add("on");
   var a=app.getBoundingClientRect(),r=el.getBoundingClientRect(),w=np.offsetWidth,h=np.offsetHeight,l=Math.min(Math.max(8,r.left-a.left+r.width/2-w/2),a.width-w-8),t=r.top-a.top-h-8;if(t<8)t=r.bottom-a.top+8;np.style.left=l+"px";np.style.top=t+"px"}
  function nmx(){np.classList.remove("on")}
@@ -2116,7 +2127,7 @@ function reader(k){
  function mshp(i){if(typeof i==="string"){var u=MY[+i.slice(1)];return u?"background-image:url("+u.u+");background-size:contain;background-repeat:no-repeat;background-position:center":""}return i<0?"border-radius:4px;border:1.5px solid #E6DCD2":""}
  function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':""}
  function mbg(m){return'<i'+mcls(m.i)+' style="background:'+mcol(m.i)+';'+mshp(m.i)+';opacity:'+m.o/100+'"></i>'}
- function mmH(m,id){var e=id===eid;return'<div class="mm'+(e?" ed":"")+'" data-mm="'+id+'" style="left:'+m.x+'%;top:'+m.y+'%;width:'+m.w+'%;height:'+m.h+'%" role="note" aria-label="내 스티커">'+mbg(m)+'<p>'+esc(m.t)+'</p>'+(e?'<button class="mdn">완료</button><b class="rz" aria-hidden="true"></b>':'')+'</div>'}
+ function mmH(m,id){var e=id===eid;return'<div class="mm'+(e?" ed":"")+'" data-mm="'+id+'" style="left:'+m.x+'%;top:'+m.y+'%;width:'+m.w+'%;height:'+m.h+'%;--mr:'+(m.r||0)+'deg;transform:rotate(var(--mr))" role="note" aria-label="내 스티커">'+mbg(m)+'<p>'+esc(m.t)+'</p>'+(e?'<span class="mtb"><button class="mdl2">삭제</button><button class="med2">글씨 수정</button></span><button class="mdn">완료</button><b class="rz" aria-hidden="true"></b><b class="mro" aria-label="돌리기"></b>':'')+'</div>'}
  function memo(id){var ed=!!id,pi,j,m;
   if(ed){pi=+id.split("-")[0];j=+id.split("-")[1];m=MMO[pi][j]}
   else{var a=AP.PN&&OWN[AP.PN]?+AP.PN.slice(2):-1;m={t:"",i:a,o:100,x:27,y:30,w:46,h:24}}
@@ -2136,10 +2147,10 @@ function reader(k){
   d.querySelector(".mpk").onclick=function(e){var b=e.target.closest("button");if(!b)return;v.i=/^u/.test(b.dataset.p)?b.dataset.p:+b.dataset.p;d.querySelectorAll(".mpk button").forEach(function(y){y.setAttribute("aria-pressed",y===b)});pv()};
   if(!ed)document.getElementById("mx").onclick=x;
   else{document.getElementById("mdl").onclick=function(){MMO[pi].splice(j,1);x();rt();toast("스티커를 뗐어요")};
-   document.getElementById("mmv").onclick=function(){x();eid=id;rt();toast("끌어서 옮기고, 모서리로 크기를 조절해요")}}
+   document.getElementById("mmv").onclick=function(){x();eid=id;rt();toast("끌어서 옮기고, 모서리로 크기와 방향을 바꿔요")}}
   document.getElementById("ms").onclick=function(){var t=ta.value.trim();
    m.t=t;m.i=v.i;m.o=v.o;x();
-   if(!ed){(MMO[cur]=MMO[cur]||[]).push(m);eid=cur+"-"+(MMO[cur].length-1);toast("끌어서 옮기고, 모서리로 크기를 조절해요")}
+   if(!ed){(MMO[cur]=MMO[cur]||[]).push(m);eid=cur+"-"+(MMO[cur].length-1);toast("끌어서 옮기고, 모서리로 크기와 방향을 바꿔요")}
    rt()};
   ta.focus()}
  function tset(t){tool=tool===t?0:t;hn.textContent=TH[tool];hn.classList.toggle("on",!!tool)}
@@ -2147,10 +2158,16 @@ function reader(k){
  rt();pr();ap();
  var x0=0,sw=false;
  var y0=0;tx.addEventListener("pointerdown",function(e){x0=e.clientX;y0=e.clientY;sw=false});
- tx.addEventListener("pointerdown",function(e){var el=e.target.closest(".mm.ed");if(!el||e.target.closest(".mdn"))return;e.stopPropagation();e.preventDefault();
+ var lpt=null,lpx=0,lpy=0;tx.addEventListener("pointerdown",function(e){var q=e.target.closest(".mm:not(.ed)");if(!q||eid)return;lpx=e.clientX;lpy=e.clientY;clearTimeout(lpt);
+  lpt=setTimeout(function(){lpt=null;eid=q.dataset.mm;sw=true;rt();if(navigator.vibrate)navigator.vibrate(15)},450)});
+ tx.addEventListener("pointermove",function(e){if(lpt&&Math.abs(e.clientX-lpx)+Math.abs(e.clientY-lpy)>8){clearTimeout(lpt);lpt=null}});
+ ["pointerup","pointercancel"].forEach(function(t){tx.addEventListener(t,function(){if(lpt){clearTimeout(lpt);lpt=null}})});
+ tx.addEventListener("pointerdown",function(e){var el=e.target.closest(".mm.ed");if(!el||e.target.closest(".mdn,.mtb"))return;e.stopPropagation();e.preventDefault();
   var pi=+el.dataset.mm.split("-")[0],m=MMO[pi][+el.dataset.mm.split("-")[1]],b=el.parentNode.getBoundingClientRect();
-  drg={el:el,m:m,rz:!!e.target.closest(".rz"),x:e.clientX,y:e.clientY,m0:{x:m.x,y:m.y,w:m.w,h:m.h},bw:b.width,bh:b.height};el.setPointerCapture(e.pointerId)},true);
+  var er=el.getBoundingClientRect(),cx=er.left+er.width/2,cy=er.top+er.height/2;
+  drg={el:el,m:m,rz:!!e.target.closest(".rz"),ro:!!e.target.closest(".mro"),cx:cx,cy:cy,a0:Math.atan2(e.clientY-cy,e.clientX-cx),r0:m.r||0,x:e.clientX,y:e.clientY,m0:{x:m.x,y:m.y,w:m.w,h:m.h},bw:b.width,bh:b.height};el.setPointerCapture(e.pointerId)},true);
  tx.addEventListener("pointermove",function(e){if(!drg)return;var g=drg,m=g.m,dx=(e.clientX-g.x)*100/g.bw,dy=(e.clientY-g.y)*100/g.bh,c=function(v,a,b){return Math.min(Math.max(v,a),b)};
+  if(g.ro){var r=g.r0+(Math.atan2(e.clientY-g.cy,e.clientX-g.cx)-g.a0)*180/Math.PI;r=((r%360)+540)%360-180;if(Math.abs(r)<4)r=0;m.r=Math.round(r);g.el.style.setProperty("--mr",m.r+"deg");return}
   if(g.rz){m.w=c(g.m0.w+dx,20,100-m.x);m.h=c(g.m0.h+dy,8,100-m.y)}else{m.x=c(g.m0.x+dx,0,100-m.w);m.y=c(g.m0.y+dy,0,100-m.h)}
   ["left","top","width","height"].forEach(function(k,i){g.el.style[k]=[m.x,m.y,m.w,m.h][i]+"%"})});
  tx.addEventListener("pointerup",function(e){if(drg){drg=null;sw=true;return}var d=e.clientX-x0,ab=app.getBoundingClientRect();if(y0>ab.bottom-160&&y0-e.clientY>50&&Math.abs(d)<60){sw=true;cpOpen();return}if(selRange()){sw=true;return}if(Math.abs(d)>50){sw=true;nmx();eid=null;fl(cur+(d<0?1:-1))}});
@@ -2164,8 +2181,11 @@ function reader(k){
   if(sw){sw=false;return}
   if(selRange())return;
   var mm=e.target.closest(".mm");
-  if(eid){if(!mm||e.target.closest(".mdn")){eid=null;rt()}return}
-  if(mm){memo(mm.dataset.mm);return}
+  if(e.target.closest(".crb")){var i=BM.indexOf(pg);i>-1?BM.splice(i,1):BM.push(pg);rt();pr();var cn=lf.querySelector(".crn");if(cn&&i<0)cn.classList.add("pop");toast(i>-1?pg+"쪽 책갈피를 뺐어요":pg+"쪽에 책갈피를 꽂았어요");return}
+  if(eid){var ei=eid;if(e.target.closest(".mdl2")){var q=ei.split("-");MMO[+q[0]].splice(+q[1],1);eid=null;rt();toast("스티커를 뗐어요");return}
+   if(e.target.closest(".med2")){eid=null;rt();memo(ei);return}
+   if(!mm||e.target.closest(".mdn")){eid=null;rt()}return}
+  if(mm)return;
   var c=e.target.closest(".ct"),s=e.target.closest(".s"),n=e.target.closest(".nm");
   if(n&&!tool){nm(n);return}
   if(c&&c.dataset.m){var mm=my[c.dataset.m];so('<p class="sm">'+esc(mm.t)+'</p><p class="sm" style="color:var(--sub);font-size:13px">스포 방지 '+(mm.sp?"켜짐":"꺼짐")+'</p>');return}
@@ -2202,7 +2222,7 @@ function reader(k){
   var n=at(e.clientX);show(n);tk.setPointerCapture(e.pointerId);
   tk.onpointermove=function(v){n=at(v.clientX);show(n)};
   tk.onpointerup=tk.onpointercancel=function(){tk.onpointermove=tk.onpointerup=tk.onpointercancel=null;if(n!==cur){eid=null;nmx();cur=n;pg=PGN[n];rt();un.innerHTML=""}pr()}});
- var CPT=[["hl","형광펜","ul"],["memo","스티커","memo"],["bm","책갈피","bm"],["dn",S.n===1?"밤 모드":"낮 모드",S.n===1?"moon":"sun"],["wd","단어 사전","dict"],["ch","인물 사전","person"],["sh","책 공유","bksh"],["set","읽기 설정","set"]];
+ var CPT=[["hl","형광펜","ul"],["memo","스티커","memo"],["wd","단어 사전","dict"],["ch","인물 사전","person"],["sh","책 공유","bksh"],["set","읽기 설정","set"]];
  var cp=document.createElement("div");cp.id="cp";cp.setAttribute("role","dialog");cp.setAttribute("aria-label","읽기 도구");
  cp.innerHTML='<div class="cph" id="cph"><i></i></div><div class="cpg">'+CPT.map(function(t){return'<button class="cpt" data-a="'+t[0]+'"><span>'+ic(t[2])+'</span>'+t[1]+'</button>'}).join("")+'</div>';
  cp.appendChild(document.getElementById("pg"));
@@ -2237,7 +2257,7 @@ function reader(k){
  if(!window.TUTD)setTimeout(tut,400);
  function tut(){if(!document.getElementById("lf"))return;
   var ov=document.createElement("div");ov.id="tut";app.appendChild(ov);
-  var C=[["hl","형광펜","문구점에서 산 펜 중 어떤 형광펜으로 칠할지 골라요. 칠하기는 글을 드래그한 뒤 말풍선에서 해요."],["memo","스티커","스티커를 골라 글을 적고, 원하는 자리에 붙여요. 직접 만든 스티커도 쓸 수 있어요."],["bm","책갈피","지금 보는 쪽에 책갈피를 꽂거나 빼요."],["wd","단어 사전","모르는 단어의 뜻을 바로 찾아봐요."],["ch","인물 사전","나만 보는 인물 메모예요. 추가한 이름은 본문에서 색으로 표시돼요."],["sh","책 공유","지금 읽는 책을 링크로 친구에게 공유해요. 문장 카드는 글을 드래그한 뒤 말풍선에서 만들어요."],["set","읽기 설정","넘김·스크롤, 글자 크기, 글씨체, 스포 방지를 바꿔요."],["pg","쪽 이동","슬라이더를 끌어 원하는 쪽으로 가요. 메이트가 어디쯤 읽는지도 보여요."]],i=0;
+  var C=[["hl","형광펜","문구점에서 산 펜 중 어떤 형광펜으로 칠할지 골라요. 칠하기는 글을 드래그한 뒤 말풍선에서 해요."],["memo","스티커","스티커를 골라 글을 적고, 원하는 자리에 붙여요. 직접 만든 스티커도 쓸 수 있어요."],["wd","단어 사전","모르는 단어의 뜻을 바로 찾아봐요."],["ch","인물 사전","나만 보는 인물 메모예요. 추가한 이름은 본문에서 색으로 표시돼요."],["sh","책 공유","지금 읽는 책을 링크로 친구에게 공유해요. 문장 카드는 글을 드래그한 뒤 말풍선에서 만들어요."],["set","읽기 설정","낮·밤 모드, 넘김·스크롤, 글자 크기, 글씨체, 스포 방지를 바꿔요."],["pg","쪽 이동","슬라이더를 끌어 원하는 쪽으로 가요. 메이트가 어디쯤 읽는지도 보여요."]],i=0;
   function done(){ov.remove();window.TUTD=1;cpClose();toast("이제 편하게 읽어 보세요")}
   function s1(){ov.className="t1";ov.innerHTML='<div class="tbx tb1"><b>읽기 도구 열기</b><p>화면 아래에서 위로 밀어 보세요.<br>형광펜, 코멘트, 쪽 이동 같은 도구가 나와요.</p><button class="tsk">건너뛰기</button></div><div class="tar" aria-hidden="true"><i></i>'+ic("back")+'</div>';
    var y0=null;function st(y){y0=y}function en(y){if(y0!==null&&y0-y>40){cpOpen();setTimeout(step,340)}y0=null}
