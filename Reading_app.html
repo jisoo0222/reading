@@ -934,6 +934,10 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .hmr em{font-style:normal;font-size:12px;font-weight:700;color:var(--sec);white-space:nowrap}
 .hmr.dn>span{background:var(--sec);border-color:var(--sec);color:#F6F1EC}.hmr.dn em{color:var(--sub);font-weight:500}
 .ckfx{position:absolute;display:block;box-sizing:border-box;border-radius:50%;pointer-events:none;z-index:9999}
+.app.hf1 .hero{padding:14px 14px 12px}.app.hf1 .hcv{width:74px}.app.hf1 .hgl{margin-top:10px;padding-top:10px}.app.hf1 .hgo{margin-top:10px;padding:11px}
+.app.hf1 .wkx{padding:12px 14px}.app.hf1 .wks{margin-bottom:8px}.app.hf1 .sh{margin-bottom:8px}.app.hf1 .hpc,.app.hf1 .hpo{padding:12px}.app.hf1 .hdh{margin-bottom:4px}.app.hf1 .hmo,.app.hf1 .hpof{padding-top:6px}
+.app.hf2 .wkd em{height:32px}.app.hf2 .wkd{gap:4px}.app.hf2 .hpo p{-webkit-line-clamp:2}.app.hf2 .hpbig{font-size:20px}.app.hf2 .hcv{width:64px}.app.hf2 .wks span{display:none}
+.app.hf3 .blk{margin-top:10px}.app.hf3 .hero{padding:12px 12px 10px}.app.hf3 .hgo{padding:10px}.app.hf3 .hd{padding-bottom:0}
 </style>
 </head>
 <body>
@@ -1719,6 +1723,18 @@ function calendar(y,m,sd){
 }
 var WK=[14,9,0,18,12,7,11],RLOG={};function hm(){var d=new Date(),z=function(n){return(n<10?"0":"")+n};return z(d.getHours())+":"+z(d.getMinutes())}
 var OPENP=0;
+/* 홈 한 화면 맞춤: 내용이 아래 탭바 위에 다 들어오게 하고, 맨 위 여백과 탭바 위 여백을 같게. 남는 공간은 섹션 사이에 고르게 나눠요 */
+function hFit(){var sc=document.querySelector(".sc.hm"),tb=app.querySelector(".tab");if(!sc||!tb||!app.classList.contains("hm"))return;
+ var K=[].slice.call(sc.children).filter(function(c){return c.offsetParent!==null&&getComputedStyle(c).position!=="absolute"&&getComputedStyle(c).position!=="fixed"});if(K.length<2)return;
+ app.classList.remove("hf1","hf2","hf3");K.forEach(function(c,i){if(i)c.style.marginTop=""});sc.style.paddingTop="";sc.style.paddingBottom="";
+ sc.scrollTop=0;var G=12;function meas(){var t=sc.getBoundingClientRect().top,av=tb.getBoundingClientRect().top-t,h=K[K.length-1].getBoundingClientRect().bottom-K[0].getBoundingClientRect().top;return{av:av,h:h}}
+ var m=meas();if(m.h+G>m.av){app.classList.add("hf1");m=meas()}if(m.h+G>m.av){app.classList.add("hf2");m=meas()}if(m.h+G>m.av){app.classList.add("hf3");m=meas()}
+ if(m.h+G>m.av)return;/* 아주 작은 화면이면 지금처럼 스크롤 */
+ var ex=(m.av-G-m.h)/(K.length+1);
+ sc.style.paddingTop=ex+"px";K.forEach(function(c,i){if(i)c.style.marginTop=(parseFloat(getComputedStyle(c).marginTop)+ex)+"px"});
+ sc.style.paddingBottom=(sc.clientHeight-m.av+G+ex)+"px"}
+window.addEventListener("resize",function(){if(app.classList.contains("hm"))hFit()});
+
 /* 홈 포인트 카드를 누르면 뜨는 오늘의 미션 목록 */
 function hMis(){var d=psDay();msSync();
  var x=pop('<h3>오늘의 미션</h3><p class="sm" style="font-size:13px;margin:-2px 0 12px">보유 <b>'+PT+'P</b> · 오늘 <b>'+d.act+'P</b> / '+PCFG.DAILY_CAP+'P</p><div class="hml">'+MS.map(function(m,i){return[m,i]}).sort(function(a,b){return a[0][3]-b[0][3]}).map(function(r){var m=r[0],i=r[1],g=d.got[MK[i]];return'<div class="hmr'+(m[3]?" dn":"")+'"><span>'+ic(m[3]?"check":m[1])+'</span><div><b>'+m[0]+'</b><small>'+MSD[i]+'</small></div><em>'+(m[3]?(g!==undefined&&g<m[2]?"완료 +"+g+"P":"완료"):"+"+m[2]+"P")+'</em></div>'}).join("")+'</div><div class="dbt"><button class="btn ghost" id="hmx">닫기</button><button class="btn" id="hms">디지털 문구점</button></div>');
@@ -1763,7 +1779,7 @@ function home(){
   el.onclick=function(e){e.stopPropagation();tshow(el)};
   el.onkeydown=function(e){if(e.key==="Enter")el.onclick(e);if(e.key==="Escape")thide()}});
  document.querySelector(".sc").addEventListener("click",thide);
- var tb=app.querySelectorAll(".tab button");tb[0].onclick=community;tb[1].onclick=shop;tb[3].onclick=tabStamp;tb[4].onclick=profile;
+ var tb=app.querySelectorAll(".tab button");tb[0].onclick=community;tb[1].onclick=shop;tb[3].onclick=tabStamp;tb[4].onclick=profile;requestAnimationFrame(hFit);
  document.getElementById("hbl").onclick=inbox;
  document.getElementById("hdt").onclick=function(){calendar()};
 }
