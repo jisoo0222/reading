@@ -938,6 +938,7 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .app.hf1 .wkx{padding:12px 14px}.app.hf1 .wks{margin-bottom:8px}.app.hf1 .sh{margin-bottom:8px}.app.hf1 .hpc,.app.hf1 .hpo{padding:12px}.app.hf1 .hdh{margin-bottom:4px}.app.hf1 .hmo,.app.hf1 .hpof{padding-top:6px}
 .app.hf2 .wkd em{height:32px}.app.hf2 .wkd{gap:4px}.app.hf2 .hpo p{-webkit-line-clamp:2}.app.hf2 .hpbig{font-size:20px}.app.hf2 .hcv{width:64px}.app.hf2 .wks span{display:none}
 .app.hf3 .blk{margin-top:10px}.app.hf3 .hero{padding:12px 12px 10px}.app.hf3 .hgo{padding:10px}.app.hf3 .hd{padding-bottom:0}
+.wkd em.wok{background:var(--bg)}.hrb{margin-right:2px}
 </style>
 </head>
 <body>
@@ -1349,13 +1350,14 @@ function profile(){
  document.getElementById("pme").onclick=meEdit;
  document.getElementById("pth").onclick=function(){themePop(profile)};document.getElementById("pset").onclick=setPg;
  app.querySelectorAll(".pfc[data-i]").forEach(function(b){b.onclick=function(){friend(+b.dataset.i,1)}});var pfa=document.getElementById("pfa");if(pfa)pfa.onclick=frList;
- var rbm=document.getElementById("rbm");if(rbm)rbm.onclick=function(){readPg(1)};
+ var rbm=document.getElementById("rbm");if(rbm)rbm.onclick=function(){RPB=profile;readPg(1)};
  app.querySelectorAll(".ordr").forEach(function(b){b.onclick=function(){ordPg(+b.dataset.o)}});
  var pst=document.getElementById("pst");pst.onclick=function(){SPF=1;stampPg()};pst.onkeydown=function(e){if(e.key==="Enter")pst.onclick()};
 
  document.getElementById("pfr").onclick=frList;
  app.querySelectorAll(".tab button")[2].onclick=home;app.querySelectorAll(".tab button")[0].onclick=community;app.querySelectorAll(".tab button")[1].onclick=shop;app.querySelectorAll(".tab button")[3].onclick=tabStamp;
 }
+var RPB=null;
 function readPg(srt,flt){flt=flt||0;
  var CHO="ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ",BS={"ㄲ":"ㄱ","ㄸ":"ㄷ","ㅃ":"ㅂ","ㅆ":"ㅅ","ㅉ":"ㅈ"};
  function ini(t){var c=t.charCodeAt(0);if(c>=0xAC00&&c<=0xD7A3){var h=CHO.charAt(Math.floor((c-0xAC00)/588));return BS[h]||h}return/[A-Za-z]/.test(t.charAt(0))?"A-Z":"기타"}
@@ -1369,7 +1371,7 @@ function readPg(srt,flt){flt=flt||0;
  +'<div class="rso" role="group" aria-label="정렬">'+[["1","가나다 순"],["0","최근 읽은 순"]].map(function(o){return'<button aria-pressed="'+(+o[0]===+!!srt)+'" data-s="'+o[0]+'">'+o[1]+'</button>'}).join("")+'</div>'
  +(L.length?h:'<p class="pfe" style="text-align:center;padding:40px 0">'+(flt===1?"지금 읽는 중인 책이 없어요.":"아직 완독한 책이 없어요.")+'</p>');
  app.firstChild.style.paddingBottom="30px";
- document.getElementById("rp0").onclick=profile;
+ document.getElementById("rp0").onclick=function(){(RPB||profile)()};
  app.querySelectorAll(".ctb button").forEach(function(b){b.onclick=function(){readPg(srt,+b.dataset.f)}});
  app.querySelectorAll(".rso button").forEach(function(b){b.onclick=function(){readPg(+b.dataset.s,flt)}})}
 function frList(){
@@ -1749,7 +1751,7 @@ function home(){
   :(function(){var L=RLs().filter(function(k){return bprog(k).c<100}).slice(0,3);if(!L.length)L=[RLs()[0]];var h=L.map(function(k,i){var B=LB[k],q=bprog(k);return'<section class="hero"'+(i?'':' id="rc"')+'><div class="htp"><div class="hcv" style="background:'+B[2]+'"><b>'+B[0]+'</b></div><div class="hif"><small>'+(i?"최근에 읽던 책":"지금 읽는 책")+'</small><h2>'+B[0]+'</h2><p>'+B[1]+'</p><div class="hpg" role="progressbar" aria-label="진행률" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div><p class="hpt"><b>'+q.c+'%</b> · '+q.p+' / '+q.t+'쪽</p></div></div>'
   +'<div class="hgl"><span>오늘 목표</span><div class="hgm"><i style="width:'+Math.min(100,Math.round(tdp*100/G))+'%"></i></div><b>'+tdp+' / '+G+'쪽</b></div><button class="hgo" data-k="'+k+'">이어 읽기 · '+q.p+'쪽부터</button></section>'}).join("");
   return L.length>1?'<div class="rcwrap"><div class="rcscroll" id="rcscroll" aria-label="최근에 읽던 책, 옆으로 넘겨 보기">'+h+'</div><div class="rcdots" id="hdots">'+L.map(function(_,i){return'<button aria-label="'+(i+1)+'번째 책 보기" aria-current="'+(i===0)+'"></button>'}).join("")+'</div></div>':h})();
- app.innerHTML='<header class="hd"><span class="hav" style="'+avBg(ME)+'" aria-hidden="true">'+avTx(ME)+'</span><span class="nick">'+esc(ME)+'</span><button class="ib nbl" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'">'+ic(unread()?"bellOn":"bell")+(unread()?'<i class="nbd"></i>':'')+'</button></header>'
+ app.innerHTML='<header class="hd"><span class="hav" style="'+avBg(ME)+'" aria-hidden="true">'+avTx(ME)+'</span><span class="nick">'+esc(ME)+'</span><button class="ib hrb" id="hrb" aria-label="지금까지 읽은 책 보기">'+ic("shelf")+'</button><button class="ib nbl" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'">'+ic(unread()?"bellOn":"bell")+(unread()?'<i class="nbd"></i>':'')+'</button></header>'
  +hero
  +'<section class="blk"><div class="sh"><h3>이번 주 기록</h3><button class="pme" id="hdt">달력'+ic("next")+'</button></div><div class="box wkx"><div class="wks"><b>'+rd+'일</b> 읽었어요<span>이번 주 목표 달성률 '+wp+'% · 하루 목표 '+G+'쪽</span></div><div class="wkr">'+bars+'</div></div></section>'
  +(function(){var d=psDay(),c=PCFG.DAILY_CAP,pc=Math.round(d.act*100/c);msSync();var nd=MS.filter(function(x){return x[3]}).length;
@@ -1780,7 +1782,7 @@ function home(){
   el.onkeydown=function(e){if(e.key==="Enter")el.onclick(e);if(e.key==="Escape")thide()}});
  document.querySelector(".sc").addEventListener("click",thide);
  var tb=app.querySelectorAll(".tab button");tb[0].onclick=community;tb[1].onclick=shop;tb[3].onclick=tabStamp;tb[4].onclick=profile;requestAnimationFrame(hFit);
- document.getElementById("hbl").onclick=inbox;
+ document.getElementById("hbl").onclick=inbox;document.getElementById("hrb").onclick=function(){RPB=home;readPg(1)};
  document.getElementById("hdt").onclick=function(){calendar()};
 }
 I.globe="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18";I.users="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 19c0-3 3-5 6-5s6 2 6 5M16 11a2.5 2.5 0 1 0 0-5M17 14c2.5.3 4 2 4 5";
@@ -1920,7 +1922,7 @@ function community(){
  var tb=app.querySelectorAll(".tab button");tb[1].onclick=shop;tb[2].onclick=home;tb[3].onclick=tabStamp;tb[4].onclick=profile;
  if(OPENP){var op=OPENP;OPENP=0;if(byId(op))detail(op)}
 }
-I.sun="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2v2M12 20v2M4.900 4.900l1.400 1.400M17.700 17.700l1.400 1.400M2 12h2M20 12h2M4.900 19.100l1.400-1.400M17.700 6.300l1.400-1.400";I.moon="M20 14.500A8 8 0 1 1 9.500 4a6.500 6.500 0 0 0 10.500 10.500z";I.bksh="M4 19.5V5a2 2 0 0 1 2-2h8v13H6a2 2 0 0 0-2 2zM4 19a2 2 0 0 0 2 2h8M16 13l5-4-5-4M21 9h-4a3 3 0 0 0-3 3";I.link="M10 14a4 4 0 0 0 5.700 0l3-3a4 4 0 0 0-5.700-5.700l-1 1M14 10a4 4 0 0 0-5.700 0l-3 3a4 4 0 0 0 5.700 5.700l1-1";I.pal="M12 3a9 9 0 1 0 0 18c1.1 0 1.700-.8 1.700-1.700 0-.5-.2-.9-.5-1.200-.3-.3-.5-.7-.5-1.200 0-.9.8-1.700 1.700-1.700H16a5 5 0 0 0 5-5C21 6.600 17 3 12 3zM7.500 11.500h.01M10 7.500h.01M15 7.500h.01M17.500 11.500h.01";I.minus="M5 12h14";I.dl="M12 4v11M7 10l5 5 5-5M5 20h14";I.pencil="M4 20l1-4L16.5 4.500a2.100 2.100 0 0 1 3 3L8 19zM14.500 6.500l3 3";I.more="M12 5h.01M12 12h.01M12 19h.01";I.stamp="M7 21h10M5 18h14v-3a4 4 0 0 0-4-4h-1V7a2 2 0 1 0-4 0v4H9a4 4 0 0 0-4 4z";
+I.sun="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2v2M12 20v2M4.900 4.900l1.400 1.400M17.700 17.700l1.400 1.400M2 12h2M20 12h2M4.900 19.100l1.400-1.400M17.700 6.300l1.400-1.400";I.moon="M20 14.500A8 8 0 1 1 9.500 4a6.500 6.500 0 0 0 10.500 10.500z";I.bksh="M4 19.5V5a2 2 0 0 1 2-2h8v13H6a2 2 0 0 0-2 2zM4 19a2 2 0 0 0 2 2h8M16 13l5-4-5-4M21 9h-4a3 3 0 0 0-3 3";I.link="M10 14a4 4 0 0 0 5.700 0l3-3a4 4 0 0 0-5.700-5.700l-1 1M14 10a4 4 0 0 0-5.700 0l-3 3a4 4 0 0 0 5.700 5.700l1-1";I.pal="M12 3a9 9 0 1 0 0 18c1.1 0 1.700-.8 1.700-1.700 0-.5-.2-.9-.5-1.200-.3-.3-.5-.7-.5-1.200 0-.9.8-1.700 1.700-1.700H16a5 5 0 0 0 5-5C21 6.600 17 3 12 3zM7.500 11.500h.01M10 7.500h.01M15 7.500h.01M17.500 11.500h.01";I.shelf="M4 20V5h3v15M9 20V8h3v12M14.5 8.5l2.9-.8 3.6 13-2.9.8zM3 20h18";I.minus="M5 12h14";I.dl="M12 4v11M7 10l5 5 5-5M5 20h14";I.pencil="M4 20l1-4L16.5 4.500a2.100 2.100 0 0 1 3 3L8 19zM14.500 6.500l3 3";I.more="M12 5h.01M12 12h.01M12 19h.01";I.stamp="M7 21h10M5 18h14v-3a4 4 0 0 0-4-4h-1V7a2 2 0 1 0-4 0v4H9a4 4 0 0 0-4 4z";
 var SPF=0,HB={},THI=0,AP={},UL={c:"",w:2,bg:0},BMV={c:"",p:""},MMC="",TMI=-1,
 THV=[null,["#2B2433","#362D3F","#F3EDE7","#C9B3C9","#4A3F5C","#B7A3E0","#2B2433","#8FB3A5"],["#EFE9D2","#F7F2E0","#2E3328","#5E6A56","#CFC9A8","#4F6B4A","#F7F2E0","#8A9A5B"],["#F6E6D0","#FBF1E2","#3A2A22","#7A6455","#E3CDB0","#B5654A","#FBF1E2","#C99A5E"]],
 COLD=["#B8993A","#C4756B","#B2A5D6","#6A4F6A","#5F8696"],
