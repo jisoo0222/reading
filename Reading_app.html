@@ -933,7 +933,7 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .hmr>div{flex:1;min-width:0}.hmr b{display:block;font-size:14px}.hmr small{display:block;font-size:11px;color:var(--sub);line-height:1.4;word-break:keep-all}
 .hmr em{font-style:normal;font-size:12px;font-weight:700;color:var(--sec);white-space:nowrap}
 .hmr.dn>span{background:var(--sec);border-color:var(--sec);color:#F6F1EC}.hmr.dn em{color:var(--sub);font-weight:500}
-.ckfx{position:absolute;width:0;height:0;pointer-events:none;z-index:9999}.ckfx i{position:absolute;left:0;top:0;display:block}
+.ckfx{position:absolute;display:block;box-sizing:border-box;border-radius:50%;pointer-events:none;z-index:9999}
 </style>
 </head>
 <body>
@@ -2230,18 +2230,16 @@ document.addEventListener("mouseup",function(){if(!D)return;var d=D;D=null;if(!d
  function k(e){e.stopPropagation();e.preventDefault();document.removeEventListener("click",k,true)}document.addEventListener("click",k,true);setTimeout(function(){document.removeEventListener("click",k,true)},0)},true);
 })();
 
-/* 클릭 효과(sniper): 누른 자리에서 십자 선 4개와 작은 점 8개가 메인 색으로 퍼져요. 책 본문(책장 넘기는 곳)에서는 쓰지 않아요 */
-(function(){var SZ=64,DUR=300,SW=2,L=SZ*.2,A=[0,90,180,270],P=[60,120,240,300,30,150,210,330];
+/* 클릭 효과(rings): 누른 자리에서 메인 색 동그라미가 퍼지며 사라져요. 책 본문(책장 넘기는 곳)에서는 쓰지 않아요 */
+(function(){var SZ=35,DUR=500,SW=2;
  if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
  document.addEventListener("click",function(e){if(!e.isTrusted||(e.clientX===0&&e.clientY===0))return;var ap=document.getElementById("app");if(!ap)return;
   if(e.target.closest&&e.target.closest(".app.rd .bkw"))return;
-  var r=ap.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,c=getComputedStyle(ap).getPropertyValue("--pri").trim()||"#6A4F6A";
-  var w=document.createElement("div");w.className="ckfx";w.style.left=x+"px";w.style.top=y+"px";
-  A.forEach(function(a){var d=document.createElement("i");d.style.cssText="width:"+L+"px;height:"+SW+"px;margin-top:"+(-SW/2)+"px;background:"+c+";transform-origin:0 50%";w.appendChild(d);
-   d.animate([{transform:"rotate("+(-a)+"deg) translateX(5px) translateX("+L+"px) scaleX(1) translateX("+(-L)+"px)",opacity:1},{opacity:1,offset:.6},{transform:"rotate("+(-a)+"deg) translateX("+(10+L)+"px) translateX("+L+"px) scaleX(0) translateX("+(-L)+"px)",opacity:0}],{duration:DUR,easing:"cubic-bezier(.33,1,.68,1)",fill:"forwards"})});
-  P.forEach(function(a){var d=document.createElement("i"),t=a*Math.PI/180;d.style.cssText="width:"+SW+"px;height:"+SW+"px;margin:"+(-SW/2)+"px 0 0 "+(-SW/2)+"px;background:"+c;w.appendChild(d);
-   d.animate([{transform:"translate(0,0) scale(1)"},{transform:"translate("+(Math.cos(t)*SZ*.24)+"px,"+(Math.sin(t)*SZ*.24)+"px) scale(1)",offset:.6},{transform:"translate("+(Math.cos(t)*SZ*.4)+"px,"+(Math.sin(t)*SZ*.4)+"px) scale(0)"}],{duration:DUR,easing:"cubic-bezier(.33,1,.68,1)",fill:"forwards"})});
-  ap.appendChild(w);setTimeout(function(){w.remove()},DUR+60)},true)})();
+  var r=ap.getBoundingClientRect(),c=getComputedStyle(ap).getPropertyValue("--pri").trim()||"#6A4F6A",d=SZ/2;
+  var w=document.createElement("i");w.className="ckfx";w.style.cssText="left:"+(e.clientX-r.left-d/2)+"px;top:"+(e.clientY-r.top-d/2)+"px;width:"+d+"px;height:"+d+"px;border:"+SW+"px solid "+c;ap.appendChild(w);
+  w.animate([{transform:"scale(.5)",borderWidth:SW+"px"},{transform:"scale(2)",borderWidth:"0px"}],{duration:DUR,easing:"cubic-bezier(.215,.61,.355,1)",fill:"forwards"});
+  w.animate([{opacity:1},{opacity:1,offset:.8},{opacity:0}],{duration:DUR,easing:"linear",fill:"forwards"});
+  setTimeout(function(){w.remove()},DUR+60)},true)})();
 </script>
 </body>
 </html>
