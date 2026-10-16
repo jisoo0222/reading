@@ -1804,7 +1804,7 @@ var PO=[
 {id:2,t:"코멘트",u:"지민",tm:"1시간 전",v:0,x:"친구들이랑 읽었는데 남주가 쓰레기 발언할 때마다 코멘트로 패줘서 너무 시원했다 ㅋㅋ 그 코멘트들이 궁금하면 책 열어 봐요. 같이 읽는 재미가 확실히 달라요.",b:1,l:48,c:[["은우","3장 남주 대사에 ‘이게 사람이냐’ 달아 놓은 거 레전드",32],["하린","여주 편 들어주는 코멘트가 제일 웃겼어요",14]]},
 {id:3,t:"밸런스",u:"은우",tm:"3시간 전",v:0,x:"밸런스 게임! 이 책에서 더 빌런은 누구일까요?",b:2,o:["남주의 거짓말","여주의 침묵"],n:[62,38],l:9,c:[]},
 {id:4,t:"자유",u:"도윤",tm:"어제",v:1,x:"요즘 출퇴근길에 한 챕터씩 읽는 습관이 생겼어요. 짧게라도 매일 읽으니 휴대폰을 덜 보게 돼요.",l:7,c:[]}],
-TY=[["all","전체"],["같이","같이 읽어요"],["코멘트","코멘트 공유"],["밸런스","밸런스 게임"],["자유","자유글"]],TW=[["all","전체"],["friend","친구"],["mine","내 글"]],CW="all",
+TY=[["all","전체"],["같이","같이 읽어요"],["코멘트","코멘트 공유"],["밸런스","밸런스 게임"],["자유","자유글"]],TW=[["all","전체"],["friend","친구"],["mine","내 활동"]],CW="all",TA=[["post","내 글"],["cmt","내 댓글"],["like","좋아요한 글"]],CA="post",
 TD={자유:"책을 고르지 않고 독서 습관, 일상, 내가 만든 꾸미기 등을 나누는 글이에요.",같이:"함께 읽을 사람을 모으는 글이에요. 책을 골라야 해요.",코멘트:"책에 남긴 내 코멘트를 소개하는 글이에요. 책을 골라야 해요.",밸런스:"책에 대한 두 가지 선택지로 투표를 받는 글이에요. 책을 골라야 해요."},
 TN={자유:"자유글",같이:"같이 읽어요",코멘트:"코멘트 공유",밸런스:"밸런스 게임"},
 VIS=[["globe","전체공개"],["users","친구공개"],["lock","나만보기"]],LKD={},VT={},CF="all";
@@ -1813,7 +1813,7 @@ function colOf(n){for(var i=0;i<M.length;i++)if(M[i][0]===n)return M[i][2];retur
 function community(){
  app.className="app";
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="chat"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="sh2"><span class="sp3 csp"></span><h2>커뮤니티</h2><button class="ib" id="csb" aria-label="글 검색" aria-expanded="false">'+ic("search")+'</button><button class="ib" id="cm" aria-label="내 활동 메뉴">'+ic("menu")+'</button></div>'
+ app.innerHTML='<div class="sh2"><span class="sp3"></span><h2>커뮤니티</h2><button class="ib" id="csb" aria-label="글 검색" aria-expanded="false">'+ic("search")+'</button></div>'
  +'<div class="csr" id="csr" hidden><input id="cq" type="search" placeholder="책 제목, 작가, 글 내용으로 찾기" aria-label="커뮤니티 글 검색" autocomplete="off"></div>'
  +'<div class="cws" role="tablist" aria-label="누구의 글" id="cwb"></div><div class="ctf" role="tablist" aria-label="글 종류" id="tyb"></div><div id="feed"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.firstChild.style.paddingBottom="90px";
@@ -1834,9 +1834,10 @@ function community(){
   return((b?b[0]+" "+b[1]+" ":"")+p.x+" "+(p.o||[]).join(" ")).toLowerCase().indexOf(q)>-1}
  function feed(){
   document.getElementById("cwb").innerHTML=TW.map(function(c){return'<button role="tab" aria-selected="'+(CW===c[0])+'" data-w="'+c[0]+'">'+c[1]+'</button>'}).join("");
-  document.getElementById("tyb").innerHTML=TY.map(function(c){return'<button role="tab" aria-selected="'+(CF===c[0])+'" data-t="'+c[0]+'">'+c[1]+'</button>'}).join("");
-  var h=PO.filter(function(p){return(CW==="all"||(CW==="mine"?p.mine:!p.mine&&!!FR[p.u]))&&(CF==="all"||p.t===CF)&&(p.v===0||p.mine||(p.v===1&&FR[p.u]))&&cqm(p)}).map(post).join("");
-  document.getElementById("feed").innerHTML=h||'<div class="emp">'+(CQ.trim()?"‘"+esc(CQ.trim())+"’에 대한 글이 없어요.":CW==="mine"?"아직 쓴 글이 없어요.":CW==="friend"?"아직 친구가 쓴 글이 없어요.":"아직 올라온 글이 없어요.")+'</div>'}
+  var tyb=document.getElementById("tyb");tyb.setAttribute("aria-label",CW==="mine"?"내 활동":"글 종류");
+  tyb.innerHTML=CW==="mine"?TA.map(function(c){return'<button role="tab" aria-selected="'+(CA===c[0])+'" data-a="'+c[0]+'">'+c[1]+'</button>'}).join(""):TY.map(function(c){return'<button role="tab" aria-selected="'+(CF===c[0])+'" data-t="'+c[0]+'">'+c[1]+'</button>'}).join("");
+  var h=PO.filter(function(p){return(CW==="mine"?(CA==="post"?p.mine:CA==="cmt"?p.c.some(function(c){return c[3]}):!!LKD[p.id]):(CW==="all"||!p.mine&&!!FR[p.u])&&(CF==="all"||p.t===CF))&&(p.v===0||p.mine||(p.v===1&&FR[p.u]))&&cqm(p)}).map(post).join("");
+  document.getElementById("feed").innerHTML=h||'<div class="emp">'+(CQ.trim()?"‘"+esc(CQ.trim())+"’에 대한 글이 없어요.":CW==="mine"?(CA==="post"?"아직 쓴 글이 없어요.":CA==="cmt"?"아직 댓글을 단 글이 없어요.":"아직 좋아요한 글이 없어요."):CW==="friend"?"아직 친구가 쓴 글이 없어요.":"아직 올라온 글이 없어요.")+'</div>'}
  function byId(id){return PO.filter(function(p){return p.id===id})[0]}
  var inD=false,FCB=null,ref=function(){feed()};
  function menu(id,fd){
@@ -1926,10 +1927,9 @@ function community(){
   document.querySelectorAll("#dlg .sg button").forEach(function(b){b.onclick=function(){document.querySelectorAll("#dlg .sg button").forEach(function(c){c.setAttribute("aria-pressed",c===b)});show(+b.dataset.a)}})}
  feed();
  document.getElementById("cwb").onclick=function(e){var b=e.target.closest("button");if(b){CW=b.dataset.w;feed()}};
- document.getElementById("tyb").onclick=function(e){var b=e.target.closest("button");if(b){CF=b.dataset.t;feed()}};
+ document.getElementById("tyb").onclick=function(e){var b=e.target.closest("button");if(b){if(b.dataset.a)CA=b.dataset.a;else CF=b.dataset.t;feed()}};
  document.getElementById("feed").onclick=pclk;
  fb.onclick=compose;
- document.getElementById("cm").onclick=act;
  var csb=document.getElementById("csb"),csr=document.getElementById("csr"),cq=document.getElementById("cq");
  csb.onclick=function(){var o=csr.hidden;csr.hidden=!o;csb.setAttribute("aria-expanded",o);if(o)cq.focus();else if(CQ){CQ="";cq.value="";feed()}};
  cq.oninput=function(){CQ=cq.value;feed()};
