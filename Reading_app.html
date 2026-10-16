@@ -2231,7 +2231,7 @@ document.addEventListener("mouseup",function(){if(!D)return;var d=D;D=null;if(!d
 })();
 
 /* 클릭 효과(rings): 누른 자리에서 메인 색 동그라미가 퍼졌다가 다시 줄어들며 사라져요. 책 본문(책장 넘기는 곳)에서는 쓰지 않아요 */
-(function(){var SZ=35,DUR=350,SW=2;
+(function(){var SZ=35,DUR=350,SW=1;
  if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
  document.addEventListener("click",function(e){if(!e.isTrusted||(e.clientX===0&&e.clientY===0))return;var ap=document.getElementById("app");if(!ap)return;
   if(e.target.closest&&e.target.closest(".app.rd .bkw"))return;
