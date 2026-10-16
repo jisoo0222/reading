@@ -940,6 +940,7 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .app.hf3 .blk{margin-top:10px}.app.hf3 .hero{padding:12px 12px 10px}.app.hf3 .hgo{padding:10px}.app.hf3 .hd{padding-bottom:0}
 .wkd em.wok{background:var(--bg)}.hrb{margin-right:2px}
 .wkd em b,.wkd em.wok b{color:#FFFFFF;-webkit-text-stroke:2.5px var(--pri);paint-order:stroke fill;font-weight:800}
+.wkx{cursor:pointer;-webkit-tap-highlight-color:transparent}.wkh{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}.wkh .hdh{margin-bottom:0}.wkh .ic{width:16px;height:16px;color:var(--sub)}
 </style>
 </head>
 <body>
@@ -1754,7 +1755,7 @@ function home(){
   return L.length>1?'<div class="rcwrap"><div class="rcscroll" id="rcscroll" aria-label="최근에 읽던 책, 옆으로 넘겨 보기">'+h+'</div><div class="rcdots" id="hdots">'+L.map(function(_,i){return'<button aria-label="'+(i+1)+'번째 책 보기" aria-current="'+(i===0)+'"></button>'}).join("")+'</div></div>':h})();
  app.innerHTML='<header class="hd"><span class="hav" style="'+avBg(ME)+'" aria-hidden="true">'+avTx(ME)+'</span><span class="nick">'+esc(ME)+'</span><button class="ib hrb" id="hrb" aria-label="지금까지 읽은 책 보기">'+ic("shelf")+'</button><button class="ib nbl" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'">'+ic(unread()?"bellOn":"bell")+(unread()?'<i class="nbd"></i>':'')+'</button></header>'
  +hero
- +'<section class="blk"><div class="sh"><h3>이번 주 기록</h3><button class="pme" id="hdt">달력'+ic("next")+'</button></div><div class="box wkx"><div class="wks"><b>'+rd+'일</b> 읽었어요<span>이번 주 목표 달성률 '+wp+'% · 하루 목표 '+G+'쪽</span></div><div class="wkr">'+bars+'</div></div></section>'
+ +'<section class="blk"><div class="box wkx" id="hdt" role="button" tabindex="0" aria-label="이번 주 기록, 독서 달력 보기"><div class="wkh"><small class="hdh">이번 주 기록</small>'+ic("next")+'</div><div class="wks"><b>'+rd+'일</b> 읽었어요<span>이번 주 목표 달성률 '+wp+'% · 하루 목표 '+G+'쪽</span></div><div class="wkr">'+bars+'</div></div></section>'
  +(function(){var d=psDay(),c=PCFG.DAILY_CAP,pc=Math.round(d.act*100/c);msSync();var nd=MS.filter(function(x){return x[3]}).length;
   var tp=PO.filter(function(p){return p.v===0}).sort(function(a,b){return(b.l+b.c.length)-(a.l+a.c.length)})[0];
   return'<section class="blk hdu"><div class="box hpx hpc" id="hpx" role="button" tabindex="0" aria-label="오늘의 포인트와 미션 보기"><small class="hdh">오늘의 포인트</small><b class="hpbig">'+PT+'P</b><div class="hpg2" role="progressbar" aria-label="오늘의 활동 포인트" aria-valuenow="'+d.act+'" aria-valuemin="0" aria-valuemax="'+c+'"><i style="width:'+pc+'%"></i></div><span class="hpn">오늘 <b>'+d.act+'P</b> / '+c+'P</span><span class="hmo">미션 '+nd+'/'+MS.length+' 완료'+ic("next")+'</span></div>'
@@ -1784,7 +1785,7 @@ function home(){
  document.querySelector(".sc").addEventListener("click",thide);
  var tb=app.querySelectorAll(".tab button");tb[0].onclick=community;tb[1].onclick=shop;tb[3].onclick=tabStamp;tb[4].onclick=profile;requestAnimationFrame(hFit);
  document.getElementById("hbl").onclick=inbox;document.getElementById("hrb").onclick=function(){RPB=home;readPg(1)};
- document.getElementById("hdt").onclick=function(){calendar()};
+ document.getElementById("hdt").onclick=function(){calendar()};document.getElementById("hdt").onkeydown=function(e){if(e.key==="Enter")calendar()};
 }
 I.globe="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18";I.users="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 19c0-3 3-5 6-5s6 2 6 5M16 11a2.5 2.5 0 1 0 0-5M17 14c2.5.3 4 2 4 5";
 var PO=[
