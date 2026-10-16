@@ -912,6 +912,27 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 #stb.on{opacity:1;transform:translate(-50%,0)}
 #stb.hot{background:var(--ink);color:var(--bg);border-style:solid;border-color:var(--ink);transform:translate(-50%,0) scale(1.08)}
 .sfs.trs{opacity:.55!important}
+.hero{box-shadow:0 12px 26px rgba(79,58,79,.18),0 3px 8px rgba(79,58,79,.10)}
+.rcscroll{padding:2px 2px 22px;margin:0 -2px -14px}
+.hav{width:32px;height:32px;border-radius:50%;flex:none;display:grid;place-items:center;color:#F6F1EC;font-size:14px;font-weight:700;margin-right:8px}
+.hd .hav:first-child{margin-left:-4px}.hd .nick{margin-left:0!important}
+.hdu{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hdu>.box{margin:0;min-width:0;display:flex;flex-direction:column;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.box.hpc{padding:14px}
+.hdh{font-size:12px;font-weight:700;color:var(--sub);margin-bottom:6px}
+.hpbig{font-size:22px;font-weight:800;color:var(--ink);line-height:1.2}
+.hpc .hpg2{margin:10px 0 6px}
+.hpn{font-size:12px;color:var(--sub)}.hpn b{color:var(--pri)}
+.hmo{margin-top:auto;padding-top:10px;display:flex;align-items:center;gap:2px;font-size:12px;font-weight:600;color:var(--pri)}.hmo .ic{width:14px;height:14px}
+.hpo{padding:14px}.hpo .tg2{align-self:flex-start;margin-bottom:6px}
+.hpo p{margin:0;font-size:13px;line-height:1.5;color:var(--ink);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;word-break:keep-all}
+.hpof{margin-top:auto;padding-top:10px;display:flex;align-items:center;gap:3px;font-size:12px;color:var(--sub)}.hpof .ic{width:14px;height:14px}.hpof i{width:8px}
+.hml{display:flex;flex-direction:column;gap:8px;max-height:52vh;overflow-y:auto}
+.hmr{display:flex;align-items:center;gap:10px;padding:10px;border:1.5px solid var(--line);border-radius:12px;background:var(--bg)}
+.hmr>span{width:34px;height:34px;flex:none;border-radius:50%;border:1.5px solid var(--pri);color:var(--pri);display:grid;place-items:center}.hmr>span .ic{width:17px;height:17px}
+.hmr>div{flex:1;min-width:0}.hmr b{display:block;font-size:14px}.hmr small{display:block;font-size:11px;color:var(--sub);line-height:1.4;word-break:keep-all}
+.hmr em{font-style:normal;font-size:12px;font-weight:700;color:var(--sec);white-space:nowrap}
+.hmr.dn>span{background:var(--sec);border-color:var(--sec);color:#F6F1EC}.hmr.dn em{color:var(--sub);font-weight:500}
 </style>
 </head>
 <body>
@@ -1696,6 +1717,11 @@ function calendar(y,m,sd){
  document.getElementById("cgd").onclick=function(e){var b=e.target.closest("button");if(b){var st=document.querySelector(".sc").scrollTop;calendar(y,m,+b.dataset.d);document.querySelector(".sc").scrollTop=st}};
 }
 var WK=[14,9,0,18,12,7,11],RLOG={};function hm(){var d=new Date(),z=function(n){return(n<10?"0":"")+n};return z(d.getHours())+":"+z(d.getMinutes())}
+var OPENP=0;
+/* 홈 포인트 카드를 누르면 뜨는 오늘의 미션 목록 */
+function hMis(){var d=psDay();msSync();
+ var x=pop('<h3>오늘의 미션</h3><p class="sm" style="font-size:13px;margin:-2px 0 12px">보유 <b>'+PT+'P</b> · 오늘 <b>'+d.act+'P</b> / '+PCFG.DAILY_CAP+'P</p><div class="hml">'+MS.map(function(m,i){return[m,i]}).sort(function(a,b){return a[0][3]-b[0][3]}).map(function(r){var m=r[0],i=r[1],g=d.got[MK[i]];return'<div class="hmr'+(m[3]?" dn":"")+'"><span>'+ic(m[3]?"check":m[1])+'</span><div><b>'+m[0]+'</b><small>'+MSD[i]+'</small></div><em>'+(m[3]?(g!==undefined&&g<m[2]?"완료 +"+g+"P":"완료"):"+"+m[2]+"P")+'</em></div>'}).join("")+'</div><div class="dbt"><button class="btn ghost" id="hmx">닫기</button><button class="btn" id="hms">디지털 문구점</button></div>');
+ document.getElementById("hmx").onclick=x;document.getElementById("hms").onclick=function(){x();shop()}}
 function home(){
  app.className="app hm";window.scrollTo(0,0);if(BK!==DEF)useBk(DEF);
  var REC=!PICKED&&!!RKEY,pct=Math.round(pg*100/TOT),DB=LB[DEF],ti=new Date().getDay(),G=GOAL||10,tdp=RDY.d===todayStr()?Object.keys(RDY.p).length:0;
@@ -1706,10 +1732,13 @@ function home(){
   :(function(){var L=RLs().filter(function(k){return bprog(k).c<100}).slice(0,3);if(!L.length)L=[RLs()[0]];var h=L.map(function(k,i){var B=LB[k],q=bprog(k);return'<section class="hero"'+(i?'':' id="rc"')+'><div class="htp"><div class="hcv" style="background:'+B[2]+'"><b>'+B[0]+'</b></div><div class="hif"><small>'+(i?"최근에 읽던 책":"지금 읽는 책")+'</small><h2>'+B[0]+'</h2><p>'+B[1]+'</p><div class="hpg" role="progressbar" aria-label="진행률" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div><p class="hpt"><b>'+q.c+'%</b> · '+q.p+' / '+q.t+'쪽</p></div></div>'
   +'<div class="hgl"><span>오늘 목표</span><div class="hgm"><i style="width:'+Math.min(100,Math.round(tdp*100/G))+'%"></i></div><b>'+tdp+' / '+G+'쪽</b></div><button class="hgo" data-k="'+k+'">이어 읽기 · '+q.p+'쪽부터</button></section>'}).join("");
   return L.length>1?'<div class="rcwrap"><div class="rcscroll" id="rcscroll" aria-label="최근에 읽던 책, 옆으로 넘겨 보기">'+h+'</div><div class="rcdots" id="hdots">'+L.map(function(_,i){return'<button aria-label="'+(i+1)+'번째 책 보기" aria-current="'+(i===0)+'"></button>'}).join("")+'</div></div>':h})();
- app.innerHTML='<header class="hd"><span class="nick">'+esc(ME)+'</span><button class="ib nbl" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'">'+ic(unread()?"bellOn":"bell")+(unread()?'<i class="nbd"></i>':'')+'</button></header>'
+ app.innerHTML='<header class="hd"><span class="hav" style="'+avBg(ME)+'" aria-hidden="true">'+avTx(ME)+'</span><span class="nick">'+esc(ME)+'</span><button class="ib nbl" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'">'+ic(unread()?"bellOn":"bell")+(unread()?'<i class="nbd"></i>':'')+'</button></header>'
  +hero
  +'<section class="blk"><div class="sh"><h3>이번 주 기록</h3><button class="pme" id="hdt">달력'+ic("next")+'</button></div><div class="box wkx"><div class="wks"><b>'+rd+'일</b> 읽었어요<span>이번 주 목표 달성률 '+wp+'% · 하루 목표 '+G+'쪽</span></div><div class="wkr">'+bars+'</div></div></section>'
- +'<section class="blk"><div class="sh"><h3>오늘의 포인트</h3><button class="pme" id="hpt">디지털 문구점'+ic("next")+'</button></div><div class="box hpx" id="hpx">'+hpHead()+'<div class="hpl">'+MS.map(function(x,i){return[x,i]}).sort(function(a,b){return a[0][3]-b[0][3]}).map(function(r){var x=r[0];return'<div class="hpm'+(x[3]?" dn":"")+'" data-i="'+r[1]+'" tabindex="0" role="button" aria-label="'+x[0]+' 미션: '+MSD[r[1]]+'"><span>'+ic(x[3]?"check":x[1])+'</span><b>'+x[0]+'</b><small>'+(x[3]?(MK[r[1]]==="done"||MK[r[1]]==="streak"||psDay().got[MK[r[1]]]===x[2]?"완료":"완료 +"+psDay().got[MK[r[1]]]+"P"):"+"+x[2]+"P")+'</small>'+'</div>'}).join("")+'</div></div></section>'
+ +(function(){var d=psDay(),c=PCFG.DAILY_CAP,pc=Math.round(d.act*100/c);msSync();var nd=MS.filter(function(x){return x[3]}).length;
+  var tp=PO.filter(function(p){return p.v===0}).sort(function(a,b){return(b.l+b.c.length)-(a.l+a.c.length)})[0];
+  return'<section class="blk hdu"><div class="box hpx hpc" id="hpx" role="button" tabindex="0" aria-label="오늘의 포인트와 미션 보기"><small class="hdh">오늘의 포인트</small><b class="hpbig">'+PT+'P</b><div class="hpg2" role="progressbar" aria-label="오늘의 활동 포인트" aria-valuenow="'+d.act+'" aria-valuemin="0" aria-valuemax="'+c+'"><i style="width:'+pc+'%"></i></div><span class="hpn">오늘 <b>'+d.act+'P</b> / '+c+'P</span><span class="hmo">미션 '+nd+'/'+MS.length+' 완료'+ic("next")+'</span></div>'
+  +(tp?'<div class="box hpo" id="hpo" role="button" tabindex="0" data-id="'+tp.id+'" aria-label="커뮤니티 인기글 보기"><small class="hdh">커뮤니티 인기글</small><span class="tg2">'+TN[tp.t]+'</span><p>'+esc(tp.x)+'</p><span class="hpof">'+ic("heart")+tp.l+'<i></i>'+ic("chat")+tp.c.length+'</span></div>':'<div class="box hpo" id="hpo" role="button" tabindex="0"><small class="hdh">커뮤니티 인기글</small><p>아직 올라온 글이 없어요.</p></div>')+'</section>'})()
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  if(REC)app.querySelectorAll(".rck").forEach(function(b){b.onclick=function(){PICKED=1;DEF=+b.dataset.k;reader(DEF)}});else app.querySelectorAll(".hgo").forEach(function(b){b.onclick=function(){if(HSM)return;reader(+b.dataset.k)}});
  var hsk=document.getElementById("hsk");if(hsk)hsk.onclick=function(){TFROM=home;testPg()};
@@ -1721,7 +1750,8 @@ function home(){
   hs.addEventListener("pointerdown",function(e){if(e.pointerType!=="mouse")return;dn=true;dx=e.clientX;sl0=hs.scrollLeft;HSM=false});
   window.addEventListener("pointermove",function(e){if(!dn||!hs.isConnected)return;var d=e.clientX-dx;if(Math.abs(d)>5){HSM=true;hs.style.scrollSnapType="none";hs.scrollLeft=sl0-d}});
   window.addEventListener("pointerup",function(){if(!dn)return;dn=false;if(hs.isConnected){var i=Math.round(hs.scrollLeft/hs.clientWidth);hs.style.scrollSnapType="";hs.scrollTo({left:i*hs.clientWidth,behavior:"smooth"})}setTimeout(function(){HSM=false},0)})}
- document.getElementById("hpt").onclick=shop;
+ document.getElementById("hpx").onclick=hMis;document.getElementById("hpx").onkeydown=function(e){if(e.key==="Enter")hMis()};
+ var hpo=document.getElementById("hpo");hpo.onclick=function(){OPENP=+hpo.dataset.id||0;community()};hpo.onkeydown=function(e){if(e.key==="Enter")hpo.onclick()};
  window.hpRef=function(){var h=document.getElementById("hpx");if(!h||!h.isConnected)return;var sy=document.querySelector(".sc")?document.querySelector(".sc").scrollTop:0;home();var sc2=document.querySelector(".sc");if(sc2)sc2.scrollTop=sy};award("att",1);
  var tip=document.createElement("div");tip.className="mtp";tip.setAttribute("role","tooltip");app.appendChild(tip);
  function tshow(el){var i=+el.dataset.i,a=app.getBoundingClientRect(),r=el.getBoundingClientRect();tip.innerHTML='<b>'+MS[i][0]+' 포인트 · +'+MS[i][2]+'P</b>'+MSD[i];tip.classList.add("on");tip.dataset.i=i;
@@ -1731,7 +1761,7 @@ function home(){
   el.onpointerenter=function(e){if(e.pointerType==="mouse")tshow(el)};el.onpointerleave=function(e){if(e.pointerType==="mouse")thide()};
   el.onclick=function(e){e.stopPropagation();tshow(el)};
   el.onkeydown=function(e){if(e.key==="Enter")el.onclick(e);if(e.key==="Escape")thide()}});
- app.querySelector(".hpl").addEventListener("scroll",thide);document.querySelector(".sc").addEventListener("click",thide);
+ document.querySelector(".sc").addEventListener("click",thide);
  var tb=app.querySelectorAll(".tab button");tb[0].onclick=community;tb[1].onclick=shop;tb[3].onclick=tabStamp;tb[4].onclick=profile;
  document.getElementById("hbl").onclick=inbox;
  document.getElementById("hdt").onclick=function(){calendar()};
@@ -1871,6 +1901,7 @@ function community(){
  cq.oninput=function(){CQ=cq.value;feed()};
 
  var tb=app.querySelectorAll(".tab button");tb[1].onclick=shop;tb[2].onclick=home;tb[3].onclick=tabStamp;tb[4].onclick=profile;
+ if(OPENP){var op=OPENP;OPENP=0;if(byId(op))detail(op)}
 }
 I.sun="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM12 2v2M12 20v2M4.900 4.900l1.400 1.400M17.700 17.700l1.400 1.400M2 12h2M20 12h2M4.900 19.100l1.400-1.400M17.700 6.300l1.400-1.400";I.moon="M20 14.500A8 8 0 1 1 9.500 4a6.500 6.500 0 0 0 10.500 10.500z";I.bksh="M4 19.5V5a2 2 0 0 1 2-2h8v13H6a2 2 0 0 0-2 2zM4 19a2 2 0 0 0 2 2h8M16 13l5-4-5-4M21 9h-4a3 3 0 0 0-3 3";I.link="M10 14a4 4 0 0 0 5.700 0l3-3a4 4 0 0 0-5.700-5.700l-1 1M14 10a4 4 0 0 0-5.700 0l-3 3a4 4 0 0 0 5.700 5.700l1-1";I.pal="M12 3a9 9 0 1 0 0 18c1.1 0 1.700-.8 1.700-1.700 0-.5-.2-.9-.5-1.200-.3-.3-.5-.7-.5-1.200 0-.9.8-1.700 1.700-1.700H16a5 5 0 0 0 5-5C21 6.600 17 3 12 3zM7.500 11.500h.01M10 7.500h.01M15 7.500h.01M17.500 11.500h.01";I.minus="M5 12h14";I.dl="M12 4v11M7 10l5 5 5-5M5 20h14";I.pencil="M4 20l1-4L16.5 4.500a2.100 2.100 0 0 1 3 3L8 19zM14.500 6.500l3 3";I.more="M12 5h.01M12 12h.01M12 19h.01";I.stamp="M7 21h10M5 18h14v-3a4 4 0 0 0-4-4h-1V7a2 2 0 1 0-4 0v4H9a4 4 0 0 0-4 4z";
 var SPF=0,HB={},THI=0,AP={},UL={c:"",w:2,bg:0},BMV={c:"",p:""},MMC="",TMI=-1,
