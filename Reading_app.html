@@ -958,6 +958,7 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .mcr small{display:block;margin-top:4px;font-size:12px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mcr small em{font-style:normal;font-weight:700;color:var(--sec);margin-right:6px}.mcr>.ic{width:16px;height:16px;color:var(--sub);flex:none}
 .cmx{display:flex;gap:10px;margin-top:4px}.cmx button{font:inherit;font-size:12px;color:var(--sub);background:none;border:0;padding:2px 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.cmr>div{flex:1;min-width:0}.cmn{display:flex;align-items:center;gap:8px}.cmn .cmx{margin:0 0 0 auto}
 </style>
 </head>
 <body>
@@ -1874,7 +1875,7 @@ function community(){
   app.firstChild.style.paddingBottom="84px";
   var bar=document.createElement("form");bar.className="cmbar";bar.innerHTML='<input id="ci" placeholder="댓글을 입력하세요" aria-label="댓글 입력" autocomplete="off"><button class="btn" id="cy">등록</button>';app.appendChild(bar);
   var dp=document.getElementById("dp"),ci=document.getElementById("ci");
-  function rd(){dp.innerHTML=post(p,true)+'<h3 class="cmh">댓글 '+p.c.length+'</h3>'+(p.c.length?p.c.map(function(c,ci){var n=c[3]?ME:c[0];return'<div class="cmr">'+(c[3]?'<span class="pav2 s" style="'+avBg(n)+'">'+avTx(n)+'</span>':'<button class="pav2 s" data-u="'+esc(n)+'" aria-label="'+esc(n)+' 프로필 보기" style="background:'+colOf(n)+'">'+esc(n).charAt(0)+'</button>')+'<div><b>'+esc(n)+(c[4]?'<em class="edt"> · 수정됨</em>':'')+'</b><p>'+esc(c[1])+'</p>'+(c[3]?'<span class="cmx"><button data-ce="'+ci+'">수정</button><button data-cd="'+ci+'">삭제</button></span>':'')+'</div></div>'}).join(""):'<div class="emp">첫 댓글을 남겨 보세요.</div>')}
+  function rd(){dp.innerHTML=post(p,true)+'<h3 class="cmh">댓글 '+p.c.length+'</h3>'+(p.c.length?p.c.map(function(c,ci){var n=c[3]?ME:c[0];return'<div class="cmr">'+(c[3]?'<span class="pav2 s" style="'+avBg(n)+'">'+avTx(n)+'</span>':'<button class="pav2 s" data-u="'+esc(n)+'" aria-label="'+esc(n)+' 프로필 보기" style="background:'+colOf(n)+'">'+esc(n).charAt(0)+'</button>')+'<div><div class="cmn"><b>'+esc(n)+(c[4]?'<em class="edt"> · 수정됨</em>':'')+'</b>'+(c[3]?'<span class="cmx"><button data-ce="'+ci+'">수정</button><button data-cd="'+ci+'">삭제</button></span>':'')+'</div><p>'+esc(c[1])+'</p></div></div>'}).join(""):'<div class="emp">첫 댓글을 남겨 보세요.</div>')}
   ref=rd;CUR=p;rd();
   dp.onclick=pclk;
   bar.onsubmit=function(e){e.preventDefault();var v=ci.value.trim();if(!v)return;p.c.push([ME,v,0,1]);ci.value="";rd();award("talk");document.querySelector(".sc").scrollTop=1e6};
