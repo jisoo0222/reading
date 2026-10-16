@@ -971,6 +971,7 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .mm .mtb{top:-54px;gap:4px;padding:4px}.mm .mtb button{width:34px;height:30px;padding:0;display:grid;place-items:center}.mm .mtb .ic{width:17px;height:17px}.mm .mdn{bottom:-50px}
 .mm>i,.mm>p{transform:rotate(var(--mr,0deg))}.mm .rz{cursor:grab;touch-action:none}.mm .rz::after{content:"";position:absolute;inset:3px;border-radius:50%;border:1.5px solid var(--onpri);border-right-color:transparent}
 .pgl,.zen .pgl{padding-top:46px}
+.pxb{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;border:0;background:var(--bg);color:var(--sub);display:grid;place-items:center;cursor:pointer;z-index:3}.pxb svg{width:16px;height:16px}#dlg,#sheet{position:absolute}#dlg>h3:first-of-type,#sheet>h3:first-of-type,#dlg>.dh2,#sheet>.dh{padding-right:36px}
 </style>
 </head>
 <body>
@@ -2138,7 +2139,7 @@ function reader(k){
    +'<div class="mpv" id="mpv"></div><textarea id="mt2" rows="3" placeholder="스티커에 적을 말 (선택)" aria-label="스티커 글"></textarea>'
    +'<label class="mop">투명도<input type="range" id="mo2" min="20" max="100" step="5" aria-label="스티커 투명도"><span id="mo3"></span></label>'
    +'<p id="me" style="color:var(--sub);font-size:13px;margin:8px 0 0;min-height:18px"></p>'
-   +'<div class="dbt">'+(ed?'<button class="btn ghost" id="mdl">삭제</button><button class="btn ghost" id="mmv">위치·크기</button>':'<button class="btn ghost" id="mx">취소</button>')+'<button class="btn" id="ms">'+(ed?"저장":"붙이기")+'</button></div>';
+   +'<div class="dbt">'+(ed?'':'<button class="btn ghost" id="mx">취소</button>')+'<button class="btn" id="ms">'+(ed?"저장":"붙이기")+'</button></div>';
   function x(){o.remove();d.remove()}
   o.onclick=x;app.appendChild(o);app.appendChild(d);d.onkeydown=function(e){if(e.key==="Escape")x()};
   var ta=document.getElementById("mt2"),rg=document.getElementById("mo2");ta.value=v.t;rg.value=v.o;
@@ -2147,8 +2148,7 @@ function reader(k){
   ta.oninput=function(){v.t=ta.value;pv()};rg.oninput=function(){v.o=+rg.value;pv()};
   d.querySelector(".mpk").onclick=function(e){var b=e.target.closest("button");if(!b)return;v.i=/^u/.test(b.dataset.p)?b.dataset.p:+b.dataset.p;d.querySelectorAll(".mpk button").forEach(function(y){y.setAttribute("aria-pressed",y===b)});pv()};
   if(!ed)document.getElementById("mx").onclick=x;
-  else{document.getElementById("mdl").onclick=function(){MMO[pi].splice(j,1);x();rt();toast("스티커를 뗐어요")};
-   document.getElementById("mmv").onclick=function(){x();eid=id;rt();toast("끌어서 옮기고, 모서리로 크기와 방향을 바꿔요")}}
+
   document.getElementById("ms").onclick=function(){var t=ta.value.trim();
    m.t=t;m.i=v.i;m.o=v.o;x();
    if(!ed){(MMO[cur]=MMO[cur]||[]).push(m);eid=cur+"-"+(MMO[cur].length-1);toast("끌어서 옮기고, 모서리로 크기와 방향을 바꿔요")}
@@ -2315,6 +2315,14 @@ document.addEventListener("mouseup",function(){if(!D)return;var d=D;D=null;if(!d
   w.animate([{transform:"scale(.5)",borderWidth:SW+"px"},{transform:"scale(2)",borderWidth:"0px"}],{duration:DUR,easing:"cubic-bezier(.215,.61,.355,1)",fill:"forwards"});
   w.animate([{opacity:1},{opacity:1,offset:.8},{opacity:0}],{duration:DUR,easing:"linear",fill:"forwards"});
   setTimeout(function(){w.remove()},DUR+60)},true)})();
+
+/* 모든 팝업(가운데 창 #dlg, 아래에서 올라오는 창 #sheet) 오른쪽 위에 X 닫기 버튼을 자동으로 달아요 */
+(function(){var X='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+ function close(t){if(t.id==="dlg"){var o=document.getElementById("ov2");if(o&&o.onclick){o.click();return}if(o)o.remove();t.remove();return}
+  var ov=document.getElementById("ov");if(ov&&ov.onclick){ov.click();return}t.classList.remove("on");if(ov)ov.classList.remove("on")}
+ function add(){["dlg","sheet"].forEach(function(id){var t=document.getElementById(id);if(!t||t.querySelector(":scope>.pxb"))return;if(id==="sheet"&&!t.classList.contains("on"))return;
+  var b=document.createElement("button");b.className="pxb";b.type="button";b.setAttribute("aria-label","닫기");b.innerHTML=X;b.onclick=function(e){e.stopPropagation();close(t)};t.insertBefore(b,t.firstChild)})}
+ var q=false;new MutationObserver(function(){if(q)return;q=true;requestAnimationFrame(function(){q=false;add()})}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class"]})})();
 </script>
 </body>
 </html>
