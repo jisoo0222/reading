@@ -942,6 +942,7 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .wkd em b,.wkd em.wok b{color:#FFFFFF;-webkit-text-stroke:2.5px var(--pri);paint-order:stroke fill;font-weight:800}
 .wkx{cursor:pointer;-webkit-tap-highlight-color:transparent}.wkh{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}.wkh .hdh{margin-bottom:0}.wkh .ic{width:16px;height:16px;color:var(--sub)}
 .mm>p{display:flex;align-items:center;justify-content:center;text-align:center}#mt2{text-align:center}
+.ps0{clip-path:polygon(0 0,100% 0,100% 72%,72% 100%,0 100%)}.ps1{border-radius:50%;width:88%;aspect-ratio:3/2}.ps2{border-radius:2px;width:90%;aspect-ratio:3/1.1;opacity:.82;transform:rotate(-5deg)}.ps3{border-radius:6px;width:68%;aspect-ratio:5/6;border-top:9px solid rgba(79,58,79,.22)}.ps4{clip-path:polygon(0 14%,36% 14%,36% 0,64% 0,64% 14%,100% 14%,100% 100%,0 100%);width:72%;aspect-ratio:1/1.1}.ps5{clip-path:polygon(50% 100%,0 42%,0 18%,22% 0,50% 22%,78% 0,100% 18%,100% 42%)}.ps6{clip-path:polygon(0 12%,7.7% 12%,7.7% 0,15.4% 0,15.4% 12%,23.1% 12%,23.1% 0,30.8% 0,30.8% 12%,38.5% 12%,38.5% 0,46.2% 0,46.2% 12%,53.8% 12%,53.8% 0,61.5% 0,61.5% 12%,69.2% 12%,69.2% 0,76.9% 0,76.9% 12%,84.6% 12%,84.6% 0,92.3% 0,92.3% 12%,100% 12%,100% 100%,0 100%);width:70%;aspect-ratio:4/5}.ps7{clip-path:polygon(100% 0%,91% 20%,100% 40%,91% 60%,100% 80%,91% 100%,9% 100%,0 80%,9% 60%,0 40%,9% 20%,0 0%);width:88%;aspect-ratio:3/1.25;opacity:.85;transform:rotate(4deg)}.ps8{clip-path:polygon(8% 0,92% 0,100% 10%,100% 66%,92% 76%,44% 76%,24% 100%,28% 76%,8% 76%,0 66%,0 10%);width:86%;aspect-ratio:1/.9}.mm>i.psk,.mpk i.psk{width:auto;aspect-ratio:auto}
 </style>
 </head>
 <body>
@@ -1433,7 +1434,7 @@ I.grid="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z";I.memo="M5 4h14v11l-
 var MSD=["하루에 책 2권을 각각 2쪽 이상 읽으면 달성돼요. 책을 펼치기만 해서는 달성되지 않아요.","커뮤니티 글에 댓글을 남기면 달성돼요. 하루 한 번만 지급돼요.","3일 연속으로 책을 읽으면 달성돼요. 하루 한 번만 지급돼요.","문장 카드나 책을 공유하면 달성돼요. 하루 한 번만 지급돼요.","책 한 권을 끝까지 읽으면 달성돼요. 같은 책은 한 번만, 하루 한 번만 지급돼요.","오늘 설정한 목표 쪽수에 도달하면 달성돼요. 목표가 10쪽보다 적으면 10쪽을 읽어야 해요.","오늘 앱에 들어오면 달성돼요.","친구에게 독서 우표를 선물하면 달성돼요. 나에게 보내면 지급되지 않고, 하루 한 번만 지급돼요.","책 속 문장에 코멘트를 남기면 달성돼요. 하루 한 번만 지급돼요."],MS=[["다독","book",50,0],["토론 참여","chat",50,0],["지속 독서","clock",100,0],["공유","talk",20,0],["완독","stack",200,0],["정독","notes",100,0],["출석","cal",10,0],["선물","gift",50,0],["코멘트","cmt",20,0]];
 function pc(c,i){var t=ITM[c][i];return c==="TH"?t[4]:t[2]}
 function pv(c,i,col){var t=ITM[c][i];
- if(c==="PN")return'<div class="pvn" style="background:'+col+';'+PS[t[1]]+'"></div>';
+ if(c==="PN")return'<div class="pvn ps'+t[1]+'" style="background:'+col+'"></div>';
  if(c==="BM")return'<div class="pvb" style="background:'+col+';'+BS[t[1]]+'"></div>';
  if(c==="TH")return'<div class="pvt" style="background:'+t[3]+'"><i style="background:'+t[1]+'"></i><i style="background:'+t[2]+'"></i></div>';
  return'<svg viewBox="0 0 120 30" aria-hidden="true"><path d="M8 15Q22 3 36 15T64 15T92 15T112 15" stroke="'+col+'" stroke-width="'+t[1]+'" stroke-linecap="'+(i===4?"butt":"round")+'" fill="none" opacity="'+(i===2?".45":".8")+'"'+(i===5?' stroke-dasharray="1 12"':'')+'/></svg>'}
@@ -2085,15 +2086,16 @@ function reader(k){
   d.onkeydown=function(e){if(e.key==="Escape")x()};
   document.getElementById("cn").focus()}
  function mcol(i){if(typeof i==="string")return"transparent";return i<0?MDF:COL[("PN"+i) in CS?CS["PN"+i]:i%5]}
- function mshp(i){if(typeof i==="string"){var u=MY[+i.slice(1)];return u?"background-image:url("+u.u+");background-size:contain;background-repeat:no-repeat;background-position:center":""}return i<0?"border-radius:4px;border:1.5px solid #E6DCD2":PS[i].replace(/(width|aspect-ratio):[^;]*;?/g,"")}
- function mbg(m){return'<i style="background:'+mcol(m.i)+';'+mshp(m.i)+';opacity:'+m.o/100+'"></i>'}
+ function mshp(i){if(typeof i==="string"){var u=MY[+i.slice(1)];return u?"background-image:url("+u.u+");background-size:contain;background-repeat:no-repeat;background-position:center":""}return i<0?"border-radius:4px;border:1.5px solid #E6DCD2":""}
+ function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':""}
+ function mbg(m){return'<i'+mcls(m.i)+' style="background:'+mcol(m.i)+';'+mshp(m.i)+';opacity:'+m.o/100+'"></i>'}
  function mmH(m,id){var e=id===eid;return'<div class="mm'+(e?" ed":"")+'" data-mm="'+id+'" style="left:'+m.x+'%;top:'+m.y+'%;width:'+m.w+'%;height:'+m.h+'%" role="note" aria-label="내 스티커">'+mbg(m)+'<p>'+esc(m.t)+'</p>'+(e?'<button class="mdn">완료</button><b class="rz" aria-hidden="true"></b>':'')+'</div>'}
  function memo(id){var ed=!!id,pi,j,m;
   if(ed){pi=+id.split("-")[0];j=+id.split("-")[1];m=MMO[pi][j]}
   else{var a=AP.PN&&OWN[AP.PN]?+AP.PN.slice(2):-1;m={t:"",i:a,o:100,x:27,y:30,w:46,h:24}}
   var v={t:m.t,i:m.i,o:m.o},pk=[-1].concat(ITM.PN.map(function(_,k){return k}).filter(function(k){return OWN["PN"+k]})).concat(MY.map(function(_,k){return"u"+k}));
   var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-labelledby","dt");
-  d.innerHTML='<h3 id="dt">'+(ed?"스티커 수정":"스티커")+'</h3><div class="mpk" role="group" aria-label="스티커 종류">'+pk.map(function(k){return'<button data-p="'+k+'" aria-label="'+(k<0?"기본 스티커":typeof k==="string"?esc(MY[+k.slice(1)].n):ITM.PN[k][0])+'" aria-pressed="'+(k===v.i)+'"><i style="'+(typeof k==="string"?mshp(k):'background:'+mcol(k)+';'+(k<0?"border-radius:3px;border:1.5px solid #E6DCD2":PS[k]))+'"></i></button>'}).join("")+'</div>'
+  d.innerHTML='<h3 id="dt">'+(ed?"스티커 수정":"스티커")+'</h3><div class="mpk" role="group" aria-label="스티커 종류">'+pk.map(function(k){return'<button data-p="'+k+'" aria-label="'+(k<0?"기본 스티커":typeof k==="string"?esc(MY[+k.slice(1)].n):ITM.PN[k][0])+'" aria-pressed="'+(k===v.i)+'"><i'+(typeof k==="string"?"":mcls(k))+' style="'+(typeof k==="string"?mshp(k):'background:'+mcol(k)+';'+(k<0?"border-radius:3px;border:1.5px solid #E6DCD2":""))+'"></i></button>'}).join("")+'</div>'
    +'<div class="mpv" id="mpv"></div><textarea id="mt2" rows="3" placeholder="스티커에 적을 말 (선택)" aria-label="스티커 글"></textarea>'
    +'<label class="mop">투명도<input type="range" id="mo2" min="20" max="100" step="5" aria-label="스티커 투명도"><span id="mo3"></span></label>'
    +'<p id="me" style="color:var(--sub);font-size:13px;margin:8px 0 0;min-height:18px"></p>'
