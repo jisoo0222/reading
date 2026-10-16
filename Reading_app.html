@@ -2230,11 +2230,11 @@ document.addEventListener("mouseup",function(){if(!D)return;var d=D;D=null;if(!d
  function k(e){e.stopPropagation();e.preventDefault();document.removeEventListener("click",k,true)}document.addEventListener("click",k,true);setTimeout(function(){document.removeEventListener("click",k,true)},0)},true);
 })();
 
-/* 클릭 효과(rings): 누른 자리에서 메인 색 동그라미가 퍼지며 사라져요. 책 본문(책장 넘기는 곳)에서는 쓰지 않아요 */
+/* 클릭 효과(rings): 누른 자리에서 메인 색 동그라미가 퍼지며 사라져요. 책 읽는 화면에서는 쓰지 않아요 */
 (function(){var SZ=28,DUR=350,SW=1;
  if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
  document.addEventListener("click",function(e){if(!e.isTrusted||(e.clientX===0&&e.clientY===0))return;var ap=document.getElementById("app");if(!ap)return;
-  if(e.target.closest&&e.target.closest(".app.rd .bkw"))return;
+  if(ap.classList.contains("rd"))return;
   var r=ap.getBoundingClientRect(),c=getComputedStyle(ap).getPropertyValue("--pri").trim()||"#6A4F6A",d=SZ/2;
   var w=document.createElement("i");w.className="ckfx";w.style.cssText="left:"+(e.clientX-r.left-d/2)+"px;top:"+(e.clientY-r.top-d/2)+"px;width:"+d+"px;height:"+d+"px;border:"+SW+"px solid "+c;ap.appendChild(w);
   w.animate([{transform:"scale(.5)",borderWidth:SW+"px"},{transform:"scale(2)",borderWidth:"0px"}],{duration:DUR,easing:"cubic-bezier(.215,.61,.355,1)",fill:"forwards"});
