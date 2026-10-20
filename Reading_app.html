@@ -1046,6 +1046,12 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .mpk i.psk{width:30px;height:30px;aspect-ratio:auto}.mpk i.ps1{width:34px;height:23px}.mpk i.ps2{width:36px;height:14px}.mpk i.ps3,.mpk i.ps4{width:32px;height:32px}.mpk i.ps6{width:26px;height:32px}.mpk i.ps7{width:36px;height:16px}.mpk i.ps8{width:32px;height:29px}
 .mm .mdn{width:34px;height:34px;padding:0;display:grid;place-items:center;border-radius:50%}.mm .mdn .ic{width:20px;height:20px;stroke-width:2.6}
 .mm .rz{width:24px;height:24px;right:-12px;bottom:-12px}.mm .rz::after{inset:4px;border-width:2.6px}
+.pb2{border-radius:22%}
+.pb3{clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);width:84%;aspect-ratio:1}
+.pb4{-webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%2070%27%3E%3Cpath%20d%3D%27M24%2066C11%2066%204%2058%204%2048C4%2038%2012%2031%2022%2031C23%2017%2034%208%2047%208C59%208%2068%2015%2071%2026C84%2025%2096%2034%2096%2046C96%2058%2087%2066%2075%2066Z%27%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20100%2070%27%3E%3Cpath%20d%3D%27M24%2066C11%2066%204%2058%204%2048C4%2038%2012%2031%2022%2031C23%2017%2034%208%2047%208C59%208%2068%2015%2071%2026C84%2025%2096%2034%2096%2046C96%2058%2087%2066%2075%2066Z%27%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;width:90%;aspect-ratio:10/7}
+.pb5{clip-path:polygon(16% 0,100% 0,100% 100%,16% 100%,0 50%);width:92%;aspect-ratio:2.4/1}
+.mpk i.pb2{width:30px;height:30px}.mpk i.pb3{width:32px;height:32px}.mpk i.pb4{width:36px;height:25px}.mpk i.pb5{width:36px;height:16px}
+.mm .rz::after{display:none}.mm .rz{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27%23F6F1EC%27%20stroke-width%3D%273%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M19.5%2013A7.5%207.5%200%201%201%2017%207.2%27%2F%3E%3Cpath%20d%3D%27M18.5%202.8v5h-5%27%2F%3E%3C%2Fsvg%3E");background-size:16px 16px;background-position:center;background-repeat:no-repeat}
 </style>
 </head>
 <body>
@@ -2226,17 +2232,19 @@ function reader(k){
    var v=[n,t||"설명이 없어요."];ed?CH[k]=v:CH.push(v);rt();x();dic()};
   d.onkeydown=function(e){if(e.key==="Escape")x()};
   document.getElementById("cn").focus()}
- function mcol(i){if(typeof i==="string")return"transparent";return i<0?MDF:COL[("PN"+i) in CS?CS["PN"+i]:i%5]}
- function mshp(i){if(typeof i==="string"){var u=MY[+i.slice(1)];return u?"background-image:url("+u.u+");background-size:contain;background-repeat:no-repeat;background-position:center":""}return i<0?"border-radius:4px;border:1.5px solid #E6DCD2":""}
- function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':""}
+ function mcol(i){if(typeof i==="string")return"transparent";if(i<=-2){var bq=bstOf(i);return bq?bq[2]:MDF}return i<0?MDF:COL[("PN"+i) in CS?CS["PN"+i]:i%5]}
+ function mshp(i){if(typeof i==="string"){var u=MY[+i.slice(1)];return u?"background-image:url("+u.u+");background-size:contain;background-repeat:no-repeat;background-position:center":""}return i===-1?"border-radius:4px;border:1.5px solid #E6DCD2":""}
+ var BST=[[-2,"둥근 메모","#E3B7B0"],[-3,"별 스티커","#E9D58B"],[-4,"구름 스티커","#BFD0D8"],[-5,"라벨 스티커","#B9C7A5"]];
+function bstOf(i){for(var q=0;q<BST.length;q++)if(BST[q][0]===i)return BST[q];return null}
+function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':(typeof i==="number"&&i<=-2?' class="psk pb'+(-i)+'"':"")}
  function mbg(m){return'<i'+mcls(m.i)+' style="background:'+mcol(m.i)+';'+mshp(m.i)+';opacity:'+m.o/100+'"></i>'}
  function mmH(m,id){var e=id===eid;return'<div class="mm'+(e?" ed":"")+'" data-mm="'+id+'" style="left:'+m.x+'%;top:'+m.y+'%;width:'+m.w+'%;height:'+m.h+'%;--mr:'+(m.r||0)+'deg" role="note" aria-label="내 스티커">'+mbg(m)+'<p>'+esc(m.t)+'</p>'+(e?'<span class="mtb"><button class="mdl2" aria-label="스티커 삭제">'+ic("trash")+'</button><button class="med2" aria-label="스티커 글씨 수정">'+ic("pen")+'</button></span><button class="mdn" aria-label="완료">'+ic("check")+'</button><b class="rz" aria-label="크기·방향 조절"></b>':'')+'</div>'}
  function memo(id){var ed=!!id,pi,j,m;
   if(ed){pi=+id.split("-")[0];j=+id.split("-")[1];m=MMO[pi][j]}
   else{var a=AP.PN&&OWN[AP.PN]?+AP.PN.slice(2):-1;m={t:"",i:a,o:100,x:27,y:30,w:46,h:24}}
-  var v={t:m.t,i:m.i,o:m.o},pk=[-1].concat(ITM.PN.map(function(_,k){return k}).filter(function(k){return OWN["PN"+k]})).concat(MY.map(function(_,k){return"u"+k}));
+  var v={t:m.t,i:m.i,o:m.o},pk=[-1].concat(BST.map(function(q){return q[0]})).concat(ITM.PN.map(function(_,k){return k}).filter(function(k){return OWN["PN"+k]})).concat(MY.map(function(_,k){return"u"+k}));
   var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-labelledby","dt");
-  d.innerHTML='<h3 id="dt">'+(ed?"스티커 수정":"스티커")+'</h3><div class="mpk" role="group" aria-label="스티커 종류">'+pk.map(function(k){return'<button data-p="'+k+'" aria-label="'+(k<0?"기본 스티커":typeof k==="string"?esc(MY[+k.slice(1)].n):ITM.PN[k][0])+'" aria-pressed="'+(k===v.i)+'"><i'+(typeof k==="string"?"":mcls(k))+' style="'+(typeof k==="string"?mshp(k):'background:'+mcol(k)+';'+(k<0?"border-radius:3px;border:1.5px solid #E6DCD2":""))+'"></i></button>'}).join("")+'</div>'
+  d.innerHTML='<h3 id="dt">'+(ed?"스티커 수정":"스티커")+'</h3><div class="mpk" role="group" aria-label="스티커 종류">'+pk.map(function(k){return'<button data-p="'+k+'" aria-label="'+(k===-1?"기본 스티커":k<0?bstOf(k)[1]:typeof k==="string"?esc(MY[+k.slice(1)].n):ITM.PN[k][0])+'" aria-pressed="'+(k===v.i)+'"><i'+(typeof k==="string"?"":mcls(k))+' style="'+(typeof k==="string"?mshp(k):'background:'+mcol(k)+';'+(k===-1?"border-radius:3px;border:1.5px solid #E6DCD2":""))+'"></i></button>'}).join("")+'</div>'
    +'<div class="mpv" id="mpv"></div><textarea id="mt2" rows="3" placeholder="스티커에 적을 말 (선택)" aria-label="스티커 글"></textarea>'
    +'<label class="mop">투명도<input type="range" id="mo2" min="20" max="100" step="5" aria-label="스티커 투명도"><span id="mo3"></span></label>'
    +'<p id="me" style="color:var(--sub);font-size:13px;margin:8px 0 0;min-height:18px"></p>'
