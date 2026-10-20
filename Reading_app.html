@@ -1002,6 +1002,8 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 
 .rbw{cursor:default;align-items:flex-start}.rbw i{margin-top:2px}.rbw p{font-size:12.5px;line-height:1.55;color:var(--ink);margin:6px 0 0;word-break:keep-all}
 .rbw em{margin-top:6px;word-break:keep-all}.rbw p{margin-top:4px}.ax p,.sec .ax p{word-break:keep-all}
+
+.tlx .pps{grid-template-columns:repeat(3,minmax(0,1fr))!important}.tlx .bk{min-width:0}.tlx .bk .a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tlx .bk .t{white-space:normal;word-break:keep-all;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.35}.tlx .bk .rdr{white-space:nowrap}
 </style>
 </head>
 <body>
@@ -1661,7 +1663,7 @@ var BD={"65":[[["새벽 세 시의 사서"], ["도시에서 가장 오래된 도
 function shelf(){var H=[92,110,100,112,96,106,100,108,96,110,94];function row(a,b){return'<div class="shr">'+KD.slice(a,b).map(function(k,i){var j=a+i;return'<button class="sv" data-k="'+j+'" style="height:'+H[j]+'px;background:'+BC[j%3]+';color:'+(j%3?"#4F3A4F":"#F6F1EC")+'" aria-label="'+k[1]+' 서가">'+(k[0]?'<b>'+k[0]+'</b>':'')+'<span>'+k[1]+'</span></button>'}).join("")+'</div>'}return'<div class="shf">'+row(0,6)+row(6,11)+'</div>'}
 function catPg(k){
  app.className="app";window.scrollTo(0,0);var ids=CB[k]||[];
- app.innerHTML='<div class="sh2"><button class="ib" id="cg0" aria-label="뒤로">'+ic("back")+'</button><h2>'+(KD[k][0]?KD[k][0]+" ":"")+KD[k][1]+'</h2><span class="sp3"></span></div>'+(ids.length?'<div class="gd g2">'+ids.map(function(i){return bcard(i)}).join("")+'</div>':'<div class="emp">아직 등록된 책이 없어요.</div>');
+ app.innerHTML='<div class="sh2"><button class="ib" id="cg0" aria-label="뒤로">'+ic("back")+'</button><h2>'+(KD[k][0]?KD[k][0]+" ":"")+KD[k][1]+'</h2><span class="sp3"></span></div>'+(ids.length?'<div class="box tlx cgx"><div class="pps">'+ids.map(function(i){return bcard(i)}).join("")+'</div></div>':'<div class="emp">아직 등록된 책이 없어요.</div>');
  document.getElementById("cg0").onclick=library;lbWire(function(){catPg(k)})}
 function themeList(){
  app.className="app";
