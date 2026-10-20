@@ -2432,7 +2432,10 @@ function mailPg(back){MLB=back||profile;app.className="app mlp";window.scrollTo(
 function pawF(){var f=document.getElementById("pawf"),on=REQ.some(function(r){return r.st===0})&&!!app.querySelector("nav.tab");
  if(!on){if(f)f.remove();return}
  if(!f){f=document.createElement("button");f.id="pawf";f.setAttribute("aria-label","함께 읽기 신청 편지 열기");f.innerHTML=envSvg(0);document.body.appendChild(f);
-  f.onclick=function(){var r=REQ.filter(function(q){return q.st===0})[0];if(r)letter(r.id)}}}
+  f.onclick=function(){var r=REQ.filter(function(q){return q.st===0})[0];if(r)letter(r.id)}}
+ pawPos()}
+function pawPos(){var f=document.getElementById("pawf"),t=app.querySelector("nav.tab");if(!f||!t)return;var tp=t.getBoundingClientRect().top;f.style.bottom=Math.max(0,window.innerHeight-tp)+14+"px"}
+window.addEventListener("resize",pawPos);
 new MutationObserver(function(){pawF()}).observe(app,{childList:true});
 </script>
 </body>
