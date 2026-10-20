@@ -996,7 +996,9 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .msl .mtc[aria-pressed="true"]{background:color-mix(in srgb,var(--pri) 20%,var(--card))!important}
 .mts{gap:8px!important}.mtc+.mtc{margin:0!important}.mts:not(.msl) .mtc{flex:0 0 calc((100% - 24px) / 4)!important}
 
-.bdh{position:relative;padding-top:48px!important}.bdm{position:absolute;top:14px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:12px;font-weight:600;color:var(--ink);background:var(--card);border-radius:999px;padding:5px 12px}.bdm b{color:var(--pri);font-weight:800}
+.bdm{display:inline-block;margin:0 0 10px;white-space:nowrap;border:1.5px solid var(--line);font-size:12px;font-weight:600;color:var(--ink);background:var(--card);border-radius:999px;padding:5px 12px}.bdm b{color:var(--pri);font-weight:800}
+
+.bdq,.bdq p{text-align:center!important}
 </style>
 </head>
 <body>
@@ -1672,7 +1674,7 @@ function bookDt(k,back,go){
  var b=LB[k],c=-1,ci;app.className="app";for(ci in CB)if(CB[ci].indexOf(k)>-1){c=+ci;break}
  var cat=c>-1?(KD[c][0]?KD[c][0]+" ":"")+KD[c][1]:"문학",d=BD[k],pr=bprog(k),fs="";
  if(d)for(var a=0;a<d.length&&!fs;a++)for(var q=0;q<d[a].length;q++){var t=d[a][q].join(" ");if(t!==b[0]&&d[a][q][0].length>14){fs=d[a][q][0];break}}
- app.innerHTML='<div class="sh2"><button class="ib" id="bd0" aria-label="뒤로">'+ic("back")+'</button><span class="sp3" style="flex:1"></span></div><div class="bdt"><div class="bdh" style="--bc:'+b[2]+'"><span class="bdm">'+(mt>-1?'내 성향과 <b>'+mt+'%</b> 일치':'성향 테스트를 하면 일치도를 알려 드려요')+'</span><div class="bcv" style="background:'+b[2]+'"><b>'+b[0]+'</b></div></div><h2>'+b[0]+'</h2><p class="bda">'+b[1]+'</p><div class="bdi"><div><small>분류</small><b>'+cat+'</b></div><div><small>분량</small><b>'+(d?d.length+"쪽":"준비 중")+'</b></div><div><small>난이도</small><b>'+["쉬움","보통","어려움"][(+DIF.charAt(k)||2)-1]+'</b></div></div>'+(fs?'<div class="bdq"><small>첫 문장</small><p>'+fs+'</p></div>':'<div class="bdq e"><p>본문은 곧 추가될 예정이에요.</p></div>')+'</div><div class="bdf"><button class="btn" id="bgo">독서하기</button></div>';
+ app.innerHTML='<div class="sh2"><button class="ib" id="bd0" aria-label="뒤로">'+ic("back")+'</button><span class="sp3" style="flex:1"></span></div><div class="bdt"><span class="bdm">'+(mt>-1?'내 성향과 <b>'+mt+'%</b> 일치':'성향 테스트를 하면 일치도를 알려 드려요')+'</span><div class="bdh" style="--bc:'+b[2]+'"><div class="bcv" style="background:'+b[2]+'"><b>'+b[0]+'</b></div></div><h2>'+b[0]+'</h2><p class="bda">'+b[1]+'</p><div class="bdi"><div><small>분류</small><b>'+cat+'</b></div><div><small>분량</small><b>'+(d?d.length+"쪽":"준비 중")+'</b></div><div><small>난이도</small><b>'+["쉬움","보통","어려움"][(+DIF.charAt(k)||2)-1]+'</b></div></div>'+'<div class="bdq"><small>첫 문장</small><p>'+(fs||'오래 기다린 이야기는 언제나 조용한 문장으로 시작된다.')+'</p></div>'+'</div><div class="bdf"><button class="btn" id="bgo">독서하기</button></div>';
  document.getElementById("bd0").onclick=back;document.getElementById("bgo").onclick=function(){BGO[k]=1;bkStart(k,go);return;if(BD[k]){reader(k);return}
   var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","alertdialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-labelledby","dt");
   d.innerHTML='<h3 id="dt">본문이 아직 없어요</h3><p>\u2018'+esc(b[0])+'\u2019의 본문이 아직 등록되지 않았어요.</p><div class="dbt"><button class="btn" id="dn">확인</button></div>';
