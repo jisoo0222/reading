@@ -1044,6 +1044,8 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .sti p{word-break:keep-all}
 #stb{width:64px;height:64px;padding:0;justify-content:center;border-radius:50%}#stb .ic{width:30px;height:30px}
 .mpk i.psk{width:30px;height:30px;aspect-ratio:auto}.mpk i.ps1{width:34px;height:23px}.mpk i.ps2{width:36px;height:14px}.mpk i.ps3,.mpk i.ps4{width:32px;height:32px}.mpk i.ps6{width:26px;height:32px}.mpk i.ps7{width:36px;height:16px}.mpk i.ps8{width:32px;height:29px}
+.mm .mdn{width:34px;height:34px;padding:0;display:grid;place-items:center;border-radius:50%}.mm .mdn .ic{width:20px;height:20px;stroke-width:2.6}
+.mm .rz{width:24px;height:24px;right:-12px;bottom:-12px}.mm .rz::after{inset:4px;border-width:2.6px}
 </style>
 </head>
 <body>
@@ -2228,7 +2230,7 @@ function reader(k){
  function mshp(i){if(typeof i==="string"){var u=MY[+i.slice(1)];return u?"background-image:url("+u.u+");background-size:contain;background-repeat:no-repeat;background-position:center":""}return i<0?"border-radius:4px;border:1.5px solid #E6DCD2":""}
  function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':""}
  function mbg(m){return'<i'+mcls(m.i)+' style="background:'+mcol(m.i)+';'+mshp(m.i)+';opacity:'+m.o/100+'"></i>'}
- function mmH(m,id){var e=id===eid;return'<div class="mm'+(e?" ed":"")+'" data-mm="'+id+'" style="left:'+m.x+'%;top:'+m.y+'%;width:'+m.w+'%;height:'+m.h+'%;--mr:'+(m.r||0)+'deg" role="note" aria-label="내 스티커">'+mbg(m)+'<p>'+esc(m.t)+'</p>'+(e?'<span class="mtb"><button class="mdl2" aria-label="스티커 삭제">'+ic("trash")+'</button><button class="med2" aria-label="스티커 글씨 수정">'+ic("pen")+'</button></span><button class="mdn">완료</button><b class="rz" aria-label="크기·방향 조절"></b>':'')+'</div>'}
+ function mmH(m,id){var e=id===eid;return'<div class="mm'+(e?" ed":"")+'" data-mm="'+id+'" style="left:'+m.x+'%;top:'+m.y+'%;width:'+m.w+'%;height:'+m.h+'%;--mr:'+(m.r||0)+'deg" role="note" aria-label="내 스티커">'+mbg(m)+'<p>'+esc(m.t)+'</p>'+(e?'<span class="mtb"><button class="mdl2" aria-label="스티커 삭제">'+ic("trash")+'</button><button class="med2" aria-label="스티커 글씨 수정">'+ic("pen")+'</button></span><button class="mdn" aria-label="완료">'+ic("check")+'</button><b class="rz" aria-label="크기·방향 조절"></b>':'')+'</div>'}
  function memo(id){var ed=!!id,pi,j,m;
   if(ed){pi=+id.split("-")[0];j=+id.split("-")[1];m=MMO[pi][j]}
   else{var a=AP.PN&&OWN[AP.PN]?+AP.PN.slice(2):-1;m={t:"",i:a,o:100,x:27,y:30,w:46,h:24}}
