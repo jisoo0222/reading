@@ -2422,7 +2422,7 @@ function letter(id,na){var r=reqBy(id);if(!r)return;var b=LB[r.k],mi=mIdx(r.from
  var x=pop((na?'':'<div class="lto">'+envSvg(1)+'</div>')+'<div class="ltr"><span class="ltv" style="background:'+c+'">'+r.from.charAt(0)+'</span><small>'+r.from+'님에게서 편지가 왔어요</small><h3>같이 읽을래?</h3><p><b>『'+b[0]+'』</b><br>함께 읽자는 신청이 왔어요.</p><div class="ltb"><button class="btn ghost" id="lrj">거절하기</button><button class="btn" id="lac">함께 읽기</button></div></div>');
  var d=document.getElementById("dlg");d.classList.add("ltd");if(na)d.classList.add("lt0");
  document.getElementById("lrj").onclick=function(){reqDel(id);x();pawF();ptToast("신청을 거절했어요.");if(app.classList.contains("mlp"))mailPg(MLB);else if(app.classList.contains("pf"))profile()};
- document.getElementById("lac").onclick=function(){reqDel(id);var L=BMT[r.k]||[];if(L.indexOf(r.from)<0)L=L.concat(r.from);BMT[r.k]=L;BGO[r.k]=1;x();pawF();ptToast(r.from+"님과 『"+b[0]+"』 함께 읽기를 시작해요.");if(app.classList.contains("mlp"))mailPg(MLB);else if(app.classList.contains("pf"))profile()}}
+ document.getElementById("lac").onclick=function(){reqDel(id);var L=BMT[r.k]||[];if(L.indexOf(r.from)<0)L=L.concat(r.from);BMT[r.k]=L;BGO[r.k]=1;x();pawF();warn(function(){touchBk(r.k);home();ptToast(r.from+"님과 함께 읽기를 시작해요.")})}}
 var MLB=profile;
 function mailPg(back){MLB=back||profile;app.className="app mlp";window.scrollTo(0,0);
  app.innerHTML='<div class="sh2"><button class="ib" id="ml0" aria-label="뒤로">'+ic("back")+'</button><h2>우체통</h2><span class="sp3"></span></div><p class="mlh">함께 읽자는 편지를 모아 두었어요.</p>'
