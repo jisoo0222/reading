@@ -1042,6 +1042,7 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .rh>#bk2,.rh>#mt{flex:0 0 84px;width:84px}.rh>#bk2{display:flex;justify-content:flex-start}.rh>#mt{justify-content:flex-end}.rh h2{flex:1;min-width:0}
 .pwx{position:absolute;top:-2px;right:-2px;width:20px;height:20px;border-radius:50%;background:var(--pri);color:#F6F1EC;font-style:normal;font-size:13px;font-weight:800;line-height:20px;text-align:center;border:2px solid var(--bg);box-sizing:content-box}
 .sti p{word-break:keep-all}
+#stb{width:64px;height:64px;padding:0;justify-content:center;border-radius:50%}#stb .ic{width:30px;height:30px}
 </style>
 </head>
 <body>
@@ -1418,7 +1419,7 @@ function profile(){
   /* 제목이 책등보다 길면 두 줄로 나누고, 그래도 넘치면 글자를 조금씩 줄여 책등 안에 들어가게 */
   shf.querySelectorAll(".sfs").forEach(function(el){var sp=el.firstChild,f=12,ov=function(){return sp.scrollHeight>el.clientHeight-20};if(ov()){el.style.whiteSpace="normal";sp.style.lineHeight="1.35"}while(f>8&&ov()){f-=.5;el.style.fontSize=f+"px"}});
   /* 꾹 눌러 옮기는 동안 책장 아래에 휴지통이 떠요. 휴지통에 놓으면 책장에서 빠져요 */
-  var stb=document.getElementById("stb");if(!stb){stb=document.createElement("div");stb.id="stb";stb.setAttribute("aria-hidden","true");stb.innerHTML=ic("trash")+'<span>여기에 놓으면 책장에서 빼요</span>';app.appendChild(stb)}
+  var stb=document.getElementById("stb");if(!stb){stb=document.createElement("div");stb.id="stb";stb.setAttribute("aria-hidden","true");stb.innerHTML=ic("trash");app.appendChild(stb)}
   function tbShow(){var a=app.getBoundingClientRect(),sc=app.querySelector(".pfb")||document.querySelector(".sc"),b=sc?sc.getBoundingClientRect().top:a.bottom;b=Math.min(b,a.bottom)-a.top;stb.style.top=(b-stb.offsetHeight-14)+"px";stb.classList.add("on")}
   function tbHide(){stb.classList.remove("on","hot")}
   function onTb(e){if(!stb.classList.contains("on"))return false;var r=stb.getBoundingClientRect();return e.clientX>=r.left-10&&e.clientX<=r.right+10&&e.clientY>=r.top-16&&e.clientY<=r.bottom+10}
