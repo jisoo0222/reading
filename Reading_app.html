@@ -1037,6 +1037,7 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .sv span{text-orientation:upright}
 #dlg.lt0,#dlg.lt0 .ltr,#dlg.lt0>.pxb{animation:none!important;opacity:1!important;transform:none!important}
 #pawf{background:#B2A5D6;box-shadow:0 4px 10px rgba(79,58,79,.18)}#pawf::after{border-color:#B2A5D6}
+#pawf::after{display:none}#pawf{right:max(26px,calc(50% - 215px + 26px))}
 </style>
 </head>
 <body>
@@ -2435,7 +2436,7 @@ function pawF(){var f=document.getElementById("pawf"),on=REQ.some(function(r){re
  if(!f){f=document.createElement("button");f.id="pawf";f.setAttribute("aria-label","함께 읽기 신청 편지 열기");f.innerHTML=envSvg(0);document.body.appendChild(f);
   f.onclick=function(){var r=REQ.filter(function(q){return q.st===0})[0];if(r)letter(r.id)}}
  pawPos()}
-function pawPos(){var f=document.getElementById("pawf"),t=app.querySelector("nav.tab");if(!f||!t)return;var tp=t.getBoundingClientRect().top;f.style.bottom=Math.max(0,window.innerHeight-tp)+14+"px"}
+function pawPos(){var f=document.getElementById("pawf"),t=app.querySelector("nav.tab");if(!f||!t)return;var tp=t.getBoundingClientRect().top;f.style.bottom=Math.max(0,window.innerHeight-tp)+28+"px"}
 window.addEventListener("resize",pawPos);
 new MutationObserver(function(){pawF()}).observe(app,{childList:true});
 </script>
