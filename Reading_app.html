@@ -1055,6 +1055,7 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .pp.phd{font-weight:800;color:var(--pri);font-size:1.08em;margin-top:6px}
 .sel{max-height:46vh;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;-webkit-overflow-scrolling:touch}
 .sah{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:-2px 0 10px}.sah .rbf,.fsh .rbf{margin-left:auto;display:flex;align-items:center;gap:4px;font:inherit;font-size:12px;font-weight:600;color:var(--sub);background:none;border:0;padding:4px 0;cursor:pointer}.sah .rbf .ic,.fsh .rbf .ic{width:15px;height:15px;color:var(--pri)}
+.hfin span{display:block;white-space:nowrap;overflow:hidden}
 </style>
 </head>
 <body>
@@ -1893,7 +1894,7 @@ function home(){
  var bars="일월화수목금토".split("").map(function(w,i){var v=wv[i],pc=v===null?null:Math.round(v*100/G);return'<div class="wkd'+(i===ti?" td":"")+(v===null?" fu":"")+'"><span>'+w+'</span><em class="'+(pc>=55?"wok":"")+'"'+(pc===null?'':' role="img" aria-label="'+w+'요일 목표의 '+pc+'%"')+'><i style="height:'+Math.min(100,pc||0)+'%"></i><b>'+(pc===null?"–":pc+"%")+'</b></em></div>'}).join(""),wp=Math.round(sm*100/(G*(ti+1)));
  var tabs=[["chat","커뮤니티"],["basket","디지털 문구점"],["home","홈"],["book","도서관"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="home"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
  var hero=SKT&&!RKEY&&!PICKED?'<section class="hero hrc hsk"><small>추천 독서</small><h2>RBTI 검사 받고<br>첫 책 추천 받기!</h2><button class="hgo" id="hsk">검사하기</button></section>':REC?'<section class="hero hrc"><small>추천 독서</small><h2>'+esc(ME)+'님께 맞는<br>첫 책을 골라 보세요</h2><div class="hrl">'+recList(RKEY).map(function(r){var b=LB[r.k];return'<button class="rck" data-k="'+r.k+'" aria-label="'+b[0]+' 읽기 시작"><i style="background:'+b[2]+'"></i><b>'+b[0]+'</b><small>일치도 '+r.m.length*25+'%</small></button>'}).join("")+'</div></section>'
-  :(OPN.length&&BD[OPN[0]]&&bprog(OPN[0]).c>=100)?(function(){var f=LB[OPN[0]][0],R=recNext();return'<section class="hero hrc"><small>추천 독서</small><h2>『'+esc(f)+'』'+((f.charCodeAt(f.length-1)-44032)%28?"을":"를")+' 완독했어요!<br>다음 책을 골라볼까요?</h2><div class="hrl">'+R.map(function(r){var b=LB[r.k];return'<button class="rck" data-k="'+r.k+'" aria-label="'+b[0]+' 책 정보 보기"><i style="background:'+b[2]+'"></i><b>'+b[0]+'</b><small>일치도 '+r.p+'%</small></button>'}).join("")+'</div></section>'})()
+  :(OPN.length&&!OPN.some(function(k){return bprog(k).c<100}))?(function(){var f=LB[OPN[0]][0],R=recNext();return'<section class="hero hrc"><small>추천 독서</small><h2 class="hfin"><span class="hf1t">『'+esc(f)+'』'+((f.charCodeAt(f.length-1)-44032)%28?"을":"를")+' 완독했어요!</span><span>다음 책을 골라볼까요?</span></h2><div class="hrl">'+R.map(function(r){var b=LB[r.k];return'<button class="rck" data-k="'+r.k+'" aria-label="'+b[0]+' 책 정보 보기"><i style="background:'+b[2]+'"></i><b>'+b[0]+'</b><small>일치도 '+r.p+'%</small></button>'}).join("")+'</div></section>'})()
   :(function(){var L=RLs().filter(function(k){return bprog(k).c<100}).slice(0,3);if(!L.length)L=[RLs()[0]];var h=L.map(function(k,i){var B=LB[k],q=bprog(k);return'<section class="hero"'+(i?'':' id="rc"')+'><div class="htp"><div class="hcv" style="background:'+B[2]+'"><b>'+B[0]+'</b>'+(function(){var L=mpFor(k);return L.length?'<span class="hmt" aria-label="같이 읽는 메이트 '+L.map(function(m){return m[0]}).join(", ")+'">'+L.slice(0,3).map(function(m){return'<i style="background:'+m[2]+'">'+m[0].charAt(0)+'</i>'}).join("")+'</span>':''})()+'</div><div class="hif"><small>'+(i?"최근에 읽던 책":"지금 읽는 책")+'</small><h2>'+B[0]+'</h2><p>'+B[1]+'</p><div class="hpg" role="progressbar" aria-label="진행률" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div><p class="hpt"><b>'+q.c+'%</b> · '+q.p+' / '+q.t+'쪽</p></div></div>'
   +'<div class="hgl"><span>오늘 목표</span><div class="hgm"><i style="width:'+Math.min(100,Math.round(tdp*100/G))+'%"></i></div><b>'+tdp+' / '+G+'쪽</b></div><button class="hgo" data-k="'+k+'">이어 읽기 · '+q.p+'쪽부터</button></section>'}).join("");
   return L.length>1?'<div class="rcwrap"><div class="rcscroll" id="rcscroll" aria-label="최근에 읽던 책, 옆으로 넘겨 보기">'+h+'</div><div class="rcdots" id="hdots">'+L.map(function(_,i){return'<button aria-label="'+(i+1)+'번째 책 보기" aria-current="'+(i===0)+'"></button>'}).join("")+'</div></div>':h})();
@@ -2473,6 +2474,9 @@ function mtIn(){return MP.slice(0,3).map(function(m){return'<i style="background
 /* 완독 후 홈 추천: 다 읽은 책을 빼고 성향 일치도가 높은 순으로 3권 */
 function recNext(){var C=Object.keys(BD).map(Number).filter(function(k){return LB[k]&&!(OPN.indexOf(k)>-1&&bprog(k).c>=100)});
  return C.map(function(k){var p=bkMatch(k);return{k:k,p:p>-1?p:60+(k*7)%30}}).sort(function(a,b){return b.p-a.p||a.k-b.k}).slice(0,3)}
+
+/* 완독 후 추천 문구: 항상 두 줄. 첫 줄(책 제목)이 넘치면 글씨를 줄여요 */
+new MutationObserver(function(){var t=app.querySelector(".hfin .hf1t");if(!t||t.dataset.fit)return;t.dataset.fit=1;var f=parseFloat(getComputedStyle(t).fontSize);while(f>12&&t.scrollWidth>t.clientWidth+1){f-=.5;t.style.fontSize=f+"px"}}).observe(app,{childList:true});
 </script>
 </body>
 </html>
