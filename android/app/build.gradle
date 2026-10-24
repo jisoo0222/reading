@@ -21,6 +21,8 @@ android {
             buildConfigField 'String', 'DEV_URL', '""'
         }
     }
+    // Pretendard 글꼴(앱 전용). 웹 파일에는 넣지 않고 앱 안에서만 써요.
+    sourceSets { main { assets.srcDirs += 'src/main/webfont' } }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
