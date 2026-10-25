@@ -1139,6 +1139,11 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .hti>*{align-self:center!important}
 .lsrow{display:flex;align-items:center;gap:6px;margin:0 0 16px}.lsrow .lsr{flex:1;min-width:0;margin:0!important}.lsrow .lhb{flex:none;width:42px;height:42px;margin-left:-6px}
 .wfab{left:20px!important;right:auto!important;width:56px!important;height:56px!important;box-shadow:0 6px 16px rgba(79,58,79,.32),0 2px 4px rgba(79,58,79,.18);border:3px solid var(--card)!important;transition:transform .15s}.wfab:active{transform:scale(.94)}.wfab .ic{width:24px;height:24px}
+.cwrow .csr{flex:1;min-width:0;margin:0!important}.cwrow .csr #cq{padding-left:12px;font-size:13.5px}
+.cwbx{position:relative;flex:none}
+.cwh2{height:44px;padding:0 10px 0 12px!important;border:1.5px solid var(--line)!important;background:var(--card)!important;border-radius:12px!important;font-size:13.5px!important;font-weight:700!important;color:var(--ink)!important;white-space:nowrap}
+.cwh2 .ic{width:16px!important;height:16px!important}
+.cwbx .cwm{left:0;transform:none;top:100%;margin-top:6px}
 </style>
 </head>
 <body>
@@ -2053,8 +2058,8 @@ function colOf(n){for(var i=0;i<M.length;i++)if(M[i][0]===n)return M[i][2];retur
 function community(){
  app.className="app";
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="chat"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="sh2 cwhd"><span class="sp3"></span><h2><button class="cwh" id="cwh" aria-haspopup="true" aria-expanded="false" aria-label="커뮤니티 보기 방식 고르기"><span id="cwlb">'+({all:"전체 글",friend:"친구 기록",mine:"내 기록"})[CW]+'</span>'+ic("caret")+'</button></h2><div class="cwm" id="cwm" role="menu" hidden></div><span class="sp3"></span></div>'
- +'<div class="csr" id="csr"><input id="cq" type="search" placeholder="책 제목, 작가, 글 내용으로 찾기" aria-label="커뮤니티 글 검색" autocomplete="off"><button class="csb2" id="csb" aria-label="검색">'+ic("search")+'</button></div>'
+ app.innerHTML='<div class="lsrow cwrow"><div class="cwbx"><button class="cwh cwh2" id="cwh" aria-haspopup="true" aria-expanded="false" aria-label="보기 범위 고르기"><span id="cwlb">'+({all:"전체 글",friend:"친구 기록",mine:"내 기록"})[CW]+'</span>'+ic("caret")+'</button><div class="cwm" id="cwm" role="menu" hidden></div></div>'
+ +'<div class="csr" id="csr"><input id="cq" type="search" placeholder="책 제목, 작가, 글 내용으로 찾기" aria-label="커뮤니티 글 검색" autocomplete="off"><button class="csb2" id="csb" aria-label="검색">'+ic("search")+'</button></div></div>'
  +'<div id="cwb" hidden></div><div class="ctf" role="tablist" aria-label="글 종류" id="tyb"></div><div id="feed"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.firstChild.style.paddingBottom="90px";
  var fb=document.createElement("button");fb.className="wfab";fb.setAttribute("aria-label","글쓰기");fb.innerHTML=ic("pencil");app.appendChild(fb);requestAnimationFrame(function(){var t=app.querySelector("nav.tab");if(t)fb.style.bottom=(app.getBoundingClientRect().bottom-t.getBoundingClientRect().top+20)+"px"});
@@ -2178,7 +2183,7 @@ function community(){
  document.getElementById("cwb").onclick=function(e){var b=e.target.closest("button");if(b){CW=b.dataset.w;feed()}};
  (function(){var h=document.getElementById("cwh"),m=document.getElementById("cwm");function close(){m.hidden=true;h.setAttribute("aria-expanded","false");document.removeEventListener("click",out,true)}function out(e){if(!m.contains(e.target)&&!h.contains(e.target))close()}
   h.onclick=function(){if(!m.hidden){close();return}m.innerHTML=[["all","전체 글 보기"],["friend","친구 기록 보기"],["mine","내 기록 보기"]].map(function(t){return'<button role="menuitemradio" aria-checked="'+(CW===t[0])+'" data-w="'+t[0]+'">'+t[1]+(CW===t[0]?ic("check"):"")+'</button>'}).join("");m.hidden=false;h.setAttribute("aria-expanded","true");setTimeout(function(){document.addEventListener("click",out,true)},0)};
-  m.onclick=function(e){var b=e.target.closest("button");if(!b)return;CW=b.dataset.w;document.getElementById("cwlb").textContent=({all:"전체 글",friend:"친구 기록",mine:"내 기록"})[CW];close();feed()}})();
+  m.onclick=function(e){var b=e.target.closest("button");if(!b)return;CW=b.dataset.w;CQ=document.getElementById("cq").value;document.getElementById("cwlb").textContent=({all:"전체 글",friend:"친구 기록",mine:"내 기록"})[CW];close();feed()}})();
  document.getElementById("tyb").onclick=function(e){var b=e.target.closest("button");if(b){if(b.dataset.a)CA=b.dataset.a;else CF=b.dataset.t;feed()}};
  document.getElementById("feed").onclick=pclk;
  fb.onclick=compose;
