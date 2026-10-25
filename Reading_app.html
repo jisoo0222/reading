@@ -1067,6 +1067,12 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .tab button:nth-child(3) .ic{width:46px;height:46px;padding:11px;margin:-24px auto 2px;border-radius:50%;background:var(--pri);color:var(--onpri,#F6F1EC);stroke:currentColor;box-shadow:0 3px 8px rgba(79,58,79,.25);border:3px solid var(--card);box-sizing:border-box;display:block}
 .tab button:nth-child(3)[aria-current="page"] .ic{box-shadow:0 0 0 3px color-mix(in srgb,var(--pri) 25%,transparent),0 3px 8px rgba(79,58,79,.25)}
 .tab button:nth-child(3) .ic{width:50px;height:50px;padding:11px;margin:-27px auto 2px;border-width:2.5px;stroke-width:2.2}.dgt{margin-bottom:16px!important}
+.cwt{display:flex;margin:-2px 0 12px;border-bottom:1.5px solid var(--line)}
+.cwt button{flex:1 1 0;font:inherit;font-size:15px;font-weight:700;padding:10px 2px 11px;border:0;background:none;color:var(--sub);opacity:.7;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1.5px;white-space:nowrap}
+.cwt button[aria-selected="true"]{color:var(--ink);opacity:1;border-bottom-color:var(--pri)}
+#tyb.ctf{border-bottom:0;gap:6px;flex-wrap:nowrap;overflow-x:auto;margin-bottom:12px}
+#tyb.ctf button{flex:none;padding:6px 12px;border:1.5px solid var(--line);border-radius:999px;font-size:12.5px;opacity:1;color:var(--sub);background:var(--card)}
+#tyb.ctf button[aria-selected="true"]{background:var(--pri);border-color:var(--pri);color:var(--onpri,#F6F1EC)}
 </style>
 </head>
 <body>
@@ -1953,7 +1959,7 @@ var PO=[
 {id:2,t:"코멘트",u:"지민",tm:"1시간 전",v:0,x:"친구들이랑 읽었는데 남주가 쓰레기 발언할 때마다 코멘트로 패줘서 너무 시원했다 ㅋㅋ 그 코멘트들이 궁금하면 책 열어 봐요. 같이 읽는 재미가 확실히 달라요.",b:1,l:48,c:[["은우","3장 남주 대사에 ‘이게 사람이냐’ 달아 놓은 거 레전드",32],["하린","여주 편 들어주는 코멘트가 제일 웃겼어요",14]]},
 {id:3,t:"밸런스",u:"은우",tm:"3시간 전",v:0,x:"밸런스 게임! 이 책에서 더 빌런은 누구일까요?",b:2,o:["남주의 거짓말","여주의 침묵"],n:[62,38],l:9,c:[]},
 {id:4,t:"자유",u:"도윤",tm:"어제",v:1,x:"요즘 출퇴근길에 한 챕터씩 읽는 습관이 생겼어요. 짧게라도 매일 읽으니 휴대폰을 덜 보게 돼요.",l:7,c:[]}],
-TY=[["all","전체"],["같이","같이 읽어요"],["코멘트","코멘트 공유"],["밸런스","밸런스 게임"],["자유","자유글"]],TW=[["all","전체"],["friend","친구"],["mine","내 활동"]],CW="all",TA=[["post","내 글"],["cmt","내 댓글"],["like","좋아요한 글"]],CA="post",
+TY=[["all","전체"],["같이","같이 읽어요"],["코멘트","코멘트 공유"],["밸런스","밸런스 게임"],["자유","자유글"]],TW=[["all","전체"],["friend","친구 기록 보기"],["mine","내 기록 보기"]],CW="all",TA=[["post","내 글"],["cmt","내 댓글"],["like","좋아요한 글"]],CA="post",
 TD={자유:"책을 고르지 않고 독서 습관, 일상, 내가 만든 꾸미기 등을 나누는 글이에요.",같이:"함께 읽을 사람을 모으는 글이에요. 책을 골라야 해요.",코멘트:"책에 남긴 내 코멘트를 소개하는 글이에요. 책을 골라야 해요.",밸런스:"책에 대한 두 가지 선택지로 투표를 받는 글이에요. 책을 골라야 해요."},
 TN={자유:"자유글",같이:"같이 읽어요",코멘트:"코멘트 공유",밸런스:"밸런스 게임"},
 VIS=[["globe","전체공개"],["users","친구공개"],["lock","나만보기"]],LKD={},VT={},CF="all";
@@ -1964,7 +1970,7 @@ function community(){
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="chat"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
  app.innerHTML='<div class="sh2"><span class="sp3"></span><h2>커뮤니티</h2><button class="ib" id="csb" aria-label="글 검색" aria-expanded="false">'+ic("search")+'</button></div>'
  +'<div class="csr" id="csr" hidden><input id="cq" type="search" placeholder="책 제목, 작가, 글 내용으로 찾기" aria-label="커뮤니티 글 검색" autocomplete="off"></div>'
- +'<div class="cws" role="tablist" aria-label="누구의 글" id="cwb"></div><div class="ctf" role="tablist" aria-label="글 종류" id="tyb"></div><div id="feed"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
+ +'<div class="cwt" role="tablist" aria-label="누구의 기록" id="cwb"></div><div class="ctf" role="tablist" aria-label="글 종류" id="tyb"></div><div id="feed"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.firstChild.style.paddingBottom="90px";
  var fb=document.createElement("button");fb.className="wfab";fb.setAttribute("aria-label","글쓰기");fb.innerHTML=ic("pencil");app.appendChild(fb);
  function post(p,full){
