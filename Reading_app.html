@@ -1100,6 +1100,7 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 /* 네비게이션 홈: 글자 없이 더 큰 버튼 */
 .tab button:nth-child(3){font-size:0!important;line-height:0}
 .tab button:nth-child(3) .ic{width:60px!important;height:60px!important;padding:14px!important;margin:-30px auto 0!important}
+.lhb{position:relative;color:var(--pri)}.lhb .lhd{position:absolute;top:7px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--pri)}
 </style>
 </head>
 <body>
@@ -1739,13 +1740,13 @@ function lbWire(back){
 function library(){
  app.className="app";
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="book"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="sh2"><span class="sp3"></span><h2>도서관</h2><span class="sp3"></span></div>'
+ app.innerHTML='<div class="sh2"><span class="sp3"></span><h2>도서관</h2><button class="ib lhb" id="lhb" aria-label="찜한 책 보기">'+ic("heart")+(LB.some(function(_,k){return HB[k]})?'<i class="lhd"></i>':'')+'</button></div>'
  +'<div class="thb"><button class="ib" id="tp" aria-label="이전 테마">'+ic("back")+'</button><button class="thn" id="tn"><small>이달 테마</small><b id="tt">'+THM[TI]+'</b></button><button class="ib" id="tx" aria-label="다음 테마">'+ic("next")+'</button></div>'
  +'<section class="fs"><div class="fsh"><h3>인기 급상승 오늘의 책</h3><button class="pme" id="rkm">자세히 보기'+ic("next")+'</button></div><div class="box ppx"><div class="shs pps">'+popRank().slice(0,10).map(function(k,i){return bcard(k,i+1)}).join("")+'</div></div></section>'
  +'<div class="sh" style="margin-top:20px"><h3>카테고리</h3></div>'+shelf()+'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.firstChild.style.paddingBottom="76px";
  function th(d){TI=(TI+d+THM.length)%THM.length;document.getElementById("tt").textContent=THM[TI]}
- document.getElementById("tp").onclick=function(){th(-1)};document.getElementById("tx").onclick=function(){th(1)};
+ document.getElementById("tp").onclick=function(){th(-1)};document.getElementById("lhb").onclick=likedPg;document.getElementById("tx").onclick=function(){th(1)};
  document.getElementById("tn").onclick=themeList;document.getElementById("rkm").onclick=rankPg;
 
  lbWire(library);
@@ -2151,9 +2152,9 @@ function applyItem(c,i){var id=c+i,t=ITM[c][i],k=(id in CS)?CS[id]:i%5;AP[c]=id;
  if(c==="PN")MMC=COL[k];
  if(c==="TH")THI=i}
 function vault(t,back){
- app.className="app";t=t||0;
- var TB=["책","커뮤니티","문구점","타임머신"],CN={PN:"스티커",HL:"형광펜",BM:"책갈피",TH:"테마"};
- app.innerHTML='<div class="sh2"><button class="ib" id="vb0" aria-label="뒤로">'+ic("back")+'</button><h2>보관함</h2><span class="sp3"></span></div><div class="ctb" role="tablist" id="vt"></div><div id="vc"></div>';
+ app.className="app";t=2;
+ var TB=["문구점"],CN={PN:"스티커",HL:"형광펜",BM:"책갈피",TH:"테마"};
+ app.innerHTML='<div class="sh2"><button class="ib" id="vb0" aria-label="뒤로">'+ic("back")+'</button><h2>보관함</h2><span class="sp3"></span></div><div id="vt" hidden></div><div id="vc"></div>';
  function rows(a){return a.length?a.map(function(x){return'<div class="cr">'+x+'</div>'}).join(""):'<p class="sm" style="color:var(--sub)">아직 없어요.</p>'}
  function sec(h,b){return'<div class="vs"><h3>'+h+'</h3>'+b+'</div>'}
  function body(){
@@ -2165,7 +2166,7 @@ function vault(t,back){
    PO.forEach(function(p){if(p.mine)mine.push(esc(p.x)+'<small class="dt"> '+p.tm+'</small>');p.c.forEach(function(c){if(c[3])cm.push(esc(c[1])+'<small class="dt"> ← '+esc(p.x.slice(0,16))+'…</small>')});if(LKD[p.id])lk3.push(esc(p.x))});
    h=sec("내가 쓴 글",rows(mine))+sec("내가 쓴 댓글",rows(cm))+sec("내가 남긴 코멘트",CMTS.map(function(c){return'<div class="cr"><small class="dt">'+c.d+' · '+esc(c.b)+'</small><br>'+esc(c.t)+'</div>'}).join(""))+sec("좋아요 누른 글",rows(lk3))}
   if(t===2){var ids=Object.keys(OWN).filter(function(id){return OWN[id]&&/^(PN|HL)/.test(id)});
-   h='<p class="sm" style="color:var(--sub);font-size:13px">산 아이템을 적용하면 독서 화면과 앱 전체에 반영돼요.</p>'+ids.map(function(id){var c=id.slice(0,2),i=+id.slice(2),it=ITM[c][i],on=c==="TH"?THI===i:AP[c]===id;return'<div class="vi"><div class="pvw vp">'+pv(c,i,COL[(id in CS)?CS[id]:i%5])+'</div><div class="vn"><b>'+it[0]+'</b><small>'+CN[c]+'</small></div><button class="fadd" data-a="'+id+'" aria-pressed="'+on+'">'+(on?"적용 중":"적용")+'</button></div>'}).join("")}
+   h=(ids.length?'<p class="sm" style="color:var(--sub);font-size:13px;word-break:keep-all">문구점에서 산 아이템이에요. 적용하면 독서 화면과 앱 전체에 반영돼요.</p>':'<div class="emp">아직 산 아이템이 없어요.<br>문구점에서 산 스티커와 형광펜이 여기에 모여요.</div>')+ids.map(function(id){var c=id.slice(0,2),i=+id.slice(2),it=ITM[c][i],on=c==="TH"?THI===i:AP[c]===id;return'<div class="vi"><div class="pvw vp">'+pv(c,i,COL[(id in CS)?CS[id]:i%5])+'</div><div class="vn"><b>'+it[0]+'</b><small>'+CN[c]+'</small></div><button class="fadd" data-a="'+id+'" aria-pressed="'+on+'">'+(on?"적용 중":"적용")+'</button></div>'}).join("")}
   if(t===3){if(TMI<0||TMI>=CMTS.length)TMI=CMTS.length-1;
    var m=CMTS[TMI],pp=m.d.split("."),dd=Math.round((new Date(todayStr().replace(/\./g,"-"))-new Date(m.d.replace(/\./g,"-")))/864e5);
    h='<div class="tm"><small>타임머신</small><p><b>'+(+pp[1])+'월 '+(+pp[2])+'일</b>, ‘'+esc(m.b)+'’을 추천했어요. <span class="dt">('+dd+'일 전)</span></p><p class="q">“'+esc(m.t)+'”</p><div class="dbt"><button class="btn ghost" data-m="old">더 이전 기록</button><button class="btn ghost" data-m="new">더 최근 기록</button></div><button class="btn" data-m="re" style="width:100%;margin-top:8px">다시 추천하기</button></div>'}
@@ -2529,6 +2530,11 @@ new MutationObserver(function(){var t=app.querySelector(".hfin .hf1t");if(!t||t.
 /* 홈 커뮤니티 인기글: 인기글 3개를 3.5초마다 위로 넘기며 보여줘요 */
 var HTK=null;new MutationObserver(function(){var w=app.querySelector(".htw");if(!w||w.dataset.on)return;w.dataset.on=1;clearInterval(HTK);var n=w.children.length,i=0;if(n<2)return;
  HTK=setInterval(function(){if(!document.body.contains(w)){clearInterval(HTK);return}i=(i+1)%n;w.style.transform="translateY(-"+(i*100/n)+"%)";var h=document.getElementById("hpo");if(h)h.dataset.id=w.children[i].dataset.id;app.querySelectorAll(".htd i").forEach(function(d,j){d.classList.toggle("on",j===i)})},3500)}).observe(app,{childList:true});
+
+/* 도서관 > 찜한 책 */
+function likedPg(){app.className="app";window.scrollTo(0,0);var ids=LB.map(function(_,k){return k}).filter(function(k){return HB[k]});
+ app.innerHTML='<div class="sh2"><button class="ib" id="lk0" aria-label="뒤로">'+ic("back")+'</button><h2>찜한 책</h2><span class="sp3"></span></div>'+(ids.length?'<div class="box tlx"><div class="pps">'+ids.map(function(k){return bcard(k)}).join("")+'</div></div>':'<div class="emp">찜한 책이 없어요.<br>책 표지의 하트를 누르면 여기에 모여요.</div>');
+ document.getElementById("lk0").onclick=library;lbWire(likedPg)}
 </script>
 </body>
 </html>
