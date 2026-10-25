@@ -1094,6 +1094,12 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .app.hf3 .hgl{display:none}.app.hf3 .hrw{padding:8px 12px!important}.app.hf3 .hpo.hrw p{font-size:12.5px}
 .pset2{display:flex;align-items:center;gap:8px;width:100%;margin:22px 0 64px;padding:14px 4px;font:inherit;font-size:14px;color:var(--sub);background:none;border:0;border-top:1.5px solid var(--line);cursor:pointer}
 .pset2 span{flex:1;text-align:left}.pset2 .ic{width:18px;height:18px;color:var(--sub)}
+.htk{height:22px;overflow:hidden}.htw{transition:transform .45s ease}.hti{height:22px;display:flex;align-items:center;gap:8px}.hti p{flex:1;min-width:0;margin:0!important;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block!important}.hti .tg2{flex:none;margin:0!important}.hti .hpof{flex:none;position:static!important}
+.htd{margin-left:auto;display:flex;gap:4px}.htd i{width:5px;height:5px;border-radius:50%;background:var(--line)}.htd i.on{background:var(--pri)}
+@media (prefers-reduced-motion:reduce){.htw{transition:none}}
+/* 네비게이션 홈: 글자 없이 더 큰 버튼 */
+.tab button:nth-child(3){font-size:0!important;line-height:0}
+.tab button:nth-child(3) .ic{width:60px!important;height:60px!important;padding:14px!important;margin:-30px auto 0!important}
 </style>
 </head>
 <body>
@@ -1916,13 +1922,13 @@ var OPENP=0;
 /* 홈 한 화면 맞춤: 내용이 아래 탭바 위에 다 들어오게 하고, 맨 위 여백과 탭바 위 여백을 같게. 남는 공간은 섹션 사이에 고르게 나눠요 */
 function hFit(){var sc=document.querySelector(".sc.hm"),tb=app.querySelector(".tab");if(!sc||!tb||!app.classList.contains("hm"))return;
  var K=[].slice.call(sc.children).filter(function(c){return c.offsetParent!==null&&getComputedStyle(c).position!=="absolute"&&getComputedStyle(c).position!=="fixed"});if(K.length<2)return;
- app.classList.remove("hf1","hf2","hf3");K.forEach(function(c,i){if(i)c.style.marginTop=""});sc.style.paddingTop="";sc.style.paddingBottom="";
- sc.scrollTop=0;var G=12;function meas(){var t=sc.getBoundingClientRect().top,av=tb.getBoundingClientRect().top-t,h=K[K.length-1].getBoundingClientRect().bottom-K[0].getBoundingClientRect().top;return{av:av,h:h}}
+ app.classList.remove("hf1","hf2","hf3");K.forEach(function(c,i){c.style.marginTop="0px"});sc.style.paddingTop="";sc.style.paddingBottom="";
+ sc.scrollTop=0;var G=(K.length+1)*8;function meas(){var t=sc.getBoundingClientRect().top,hi=tb.querySelector("button:nth-child(3) .ic"),av=Math.min(tb.getBoundingClientRect().top,hi?hi.getBoundingClientRect().top:1e9)-t,h=K[K.length-1].getBoundingClientRect().bottom-K[0].getBoundingClientRect().top;return{av:av,h:h}}
  var m=meas();if(m.h+G>m.av){app.classList.add("hf1");m=meas()}if(m.h+G>m.av){app.classList.add("hf2");m=meas()}if(m.h+G>m.av){app.classList.add("hf3");m=meas()}
  if(m.h+G>m.av)return;/* 아주 작은 화면이면 지금처럼 스크롤 */
- var ex=(m.av-G-m.h)/(K.length+1);
- sc.style.paddingTop=ex+"px";K.forEach(function(c,i){if(i)c.style.marginTop=(parseFloat(getComputedStyle(c).marginTop)+ex)+"px"});
- sc.style.paddingBottom=(sc.clientHeight-m.av+G+ex)+"px"}
+ var ex=(m.av-m.h)/(K.length+1);
+ sc.style.paddingTop=ex+"px";K.forEach(function(c,i){if(i)c.style.marginTop=ex+"px"});
+ sc.style.paddingBottom=(sc.clientHeight-m.av+ex)+"px"}
 window.addEventListener("resize",function(){if(app.classList.contains("hm"))hFit()});
 
 /* 홈 포인트 카드를 누르면 뜨는 오늘의 미션 목록 */
@@ -1944,9 +1950,9 @@ function home(){
  +hero
  +'<section class="blk"><div class="box wkx" id="hdt" role="button" tabindex="0" aria-label="이번 주 기록, 독서 달력 보기"><div class="wkh wkh1"><small class="hdh">이번 주 기록</small><span class="wks1"><b>'+rd+'일</b> 읽었어요 · 달성률 '+wp+'%</span>'+ic("next")+'</div><div class="wkr">'+bars+'</div></div></section>'
  +(function(){var d=psDay(),c=PCFG.DAILY_CAP,pc=Math.round(d.act*100/c);msSync();var nd=MS.filter(function(x){return x[3]}).length;
-  var tp=PO.filter(function(p){return p.v===0}).sort(function(a,b){return(b.l+b.c.length)-(a.l+a.c.length)})[0];
-  return'<section class="blk hdu hdu1"><div class="box hrw hpx hpc" id="hpx" role="button" tabindex="0" aria-label="오늘의 포인트와 미션 보기"><div class="hr1"><small class="hdh">오늘의 포인트</small><span class="hmo">미션 '+nd+'/'+MS.length+' 완료'+ic("next")+'</span></div><div class="hr2"><b class="hpbig">'+PT+'P</b><div class="hpg2" role="progressbar" aria-label="오늘의 활동 포인트" aria-valuenow="'+d.act+'" aria-valuemin="0" aria-valuemax="'+c+'"><i style="width:'+pc+'%"></i></div><span class="hpn">오늘 <b>'+d.act+'P</b> / '+c+'P</span></div></div>'
-  +(tp?'<div class="box hrw hpo" id="hpo" role="button" tabindex="0" data-id="'+tp.id+'" aria-label="커뮤니티 인기글 보기"><div class="hr1"><small class="hdh">커뮤니티 인기글</small><span class="tg2">'+TN[tp.t]+'</span><span class="hpof">'+ic("heart")+tp.l+'<i></i>'+ic("chat")+tp.c.length+'</span></div><p>'+esc(tp.x)+'</p></div>':'<div class="box hrw hpo" id="hpo" role="button" tabindex="0"><div class="hr1"><small class="hdh">커뮤니티 인기글</small></div><p>아직 올라온 글이 없어요.</p></div>')+'</section>'})()
+  var TPS=PO.filter(function(p){return p.v===0}).sort(function(a,b){return(b.l+b.c.length)-(a.l+a.c.length)}).slice(0,3),tp=TPS[0];
+  return'<section class="blk hdu hdu1"><div class="box hrw hpx hpc" id="hpx" role="button" tabindex="0" aria-label="오늘의 포인트와 미션 보기"><div class="hr1"><small class="hdh">오늘의 포인트</small><span class="hmo">미션 '+nd+'/'+MS.length+' 완료'+ic("next")+'</span></div><div class="hr2"><b class="hpbig">'+PT+'P</b><div class="hpg2" role="progressbar" aria-label="오늘의 활동 포인트" aria-valuenow="'+d.act+'" aria-valuemin="0" aria-valuemax="'+c+'"><i style="width:'+pc+'%"></i></div><span class="hpn">오늘 <b>'+d.act+'P</b> / '+c+'P</span></div></div></section><section class="blk hdu hdu1">'
+  +(tp?'<div class="box hrw hpo" id="hpo" role="button" tabindex="0" data-id="'+tp.id+'" aria-label="커뮤니티 인기글 보기"><div class="hr1"><small class="hdh">커뮤니티 인기글</small>'+(TPS.length>1?'<span class="htd">'+TPS.map(function(_,i){return'<i'+(i?'':' class="on"')+'></i>'}).join("")+'</span>':'')+'</div><div class="htk"><div class="htw">'+TPS.map(function(q){return'<div class="hti" data-id="'+q.id+'"><span class="tg2">'+TN[q.t]+'</span><p>'+esc(q.x)+'</p><span class="hpof">'+ic("heart")+q.l+'<i></i>'+ic("chat")+q.c.length+'</span></div>'}).join("")+'</div></div></div>':'<div class="box hrw hpo" id="hpo" role="button" tabindex="0"><div class="hr1"><small class="hdh">커뮤니티 인기글</small></div><p>아직 올라온 글이 없어요.</p></div>')+'</section>'})()
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.querySelectorAll(".rck").forEach(function(b){b.onclick=function(){var kk=+b.dataset.k;bookDt(kk,home,function(){PICKED=1;DEF=kk;reader(DEF)})}});app.querySelectorAll(".hgo").forEach(function(b){b.onclick=function(){if(HSM)return;reader(+b.dataset.k)}});
  var hsk=document.getElementById("hsk");if(hsk)hsk.onclick=function(){TFROM=home;testPg()};
@@ -2519,6 +2525,10 @@ function recNext(){var C=Object.keys(BD).map(Number).filter(function(k){return L
 
 /* 완독 후 추천 문구: 항상 두 줄. 첫 줄(책 제목)이 넘치면 글씨를 줄여요 */
 new MutationObserver(function(){var t=app.querySelector(".hfin .hf1t");if(!t||t.dataset.fit)return;t.dataset.fit=1;var f=parseFloat(getComputedStyle(t).fontSize);while(f>12&&t.scrollWidth>t.clientWidth+1){f-=.5;t.style.fontSize=f+"px"}}).observe(app,{childList:true});
+
+/* 홈 커뮤니티 인기글: 인기글 3개를 3.5초마다 위로 넘기며 보여줘요 */
+var HTK=null;new MutationObserver(function(){var w=app.querySelector(".htw");if(!w||w.dataset.on)return;w.dataset.on=1;clearInterval(HTK);var n=w.children.length,i=0;if(n<2)return;
+ HTK=setInterval(function(){if(!document.body.contains(w)){clearInterval(HTK);return}i=(i+1)%n;w.style.transform="translateY(-"+(i*100/n)+"%)";var h=document.getElementById("hpo");if(h)h.dataset.id=w.children[i].dataset.id;app.querySelectorAll(".htd i").forEach(function(d,j){d.classList.toggle("on",j===i)})},3500)}).observe(app,{childList:true});
 </script>
 </body>
 </html>
