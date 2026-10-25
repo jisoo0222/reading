@@ -1059,6 +1059,8 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .sad{font-size:12.5px!important;line-height:1.5;margin:0!important;word-break:keep-all}.sah{align-items:flex-start!important}.sah .rbf{flex:none;white-space:nowrap}
 .sea .sed{flex:none;font-style:normal;font-size:11px;font-weight:600;color:var(--sub);margin-left:auto;margin-right:6px}.sea .sen{min-width:0}
 .sah{flex-direction:column;align-items:stretch!important;gap:4px}.sah .rbf{align-self:flex-end}.sea .sed{display:block;margin:2px 0 0;color:var(--pri)}
+.ntc .ntu{display:inline-block;margin-left:3px;min-width:15px;height:15px;line-height:15px;padding:0 4px;border-radius:999px;background:var(--pri);color:#F6F1EC;font-size:9.5px;font-weight:800;font-style:normal;vertical-align:1px}
+.ntc button{padding:8px 1px 9px!important;font-size:12px!important;letter-spacing:-.02em}.ntc .ntu{margin-left:2px;min-width:13px;height:13px;line-height:13px;padding:0 3px;font-size:9px}
 </style>
 </head>
 <body>
@@ -1766,11 +1768,13 @@ I.bellOn="M6 16v-5a6 6 0 0 1 9-5.2M18 11v5l1.5 2h-15M10 20a2 2 0 0 0 4 0";
 var NTF=[{k:"rq",q:1,t:"하린님이 『메밀꽃 필 무렵』 함께 읽기를 신청했어요.",tm:"방금 전",rd:0},{k:"fr",u:2,t:"하린님이 친구 신청을 보냈어요.",tm:"방금 전",rd:0},{k:"rm",t:"",tm:"10분 전",rd:0},{k:"pp",u:0,t:"지민님이 같은 책에 코멘트를 남겼어요.",tm:"1시간 전",rd:0},{k:"pt",t:"출석 포인트 10P가 쌓였어요.",tm:"어제",rd:1}],NIC={fr:"users",rm:"book",pp:"chat",pt:"gift",rq:"mail"};
 function ntfT(n){return n.k==="rm"?(GOAL?"오늘 목표 "+GOAL+"쪽, 아직 읽을 시간이 남았어요. 이어 읽어 볼까요?":"오늘도 한 쪽만 가볍게 읽어 볼까요?"):n.t}
 function unread(){return NTF.filter(function(n){return!n.rd}).length}
-function inbox(){
- app.className="app";
+var NFC="all",NCAT=[["all","전체"],["rq","우편"],["fr","친구"],["rm","독서"],["pp","커뮤니티"],["pt","포인트"]];
+function inbox(c){if(typeof c==="string")NFC=c;
+ app.className="app";var VIS=NTF.map(function(n,i){return i}).filter(function(i){return NFC==="all"||NTF[i].k===NFC});
  app.innerHTML='<div class="sh2"><button class="ib" id="nb0" aria-label="뒤로">'+ic("back")+'</button><h2>알림</h2><span class="sp3"></span></div>'
- +(NTF.length?'<div class="ntl">'+NTF.map(function(n,i){return'<button class="ntr'+(n.rd?"":" new")+'" data-i="'+i+'"><span class="nti">'+ic(NIC[n.k])+'</span><span class="ntx"><b>'+esc(ntfT(n))+'</b><small>'+n.tm+'</small></span>'+(n.rd?'':'<i class="ntd" aria-label="읽지 않음"></i>')+'</button>'}).join("")+'</div>':'<div class="emp">새 알림이 없어요.</div>');
- document.getElementById("nb0").onclick=home;NTF.forEach(function(n){n.rd=1});
+ +'<div class="ctf ntc" role="tablist" aria-label="알림 분류" id="ntc">'+NCAT.map(function(t){var u=NTF.filter(function(n){return !n.rd&&(t[0]==="all"||n.k===t[0])}).length;return'<button role="tab" data-c="'+t[0]+'" aria-selected="'+(NFC===t[0])+'">'+t[1]+(u?'<i class="ntu" aria-label="읽지 않음 '+u+'개">'+u+'</i>':'')+'</button>'}).join("")+'</div>'
+ +(VIS.length?'<div class="ntl">'+VIS.map(function(i){var n=NTF[i];return'<button class="ntr'+(n.rd?"":" new")+'" data-i="'+i+'"><span class="nti">'+ic(NIC[n.k])+'</span><span class="ntx"><b>'+esc(ntfT(n))+'</b><small>'+n.tm+'</small></span>'+(n.rd?'':'<i class="ntd" aria-label="읽지 않음"></i>')+'</button>'}).join("")+'</div>':'<div class="emp">'+(NFC==="all"?'새 알림이 없어요.':'이 분류에는 알림이 없어요.')+'</div>');
+ document.getElementById("nb0").onclick=home;document.getElementById("ntc").onclick=function(e){var b=e.target.closest("button");if(b&&b.dataset.c!==NFC)inbox(b.dataset.c)};VIS.forEach(function(i){NTF[i].rd=1});
  app.querySelectorAll(".ntr").forEach(function(b){b.onclick=function(){var n=NTF[+b.dataset.i];n.rd=1;
   if(n.k==="rq"){inbox();if(reqBy(n.q))letter(n.q);else mailPg(inbox)}else if(n.k==="fr"){inbox();friend(n.u)}else if(n.k==="rm"||n.k==="pp")reader();else if(n.k==="pt")shop();else inbox()}})}
 var PLT={L:["#F3EDE7","#F6F1EC","#4F3A4F","#8A6A8A","#E6DCD2","#6A4F6A","#F6F1EC","#B2A5D6"],D:["#3A2B3A","#4F3A4F","#F3EDE7","#C9B3C9","#6A4F6A","#B2A5D6","#3A2B3A","#C9B3C9"]},
@@ -1934,7 +1938,7 @@ function home(){
   el.onkeydown=function(e){if(e.key==="Enter")el.onclick(e);if(e.key==="Escape")thide()}});
  document.querySelector(".sc").addEventListener("click",thide);
  var tb=app.querySelectorAll(".tab button");tb[0].onclick=tabStamp;tb[1].onclick=shop;tb[3].onclick=community;tb[4].onclick=profile;requestAnimationFrame(hFit);
- document.getElementById("hbl").onclick=inbox;document.getElementById("hrb").onclick=function(){RPB=home;readPg(1)};
+ document.getElementById("hbl").onclick=function(){inbox("all")};document.getElementById("hrb").onclick=function(){RPB=home;readPg(1)};
  document.getElementById("hdt").onclick=function(){calendar()};document.getElementById("hdt").onkeydown=function(e){if(e.key==="Enter")calendar()};
 }
 I.globe="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18";I.mail="M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zM3.500 7l8.500 6.500L20.500 7";I.users="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 19c0-3 3-5 6-5s6 2 6 5M16 11a2.5 2.5 0 1 0 0-5M17 14c2.5.3 4 2 4 5";
