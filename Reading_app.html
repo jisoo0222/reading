@@ -1135,6 +1135,9 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .mpt2 .pt{border:0;padding:0;color:inherit;font-size:22px;font-weight:800;gap:6px}
 .mpt2 .vl{display:flex;align-items:center;gap:6px;color:var(--pri);background:var(--card);border:0;padding:9px 14px;font-size:13.5px}.mpt2 .vl .ic{width:16px;height:16px}
 .lsr{margin:-4px 0 16px}.lsr #lq{width:100%;box-sizing:border-box;font:inherit;font-size:14px;padding:11px 46px 11px 14px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink)}.lsr #lq:focus{outline:none;border-color:var(--pri)}.lsr #lq::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+.hti{align-items:center!important}.hti>*{margin:0!important;position:static!important;top:auto!important;transform:none!important;align-self:center}.hti .tg2{display:inline-flex!important;align-items:center;height:20px;line-height:1;box-sizing:border-box;padding-top:0!important;padding-bottom:0!important}.hti p{height:20px;line-height:20px!important}.hti .hpof{height:20px;line-height:1}.hti .hpof .ic{display:block}
+.hti>*{align-self:center!important}
+.lsrow{display:flex;align-items:center;gap:6px;margin:0 0 16px}.lsrow .lsr{flex:1;min-width:0;margin:0!important}.lsrow .lhb{flex:none;width:42px;height:42px;margin-left:-6px}
 </style>
 </head>
 <body>
@@ -1774,8 +1777,7 @@ function lbWire(back){
 function library(){
  app.className="app";
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="book"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="sh2"><button class="ib lhb" id="lhb" aria-label="찜한 책 보기">'+ic("heart")+(LB.some(function(_,k){return HB[k]})?'<i class="lhd"></i>':'')+'</button><span style="flex:1"></span></div>'
- +'<div class="csr lsr"><input id="lq" type="search" placeholder="책 제목, 저자로 찾기" aria-label="책 제목이나 저자로 찾기" autocomplete="off"><button class="csb2" id="lsb" aria-label="검색">'+ic("search")+'</button></div><div id="lres" hidden></div><div id="lmain">'
+ app.innerHTML='<div class="lsrow"><button class="ib lhb" id="lhb" aria-label="찜한 책 보기">'+ic("heart")+(LB.some(function(_,k){return HB[k]})?'<i class="lhd"></i>':'')+'</button><div class="csr lsr"><input id="lq" type="search" placeholder="책 제목, 저자로 찾기" aria-label="책 제목이나 저자로 찾기" autocomplete="off"><button class="csb2" id="lsb" aria-label="검색">'+ic("search")+'</button></div></div><div id="lres" hidden></div><div id="lmain">'
  
  +'<section class="fs"><div class="fsh"><h3>인기 급상승 오늘의 책</h3><button class="pme" id="rkm">자세히 보기'+ic("next")+'</button></div><div class="box ppx"><div class="shs pps">'+popRank().slice(0,10).map(function(k,i){return bcard(k,i+1)}).join("")+'</div></div></section>'
  +'<section class="fs"><div class="fsh"><h3>장르</h3></div><div class="box gnc" role="group" aria-label="장르별로 보기">'+GEN.map(function(g,i){return'<button class="gnt" data-g="'+i+'"><span>'+ic(GIC[i])+'</span>'+g+'</button>'}).join("")+'</div></section>'
