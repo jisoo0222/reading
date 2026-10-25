@@ -1061,6 +1061,12 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .sah{flex-direction:column;align-items:stretch!important;gap:4px}.sah .rbf{align-self:flex-end}.sea .sed{display:block;margin:2px 0 0;color:var(--pri)}
 .ntc .ntu{display:inline-block;margin-left:3px;min-width:15px;height:15px;line-height:15px;padding:0 4px;border-radius:999px;background:var(--pri);color:#F6F1EC;font-size:9.5px;font-weight:800;font-style:normal;vertical-align:1px}
 .ntc button{padding:8px 1px 9px!important;font-size:12px!important;letter-spacing:-.02em}.ntc .ntu{margin-left:2px;min-width:13px;height:13px;line-height:13px;padding:0 3px;font-size:9px}
+.dgt{margin:0 0 6px}.dgt div{gap:8px}.dgt button{display:flex;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:600;padding:12px 4px;border-radius:12px}.dgt button .ic{width:18px;height:18px}
+/* 하단 홈 탭 강조: 동그라미 안 아이콘 */
+.tab button:nth-child(3){position:relative;color:var(--pri);font-weight:700}
+.tab button:nth-child(3) .ic{width:46px;height:46px;padding:11px;margin:-24px auto 2px;border-radius:50%;background:var(--pri);color:var(--onpri,#F6F1EC);stroke:currentColor;box-shadow:0 3px 8px rgba(79,58,79,.25);border:3px solid var(--card);box-sizing:border-box;display:block}
+.tab button:nth-child(3)[aria-current="page"] .ic{box-shadow:0 0 0 3px color-mix(in srgb,var(--pri) 25%,transparent),0 3px 8px rgba(79,58,79,.25)}
+.tab button:nth-child(3) .ic{width:50px;height:50px;padding:11px;margin:-27px auto 2px;border-width:2.5px;stroke-width:2.2}.dgt{margin-bottom:16px!important}
 </style>
 </head>
 <body>
@@ -1417,7 +1423,7 @@ function profile(){
  app.innerHTML='<div class="bn" id="bn" role="button" tabindex="0" aria-label="내 책장 펼쳐 보기"></div>'
  +'<div class="pfb"><button class="pfg" id="pfg" aria-label="책장 펼치기"><i></i></button><section class="box pbx2"><div class="pbt"><div class="av3" style="'+avS()+'">'+(MEP?'':esc(ME).charAt(0))+'</div><div class="pnm"><h2>'+esc(ME)+'</h2><small>'+(AGE!==null?AGES[AGE]+' · ':'')+'하루 '+(GOAL||10)+'쪽 목표</small></div><button class="pme pmb" id="pme" aria-label="프로필 편집">'+ic("pen")+'</button></div>'
  +(function(){var k=RKEY||(ans.indexOf(null)<0?calcType().key:""),t=k&&T[k];return'<button class="ptc2" id="rp"><span class="ptl"><small>AI 독서 성향</small><span class="ptr">'+(t?'<em class="ptk">'+k+'</em><b>'+t[0]+'</b>':'<b>나의 독서 유형 알아보기</b>')+'</span></span>'+ic("next")+'</button>'})()
- +'<div class="pqb"><button id="pmail">'+ic("mail")+'우체통'+(REQ.length?'<i class="pmn">'+REQ.length+'</i>':'')+'</button><button id="pth">'+ic("pal")+'테마</button><button id="pset">'+ic("set")+'설정</button></div></section>'
+ +'<div class="pqb"><button id="pset">'+ic("set")+'설정</button></div></section>'
  +'<section class="fs"><div class="fsh"><h3>내 친구 '+fc+'</h3><button class="pme" id="pfr">자세히 보기'+ic("next")+'</button></div><div class="box pfl">'+(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):'<p class="pfe">아직 친구가 없어요.</p><button class="pfc pfa" id="pfa"><span>'+ic("plus")+'</span><b>친구 찾기</b></button>')+'</div></section>'
  +(function(){var L=readList();return'<section class="fs"><div class="fsh"><h3>읽은 책 '+L.length+'권</h3><button class="pme" id="rbm">전체 보기'+ic("next")+'</button></div><div class="rbl" id="rbl">'+L.map(function(b,i){return'<div class="rbk'+(i>4?" xtra":"")+'"><i style="background:'+b.c+'"></i><span class="rbt"><b>'+esc(b.t)+'</b><small>'+esc(b.a)+'</small></span><em class="rbs'+(b.done?" dn":"")+'">'+b.s+'</em></div>'}).join("")+'</div>'+'</section>'})()
  +'<section class="fs" id="pst" role="button" tabindex="0" style="cursor:pointer" aria-label="독서 우표 보러 가기"><div class="fsh"><h3>'+esc(ME)+' 님의 독서 우표</h3><button class="pme" id="pstm">자세히 보기'+ic("next")+'</button></div><div class="box"><div class="stg">'+(function(){var t="";for(var q=0;q<4;q++)t+=stamp(BC[q%3],1,q);return t})()+'</div></div></section>'
@@ -1470,7 +1476,7 @@ function profile(){
  document.getElementById("pfg").onclick=function(e){e.stopPropagation();app.classList.contains("pfo")?sClose():sOpen()};
  document.getElementById("rp").onclick=function(){if(RKEY||ans.indexOf(null)<0)typePg();else{TFROM=profile;testPg()}};
  document.getElementById("pme").onclick=meEdit;
- document.getElementById("pth").onclick=function(){themePop(profile)};document.getElementById("pset").onclick=setPg;document.getElementById("pmail").onclick=function(){mailPg(profile)};
+ document.getElementById("pset").onclick=setPg;
  app.querySelectorAll(".pfc[data-i]").forEach(function(b){b.onclick=function(){friend(+b.dataset.i,1)}});var pfa=document.getElementById("pfa");if(pfa)pfa.onclick=frList;
  var rbm=document.getElementById("rbm");if(rbm)rbm.onclick=function(){RPB=profile;readPg(1)};
  app.querySelectorAll(".ordr").forEach(function(b){b.onclick=function(){ordPg(+b.dataset.o)}});
@@ -1828,8 +1834,8 @@ function setPg(){
  function art(a){return a.map(function(x){return'<p class="sm"><b>'+x[0]+'</b><br><span style="color:var(--sub);font-size:13px">'+x[1]+'</span></p>'}).join("")}
  var note='<p class="dnote">※ 샘플 문구예요. 실제 서비스에서는 확정된 내용으로 교체해야 해요.</p>';
  function seg(){return'<div class="dg"><b>화면 모드</b><div>'+["시스템","라이트","다크"].map(function(t,i){return'<button data-i="'+i+'" aria-pressed="'+(DM===i)+'">'+t+'</button>'}).join("")+'</div></div><p class="dnote" style="margin:-4px 0 14px">시스템은 기기 설정을 따라가요.</p>'}
- function r(){app.innerHTML='<div class="sh2"><button class="ib" id="dcl" aria-label="뒤로">'+ic("back")+'</button><h2>설정</h2><span class="sp3"></span></div><div class="drw stpg"><h4>알림</h4><button class="drow" data-a="al">알림 설정'+ic("next")+'</button><h4>정보</h4><button class="drow" data-a="nt">공지사항'+ic("next")+'</button><button class="drow" data-a="tm">이용약관'+ic("next")+'</button><button class="drow" data-a="pv">개인정보 처리방침'+ic("next")+'</button><button class="drow" data-a="cs">고객센터'+ic("next")+'</button><p class="dnote" style="text-align:center;margin-top:8px">버전 1.0.0</p></div>';var d=app;
-  d.querySelectorAll(".dg button").forEach(function(b){b.onclick=function(){DM=+b.dataset.i;try{localStorage.setItem("rd_dm",DM)}catch(e){}applyDM();r()}});
+ function r(){app.innerHTML='<div class="sh2"><button class="ib" id="dcl" aria-label="뒤로">'+ic("back")+'</button><h2>설정</h2><span class="sp3"></span></div><div class="drw stpg"><h4>테마</h4><div class="dg dgt"><div>'+[[1,"라이트"],[2,"다크"]].map(function(t){var dk=DM===2||(DM===0&&matchMedia("(prefers-color-scheme: dark)").matches);return'<button data-i="'+t[0]+'" aria-pressed="'+(THI===0&&(dk?2:1)===t[0])+'">'+ic(t[0]===2?"moon":"sun")+t[1]+'</button>'}).join("")+'</div></div><h4>알림</h4><button class="drow" data-a="al">알림 설정'+ic("next")+'</button><h4>정보</h4><button class="drow" data-a="nt">공지사항'+ic("next")+'</button><button class="drow" data-a="tm">이용약관'+ic("next")+'</button><button class="drow" data-a="pv">개인정보 처리방침'+ic("next")+'</button><button class="drow" data-a="cs">고객센터'+ic("next")+'</button><p class="dnote" style="text-align:center;margin-top:8px">버전 1.0.0</p></div>';var d=app;
+  d.querySelectorAll(".dg button").forEach(function(b){b.onclick=function(){DM=+b.dataset.i;THI=0;try{localStorage.setItem("rd_dm",DM)}catch(e){}applyDM();thm();r()}});
   d.querySelectorAll(".drow").forEach(function(b){b.onclick=function(){var a=b.dataset.a;
    if(a==="nt")infoPop("공지사항",NT.map(function(n){return'<p class="sm"><b>'+n[0]+'</b> <small style="color:var(--sub)">'+n[1]+'</small><br><span style="color:var(--sub);font-size:13px">'+n[2]+'</span></p>'}).join(""));
    if(a==="tm")infoPop("이용약관",art(TM)+note);
