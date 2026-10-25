@@ -1777,7 +1777,7 @@ function tCur(){for(var i=0;i<TOPT.length;i++)if(TOPT[i][1]===DM&&TOPT[i][2]===T
 function tPal(i){var o=TOPT[i];if(o[2])return THV[o[2]];if(o[1]===2||(o[1]===0&&matchMedia("(prefers-color-scheme: dark)").matches))return PLT.D;return PLT.L}
 function themePop(done){
  var sel=tCur();
- var x=pop('<h3>테마</h3><div class="tpv" id="tpv"></div><div class="tgd" id="tgd"></div><div class="dbt"><button class="btn ghost" id="tcx">취소</button><button class="btn" id="tap">적용</button></div>');
+ var x=pop('<h3>테마</h3>');document.getElementById("dlg").dataset.nox=1;document.getElementById("dlg").insertAdjacentHTML("beforeend",'<div class="tpv" id="tpv"></div><div class="tgd" id="tgd"></div><div class="dbt"><button class="btn ghost" id="tcx">취소</button><button class="btn" id="tap">적용</button></div>');
  function r(){var P=tPal(sel);
   document.getElementById("tpv").innerHTML='<div class="tmk" style="background:'+P[0]+';color:'+P[2]+';border-color:'+P[4]+'"><div class="tmh"><b>'+esc(ME||"나")+'</b><i style="background:'+P[3]+'"></i></div><div class="tmc" style="background:'+P[1]+';border-color:'+P[4]+'"><span class="tmv" style="background:'+P[7]+'"></span><div><b>지금 읽는 책</b><small style="color:'+P[3]+'">미리보기 화면이에요</small><span class="tmb" style="background:'+P[4]+'"><i style="background:'+P[5]+'"></i></span></div></div><div class="tmo" style="background:'+P[5]+';color:'+P[6]+'">이어 읽기</div></div>';
   document.getElementById("tgd").innerHTML=TOPT.map(function(o,i){var Q=tPal(i);return'<button class="tsw" data-i="'+i+'" aria-pressed="'+(i===sel)+'"><span style="background:'+Q[0]+';border-color:'+Q[4]+'"><i style="background:'+Q[5]+'"></i><i style="background:'+Q[7]+'"></i></span>'+o[0]+'</button>'}).join("")}
@@ -2441,7 +2441,7 @@ document.addEventListener("mouseup",function(){if(!D)return;var d=D;D=null;if(!d
 (function(){var X='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
  function close(t){if(t.id==="dlg"){var o=document.getElementById("ov2");if(o&&o.onclick){o.click();return}if(o)o.remove();t.remove();return}
   var ov=document.getElementById("ov");if(ov&&ov.onclick){ov.click();return}t.classList.remove("on");if(ov)ov.classList.remove("on")}
- function add(){["dlg","sheet"].forEach(function(id){var t=document.getElementById(id);if(!t||t.querySelector(":scope>.pxb"))return;if(id==="sheet"&&!t.classList.contains("on"))return;
+ function add(){["dlg","sheet"].forEach(function(id){var t=document.getElementById(id);if(!t||t.dataset.nox||t.querySelector(":scope>.pxb"))return;if(id==="sheet"&&!t.classList.contains("on"))return;
   var b=document.createElement("button");b.className="pxb";b.type="button";b.setAttribute("aria-label","닫기");b.innerHTML=X;b.onclick=function(e){e.stopPropagation();close(t)};t.insertBefore(b,t.firstChild)})}
  var q=false;new MutationObserver(function(){if(q)return;q=true;requestAnimationFrame(function(){q=false;add()})}).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:["class"]})})();
 
