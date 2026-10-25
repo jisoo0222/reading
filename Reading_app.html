@@ -1138,6 +1138,7 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .hti{align-items:center!important}.hti>*{margin:0!important;position:static!important;top:auto!important;transform:none!important;align-self:center}.hti .tg2{display:inline-flex!important;align-items:center;height:20px;line-height:1;box-sizing:border-box;padding-top:0!important;padding-bottom:0!important}.hti p{height:20px;line-height:20px!important}.hti .hpof{height:20px;line-height:1}.hti .hpof .ic{display:block}
 .hti>*{align-self:center!important}
 .lsrow{display:flex;align-items:center;gap:6px;margin:0 0 16px}.lsrow .lsr{flex:1;min-width:0;margin:0!important}.lsrow .lhb{flex:none;width:42px;height:42px;margin-left:-6px}
+.wfab{left:20px!important;right:auto!important;width:56px!important;height:56px!important;box-shadow:0 6px 16px rgba(79,58,79,.32),0 2px 4px rgba(79,58,79,.18);border:3px solid var(--card)!important;transition:transform .15s}.wfab:active{transform:scale(.94)}.wfab .ic{width:24px;height:24px}
 </style>
 </head>
 <body>
@@ -2056,7 +2057,7 @@ function community(){
  +'<div class="csr" id="csr"><input id="cq" type="search" placeholder="책 제목, 작가, 글 내용으로 찾기" aria-label="커뮤니티 글 검색" autocomplete="off"><button class="csb2" id="csb" aria-label="검색">'+ic("search")+'</button></div>'
  +'<div id="cwb" hidden></div><div class="ctf" role="tablist" aria-label="글 종류" id="tyb"></div><div id="feed"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.firstChild.style.paddingBottom="90px";
- var fb=document.createElement("button");fb.className="wfab";fb.setAttribute("aria-label","글쓰기");fb.innerHTML=ic("pencil");app.appendChild(fb);
+ var fb=document.createElement("button");fb.className="wfab";fb.setAttribute("aria-label","글쓰기");fb.innerHTML=ic("pencil");app.appendChild(fb);requestAnimationFrame(function(){var t=app.querySelector("nav.tab");if(t)fb.style.bottom=(app.getBoundingClientRect().bottom-t.getBoundingClientRect().top+20)+"px"});
  function post(p,full){
   var me=!!p.mine,un=me?ME:p.u,fr=!!FR[p.u],tc=p.c.length?p.c.slice().sort(function(a,b){return b[2]-a[2]})[0]:null,lk2=!!LKD[p.id];
   var bi2=p.bt||(p.b!==undefined?[LB[p.b][0],LB[p.b][1],LB[p.b][2],p.b]:null);
