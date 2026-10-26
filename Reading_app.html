@@ -1172,6 +1172,32 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 #dlg.wrn .wri{display:grid;place-items:center;width:44px;height:44px;margin:0 auto 10px;border-radius:50%;background:var(--acc1,#FFD9E2)}
 #dlg.wrn .wri svg{width:24px;height:24px;fill:none;stroke:#261931;stroke-width:2;stroke-linecap:round}
 #dlg.wrn h3{text-align:center}#dlg.wrn>p{text-align:center;word-break:keep-all}
+
+/* 홈 위쪽: 인사말 + 아치 장식 + 도기 */
+.hd.hgt{position:relative;display:block;padding:14px 10px 0 22px!important;min-height:100px;box-sizing:border-box}
+.hd.hgt .hga{position:absolute;left:6px;right:6px;top:4px;height:200px;background:var(--lav,#F0EBFF);border-radius:170px 170px 0 0/90px 90px 0 0;overflow:hidden;z-index:0;pointer-events:none}
+.hd.hgt .hgd{position:absolute;left:0;top:0;width:100%;height:150px}
+.hd.hgt .hgx{position:relative;z-index:1;padding-top:20px;max-width:62%}
+.hd.hgt h1{margin:0;font-size:21px;line-height:1.3;font-weight:800;color:var(--ink);word-break:keep-all}
+.hd.hgt p{margin:5px 0 0;font-size:12.5px;line-height:1.45;color:var(--sub);word-break:keep-all}
+.hd.hgt .nbl{position:absolute;top:12px;right:10px;z-index:4}
+.hd.hgt .hdg{position:absolute;right:26px;bottom:-22px;width:96px;z-index:4;pointer-events:none}
+.hd.hgt .hdg svg{display:block;width:100%;height:auto}
+.sc.hm>.hero,.sc.hm>.rcwrap,.sc.hm>.blk{position:relative;z-index:1}
+:root{--lav2:#E4DAFB}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--lav2:#4A3D5E}}:root[data-theme="dark"]{--lav2:#4A3D5E}
+.app.dk{--lav2:#4A3D5E}
+/* 스플래시 로고 */
+.spw svg{width:150px;height:auto}
+/* 알림 목록: 안 읽은 알림은 연보라로 차분하게 */
+.ntr.new{background:var(--lav,#F0EBFF)!important;border-color:#DCD0FA!important}
+.ntd{background:var(--pri)!important}
+.ntu{background:var(--pri)!important;color:var(--onpri,#fff)!important}
+
+/* 이번 주 기록: 채움 색을 연보라로 */
+.wkd em i{background:var(--lav,#F0EBFF)!important}
+.wkd em b,.wkd em.wok b{color:var(--pri)!important;-webkit-text-stroke:0!important}
+.wkd.fu em b{color:var(--sub)!important}
 </style>
 </head>
 <body>
@@ -2037,7 +2063,7 @@ function home(){
   :(function(){var L=RLs().filter(function(k){return bprog(k).c<100}).slice(0,3);if(!L.length)L=[RLs()[0]];var h=L.map(function(k,i){var B=LB[k],q=bprog(k);return'<section class="hero"'+(i?'':' id="rc"')+'><div class="htp"><div class="hcv" data-k="'+k+'" style="background:'+B[2]+'"><b>'+B[0]+'</b>'+(function(){var L=mpFor(k);return L.length?'<span class="hmt" aria-label="같이 읽는 메이트 '+L.map(function(m){return m[0]}).join(", ")+'">'+L.slice(0,3).map(function(m){return'<i style="background:'+m[2]+'">'+m[0].charAt(0)+'</i>'}).join("")+'</span>':''})()+'</div><div class="hif"><small>'+(i?"최근에 읽던 책":"지금 읽는 책")+'</small><h2>'+B[0]+'</h2><p>'+B[1]+'</p><div class="hpg" role="progressbar" aria-label="진행률" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div><p class="hpt"><b>'+q.c+'%</b> · '+q.p+' / '+q.t+'쪽</p></div></div>'
   +'<div class="hgl"><span>오늘 목표</span><div class="hgm"><i style="width:'+Math.min(100,Math.round(tdp*100/G))+'%"></i></div><b>'+tdp+' / '+G+'쪽</b></div><button class="hgo" data-k="'+k+'">이어 읽기 · '+q.p+'쪽부터</button></section>'}).join("");
   return L.length>1?'<div class="rcwrap"><div class="rcscroll" id="rcscroll" aria-label="최근에 읽던 책, 옆으로 넘겨 보기">'+h+'</div><div class="rcdots" id="hdots">'+L.map(function(_,i){return'<button aria-label="'+(i+1)+'번째 책 보기" aria-current="'+(i===0)+'"></button>'}).join("")+'</div></div>':h})();
- app.innerHTML='<header class="hd"><span class="hav" style="'+avBg(ME)+'" aria-hidden="true">'+avTx(ME)+'</span><span class="nick">'+esc(ME)+'</span><button class="ib nbl" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'">'+ic(unread()?"bellOn":"bell")+(unread()?'<i class="nbd"></i>':'')+'</button></header>'
+ app.innerHTML='<header class="hd hgt"><span class="hga" aria-hidden="true">'+archDeco()+'</span><div class="hgx"><h1>'+(ME?'안녕, '+esc(ME)+'님!':'안녕하세요!')+'</h1><p>오늘도 좋은 이야기가<br>기다리고 있어요.</p></div><span class="hdg" aria-hidden="true">'+dogiSVG()+'</span><button class="ib nbl" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'">'+ic(unread()?"bellOn":"bell")+(unread()?'<i class="nbd"></i>':'')+'</button></header>'
  +hero
  +'<section class="blk"><div class="box wkx" id="hdt" role="button" tabindex="0" aria-label="이번 주 기록, 독서 달력 보기"><div class="wkh wkh1"><small class="hdh">이번 주 기록</small><span class="wks1"><b>'+rd+'일</b> 읽었어요 · 달성률 '+wp+'%</span>'+ic("next")+'</div><div class="wkr">'+bars+'</div></div></section>'
  +(function(){var d=psDay(),c=PCFG.DAILY_CAP,pc=Math.round(d.act*100/c);msSync();var nd=MS.filter(function(x){return x[3]}).length;
@@ -2542,7 +2568,7 @@ function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':(typeof
 }
 useBk(DEF);
 function splash(){app.className="app spl";
- app.innerHTML='<div class="spw" role="img" aria-label="똑독, 똑똑, 같이 읽을래?"><svg viewBox="0 0 200 170" width="190" height="162" aria-hidden="true"><path d="M48 70C40 46 42 22 52 14c10-6 30 14 40 34z" fill="#F7EEE3" stroke="#E3D5C6" stroke-width="2" stroke-linejoin="round"/><path d="M55 58c-5-15-5-30 0-36 6-3 18 10 25 24z" fill="#E9B8B8"/><path d="M152 70c8-24 6-48-4-56-10-6-30 14-40 34z" fill="#CDB49A"/><ellipse cx="100" cy="88" rx="62" ry="50" fill="#F7EEE3" stroke="#E3D5C6" stroke-width="2"/><ellipse cx="100" cy="106" rx="20" ry="14" fill="#D9C2A8"/><circle cx="76" cy="88" r="6.5" fill="#4F3A4F"/><circle cx="124" cy="88" r="6.5" fill="#4F3A4F"/><circle cx="78" cy="86" r="1.8" fill="#F6F1EC"/><circle cx="126" cy="86" r="1.8" fill="#F6F1EC"/><path d="M93 99c0-3 3-4 7-4s7 1 7 4c0 3-4 6-7 6s-7-3-7-6z" fill="#4F3A4F"/><path d="M100 116c-16-6-36-7-56-3v50c20-4 40-3 56 3z" fill="#B2A5D6" stroke="#9A8BC4" stroke-width="2" stroke-linejoin="round"/><path d="M100 116c16-6 36-7 56-3v50c-20-4-40-3-56 3z" fill="#B2A5D6" stroke="#9A8BC4" stroke-width="2" stroke-linejoin="round"/><path d="M100 116v50" stroke="#9A8BC4" stroke-width="2.5"/><g transform="translate(130 142)" fill="#F6F1EC"><path d="M0 0c-2.8 0-6.2 3.6-6.2 6.2 0 2 1.6 2.8 3.2 2.8 1.2 0 2-.7 3-.7s1.8.7 3 .7c1.6 0 3.2-.8 3.2-2.8 0-2.6-3.4-6.2-6.2-6.2z"/><ellipse cx="-7.2" cy="-2" rx="1.9" ry="2.6" transform="rotate(-28 -7.2 -2)"/><ellipse cx="-2.6" cy="-5.8" rx="2" ry="2.8" transform="rotate(-8 -2.6 -5.8)"/><ellipse cx="2.6" cy="-5.8" rx="2" ry="2.8" transform="rotate(8 2.6 -5.8)"/><ellipse cx="7.2" cy="-2" rx="1.9" ry="2.6" transform="rotate(28 7.2 -2)"/></g><ellipse cx="40" cy="124" rx="13" ry="10" fill="#F7EEE3" stroke="#E3D5C6" stroke-width="2"/><ellipse cx="160" cy="124" rx="13" ry="10" fill="#F7EEE3" stroke="#E3D5C6" stroke-width="2"/><path class="kn k1" d="M172 30l8-8M178 44l11-3" stroke="var(--sec)" stroke-width="3.5" stroke-linecap="round"/><path class="kn k2" d="M28 30l-8-8M22 44l-11-3" stroke="var(--sec)" stroke-width="3.5" stroke-linecap="round"/></svg><h1>똑독</h1><p class="dke">DDOKDOK</p><p class="dks">똑똑, 같이 읽을래?</p></div>';
+ app.innerHTML='<div class="spw" role="img" aria-label="똑독, 똑똑, 같이 읽을래?">'+logoSVG()+'<h1>똑독</h1><p class="dke">DDOKDOK</p><p class="dks">똑똑, 같이 읽을래?</p></div>';
  var t=setTimeout(go,2200);function go(){clearTimeout(t);app.onclick=null;info()}app.onclick=go}
 splash();
 
@@ -2690,6 +2716,33 @@ function cIsDark(hex){var c=parseInt(hex.slice(1),16),r=c>>16&255,g=c>>8&255,b=c
  document.querySelectorAll("[data-st]:not([data-sp])").forEach(spineDeco);document.querySelectorAll("[data-bt]:not([data-art])").forEach(function(e){e.setAttribute("data-art","1");e.insertAdjacentHTML("afterbegin",coverByTitle(e.getAttribute("data-bt")))});
  app.querySelectorAll(".bk[data-k] .cv:not([data-art]),.bcv[data-k]:not([data-art]),.hcv[data-k]:not([data-art]),.rck[data-k]>i:not([data-art]),.rbw[data-k]>i:not([data-art])").forEach(function(e){var k=+(e.dataset.k||e.closest("[data-k]").dataset.k);if(!LB[k])return;e.setAttribute("data-art","1");e.insertAdjacentHTML("afterbegin",coverSVG(k));var P=cpal(k);e.style.setProperty("--ink",cIsDark(P[0])?"#F6F1EC":"#2E2430")})}
  new MutationObserver(function(){if(!q){q=1;requestAnimationFrame(run)}}).observe(app,{childList:true,subtree:true});run()})();
+
+/* 똑독 캐릭터 '도기' (머리만 빼꼼 내민 모습) */
+function dogiSVG(){return'<svg viewBox="0 0 120 108" aria-hidden="true">'
+ +'<path d="M24 56C16 38 16 20 24 12c8-5 22 8 30 24z" fill="#FFF8F2" stroke="#EADBCF" stroke-width="2" stroke-linejoin="round"/><path d="M29 47c-4-11-4-23 0-28 5-2 13 7 18 17z" fill="#F7C6CD"/>'
+ +'<path d="M96 58c9-14 11-32 4-42-7-6-24 4-34 20z" fill="#CDB2A0"/>'
+ +'<ellipse cx="60" cy="66" rx="40" ry="32" fill="#FFF8F2" stroke="#EADBCF" stroke-width="2"/>'
+ +'<g transform="rotate(14 66 30)"><path d="M44 42L64 6c2-3 5-3 7 0l19 36c-14 6-32 6-46 0z" fill="#A58FDA" stroke="#8F76CC" stroke-width="2" stroke-linejoin="round"/><path d="M67 20l2.6 5.2 5.7.8-4.1 4 1 5.7-5.2-2.7-5.1 2.7 1-5.7-4.2-4 5.8-.8z" fill="#FFEFB8"/></g>'
+ +'<ellipse cx="34" cy="76" rx="7" ry="4.6" fill="#F9CDD4"/><ellipse cx="86" cy="76" rx="7" ry="4.6" fill="#F9CDD4"/>'
+ +'<circle cx="45" cy="66" r="6" fill="#33222D"/><circle cx="75" cy="66" r="6" fill="#33222D"/><circle cx="47" cy="64" r="2" fill="#FFFFFF"/><circle cx="77" cy="64" r="2" fill="#FFFFFF"/>'
+ +'<ellipse cx="60" cy="79" rx="14" ry="10" fill="#D8C0AE"/><path d="M55 74.5c0-2 2.4-3 5-3s5 1 5 3-3 4.4-5 4.4-5-2.4-5-4.4z" fill="#3E2A33"/><path d="M60 79v3M56 83c2 2 6 2 8 0" stroke="#3E2A33" stroke-width="1.6" fill="none" stroke-linecap="round"/>'
+ +'<ellipse cx="38" cy="99" rx="13" ry="8.5" fill="#FFF8F2" stroke="#EADBCF" stroke-width="2"/><ellipse cx="82" cy="99" rx="13" ry="8.5" fill="#FFF8F2" stroke="#EADBCF" stroke-width="2"/>'
+ +'<path d="M34 96v5M40 96v5M78 96v5M84 96v5" stroke="#E2D1C3" stroke-width="1.6" stroke-linecap="round"/></svg>'}
+/* 앱 로고: 문처럼 열리는 책 + 똑똑 */
+function logoSVG(){return'<svg viewBox="0 0 170 120" aria-hidden="true">'
+ +'<path d="M26 18c0-5 3-7 8-6 18 4 33 11 42 20 3 3 4 6 4 10v66c0 3-3 4-5 3-12-7-27-13-41-15-5-1-8-3-8-8z" fill="none" stroke="var(--pri)" stroke-width="4" stroke-linejoin="round"/>'
+ +'<path d="M144 18c0-5-3-7-8-6-18 4-33 11-42 20-3 3-4 6-4 10v66c0 3 3 4 5 3 12-7 27-13 41-15 5-1 8-3 8-8z" fill="var(--pri)" stroke="var(--pri)" stroke-width="4" stroke-linejoin="round"/>'
+ +'<rect x="66" y="54" width="7" height="13" rx="3.5" fill="var(--pri)"/><rect x="97" y="54" width="7" height="13" rx="3.5" fill="var(--bg)"/>'
+ +'<path class="kn k1" d="M154 6l-7 13M166 22l-13 6M164 40l-13-2" stroke="var(--pri)" stroke-width="4" stroke-linecap="round" fill="none"/></svg>'}
+/* 홈 위쪽 아치 장식 */
+function archDeco(){return'<svg class="hgd" viewBox="0 0 344 150" preserveAspectRatio="xMidYMin slice" aria-hidden="true">'
+ +'<g fill="none" stroke="var(--pri)" stroke-linecap="round" stroke-linejoin="round" opacity=".38" stroke-width="1.6">'
+ +'<path d="M206 0v20"/><path d="M194 34c0-8 5-14 12-14s12 6 12 14z" fill="var(--card)"/><path d="M201 38c1 3 3 4 5 4s4-1 5-4"/>'
+ +'<path d="M150 0v10"/><path d="M143 19c0-5 3-9 7-9s7 4 7 9z" fill="var(--card)"/>'
+ +'<path d="M14 150c4-22 2-44-6-62"/><path d="M12 128c-8-2-12-8-12-14 7 0 12 5 12 14zM10 108c7-3 13-1 16 5-7 3-13 1-16-5zM9 92c-7-3-9-9-7-14 6 2 9 8 7 14z" fill="var(--lav2,#E4DAFB)"/>'
+ +'<path d="M330 150c-3-18-1-34 6-48"/><path d="M332 124c7-2 11-7 11-13-6 0-11 5-11 13zM333 106c-6-3-12-1-14 4 6 3 12 1 14-4z" fill="var(--lav2,#E4DAFB)"/>'
+ +'<path d="M250 44l1.6 3.4 3.4 1.6-3.4 1.6-1.6 3.4-1.6-3.4-3.4-1.6 3.4-1.6zM176 58l1.2 2.4 2.4 1.2-2.4 1.2-1.2 2.4-1.2-2.4-2.4-1.2 2.4-1.2z" fill="var(--pri)" stroke="none"/>'
+ +'</g></svg>'}
 </script>
 </body>
 </html>
