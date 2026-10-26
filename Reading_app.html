@@ -1159,6 +1159,7 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .sfs[data-sp]{font-size:12px!important;padding:14px 0 34px!important}.sfs[data-sp]>span{max-height:none!important;overflow:visible!important;line-height:1.35!important}
 .sfs[data-sp]{background:var(--sb)!important;color:#241C26!important;white-space:nowrap!important}
 .sfs[data-sp]>span{white-space:nowrap}
+.sfs[data-sp]{color:var(--sc)!important;justify-content:center!important}
 </style>
 </head>
 <body>
@@ -2669,7 +2670,7 @@ var CMK=[["밤","moon"],["별","stars"],["달","moon"],["여행","compass"],["�
 function coverKey(t){for(var i=0;i<LB.length;i++)if(LB[i][0]===t)return[i,CMOT[i]||"book"];var h=0;for(var j=0;j<t.length;j++)h=(h*31+t.charCodeAt(j))>>>0;var m="";CMK.some(function(x){if(t.indexOf(x[0])>-1){m=x[1];return true}});if(!m)m=["book","leaf","lamp","cloud","flower","stars"][h%6];return[1000+h%997,m]}
 function coverByTitle(t){var c=coverKey(t);return coverSVG(c[0],c[1])}
 /* 책등: 표지와 같은 색, 위아래 띠, 아래쪽에 표지 그림을 작게 */
-function spineDeco(e){var c=coverKey(e.getAttribute("data-st")),P=cpal(c[0]);e.setAttribute("data-sp","1");e.style.setProperty("--sb",P[0]);e.style.setProperty("--sa",P[1]);e.insertAdjacentHTML("beforeend",'<i class="spm" aria-hidden="true"><svg viewBox="14 22 92 92">'+cmotif(c[1],P[1],P[2],P[0])+'</svg></i>');var sp=e.querySelector("span");e.style.fontSize="";e.style.whiteSpace="";e.classList.remove("sp2");if(sp){sp.style.lineHeight="";sp.textContent=sp.textContent;var t=sp.textContent,CH=13.6,PAD=50,MAXH=150,h0=e.getBoundingClientRect().height||110,need=PAD+t.length*CH;
+function spineDeco(e){var c=coverKey(e.getAttribute("data-st")),P=cpal(c[0]);e.setAttribute("data-sp","1");e.style.setProperty("--sb",P[0]);e.style.setProperty("--sc",cIsDark(P[0])?"#F6F1EC":"#241C26");e.style.setProperty("--sa",P[1]);e.insertAdjacentHTML("beforeend",'<i class="spm" aria-hidden="true"><svg viewBox="14 22 92 92">'+cmotif(c[1],P[1],P[2],P[0])+'</svg></i>');var sp=e.querySelector("span");e.style.fontSize="";e.style.whiteSpace="";e.classList.remove("sp2");if(sp){sp.style.lineHeight="";sp.textContent=sp.textContent;var t=sp.textContent,CH=13.6,PAD=50,MAXH=150,h0=e.getBoundingClientRect().height||110,need=PAD+t.length*CH;
   if(need>h0)e.style.height=Math.ceil(Math.min(need,Math.max(h0,MAXH)))+"px";var hh=Math.max(h0,Math.min(need,MAXH));if(need>hh){var f=12*(hh-PAD)/(t.length*CH);e.style.setProperty("font-size",Math.max(8,f).toFixed(1)+"px","important")}}}
 function coverSVG(k,mo){var P=cpal(k),m=mo||CMOT[k]||"book";return'<svg class="cva" viewBox="0 0 120 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="160" fill="'+P[0]+'"/><rect x="7" y="7" width="106" height="146" rx="3" fill="none" stroke="'+P[2]+'" stroke-opacity=".35" stroke-width="1.2"/><g transform="translate(0,6)">'+cmotif(m,P[1],P[2],P[0])+'</g></svg>'}
 function cIsDark(hex){var c=parseInt(hex.slice(1),16),r=c>>16&255,g=c>>8&255,b=c&255;return(0.299*r+0.587*g+0.114*b)<150}
