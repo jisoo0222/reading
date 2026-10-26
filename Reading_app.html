@@ -1357,29 +1357,29 @@ var SKT=0,RK={4:"FEDJ",5:"SEWJ",6:"FADJ",7:"FADI",8:"FADI",9:"FEDJ",10:"SAWJ"},R
 function tWrap(t,n){var w=t.split(" "),L=[],c="";w.forEach(function(x){if((c+" "+x).trim().length>n&&c){L.push(c);c=x}else c=(c+" "+x).trim()});if(c)L.push(c);return L}
 function typeSVG(key,t,names){
  var bk=LB[recList(key)[0].k][0],mk=key.charAt(0)+key.charAt(1)+(key.charAt(2)==="D"?"W":"D")+key.charAt(3),mt=[mk,T[mk][0]],e=function(x){return esc(String(x))},F='font-family="Pretendard,Apple SD Gothic Neo,Noto Sans KR,sans-serif"';
- var d=tWrap(t[1],16).map(function(l,i){return'<text x="360" y="'+(586+i*38)+'" text-anchor="middle" font-size="27" fill="#4F3A4F" '+F+'>'+e(l)+'</text>'}).join(""),dy=586+tWrap(t[1],16).length*38;
+ var d=tWrap(t[1],16).map(function(l,i){return'<text x="360" y="'+(586+i*38)+'" text-anchor="middle" font-size="27" fill="#261931" '+F+'>'+e(l)+'</text>'}).join(""),dy=586+tWrap(t[1],16).length*38;
  var cw=150,cx=360-(names.length*cw+(names.length-1)*12)/2;
- var ch=names.map(function(n,i){var x=cx+i*(cw+12);return'<rect x="'+x+'" y="'+(dy+6)+'" width="'+cw+'" height="46" rx="23" fill="none" stroke="#6A4F6A" stroke-width="2"/><text x="'+(x+cw/2)+'" y="'+(dy+37)+'" text-anchor="middle" font-size="24" font-weight="600" fill="#6A4F6A" '+F+'>'+e(n)+'</text>'}).join("");
+ var ch=names.map(function(n,i){var x=cx+i*(cw+12);return'<rect x="'+x+'" y="'+(dy+6)+'" width="'+cw+'" height="46" rx="23" fill="none" stroke="#6C3FB6" stroke-width="2"/><text x="'+(x+cw/2)+'" y="'+(dy+37)+'" text-anchor="middle" font-size="24" font-weight="600" fill="#6C3FB6" '+F+'>'+e(n)+'</text>'}).join("");
  var by=dy+96;
  return'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 '+(by+210)+'" width="720" height="'+(by+210)+'" role="img" aria-label="나의 독서 유형 카드: '+e(t[0])+'">'
- +'<rect x="2" y="2" width="716" height="'+(by+206)+'" rx="40" fill="#F6F1EC" stroke="#E6DCD2" stroke-width="3"/>'
- +'<rect x="250" y="44" width="220" height="44" rx="22" fill="#F3EDE7"/><text x="360" y="74" text-anchor="middle" font-size="21" fill="#8A6A8A" '+F+'>나의 독서 유형은?</text>'
- +'<text x="360" y="168" text-anchor="middle" font-size="72" font-weight="800" letter-spacing="8" fill="#6A4F6A" '+F+'>'+e(key)+'</text>'
- +'<text x="360" y="226" text-anchor="middle" font-size="38" font-weight="700" fill="#4F3A4F" '+F+'>'+e(t[0])+'</text>'
- +'<circle cx="360" cy="398" r="128" fill="#F3EDE7"/>'
- +'<path d="M360 330 C320 312 270 312 238 326 V466 C270 452 320 452 360 470 Z" fill="#F6F1EC" stroke="#6A4F6A" stroke-width="5" stroke-linejoin="round"/>'
- +'<path d="M360 330 C400 312 450 312 482 326 V466 C450 452 400 452 360 470 Z" fill="#F6F1EC" stroke="#6A4F6A" stroke-width="5" stroke-linejoin="round"/>'
- +'<path d="M360 330 V470" stroke="#6A4F6A" stroke-width="5"/>'
- +'<path d="M262 362 C285 354 315 354 338 362 M262 390 C285 382 315 382 338 390 M262 418 C285 410 305 410 320 414" stroke="#C9B3C9" stroke-width="4" fill="none" stroke-linecap="round"/>'
- +'<path d="M382 362 C405 354 435 354 458 362 M382 390 C405 382 435 382 458 390" stroke="#C9B3C9" stroke-width="4" fill="none" stroke-linecap="round"/>'
- +'<path d="M430 318 V372 L442 360 L454 372 V316" fill="#B2A5D6"/>'
- +'<path d="M246 300 l6 -14 l6 14 l14 6 l-14 6 l-6 14 l-6 -14 l-14 -6 z" fill="#C9B3C9"/><path d="M486 470 l4 -9 l4 9 l9 4 l-9 4 l-4 9 l-4 -9 l-9 -4 z" fill="#C9B3C9"/>'
+ +'<rect x="2" y="2" width="716" height="'+(by+206)+'" rx="40" fill="#FFFFFF" stroke="#DBDBDB" stroke-width="3"/>'
+ +'<rect x="250" y="44" width="220" height="44" rx="22" fill="#F0EBFF"/><text x="360" y="74" text-anchor="middle" font-size="21" fill="#6E6878" '+F+'>나의 독서 유형은?</text>'
+ +'<text x="360" y="168" text-anchor="middle" font-size="72" font-weight="800" letter-spacing="8" fill="#6C3FB6" '+F+'>'+e(key)+'</text>'
+ +'<text x="360" y="226" text-anchor="middle" font-size="38" font-weight="700" fill="#261931" '+F+'>'+e(t[0])+'</text>'
+ +'<circle cx="360" cy="398" r="128" fill="#F0EBFF"/>'
+ +'<path d="M360 330 C320 312 270 312 238 326 V466 C270 452 320 452 360 470 Z" fill="#FFFFFF" stroke="#6C3FB6" stroke-width="5" stroke-linejoin="round"/>'
+ +'<path d="M360 330 C400 312 450 312 482 326 V466 C450 452 400 452 360 470 Z" fill="#FFFFFF" stroke="#6C3FB6" stroke-width="5" stroke-linejoin="round"/>'
+ +'<path d="M360 330 V470" stroke="#6C3FB6" stroke-width="5"/>'
+ +'<path d="M262 362 C285 354 315 354 338 362 M262 390 C285 382 315 382 338 390 M262 418 C285 410 305 410 320 414" stroke="#A88BD0" stroke-width="4" fill="none" stroke-linecap="round"/>'
+ +'<path d="M382 362 C405 354 435 354 458 362 M382 390 C405 382 435 382 458 390" stroke="#A88BD0" stroke-width="4" fill="none" stroke-linecap="round"/>'
+ +'<path d="M430 318 V372 L442 360 L454 372 V316" fill="#E4DAFB"/>'
+ +'<path d="M246 300 l6 -14 l6 14 l14 6 l-14 6 l-6 14 l-6 -14 l-14 -6 z" fill="#A88BD0"/><path d="M486 470 l4 -9 l4 9 l9 4 l-9 4 l-4 9 l-4 -9 l-9 -4 z" fill="#A88BD0"/>'
  +d+ch
- +'<rect x="40" y="'+by+'" width="640" height="170" rx="24" fill="#FFFFFF" fill-opacity=".55" stroke="#E6DCD2" stroke-width="2"/>'
- +'<rect x="305" y="'+(by-18)+'" width="110" height="36" rx="18" fill="#6A4F6A"/><text x="360" y="'+(by+7)+'" text-anchor="middle" font-size="19" font-weight="600" fill="#F6F1EC" '+F+'>추천</text>'
- +'<path d="M360 '+(by+44)+' V'+(by+146)+'" stroke="#E6DCD2" stroke-width="2"/>'
- +'<text x="200" y="'+(by+78)+'" text-anchor="middle" font-size="20" fill="#8A6A8A" '+F+'>책</text><text x="200" y="'+(by+122)+'" text-anchor="middle" font-size="28" font-weight="700" fill="#4F3A4F" '+F+'>'+e(bk)+'</text>'
- +'<text x="520" y="'+(by+65)+'" text-anchor="middle" font-size="20" fill="#8A6A8A" '+F+'>독서 유형</text><text x="520" y="'+(by+101)+'" text-anchor="middle" font-size="30" font-weight="800" letter-spacing="4" fill="#6A4F6A" '+F+'>'+e(mt[0])+'</text><text x="520" y="'+(by+135)+'" text-anchor="middle" font-size="20" fill="#4F3A4F" '+F+'>'+e(mt[1])+'</text>'
+ +'<rect x="40" y="'+by+'" width="640" height="170" rx="24" fill="#FFFFFF" fill-opacity=".55" stroke="#DBDBDB" stroke-width="2"/>'
+ +'<rect x="305" y="'+(by-18)+'" width="110" height="36" rx="18" fill="#6C3FB6"/><text x="360" y="'+(by+7)+'" text-anchor="middle" font-size="19" font-weight="600" fill="#FFFFFF" '+F+'>추천</text>'
+ +'<path d="M360 '+(by+44)+' V'+(by+146)+'" stroke="#DBDBDB" stroke-width="2"/>'
+ +'<text x="200" y="'+(by+78)+'" text-anchor="middle" font-size="20" fill="#6E6878" '+F+'>책</text><text x="200" y="'+(by+122)+'" text-anchor="middle" font-size="28" font-weight="700" fill="#261931" '+F+'>'+e(bk)+'</text>'
+ +'<text x="520" y="'+(by+65)+'" text-anchor="middle" font-size="20" fill="#6E6878" '+F+'>독서 유형</text><text x="520" y="'+(by+101)+'" text-anchor="middle" font-size="30" font-weight="800" letter-spacing="4" fill="#6C3FB6" '+F+'>'+e(mt[0])+'</text><text x="520" y="'+(by+135)+'" text-anchor="middle" font-size="20" fill="#261931" '+F+'>'+e(mt[1])+'</text>'
  +'</svg>'}
 function cardPNG(svg,cb,sc){sc=sc||1.5;var i=new Image();i.onload=function(){var c=document.createElement("canvas");c.width=i.width*sc;c.height=i.height*sc;var x=c.getContext("2d");x.scale(sc,sc);x.drawImage(i,0,0);c.toBlob(cb,"image/png")};i.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)}
 var QTH=[["양피지","#F3EDE7","#4F3A4F","#6A4F6A","#8A6A8A"],["라벤더","#6A4F6A","#F6F1EC","#F3EDE7","#E6DAE6"],["올리브","#B2A5D6","#F6F1EC","#F3EDE7","#E8EBDD"],["밤","#3A2B3A","#F3EDE7","#B2A5D6","#C9B3C9"],["종이","#F6F1EC","#4F3A4F","#B2A5D6","#8A6A8A"]];
