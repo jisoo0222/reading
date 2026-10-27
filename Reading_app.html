@@ -1263,6 +1263,15 @@ button.cd.on{padding-top:2px!important}
 .sc.hm .hero .hgl{margin-top:8px!important;padding-top:8px!important}
 .sc.hm .hero .hgo{margin-top:8px!important;padding:10px!important}
 .app.hf3 .sc.hm .hgl{display:flex!important}
+
+/* 인사말을 문틀 안쪽으로 내리기 */
+.hd.hgt .hga{border-radius:180px 180px 0 0/150px 150px 0 0!important}
+.hd.hgt .hga::before{border-radius:171px 171px 0 0/141px 141px 0 0!important}
+.hd.hgt{min-height:178px!important}
+.hd.hgt .hgx{top:96px!important;left:22px!important}
+.hd.hgt h1{font-size:19px!important;line-height:1.25}
+.hd.hgt p{font-size:11px!important;margin-top:4px!important}
+.hd.hgt .hgd{top:22px!important}
 </style>
 </head>
 <body>
@@ -2099,7 +2108,7 @@ function hFit(){var sc=document.querySelector(".sc.hm"),tb=app.querySelector(".t
  var H=A[0],K=A.slice(1);
  app.classList.remove("hf1","hf2","hf3");sc.style.paddingTop="";sc.style.paddingBottom="";
  sc.querySelectorAll("[data-hfp]").forEach(function(e){e.style.paddingTop="";e.style.paddingBottom="";e.removeAttribute("data-hfp")});sc.querySelectorAll(".htk,.wkx .wkd em").forEach(function(e){e.style.height=""});
- K.forEach(function(c){c.style.marginTop="0px"});sc.scrollTop=0;var G=14;
+ K.forEach(function(c){c.style.marginTop="0px"});sc.scrollTop=0;var G=app.querySelector(".hd.hgt")?11:14;
  function lim(){var hi=tb.querySelector("button:nth-child(3) .ic");return Math.min(tb.getBoundingClientRect().top,hi?hi.getBoundingClientRect().top:1e9)}
  function meas(){var t=H.getBoundingClientRect().bottom,h=K[K.length-1].getBoundingClientRect().bottom-K[0].getBoundingClientRect().top;return{av:lim()-t,h:h+G*(K.length+1)}}
  var m=meas();if(m.h>m.av){app.classList.add("hf1");m=meas()}if(m.h>m.av){app.classList.add("hf2");m=meas()}if(m.h>m.av){app.classList.add("hf3");m=meas()}
