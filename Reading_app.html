@@ -1277,6 +1277,13 @@ button.cd.on{padding-top:2px!important}
 /* 알림: 모두 읽음 */
 .nall{flex:none;font:inherit;font-size:13px;font-weight:700;color:var(--pri);background:none;border:0;padding:8px 4px;cursor:pointer;white-space:nowrap}
 .nall:disabled{color:var(--sub);opacity:.5;cursor:default}
+
+/* 직접 꾸미기: 오른쪽 세로 굵기 바 */
+.pwb{position:absolute;left:10px;top:50%;transform:translateY(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px 8px;background:var(--card);border:1.5px solid var(--line);border-radius:999px;box-shadow:0 2px 8px rgba(47,29,61,.1)}
+.pwd{display:block;width:3px;height:3px;border-radius:50%;border:1.5px solid;box-sizing:border-box;flex:none}
+.pwb input{writing-mode:vertical-lr;direction:rtl;-webkit-appearance:slider-vertical;appearance:auto;width:22px;height:160px;margin:0;accent-color:var(--pri);cursor:pointer}
+.pwb small{font-size:11px;font-weight:700;color:var(--sub);min-width:18px;text-align:center}
+.pwb>i:first-child{margin-top:2px}
 </style>
 </head>
 <body>
@@ -1634,9 +1641,9 @@ function profile(){
  +'<div class="pfb"><button class="pfg" id="pfg" aria-label="책장 펼치기"><i></i></button><section class="box pbx2"><div class="pbt"><div class="av3" style="'+avS()+'">'+(MEP?'':esc(ME).charAt(0))+'</div><div class="pnm"><h2>'+esc(ME)+'</h2><small>'+(AGE!==null?AGES[AGE]+' · ':'')+'하루 '+(GOAL||10)+'쪽 목표</small></div><button class="pme pmb" id="pme" aria-label="프로필 편집">'+ic("pen")+'</button></div>'
  +(function(){var k=RKEY||(ans.indexOf(null)<0?calcType().key:""),t=k&&T[k];return'<button class="ptc2" id="rp"><span class="ptl"><small>AI 독서 성향</small><span class="ptr">'+(t?'<em class="ptk">'+k+'</em><b>'+t[0]+'</b>':'<b>나의 독서 유형 알아보기</b>')+'</span></span>'+ic("next")+'</button>'})()
  +'</section>'
- +'<section class="fs"><div class="fsh"><h3>내 친구 '+fc+'</h3><button class="pme" id="pfr">자세히 보기'+ic("next")+'</button></div><div class="box pfl">'+(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):'<p class="pfe">아직 친구가 없어요.</p><button class="pfc pfa" id="pfa"><span>'+ic("plus")+'</span><b>친구 찾기</b></button>')+'</div></section>'
+ +'<section class="fs"><div class="fsh"><h3>내 친구 '+fc+'</h3><button class="pme" id="pfr">전체 보기'+ic("next")+'</button></div><div class="box pfl">'+(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):'<p class="pfe">아직 친구가 없어요.</p><button class="pfc pfa" id="pfa"><span>'+ic("plus")+'</span><b>친구 찾기</b></button>')+'</div></section>'
  +(function(){var L=readList();return'<section class="fs"><div class="fsh"><h3>읽은 책 '+L.length+'권</h3><button class="pme" id="rbm">전체 보기'+ic("next")+'</button></div><div class="rbl" id="rbl">'+L.map(function(b,i){return'<div class="rbk'+(i>4?" xtra":"")+'"><i data-bt="'+esc(b.t)+'" style="background:'+b.c+'"></i><span class="rbt"><b>'+esc(b.t)+'</b><small>'+esc(b.a)+'</small></span><em class="rbs'+(b.done?" dn":"")+'">'+b.s+'</em></div>'}).join("")+'</div>'+'</section>'})()
- +'<section class="fs" id="pst" role="button" tabindex="0" style="cursor:pointer" aria-label="독서 우표 보러 가기"><div class="fsh"><h3>'+esc(ME)+' 님의 독서 우표</h3><button class="pme" id="pstm">자세히 보기'+ic("next")+'</button></div><div class="box"><div class="stg">'+(function(){var t="";for(var q=0;q<4;q++)t+=stamp(BC[q%3],1,q);return t})()+'</div></div></section><button class="pset2" id="pset">'+ic("set")+'<span>설정</span>'+ic("next")+'</button>'
+ +'<section class="fs" id="pst" role="button" tabindex="0" style="cursor:pointer" aria-label="독서 우표 보러 가기"><div class="fsh"><h3>'+esc(ME)+' 님의 독서 우표</h3><button class="pme" id="pstm">전체 보기'+ic("next")+'</button></div><div class="box"><div class="stg">'+(function(){var t="";for(var q=0;q<4;q++)t+=stamp(BC[q%3],1,q);return t})()+'</div></div></section><button class="pset2" id="pset">'+ic("set")+'<span>설정</span>'+ic("next")+'</button>'
  +'</div>'
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.firstChild.style.paddingBottom="76px";
@@ -1827,17 +1834,21 @@ function pop(h){var o=document.createElement("div"),d=document.createElement("di
 function craft(){
  app.className="app";
  var cl=["#4F3A4F"].concat(COL.slice(0,4)),col=cl[0],er=false;
- app.innerHTML='<div class="sh2"><button class="ib" id="cb" aria-label="뒤로">'+ic("back")+'</button><h2>직접 꾸미기</h2><button class="fadd" id="cs">저장</button></div><div class="cvw" id="cw"><svg class="gpb" aria-hidden="true"><defs><pattern id="gpc" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="currentColor" stroke-width="1" opacity=".3"/></pattern></defs><rect width="100%" height="100%" fill="url(#gpc)"/></svg><canvas id="cv" aria-label="그림 그리는 영역"></canvas><div class="tls"><button class="tlb" data-t="p" aria-label="펜" aria-pressed="true">'+ic("pen")+'</button><button class="tlb" data-t="e" aria-label="지우개" aria-pressed="false">'+ic("eraser")+'</button>'+cl.map(function(c,k){return'<button class="tlc" data-k="'+k+'" style="background:'+c+'" aria-label="색상 '+(k+1)+'" aria-pressed="'+(k===0)+'"></button>'}).join("")+'<button class="tlb" data-t="c" aria-label="모두 지우기">'+ic("trash")+'</button></div></div>';
+ app.innerHTML='<div class="sh2"><button class="ib" id="cb" aria-label="뒤로">'+ic("back")+'</button><h2>직접 꾸미기</h2><button class="fadd" id="cs">저장</button></div><div class="cvw" id="cw"><svg class="gpb" aria-hidden="true"><defs><pattern id="gpc" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="currentColor" stroke-width="1" opacity=".3"/></pattern></defs><rect width="100%" height="100%" fill="url(#gpc)"/></svg><canvas id="cv" aria-label="그림 그리는 영역"></canvas><div class="tls"><button class="tlb" data-t="p" aria-label="펜" aria-pressed="true">'+ic("pen")+'</button><button class="tlb" data-t="e" aria-label="지우개" aria-pressed="false">'+ic("eraser")+'</button>'+cl.map(function(c,k){return'<button class="tlc" data-k="'+k+'" style="background:'+c+'" aria-label="색상 '+(k+1)+'" aria-pressed="'+(k===0)+'"></button>'}).join("")+'<button class="tlb" data-t="c" aria-label="모두 지우기">'+ic("trash")+'</button></div><div class="pwb" id="pwb"><i class="pwd" id="pwd"></i><input type="range" id="pwr" min="1" max="24" step="1" value="3" aria-label="펜 굵기"><small id="pwn">3</small></div></div>';
  var cv=document.getElementById("cv"),r=document.getElementById("cw").getBoundingClientRect();cv.width=r.width;cv.height=r.height;
- var x=cv.getContext("2d"),dn=false,lx=0,ly=0;x.lineCap="round";x.lineJoin="round";
+ var x=cv.getContext("2d"),dn=false,lx=0,ly=0,pw=3,ew=16;x.lineCap="round";x.lineJoin="round";
+ /* 굵기 바: 펜과 지우개 굵기를 따로 기억해요 */
+ var pwr=document.getElementById("pwr"),pwd=document.getElementById("pwd"),pwn=document.getElementById("pwn");
+ function pwu(){var v=er?ew:pw;pwr.min=er?6:1;pwr.max=er?48:24;pwr.value=v;pwn.textContent=v;var d=Math.min(26,Math.max(3,v));pwd.style.width=pwd.style.height=d+"px";pwd.style.background=er?"var(--card)":col;pwd.style.borderColor=er?"var(--sub)":col;pwr.setAttribute("aria-label",er?"지우개 굵기":"펜 굵기")}
+ pwr.oninput=function(){if(er)ew=+pwr.value;else pw=+pwr.value;pwu()};pwu();
  function ps(e){var b=cv.getBoundingClientRect();return[e.clientX-b.left,e.clientY-b.top]}
  var dirty=false;cv.onpointerdown=function(e){dn=true;dirty=true;var p=ps(e);lx=p[0];ly=p[1];cv.setPointerCapture(e.pointerId)};
- cv.onpointermove=function(e){if(!dn)return;var p=ps(e);x.globalCompositeOperation=er?"destination-out":"source-over";x.strokeStyle=col;x.lineWidth=er?16:3;x.beginPath();x.moveTo(lx,ly);x.lineTo(p[0],p[1]);x.stroke();lx=p[0];ly=p[1]};
+ cv.onpointermove=function(e){if(!dn)return;var p=ps(e);x.globalCompositeOperation=er?"destination-out":"source-over";x.strokeStyle=col;x.lineWidth=er?ew:pw;x.beginPath();x.moveTo(lx,ly);x.lineTo(p[0],p[1]);x.stroke();lx=p[0];ly=p[1]};
  cv.onpointerup=cv.onpointercancel=function(){dn=false};
  document.querySelector(".tls").onclick=function(e){var b=e.target.closest("button");if(!b)return;
   if(b.dataset.t==="c"){x.clearRect(0,0,cv.width,cv.height);dirty=false;return}
-  if(b.dataset.t){er=b.dataset.t==="e";document.querySelectorAll(".tlb[data-t]").forEach(function(t){t.setAttribute("aria-pressed",t===b)})}
-  else{col=cl[+b.dataset.k];er=false;document.querySelectorAll(".tlc").forEach(function(t){t.setAttribute("aria-pressed",t===b)});document.querySelectorAll(".tlb[data-t]").forEach(function(t){t.setAttribute("aria-pressed",t.dataset.t==="p")})}};
+  if(b.dataset.t){er=b.dataset.t==="e";document.querySelectorAll(".tlb[data-t]").forEach(function(t){t.setAttribute("aria-pressed",t===b)});pwu()}
+  else{col=cl[+b.dataset.k];er=false;document.querySelectorAll(".tlc").forEach(function(t){t.setAttribute("aria-pressed",t===b)});document.querySelectorAll(".tlb[data-t]").forEach(function(t){t.setAttribute("aria-pressed",t.dataset.t==="p")});pwu()}};
  document.getElementById("cb").onclick=function(){function go(){STB=1;SC="MK";shop()}if(!dirty){go();return}
   var x=pop('<h3>저장하지 않고 나갈까요?</h3><p>지금 그린 스티커는 저장되지 않아요.</p><div class="dbt"><button class="btn ghost" id="ckg">계속 그리기</button><button class="btn" id="ckx">나가기</button></div>');document.getElementById("ckg").onclick=x;document.getElementById("ckx").onclick=function(){x();go()}};
  document.getElementById("cs").onclick=function(){if(!dirty){var y=pop('<h3>아직 그린 게 없어요</h3><p>그림을 그린 다음 저장해 주세요.</p><button class="btn" id="cko" style="width:100%;margin-top:14px">확인</button>');document.getElementById("cko").onclick=y;return}
@@ -1920,7 +1931,7 @@ function library(){
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="book"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
  app.innerHTML='<div class="lsrow"><button class="ib lhb" id="lhb" aria-label="찜한 책 보기">'+ic("heart")+(LB.some(function(_,k){return HB[k]})?'<i class="lhd"></i>':'')+'</button><div class="csr lsr"><input id="lq" type="search" placeholder="책 제목, 저자로 찾기" aria-label="책 제목이나 저자로 찾기" autocomplete="off"><button class="csb2" id="lsb" aria-label="검색">'+ic("search")+'</button></div></div><div id="lres" hidden></div><div id="lmain">'
  
- +'<section class="fs"><div class="fsh"><h3>인기 급상승 오늘의 책</h3><button class="pme" id="rkm">자세히 보기'+ic("next")+'</button></div><div class="box ppx"><div class="shs pps">'+popRank().slice(0,10).map(function(k,i){return bcard(k,i+1)}).join("")+'</div></div></section>'
+ +'<section class="fs"><div class="fsh"><h3>인기 급상승 오늘의 책</h3><button class="pme" id="rkm">전체 보기'+ic("next")+'</button></div><div class="box ppx"><div class="shs pps">'+popRank().slice(0,10).map(function(k,i){return bcard(k,i+1)}).join("")+'</div></div></section>'
  +'<section class="fs"><div class="fsh"><h3>장르</h3></div><div class="box gnc" role="group" aria-label="장르별로 보기">'+GEN.map(function(g,i){return'<button class="gnt" data-g="'+i+'"><span>'+ic(GIC[i])+'</span>'+g+'</button>'}).join("")+'</div></section>'
  +'<div class="sh" style="margin-top:20px"><h3>카테고리</h3></div>'+shelf()+'</div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.firstChild.style.paddingBottom="76px";
@@ -2047,7 +2058,7 @@ function csPop(){
  var x=pop('<h3>고객센터</h3><p class="sm" style="color:var(--sub);font-size:13px">운영 시간은 평일 10:00–18:00예요. 문의를 남기면 순서대로 답변해 드려요.</p><textarea id="csq" rows="4" placeholder="문의 내용을 적어 주세요" aria-label="문의 내용"></textarea><p id="cse" style="color:var(--sub);font-size:13px;min-height:18px;margin:4px 0 0"></p><div class="dbt"><button class="btn ghost" id="csn">닫기</button><button class="btn" id="csy">보내기</button></div>');
  document.getElementById("csn").onclick=x;
  document.getElementById("csy").onclick=function(){var v=document.getElementById("csq").value.trim();if(!v){document.getElementById("cse").textContent="문의 내용을 입력해 주세요.";return}
-  var d=document.getElementById("dlg");d.innerHTML='<h3>접수했어요</h3><p class="sm" style="color:var(--sub)">문의가 접수됐어요. 답변이 오면 알려드릴게요.</p><button class="btn" id="cso" style="width:100%;margin-top:14px">확인</button>';document.getElementById("cso").onclick=x}}
+  var d=document.getElementById("dlg");d.innerHTML='<h3>접수 완료</h3><p class="sm" style="color:var(--sub)">문의가 접수되었습니다. 답변이 오면 알려드리겠습니다.</p><button class="btn" id="cso" style="width:100%;margin-top:14px">확인</button>';document.getElementById("cso").onclick=x}}
 function setPg(){
  app.className="app";
  var NT=[["서비스 오픈 안내","2026.10.01","AI 독서 습관 앱이 문을 열었어요. 독서 프로필을 만들고 메이트와 함께 읽어 보세요."],["독서 우표 제작·선물 기능 추가","2026.10.03","읽은 책 8권을 모으면 나만의 독서 우표를 제작하거나 선물할 수 있어요."],["정기 점검 안내","2026.10.05","더 안정적인 서비스를 위해 새벽 시간에 짧은 점검이 있을 수 있어요."]];
@@ -2212,7 +2223,7 @@ function community(){
   return'<article class="po" data-id="'+p.id+'"><div class="ph2"><button class="pav2" data-u="'+esc(un)+'" style="'+avBg(un)+'" aria-label="'+esc(un)+' 프로필">'+avTx(un)+'</button><div class="pn"><b>'+esc(un)+'</b><small>'+p.tm+(p.ed?' · <em class="edt">수정됨</em>':'')+'</small></div><span class="vis">'+vic(p.v)+VIS[p.v][1]+'</span>'+(me?'':fr?'<span class="fp2 on">친구</span>':'<button class="fp2'+(REQ[p.u]?" rq":"")+'" data-f="'+p.u+'">'+(REQ[p.u]?"신청 중":"친구 추가")+'</button>')+(me&&!full?'<button class="pmn" data-menu="'+p.id+'" aria-label="글 메뉴">'+ic("more")+'</button>':'')+'</div>'
    +'<span class="tg2">'+TN[p.t]+'</span><p class="pt2'+(full?" open":"")+'">'+esc(p.x)+'</p>'+(!full&&p.x.length>70?'<button class="mre">더보기</button>':'')+bk+(p.img?'<img class="pim" src="'+p.img+'" alt="공유한 모음집 항목">':'')+bal
    +(tc&&!full?'<div class="tc"><small>인기 댓글</small><span class="pav2 s" style="'+avBg(tc[3]?ME:tc[0])+'">'+avTx(tc[3]?ME:tc[0])+'</span><span class="tx"><b>'+esc(tc[3]?ME:tc[0])+'</b> '+esc(tc[1])+'</span><em>'+ic("heart")+tc[2]+'</em></div>':'')
-   +'<div class="pa"><button data-l="'+p.id+'" aria-pressed="'+lk2+'">'+ic("heart")+(p.l+(lk2?1:0))+'</button><button data-cm="'+p.id+'">'+ic("chat")+'댓글 '+p.c.length+'</button></div></article>'}
+   +'<div class="pa"><button data-l="'+p.id+'" aria-pressed="'+lk2+'">'+ic("heart")+(p.l+(lk2?1:0))+'</button><button data-cm="'+p.id+'" aria-label="댓글 '+p.c.length+'개">'+ic("chat")+p.c.length+'</button></div></article>'}
  var CQ="";
  function cqm(p){var q=CQ.trim().toLowerCase();if(!q)return true;var b=p.bt||(p.b!==undefined?LB[p.b]:null);
   return((b?b[0]+" "+b[1]+" ":"")+p.x+" "+(p.o||[]).join(" ")).toLowerCase().indexOf(q)>-1}
