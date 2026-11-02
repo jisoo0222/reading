@@ -35,19 +35,19 @@
 | `brand/default` | neutral/400 `#C5C5C5` | neutral/100 `#F6F6F6` | 선택 안 된 탭, 저자 이름 |
 | `text/default` | neutral/900 `#1F1E1E` | neutral/100 `#F6F6F6` | 기본 글씨 |
 | `text/sub` | neutral/700 `#666161` | neutral/400 `#C5C5C5` | 보조 글씨, 링크 |
-| `text/emphasis` | neutral/900 `#1F1E1E` | neutral/100 `#F6F6F6` | 섹션 제목, 강조 숫자 |
+| `text/emphasis` | green/600 `#267B58` | green/300 `#A8E5B7` | 섹션 제목, 강조 숫자 |
 | `text/on-primary` | neutral/0 `#FFFFFF` | neutral/900 `#1F1E1E` | 메인 버튼 위 글씨 |
 | `text/disabled` | neutral/400 `#C5C5C5` | neutral/600 `#898585` | 비활성 글씨 |
 | `Background/default` | neutral/100 `#F6F6F6` | neutral/900 `#1F1E1E` | 화면 배경 |
-| `Background/door` | neutral/200 `#E3E3E3` | neutral/800 `#444141` | 홈·마이페이지 위쪽 영역, 칸 바탕 |
+| `Background/door` | green/200 `#C6EED0` | green/800 `#174D37` | 홈 위쪽 문 바깥 |
 | `Background/card` | neutral/0 `#FFFFFF` | neutral/800 `#444141` | 카드 |
 | `Background/section` | neutral/200 `#E3E3E3` | neutral/800 `#444141` | 구역 배경 |
 | `border/default` | neutral/200 `#E3E3E3` | neutral/800 `#444141` | 기본 테두리 |
-| `border/brand` | neutral/300 `#D5D5D5` | neutral/700 `#666161` | 요일 칸 테두리 |
+| `border/brand` | green/200 `#C6EED0` | green/700 `#186344` | 요일 칸 테두리 |
 | `divider` | neutral/300 `#D5D5D5` | neutral/800 `#444141` | 구분선 |
-| `state/selected-bg` | neutral/200 `#E3E3E3` | neutral/800 `#444141` | 선택·완료 바탕 (요일 칸, 칩, 안 읽은 알림) |
-| `state/selected-text` | neutral/900 `#1F1E1E` | neutral/100 `#F6F6F6` | 선택·완료 글씨 |
-| `progress/track` | neutral/200 `#E3E3E3` | neutral/800 `#444141` | 진행 바 바탕 |
+| `state/selected-bg` | green/200 `#C6EED0` | green/800 `#174D37` | 선택·완료 바탕 (요일 칸, 칩, 안 읽은 알림) |
+| `state/selected-text` | green/600 `#267B58` | green/300 `#A8E5B7` | 선택·완료 글씨 |
+| `progress/track` | green/200 `#C6EED0` | green/800 `#174D37` | 진행 바 바탕 |
 | `progress/fill` | green/500 `#4CAE85` | green/300 `#A8E5B7` | 진행 바 채움 |
 | `state/success` | green/500 | green/300 | 완독·달성 |
 | `state/warning` | yellow/500 `#FFF3A0` | yellow/500 | 주의 |
