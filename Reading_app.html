@@ -2872,20 +2872,20 @@ function obScene(n){
  var h='<svg viewBox="0 0 360 430" class="obsv" aria-hidden="true">'+floor;
  if(n===0){
   h+='<path d="'+arch+'" fill="'+L2+'"/><path d="'+inner+'" fill="#D9C4F2"/>'
-   +'<path d="M128 390V170a52 52 0 0 1 104 0V390z" fill="none" stroke="#C7ACEC" stroke-width="3"/><path d="M140 300h80" stroke="#C7ACEC" stroke-width="3"/>'
-   +'<circle cx="226" cy="262" r="7" fill="'+G+'"/><circle cx="226" cy="262" r="3" fill="#E9B866"/>'
+   +'<path d="M124 388V160a56 56 0 0 1 50-55V388z" fill="none" stroke="#C7ACEC" stroke-width="2.5"/><path d="M236 388V160a56 56 0 0 0-50-55V388z" fill="none" stroke="#C7ACEC" stroke-width="2.5"/><path d="M180 84V400" stroke="#C3A6EA" stroke-width="3"/><path d="M130 300h38M192 300h38" stroke="#C7ACEC" stroke-width="2.5"/>'
+   +'<circle cx="171" cy="262" r="6" fill="'+G+'"/><circle cx="189" cy="262" r="6" fill="'+G+'"/>'
    +spark(180,104,9)+spark(290,118,6)+spark(70,170,5)+books;
  }else if(n===1){
   h+='<path d="'+arch+'" fill="'+L2+'"/><path d="'+inner+'" fill="'+W+'"/>'
    +'<g opacity=".9"><path d="M150 400V330a30 30 0 0 1 60 0V400z" fill="#F4E3F8"/><rect x="128" y="300" width="20" height="100" rx="3" fill="#F1E7FB"/><rect x="214" y="286" width="22" height="114" rx="3" fill="#F1E7FB"/><circle cx="196" cy="196" r="20" fill="'+G+'" opacity=".55"/></g>'
    +'<path d="M180 160l-40-50M196 160l10-58M214 168l44-36" stroke="'+G+'" stroke-width="3" stroke-linecap="round" opacity=".8"/>'
-   +'<path d="M112 152a68 68 0 0 1 20-48L166 128V384L112 400z" fill="#D9C4F2" stroke="#C7ACEC" stroke-width="2.5" stroke-linejoin="round"/><circle cx="156" cy="268" r="5" fill="'+G+'"/>'
+   +'<path d="M112 400V156Q115 118 136 100L140 106V388z" fill="#D9C4F2" stroke="#C7ACEC" stroke-width="2.5" stroke-linejoin="round"/><path d="M248 400V156Q245 118 224 100L220 106V388z" fill="#D9C4F2" stroke="#C7ACEC" stroke-width="2.5" stroke-linejoin="round"/><circle cx="133" cy="266" r="4" fill="'+G+'"/><circle cx="227" cy="266" r="4" fill="'+G+'"/>'
    +spark(250,110,8)+spark(84,140,5)+books;
  }else{
   h+='<path d="'+arch+'" fill="'+L2+'"/><path d="'+inner+'" fill="'+W+'"/>'
    +'<path d="M150 400V250a30 30 0 0 1 60 0V400z" fill="#E6F0FA"/><path d="M150 400V250a30 30 0 0 1 60 0" fill="none" stroke="#FFFFFF" stroke-width="3"/>'
    +'<g fill="#F1E7FB" stroke="#E2CFF3" stroke-width="1.5"><rect x="122" y="384" width="116" height="16"/><rect x="130" y="368" width="100" height="16"/><rect x="138" y="352" width="84" height="16"/><rect x="146" y="336" width="68" height="16"/></g>'
-   +'<path d="M112 152a68 68 0 0 1 10-34L124 392L112 400z" fill="#D9C4F2" stroke="#C7ACEC" stroke-width="2" stroke-linejoin="round"/>'
+   +'<path d="M112 400V152Q113 126 122 112L126 118V394z" fill="#D9C4F2" stroke="#C7ACEC" stroke-width="2" stroke-linejoin="round"/><path d="M248 400V152Q247 126 238 112L234 118V394z" fill="#D9C4F2" stroke="#C7ACEC" stroke-width="2" stroke-linejoin="round"/>'
    +'<g transform="translate(40 300)"><path d="M14 100h36l-5-30H19z" fill="#F6E6E0"/><path d="M32 70C30 46 18 34 6 30M32 70c2-22 12-36 26-40M32 70c-2-16-10-24-20-24" stroke="#A9B998" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M6 30c8-2 14 4 12 10-8 0-12-4-12-10zM58 30c-8-1-13 5-11 11 8-1 12-5 11-11zM12 46c6 0 10 4 9 9-6 0-10-4-9-9z" fill="#BFCDB0"/></g>'
    +'<g transform="translate(272 314)"><path d="M10 86h32l-4-26H14z" fill="'+L+'"/><path d="M26 60c0-18-8-30-18-34M26 60c1-16 9-28 20-32" stroke="#A9B998" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M8 26c6 0 10 5 8 10-6-1-9-5-8-10zM46 28c-6 0-10 5-8 10 6-1 9-5 8-10z" fill="#BFCDB0"/></g>'
    +spark(180,96,10)+spark(118,120,6)+spark(246,128,7);
@@ -2896,7 +2896,7 @@ function onb(){
  var T=[["똑똑,<br>함께 읽을래요?","한 권의 책이<br>새로운 이야기로 이어지는 곳,<br>똑독입니다."],
   ["책장을 넘기는 순간,<br>새로운 세계가 열려요.","좋은 이야기는<br>언제나 또 다른 이야기를 불러오니까요."],
   ["친구와 함께,<br>더 멀리, 더 깊이.","같이 읽고, 나누고, 발견하는<br>나만의 독서 여정을 시작해 보세요."]];
- app.innerHTML='<div class="obw" role="region" aria-label="똑독 소개"><div class="obs" id="obs">'+T.map(function(t,i){return'<section class="obp" aria-label="'+(i+1)+' / 3"><h1>'+t[0]+'</h1><p>'+t[1]+'</p><div class="obi">'+obScene(i)+'<img class="obd'+i+'" src="'+DOGI+'" alt=""></div></section>'}).join("")+'</div>'
+ app.innerHTML='<div class="obw" role="region" aria-label="똑독 소개"><div class="obs" id="obs">'+T.map(function(t,i){return'<section class="obp" aria-label="'+(i+1)+' / 3"><h1>'+t[0]+'</h1><p>'+t[1]+'</p><div class="obi">'+obScene(i)+'</div></section>'}).join("")+'</div>'
   +'<div class="obf"><div class="obdt" id="obdt">'+[0,1,2].map(function(i){return'<button aria-label="'+(i+1)+'번째 소개 보기" aria-current="'+(i===0)+'"></button>'}).join("")+'</div><button class="btn obgo" id="obgo" hidden>똑독 시작하기</button></div></div>';
  var sc=document.getElementById("obs"),dt=document.querySelectorAll("#obdt button"),go=document.getElementById("obgo"),cur=0;
  function to(i){sc.scrollTo({left:i*sc.clientWidth,behavior:"smooth"})}
