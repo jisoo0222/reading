@@ -1349,6 +1349,9 @@ nav.tab.nvb button:nth-child(3)[aria-current="page"] .nvh circle{fill:var(--nvh1
 
 nav.tab.nvb{gap:0!important;justify-content:space-between!important;padding-left:max(4px,calc((100% - 358px)/2))!important;padding-right:max(4px,calc((100% - 358px)/2))!important}
 nav.tab.nvb button{min-width:0;letter-spacing:-.02em}
+
+/* 412×917 비율 고정: 창이 작으면 같은 비율로 줄여서 보여요 (휴대폰 앱에서는 전체 화면) */
+@media (min-width:501px){html:not(.and) .app{width:412px!important;max-width:412px!important;height:917px!important;min-height:0!important;zoom:var(--fz,1)}}
 </style>
 </head>
 <body>
@@ -2164,20 +2167,20 @@ function hFit(){var sc=document.querySelector(".sc.hm"),tb=app.querySelector(".t
  sc.querySelectorAll("[data-hfp]").forEach(function(e){e.style.paddingTop="";e.style.paddingBottom="";e.removeAttribute("data-hfp")});sc.querySelectorAll(".htk,.wkx .wkd em").forEach(function(e){e.style.height=""});
  K.forEach(function(c){c.style.marginTop="0px"});sc.scrollTop=0;var G=app.querySelector(".hd.hgt")?11:14;
  function lim(){var hi=tb.querySelector("button:nth-child(3) .ic");return Math.min(tb.getBoundingClientRect().top,hi?hi.getBoundingClientRect().top:1e9)}
- function meas(){var t=H.getBoundingClientRect().bottom,h=K[K.length-1].getBoundingClientRect().bottom-K[0].getBoundingClientRect().top;return{av:lim()-t,h:h+G*(K.length+1)}}
+ function meas(){var t=H.getBoundingClientRect().bottom,h=K[K.length-1].getBoundingClientRect().bottom-K[0].getBoundingClientRect().top;return{av:lim()-t,h:h+G*(K.length+1)*(parseFloat(getComputedStyle(app).zoom)||1)}}
  var m=meas();if(m.h>m.av){app.classList.add("hf1");m=meas()}if(m.h>m.av){app.classList.add("hf2");m=meas()}if(m.h>m.av){app.classList.add("hf3");m=meas()}
  K.forEach(function(c,i){c.style.marginTop=G+"px"});
  /* 그래도 넘치면 홈 내용 전체를 같은 비율로 줄여서 아래 탭을 침범하지 않게 */
- function mz(z){var t=H.getBoundingClientRect().bottom;return{av:lim()-t,h:K[K.length-1].getBoundingClientRect().bottom-t+G*z}}
+ function mz(z){var t=H.getBoundingClientRect().bottom;return{av:lim()-t,h:K[K.length-1].getBoundingClientRect().bottom-t+G*z*(parseFloat(getComputedStyle(app).zoom)||1)}}
  if(m.h>m.av){var m2=mz(1);if(m2.h>m2.av){var z=1;for(var t=0;t<5&&m2.h>m2.av;t++){z=Math.max(.6,z*m2.av/m2.h-.004);A.forEach(function(c){c.style.zoom=z});m2=mz(z)}}m={av:m2.av,h:m2.h}}
  if(m.h>m.av){doorH();return}/* 아주 작은 화면이면 스크롤 */
- var rem=m.av-m.h;
+ var AZ=parseFloat(getComputedStyle(app).zoom)||1;var rem=(m.av-m.h)/AZ;
  /* 남는 공간: 커뮤니티 인기글 줄 수 → 이번 주 기록 막대 → 나머지는 지금 읽는 책 카드 */
  var tk=sc.querySelector(".htk"),tw=sc.querySelector(".htw");if(tk){tk.style.height="";var RH=26,n=tw.children.length,rows=Math.max(1,Math.min(n,1+Math.floor(rem*0.5/RH)));tk.style.height=rows*RH+"px";tk.dataset.rows=rows;rem-=(rows-1)*RH;var dd=sc.querySelector(".htd");if(dd)dd.style.display=rows>=n?"none":""}
  var ems=sc.querySelectorAll(".wkx .wkd em");if(ems.length){ems.forEach(function(e){e.style.height=""});var b0=ems[0].getBoundingClientRect().height,x=Math.min(rem*0.4,22);ems.forEach(function(e){e.style.height=(b0+x)+"px"});rem-=x}
  if(rem>0){var T=[].slice.call(sc.querySelectorAll(".hero"));T.forEach(function(e){var cs=getComputedStyle(e);e.setAttribute("data-hfp","1");e.style.setProperty("padding-top",(parseFloat(cs.paddingTop)+rem/2)+"px","important");e.style.setProperty("padding-bottom",(parseFloat(cs.paddingBottom)+rem/2)+"px","important")})}
- sc.style.paddingBottom=(sc.clientHeight-(lim()-sc.getBoundingClientRect().top))+"px";doorH()}
-function doorH(){var g=document.querySelector(".hd.hgt .hga"),tb=app.querySelector(".tab");if(!g||!tb)return;var z=parseFloat(g.closest(".hd").style.zoom)||1;g.style.height=Math.max(150,(tb.getBoundingClientRect().top-g.getBoundingClientRect().top)/z+30)+"px"}
+ sc.style.paddingBottom=(sc.clientHeight-(lim()-sc.getBoundingClientRect().top)/(parseFloat(getComputedStyle(app).zoom)||1))+"px";doorH()}
+function doorH(){var g=document.querySelector(".hd.hgt .hga"),tb=app.querySelector(".tab");if(!g||!tb)return;var z=(parseFloat(g.closest(".hd").style.zoom)||1)*(parseFloat(getComputedStyle(app).zoom)||1);g.style.height=Math.max(150,(tb.getBoundingClientRect().top-g.getBoundingClientRect().top)/z+30)+"px"}
 window.addEventListener("resize",function(){if(app.classList.contains("hm"))hFit()});
 
 /* 홈 포인트 카드를 누르면 뜨는 오늘의 미션 목록 */
@@ -2758,7 +2761,7 @@ function pawF(){var f=document.getElementById("pawf"),on=REQ.some(function(r){re
  if(!f){f=document.createElement("button");f.id="pawf";f.setAttribute("aria-label","함께 읽기 신청 편지 열기");f.innerHTML=envSvg(0)+'<i class="pwx" aria-hidden="true">!</i>';document.body.appendChild(f);
   f.onclick=function(){var r=REQ.filter(function(q){return q.st===0})[0];if(r)letter(r.id)}}
  pawPos()}
-function pawPos(){var f=document.getElementById("pawf"),t=app.querySelector("nav.tab");if(!f||!t)return;var tp=t.getBoundingClientRect().top,ar=app.getBoundingClientRect().right,G=20;f.style.bottom=Math.max(0,window.innerHeight-tp)+G+"px";f.style.right=Math.max(0,document.documentElement.clientWidth-ar)+G+"px"}
+function pawPos(){var f=document.getElementById("pawf"),t=app.querySelector("nav.tab");if(!f||!t)return;var tp=t.getBoundingClientRect().top,ar=app.getBoundingClientRect().right,Z=parseFloat(getComputedStyle(app).zoom)||1,G=20*Z;f.style.zoom=Z;f.style.bottom=(Math.max(0,window.innerHeight-tp)+G)/Z+"px";f.style.right=(Math.max(0,document.documentElement.clientWidth-ar)+G)/Z+"px"}
 window.addEventListener("resize",pawPos);
 new MutationObserver(function(){pawF()}).observe(app,{childList:true});
 
@@ -2931,6 +2934,10 @@ function navSkin(){app.querySelectorAll("nav.tab:not([data-sk])").forEach(functi
  n.querySelectorAll("button").forEach(function(b,i){if(i>4)return;var lab=b.textContent.trim()||["도서관","디지털 문구점","홈","커뮤니티","마이페이지"][i];
   b.innerHTML=i===2?NVI[2]:'<span class="nvi">'+NVI[i]+'</span><span class="nvl">'+lab+'</span>';if(i===2)b.setAttribute("aria-label","홈")})})}
 new MutationObserver(navSkin).observe(app,{childList:true,subtree:true});navSkin();
+
+/* 화면 비율 412×917 유지 */
+function fitZ(){if(document.documentElement.classList.contains("and"))return;var z=innerWidth<501?1:Math.min(1,innerWidth/412,innerHeight/917);document.documentElement.style.setProperty("--fz",z.toFixed(4))}
+fitZ();addEventListener("resize",function(){fitZ();if(app.classList.contains("hm")&&typeof hFit==="function")hFit()});
 </script>
 </body>
 </html>
