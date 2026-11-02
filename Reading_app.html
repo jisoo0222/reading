@@ -1310,6 +1310,30 @@ button.cd.on{padding-top:2px!important}
 /* 마이페이지 내 글 · 공용 글 카드 */
 .fpo{display:block;width:100%;text-align:left;font:inherit;color:var(--ink);cursor:pointer;word-break:keep-all}
 .myp{padding:12px!important}.myp .fpo{background:var(--bg)}.myp .fpo:last-child{margin-bottom:0}
+
+/* ===== 시작 온보딩 ===== */
+.obw{position:absolute;inset:0;z-index:5;background:var(--bg);display:flex;flex-direction:column}
+.obs{flex:1;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:pointer}
+.obs::-webkit-scrollbar{display:none}
+.obp{flex:0 0 100%;scroll-snap-align:center;display:flex;flex-direction:column;align-items:center;text-align:center;padding:64px 24px 0;box-sizing:border-box;word-break:keep-all}
+.obp h1{margin:0;font-size:24px;line-height:1.4;font-weight:800;color:var(--ink)}
+.obp p{margin:14px 0 0;font-size:13.5px;line-height:1.65;color:var(--sub)}
+.obi{position:relative;width:100%;max-width:340px;margin-top:auto}
+.obsv{display:block;width:100%;height:auto}
+.obi img{position:absolute;width:30%;height:auto;pointer-events:none}
+.obi .obd0{left:2%;bottom:3%}
+.obi .obd1{left:24%;bottom:2%;width:27%}
+.obi .obd2{left:30%;bottom:1%;width:34%}
+.obf{flex:none;display:flex;flex-direction:column;align-items:center;gap:16px;padding:14px 24px 28px;min-height:110px;box-sizing:border-box;justify-content:flex-start}
+.obdt{display:flex;gap:8px}
+.obdt button{width:8px;height:8px;border-radius:999px;border:0;padding:0;background:var(--lav2,#E2CFF3);cursor:pointer;transition:width .2s}
+.obdt button[aria-current="true"]{width:22px;background:var(--pri)}
+.obgo{width:100%;max-width:312px}
+.obgo[hidden]{display:block!important;visibility:hidden}
+
+.obi{width:calc(100% + 40px);max-width:400px;margin:auto -20px 0}
+.obp{padding-top:56px}
+.obf{padding-top:6px;min-height:100px}
 </style>
 </head>
 <body>
@@ -2663,7 +2687,7 @@ function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':(typeof
 useBk(DEF);
 function splash(){app.className="app spl";
  app.innerHTML='<div class="spw" role="img" aria-label="똑독, 똑똑, 같이 읽을래?">'+logoSVG()+'<h1>똑독</h1><p class="dke">DDOKDOK</p><p class="dks">똑똑, 같이 읽을래?</p></div>';
- var t=setTimeout(go,2200);function go(){clearTimeout(t);app.onclick=null;info()}app.onclick=go}
+ var t=setTimeout(go,2200);function go(){clearTimeout(t);app.onclick=null;onb()}app.onclick=go}
 splash();
 
 (function(){var D=null;
@@ -2837,6 +2861,50 @@ function archDeco(){function lamp(x,len,w,h){return'<path d="M'+x+' 0V'+len+'" s
 
 /* 다른 화면으로 가면 '한 사람 글 모아 보기'를 풀어요 */
 ["home","library","shop","profile"].forEach(function(f){var o=window[f];if(typeof o==="function")window[f]=function(){CU="";CMN=0;return o.apply(this,arguments)}});
+
+/* ===== 시작 온보딩 3장: 넘길수록 문이 열려요 ===== */
+function obScene(n){
+ var L='var(--lav,#EADDF5)',L2='var(--lav2,#E2CFF3)',P='var(--pri)',W='#FFF6E4',G='#FFD9A1';
+ var spark=function(x,y,r){return'<path d="M'+x+' '+(y-r)+'Q'+x+' '+y+' '+(x+r)+' '+y+'Q'+x+' '+y+' '+x+' '+(y+r)+'Q'+x+' '+y+' '+(x-r)+' '+y+'Q'+x+' '+y+' '+x+' '+(y-r)+'z" fill="'+G+'"/>'};
+ var arch='M100 400V150a80 80 0 0 1 160 0V400z',inner='M112 400V152a68 68 0 0 1 136 0V400z';
+ var books='<g transform="translate(266 352)"><rect x="0" y="34" width="62" height="14" rx="3" fill="'+L2+'"/><rect x="5" y="20" width="54" height="14" rx="3" fill="#F6E6E0"/><rect x="2" y="6" width="58" height="14" rx="3" fill="'+L+'"/><path d="M8 13h46M10 27h40" stroke="#FFFFFF" stroke-width="1.5" opacity=".8"/></g>';
+ var floor='<ellipse cx="180" cy="404" rx="150" ry="14" fill="'+L+'" opacity=".7"/>';
+ var h='<svg viewBox="0 0 360 430" class="obsv" aria-hidden="true">'+floor;
+ if(n===0){
+  h+='<path d="'+arch+'" fill="'+L2+'"/><path d="'+inner+'" fill="#D9C4F2"/>'
+   +'<path d="M128 390V170a52 52 0 0 1 104 0V390z" fill="none" stroke="#C7ACEC" stroke-width="3"/><path d="M140 300h80" stroke="#C7ACEC" stroke-width="3"/>'
+   +'<circle cx="226" cy="262" r="7" fill="'+G+'"/><circle cx="226" cy="262" r="3" fill="#E9B866"/>'
+   +spark(180,104,9)+spark(290,118,6)+spark(70,170,5)+books;
+ }else if(n===1){
+  h+='<path d="'+arch+'" fill="'+L2+'"/><path d="'+inner+'" fill="'+W+'"/>'
+   +'<g opacity=".9"><path d="M150 400V330a30 30 0 0 1 60 0V400z" fill="#F4E3F8"/><rect x="128" y="300" width="20" height="100" rx="3" fill="#F1E7FB"/><rect x="214" y="286" width="22" height="114" rx="3" fill="#F1E7FB"/><circle cx="196" cy="196" r="20" fill="'+G+'" opacity=".55"/></g>'
+   +'<path d="M180 160l-40-50M196 160l10-58M214 168l44-36" stroke="'+G+'" stroke-width="3" stroke-linecap="round" opacity=".8"/>'
+   +'<path d="M112 152a68 68 0 0 1 20-48L166 128V384L112 400z" fill="#D9C4F2" stroke="#C7ACEC" stroke-width="2.5" stroke-linejoin="round"/><circle cx="156" cy="268" r="5" fill="'+G+'"/>'
+   +spark(250,110,8)+spark(84,140,5)+books;
+ }else{
+  h+='<path d="'+arch+'" fill="'+L2+'"/><path d="'+inner+'" fill="'+W+'"/>'
+   +'<path d="M150 400V250a30 30 0 0 1 60 0V400z" fill="#E6F0FA"/><path d="M150 400V250a30 30 0 0 1 60 0" fill="none" stroke="#FFFFFF" stroke-width="3"/>'
+   +'<g fill="#F1E7FB" stroke="#E2CFF3" stroke-width="1.5"><rect x="122" y="384" width="116" height="16"/><rect x="130" y="368" width="100" height="16"/><rect x="138" y="352" width="84" height="16"/><rect x="146" y="336" width="68" height="16"/></g>'
+   +'<path d="M112 152a68 68 0 0 1 10-34L124 392L112 400z" fill="#D9C4F2" stroke="#C7ACEC" stroke-width="2" stroke-linejoin="round"/>'
+   +'<g transform="translate(40 300)"><path d="M14 100h36l-5-30H19z" fill="#F6E6E0"/><path d="M32 70C30 46 18 34 6 30M32 70c2-22 12-36 26-40M32 70c-2-16-10-24-20-24" stroke="#A9B998" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M6 30c8-2 14 4 12 10-8 0-12-4-12-10zM58 30c-8-1-13 5-11 11 8-1 12-5 11-11zM12 46c6 0 10 4 9 9-6 0-10-4-9-9z" fill="#BFCDB0"/></g>'
+   +'<g transform="translate(272 314)"><path d="M10 86h32l-4-26H14z" fill="'+L+'"/><path d="M26 60c0-18-8-30-18-34M26 60c1-16 9-28 20-32" stroke="#A9B998" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M8 26c6 0 10 5 8 10-6-1-9-5-8-10zM46 28c-6 0-10 5-8 10 6-1 9-5 8-10z" fill="#BFCDB0"/></g>'
+   +spark(180,96,10)+spark(118,120,6)+spark(246,128,7);
+ }
+ return h+'</svg>'}
+function onb(){
+ app.className="app onb";
+ var T=[["똑똑,<br>함께 읽을래요?","한 권의 책이<br>새로운 이야기로 이어지는 곳,<br>똑독입니다."],
+  ["책장을 넘기는 순간,<br>새로운 세계가 열려요.","좋은 이야기는<br>언제나 또 다른 이야기를 불러오니까요."],
+  ["친구와 함께,<br>더 멀리, 더 깊이.","같이 읽고, 나누고, 발견하는<br>나만의 독서 여정을 시작해 보세요."]];
+ app.innerHTML='<div class="obw" role="region" aria-label="똑독 소개"><div class="obs" id="obs">'+T.map(function(t,i){return'<section class="obp" aria-label="'+(i+1)+' / 3"><h1>'+t[0]+'</h1><p>'+t[1]+'</p><div class="obi">'+obScene(i)+'<img class="obd'+i+'" src="'+DOGI+'" alt=""></div></section>'}).join("")+'</div>'
+  +'<div class="obf"><div class="obdt" id="obdt">'+[0,1,2].map(function(i){return'<button aria-label="'+(i+1)+'번째 소개 보기" aria-current="'+(i===0)+'"></button>'}).join("")+'</div><button class="btn obgo" id="obgo" hidden>똑독 시작하기</button></div></div>';
+ var sc=document.getElementById("obs"),dt=document.querySelectorAll("#obdt button"),go=document.getElementById("obgo"),cur=0;
+ function to(i){sc.scrollTo({left:i*sc.clientWidth,behavior:"smooth"})}
+ function upd(){var i=Math.round(sc.scrollLeft/sc.clientWidth);if(i===cur&&go.hidden!==(i<2))return;cur=i;dt.forEach(function(d,k){d.setAttribute("aria-current",k===i)});go.hidden=i<2}
+ sc.addEventListener("scroll",upd);
+ dt.forEach(function(d,k){d.onclick=function(){to(k)}});
+ sc.onclick=function(){if(cur<2)to(cur+1)};
+ go.onclick=info}
 </script>
 </body>
 </html>
