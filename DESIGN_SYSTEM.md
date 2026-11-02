@@ -38,13 +38,15 @@
 | `text/emphasis` | green/600 `#267B58` | green/300 `#A8E5B7` | 섹션 제목, 강조 숫자 |
 | `text/on-primary` | neutral/0 `#FFFFFF` | neutral/900 `#1F1E1E` | 메인 버튼 위 글씨 |
 | `text/disabled` | neutral/400 `#C5C5C5` | neutral/600 `#898585` | 비활성 글씨 |
-| `Background/default` | neutral/100 `#F6F6F6` | neutral/700 `#666161` | 화면 배경 |
-| `Background/door` | green/200 `#C6EED0` | green/600 `#267B58` | 홈 위쪽 문 바깥 |
+| `Background/default` | neutral/100 `#F6F6F6` | neutral/900 `#1F1E1E` | 화면 배경 |
+| `Background/door` | green/200 `#C6EED0` | green/800 `#174D37` | 홈 위쪽 문 바깥 |
 | `Background/card` | neutral/0 `#FFFFFF` | neutral/800 `#444141` | 카드 |
-| `Background/section` | neutral/200 `#E3E3E3` | neutral/700 `#666161` | 구역 배경 |
-| `border/default` | neutral/200 `#E3E3E3` | neutral/700 `#666161` | 기본 테두리 |
+| `Background/section` | neutral/200 `#E3E3E3` | neutral/800 `#444141` | 구역 배경 |
+| `border/default` | neutral/200 `#E3E3E3` | neutral/800 `#444141` | 기본 테두리 |
 | `border/brand` | green/200 `#C6EED0` | green/700 `#186344` | 요일 칸 테두리 |
-| `divider` | neutral/300 `#D5D5D5` | neutral/700 `#666161` | 구분선 |
+| `divider` | neutral/300 `#D5D5D5` | neutral/800 `#444141` | 구분선 |
+| `state/selected-bg` | green/200 `#C6EED0` | green/800 `#174D37` | 선택·완료 바탕 (요일 칸, 칩, 안 읽은 알림) |
+| `state/selected-text` | green/600 `#267B58` | green/300 `#A8E5B7` | 선택·완료 글씨 |
 | `progress/track` | green/200 `#C6EED0` | green/800 `#174D37` | 진행 바 바탕 |
 | `progress/fill` | green/500 `#4CAE85` | green/300 `#A8E5B7` | 진행 바 채움 |
 | `state/success` | green/500 | green/300 | 완독·달성 |
@@ -83,9 +85,9 @@
 
 | 종류 | 토큰 = 값 |
 |---|---|
-| 모서리 | `Radius/book-cover` 10 · `Radius/cell` 10 · `Radius/input` 12 · `Radius/button` 20 · `Radius/popup` 20 · `Radius/card` 25 · `Radius/bar` 999 · `Radius/chip` 999 |
-| 간격 | `Space/xs` 4 · `Space/sm` 8 · `Space/gap` 10 · `Space/md` 12 · `Space/lg` 16 · `Space/leftright_side` 20 · `Space/xl` 24 · `Space/2xl` 32 · `Space/updown_side` 70 |
-| 요소 크기 | `Size/icon-sm` 16 · `Size/icon-md` 20 · `Size/icon-lg` 24 · `Size/touch-min` 44 · `Size/home-button` 50 · `Size/nav-height` 91 |
+| 모서리 (4단계로 통일) | **10** `Radius/book-cover` · `Radius/cell` · `Radius/card-sm` · `Radius/input` / **20** `Radius/button` · `Radius/popup` / **25** `Radius/card` / **999** `Radius/bar` · `Radius/chip` |
+| 간격 | `Space/xs` 4 · `Space/sm` 8 · `Space/gap` 10 · `Space/md` 12 · `Space/lg` 16 · `Space/leftright_side` **16** (화면 양쪽 여백) · `Space/section` 20 · `Space/xl` 24 · `Space/2xl` 32 · `Space/updown_side` 70 |
+| 요소 크기 | `Size/header` 56 · `Size/icon-sm` 16 · `Size/icon-md` 20 · `Size/icon-lg` 24 · `Size/touch-min` 44 · `Size/home-button` 50 · `Size/nav-height` 91 |
 
 ## 5. 효과 (Effect Styles)
 
@@ -108,7 +110,7 @@
 - 높이 56, 모서리 `Radius/button` 20, 바탕 `brand/primary`, 글자 `text/on-primary` 16 Semibold (예: 이어읽기)
 
 ### card-white
-- 바탕 `Background/card`, 모서리 6, 테두리 없음 (홈 커뮤니티 인기글 카드)
+- 바탕 `Background/card`, 모서리 `Radius/card-sm` 10, 테두리 없음 (홈 커뮤니티 인기글 카드, 목록 카드)
 
 ### 홈 화면 (메인화면 412×917)
 - 위쪽: `Background/door` 바탕 위에 흰 아치(폭 412 · 높이 230), 인사말 "안녕하세요,"(24 Bold) / "OO님!"(32 Bold), 오른쪽에 캐릭터 도기, 알림 아이콘(25, `brand/primary`)
@@ -122,13 +124,13 @@
 ### 홈 간격 (Space 토큰)
 | 위치 | 간격 |
 |---|---|
-| 화면 좌우 여백 | `Space/leftright_side` 20 |
+| 화면 좌우 여백 | `Space/leftright_side` 16 (모든 화면 같음) |
 | 위쪽 아치 시작 | `Space/sm` 8 |
 | 위쪽 영역 → 지금 읽는 책 | `Space/xl` 24 |
 | 표지 → 세로선 / 세로선 → 글 | `Space/sm` 8 / `Space/md` 12 |
 | 책 정보 → 이어읽기 버튼, 구분선 → 구역 제목 | `Space/lg` 16 |
 | 구역 제목 → 내용 | `Space/sm` 8 |
-| 구역 끝 → 다음 구분선 | 20 |
+| 구역 끝 → 다음 구분선 | `Space/section` 20 |
 | 커뮤니티 카드 사이 | `Space/gap` 10 |
 | 위쪽 영역 높이 | 258 |
 
@@ -137,17 +139,17 @@
 - 탭 4개(전체보기 · 형광펜 · 스티커 · 제작하기): 아이콘 30 + 글자 11 Semibold, 기본 `brand/default` → 선택 `brand/primary` + 아래 막대 67×6, 탭 줄 아래 1px 선
 - 상품 목록: 바탕 `Background/default`, 3열, 카드 121×122 흰색 모서리 25, 가로 8 · 세로 25 간격, 이름 16 Semibold `text/default`, 가격 16 Regular `text/sub`
 
-### 공통 규칙 (피그마 시안이 없는 화면)
-도서관 · 장르 · 인기 순위 · 커뮤니티 · 게시글 · 알림 · 독서 달력 · 책 상세 · 설정 · 읽은 책 · 가입 단계 등에 같은 규칙을 써요.
-- 화면 제목: 18 Bold `text/default`
-- 구역 제목: 16 Semibold `text/emphasis`, 오른쪽 "전체 보기"는 12 Medium `text/sub` + 화살표 16
-- 카드·목록 상자: `Background/card`, 테두리 없음, 모서리 `Radius/card` 25 (작은 목록 줄은 20)
-- 버튼: 높이 56, 모서리 `Radius/button` 20, 16 Semibold / 보조 버튼은 흰 바탕 + 1.5px `brand/primary` 테두리
-- 검색창·입력칸: 흰 바탕, 1px `border/default`, 모서리 `Radius/input` 12
-- 칩·태그: 모서리 `Radius/chip` 999, 태그는 1px `brand/primary` 테두리 + `text/emphasis` 11 Semibold, 선택된 칩은 `brand/primary` 바탕 + 흰 글씨
-- 팝업: 모서리 `Radius/popup` 20, 뒤 배경 `overlay` 40%
-- 안 읽은 알림: green/100 `#DCF5E2` 바탕, 점은 `brand/primary`
-- 장르 아이콘 원: `Background/door` 바탕 + `text/emphasis` 아이콘
+### 공통 규칙 (피그마 시안이 없는 화면 · 메인 화면 기준)
+도서관 · 장르 · 인기 순위 · 커뮤니티 · 게시글 · 알림 · 독서 달력 · 책 상세 · 설정 · 읽은 책 · 마이페이지 · 가입 단계에 같은 규칙을 써요.
+- 화면 양쪽 여백 16 (`Space/leftright_side`), 바탕 `Background/default`
+- 위쪽 제목 줄: 높이 56 (`Size/header`), 흰 바탕, 아래 1px `divider`, 제목 18 Bold
+- 구역: 상자 없이 1px `divider`로 나눔 (구분선 → 제목 16, 구역 사이 20), 제목 16 Semibold `text/emphasis`, 오른쪽 "전체 보기" 12 Medium `text/sub` + 화살표 16
+- 목록 카드: 흰 바탕, 모서리 10, 안쪽 여백 14~16, 최소 높이 64 (순위 88), 제목 16 Semibold · 보조 13
+- 버튼: 높이 56, 모서리 20, 16 Semibold / 보조 버튼은 흰 바탕 + 1.5px `brand/primary`
+- 칩: 높이 40, 모서리 999, 14 Semibold, 기본은 흰 바탕 + 1px `state/selected-bg` 테두리 + `text/sub`, 선택하면 `state/selected-bg` 바탕 + `state/selected-text`
+- 입력칸: 모서리 10
+- 팝업: 모서리 20, 뒤 배경 `overlay` 40%
+- 장르 아이콘 원 56 + 이름 13 Semibold, 인기 책 카드 폭 124
 
 ### 아이콘
 - Iconify 플러그인 아이콘 사용(uil · majesticons · ant-design · ri). 선 굵기 2, 끝 둥글게
