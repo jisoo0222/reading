@@ -1566,6 +1566,23 @@ nav.tab.nvb{padding-bottom:calc(11px + env(safe-area-inset-bottom,0px))!importan
 .app .gnt{font-size:13px!important;font-weight:600}
 .app .gnt span{width:56px!important;height:56px!important}
 .app .gnt span .ic{width:26px!important;height:26px!important}
+
+/* ===== 홈 위 칸 높이 고정 (209): 아래 구역 위치가 항상 같게 ===== */
+.sc.hm>.hero,.sc.hm>.rcwrap{height:209px!important;min-height:209px!important;max-height:209px;box-sizing:border-box;overflow:hidden}
+.sc.hm>.rcwrap{position:relative;overflow:visible}
+.sc.hm .rcscroll{height:209px}
+.sc.hm .rcscroll>.hero{height:209px!important}
+.sc.hm .rcdots{position:absolute!important;top:0;right:0;margin:0!important;z-index:2}
+.sc.hm .hero.hrc{display:flex!important;flex-direction:column;padding:0!important;text-align:left}
+.sc.hm .hrc>small{font-size:12px;font-weight:600;color:var(--emp)}
+.sc.hm .hrc h2{margin:6px 0 0!important;font-size:20px!important;line-height:1.35!important;font-weight:700;color:var(--ink)}
+.sc.hm .hrc .hgo{margin-top:auto!important}
+.sc.hm .hrc .hrl{display:flex;justify-content:space-between;gap:10px;margin-top:auto!important}
+.sc.hm .hrc .rck{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:0;background:none;border:0;cursor:pointer;min-width:0}
+.sc.hm .hrc .rck i{display:block;width:56px!important;height:76px!important;border-radius:var(--r-cover)!important}
+.sc.hm .hrc .rck b{font-size:13px!important;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.sc.hm .hrc .rck small{font-size:11px!important;color:var(--emp)!important;font-weight:600}
+.sc.hm .hrc .hfin{font-size:18px!important}
 </style>
 </head>
 <body>
