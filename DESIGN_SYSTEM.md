@@ -137,6 +137,18 @@
 - 탭 4개(전체보기 · 형광펜 · 스티커 · 제작하기): 아이콘 30 + 글자 11 Semibold, 기본 `brand/default` → 선택 `brand/primary` + 아래 막대 67×6, 탭 줄 아래 1px 선
 - 상품 목록: 바탕 `Background/default`, 3열, 카드 121×122 흰색 모서리 25, 가로 8 · 세로 25 간격, 이름 16 Semibold `text/default`, 가격 16 Regular `text/sub`
 
+### 공통 규칙 (피그마 시안이 없는 화면)
+도서관 · 장르 · 인기 순위 · 커뮤니티 · 게시글 · 알림 · 독서 달력 · 책 상세 · 설정 · 읽은 책 · 가입 단계 등에 같은 규칙을 써요.
+- 화면 제목: 18 Bold `text/default`
+- 구역 제목: 16 Semibold `text/emphasis`, 오른쪽 "전체 보기"는 12 Medium `text/sub` + 화살표 16
+- 카드·목록 상자: `Background/card`, 테두리 없음, 모서리 `Radius/card` 25 (작은 목록 줄은 20)
+- 버튼: 높이 56, 모서리 `Radius/button` 20, 16 Semibold / 보조 버튼은 흰 바탕 + 1.5px `brand/primary` 테두리
+- 검색창·입력칸: 흰 바탕, 1px `border/default`, 모서리 `Radius/input` 12
+- 칩·태그: 모서리 `Radius/chip` 999, 태그는 1px `brand/primary` 테두리 + `text/emphasis` 11 Semibold, 선택된 칩은 `brand/primary` 바탕 + 흰 글씨
+- 팝업: 모서리 `Radius/popup` 20, 뒤 배경 `overlay` 40%
+- 안 읽은 알림: green/100 `#DCF5E2` 바탕, 점은 `brand/primary`
+- 장르 아이콘 원: `Background/door` 바탕 + `text/emphasis` 아이콘
+
 ### 아이콘
 - Iconify 플러그인 아이콘 사용(uil · majesticons · ant-design · ri). 선 굵기 2, 끝 둥글게
 
