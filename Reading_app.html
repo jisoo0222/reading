@@ -1424,6 +1424,60 @@ nav.tab.nvb{background:var(--card)!important;border:1.5px solid var(--pri)!impor
 /* 홈은 피그마 시안에 있는 것만: 표지 위 메이트 표시·떠 있는 편지 버튼 숨김 */
 .sc.hm .hmt{display:none!important}
 body:has(.app.hm) #pawf{display:none!important}
+
+/* ===== 디지털 문구점 (피그마 1108:2799) ===== */
+.app.shp,.app.shp .sc{background:var(--card)}
+.mpt3{display:flex;align-items:center;justify-content:space-between;min-height:127px;padding:0 24px 0 41px;margin:-10px -1px 0;border-radius:var(--r-card);background:var(--lav,#C6EED0);box-sizing:border-box}
+.mpl3{display:flex;flex-direction:column;gap:6px}
+.mpl3 small{font-size:16px;font-weight:500;color:var(--ink)}
+.pt3{display:flex;align-items:center;gap:8px;color:var(--pri)}.pt3 svg{width:32px;height:32px;flex:none}
+.pt3 b{font-size:24px;font-weight:600;color:var(--ink)}
+.vl3{align-self:center;margin-top:6px;height:30px;padding:2px 14px 0;border:0;border-radius:200px;background:var(--card);color:var(--pri);font:inherit;font-size:12px;font-weight:500;cursor:pointer}
+.app.shp .cats{display:flex!important;justify-content:center;gap:0!important;margin:20px calc(-1*var(--px)) 0!important;padding:0;border-bottom:1px solid var(--ink);overflow:visible}
+.app.shp .cat{flex:0 0 auto;width:auto!important;min-width:0;padding:0 18px 12px!important;margin:0 4px;position:relative;border:0!important;color:var(--brand-default,#C5C5C5)!important;gap:6px;background:none}
+.app.shp .cat span{display:grid;place-items:center;width:30px;height:30px}.app.shp .cat svg{width:30px;height:30px;display:block}
+.app.shp .cat small{font-size:11px!important;font-weight:600;line-height:17.3px;white-space:nowrap}
+.app.shp .cat[aria-selected="true"]{color:var(--pri)!important;font-weight:600}
+.app.shp .cat[aria-selected="true"]::after{content:"";position:absolute;left:50%;bottom:0;width:67px;height:6px;transform:translateX(-50%);background:var(--pri)}
+.app.shp .gd{margin:0 calc(-1*var(--px));padding:24px max(var(--px),calc((100% - 379px)/2)) 120px;background:var(--bg);row-gap:25px;column-gap:8px}
+.app.shp .gd.g3{grid-template-columns:repeat(3,1fr)}
+.app.shp .cd2{display:flex;flex-direction:column;align-items:center;text-align:center}
+.app.shp .pvw{width:100%;border:0!important;border-radius:var(--r-card)!important;background:var(--card)!important;margin-bottom:8px}
+.app.shp .cd2 b{font-size:16px;font-weight:600;color:var(--ink)}
+.app.shp .cd2 span{font-size:16px;font-weight:400;color:var(--sub);line-height:1.4}
+.app.shp .hlr{border:0;border-radius:var(--r-card);background:var(--card)}
+.app.shp .mkc{border:0;border-radius:var(--r-card);margin:24px 0 0}
+
+/* ===== 홈 간격: 피그마 메인화면 + Space 토큰 ===== */
+:root{--s-xs:4px;--s-sm:8px;--s-gap:10px;--s-md:12px;--s-lg:16px;--s-side:20px;--s-xl:24px;--s-2xl:32px}
+.sc.hm{padding-left:var(--s-side)!important;padding-right:var(--s-side)!important}
+.hd.hgt.hg2{margin:0 calc(-1*var(--s-side))!important}
+.hg2 .hga{top:var(--s-sm)!important}
+.sc.hm>.hero,.sc.hm>.rcwrap{margin-top:var(--s-xl)!important}
+.sc.hm .hero{padding:0!important}
+.sc.hm .hif{margin-left:var(--s-sm)!important;padding-left:var(--s-md)!important}
+.sc.hm .hif h2{margin:var(--s-sm) 0 var(--s-xs)!important}
+.sc.hm .hpt{margin-top:var(--s-sm)!important}
+.sc.hm .hgo{margin-top:var(--s-lg)!important}
+.sc.hm>.blk{margin-top:var(--s-lg)!important;padding-top:var(--s-lg)!important;padding-bottom:0!important}
+.sc.hm>.blk+.blk{margin-top:var(--s-xl)!important}
+.sc.hm .blk>.box{padding:0!important}
+.sc.hm .hsh{margin-bottom:var(--s-sm)!important}
+.sc.hm .wkd2{gap:var(--s-xs)}
+.sc.hm .hcg{gap:var(--s-gap)}
+.sc.hm .hpr2{gap:6px}
+
+nav.tab.nvb{padding-bottom:calc(11px + env(safe-area-inset-bottom,0px))!important}
+
+.sc.hm .hcc{height:86px;min-height:0!important;padding:10px 12px!important;gap:6px!important;box-sizing:border-box;overflow:hidden}
+.hct{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.hct .hcf{margin:0}
+.sc.hm .hcc p{font-size:12px!important;line-height:1.4!important}
+.sc.hm .hsh{min-height:19px;line-height:19px}
+
+.sc.hm .hero .hgo{margin-top:var(--s-lg)!important}
+.sc.hm .wkd2{gap:0!important}
+.sc.hm>.blk+.blk{margin-top:var(--s-side)!important}
 </style>
 </head>
 <body>
@@ -1906,8 +1960,8 @@ function meEdit(){
  main()}
 var PT=1700,OWN={TH0:1},SC="ALL",CS={},OP={},STB=1,MY=[],SLOT=[],
 RDB=[["느리게 읽는 밤","이서윤",224,"2026.08.12"],["나의 작은 서재","박하은",180,"2026.07.03"],["여행의 이유","김도현",256,"2026.06.14"],["마음의 구조","최유진",312,"2026.05.20"],["한 줄의 추리","정민우",288,"2026.04.08"],["작은 습관의 지도","한서진",200,"2026.03.11"],["밤의 도서관","오지윤",340,"2026.02.02"],["달의 정원","윤서하",208,"2026.01.10"]],
-CAT=[["ALL","전체","grid"],["HL","형광펜","pen"],["PN","스티커","memo"],["MK","제작","plus"]],
-COL=["#E9D58B","#E3B7B0","#B9C7A5","#C5B3D1","#BFD0D8"],
+CAT=[["ALL","전체보기","grid"],["HL","형광펜","pen"],["PN","스티커","memo"],["MK","제작하기","plus"]],
+COL=["#FFF3A0","#FFBBD1","#BDE6F7","#A8E5B7","#FEF7BB"],
 ITM={PN:[["접힌 스티커",0,200],["타원 스티커",1,200],["테이프 스티커",2,250],["체크 스티커",3,250],["클립 스티커",4,250],["하트 스티커",5,300],["스프링 노트",6,300],["마스킹 스티커",7,300],["말풍선 스티커",8,350]],
 HL:[["펜",5,150],["마커",14,200],["연필",8,150],["테마펜",10,250],["붓펜",16,300],["점선펜",6,250]],
 BM:[["리본",0,150],["깃발",1,150],["탭",2,200],["화살표",3,200]],
@@ -1925,23 +1979,29 @@ function pv(c,i,col){var t=ITM[c][i];
  if(c==="BM")return'<div class="pvb" style="background:'+col+';'+BS[t[1]]+'"></div>';
  if(c==="TH")return'<div class="pvt" style="background:'+t[3]+'"><i style="background:'+t[1]+'"></i><i style="background:'+t[2]+'"></i></div>';
  return'<svg viewBox="0 0 120 30" aria-hidden="true"><path d="M8 15Q22 3 36 15T64 15T92 15T112 15" stroke="'+col+'" stroke-width="'+t[1]+'" stroke-linecap="'+(i===4?"butt":"round")+'" fill="none" opacity="'+(i===2?".45":".8")+'"'+(i===5?' stroke-dasharray="1 12"':'')+'/></svg>'}
+/* 디지털 문구점 아이콘 (피그마 Iconify: tabler·majesticons·uil) */
+var SHI={ALL:'<svg width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M5 15H25M15 5V25M5 7.5C5 6.83696 5.26339 6.20107 5.73223 5.73223C6.20107 5.26339 6.83696 5 7.5 5H22.5C23.163 5 23.7989 5.26339 24.2678 5.73223C24.7366 6.20107 25 6.83696 25 7.5V22.5C25 23.163 24.7366 23.7989 24.2678 24.2678C23.7989 24.7366 23.163 25 22.5 25H7.5C6.83696 25 6.20107 24.7366 5.73223 24.2678C5.26339 23.7989 5 23.163 5 22.5V7.5Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+HL:'<svg width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M23.75 10.0001L16.6163 17.1338C16.3819 17.3682 16.064 17.5 15.7325 17.5001H13.75C13.4185 17.5001 13.1005 17.3684 12.8661 17.1339C12.6317 16.8995 12.5 16.5816 12.5 16.2501V14.2676C12.5001 13.9361 12.6318 13.6182 12.8663 13.3838L20 6.25006L22.8663 3.38381C23.1007 3.14947 23.4185 3.01782 23.75 3.01782C24.0815 3.01782 24.3993 3.14947 24.6338 3.38381L26.6163 5.36631C26.8506 5.60072 26.9822 5.9186 26.9822 6.25006C26.9822 6.58151 26.8506 6.8994 26.6163 7.13381L23.75 10.0001ZM20 6.25006L23.75 10.0001M7.5 17.5001H6.25C5.58696 17.5001 4.95107 17.7634 4.48223 18.2323C4.01339 18.7011 3.75 19.337 3.75 20.0001C3.75 20.6631 4.01339 21.299 4.48223 21.7678C4.95107 22.2367 5.58696 22.5001 6.25 22.5001H23.75C24.413 22.5001 25.0489 22.7635 25.5178 23.2323C25.9866 23.7011 26.25 24.337 26.25 25.0001C26.25 25.6631 25.9866 26.299 25.5178 26.7678C25.0489 27.2367 24.413 27.5001 23.75 27.5001H18.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+PN:'<svg width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M15 16.25C10 16.25 8.75 12.0838 8.75 10V5L11.875 7.5L15 3.75L18.125 7.5L21.25 5V10C21.25 12.0838 20 16.25 15 16.25ZM15 16.25V26.25M15 26.25H16.25M15 26.25H13.75M16.25 26.25C23.25 26.25 25 20.4162 25 17.5C18 17.5 16.25 23.3338 16.25 26.25ZM13.75 26.25C6.75 26.25 5 20.4162 5 17.5C12 17.5 13.75 23.3338 13.75 26.25Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+MK:'<svg width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M16.25 11.25H13.75V8.75C13.75 8.41848 13.6183 8.10054 13.3839 7.86612C13.1495 7.6317 12.8315 7.5 12.5 7.5C12.1685 7.5 11.8505 7.6317 11.6161 7.86612C11.3817 8.10054 11.25 8.41848 11.25 8.75V11.25H8.75C8.41848 11.25 8.10054 11.3817 7.86612 11.6161C7.6317 11.8505 7.5 12.1685 7.5 12.5C7.5 12.8315 7.6317 13.1495 7.86612 13.3839C8.10054 13.6183 8.41848 13.75 8.75 13.75H11.25V16.25C11.25 16.5815 11.3817 16.8995 11.6161 17.1339C11.8505 17.3683 12.1685 17.5 12.5 17.5C12.8315 17.5 13.1495 17.3683 13.3839 17.1339C13.6183 16.8995 13.75 16.5815 13.75 16.25V13.75H16.25C16.5815 13.75 16.8995 13.6183 17.1339 13.3839C17.3683 13.1495 17.5 12.8315 17.5 12.5C17.5 12.1685 17.3683 11.8505 17.1339 11.6161C16.8995 11.3817 16.5815 11.25 16.25 11.25ZM22.5 18.75V6.25C22.5 5.25544 22.1049 4.30161 21.4017 3.59835C20.6984 2.89509 19.7446 2.5 18.75 2.5H6.25C5.25544 2.5 4.30161 2.89509 3.59835 3.59835C2.89509 4.30161 2.5 5.25544 2.5 6.25V18.75C2.5 19.7446 2.89509 20.6984 3.59835 21.4017C4.30161 22.1049 5.25544 22.5 6.25 22.5H18.75C19.7446 22.5 20.6984 22.1049 21.4017 21.4017C22.1049 20.6984 22.5 19.7446 22.5 18.75ZM5 18.75V6.25C5 5.91848 5.1317 5.60054 5.36612 5.36612C5.60054 5.1317 5.91848 5 6.25 5H18.75C19.0815 5 19.3995 5.1317 19.6339 5.36612C19.8683 5.60054 20 5.91848 20 6.25V18.75C20 19.0815 19.8683 19.3995 19.6339 19.6339C19.3995 19.8683 19.0815 20 18.75 20H6.25C5.91848 20 5.60054 19.8683 5.36612 19.6339C5.1317 19.3995 5 19.0815 5 18.75ZM26.25 7.5C25.9185 7.5 25.6005 7.6317 25.3661 7.86612C25.1317 8.10054 25 8.41848 25 8.75V21.25C25 22.2446 24.6049 23.1984 23.9017 23.9017C23.1984 24.6049 22.2446 25 21.25 25H8.75C8.41848 25 8.10054 25.1317 7.86612 25.3661C7.6317 25.6005 7.5 25.9185 7.5 26.25C7.5 26.5815 7.6317 26.8995 7.86612 27.1339C8.10054 27.3683 8.41848 27.5 8.75 27.5H21.25C22.9076 27.5 24.4973 26.8415 25.6694 25.6694C26.8415 24.4973 27.5 22.9076 27.5 21.25V8.75C27.5 8.41848 27.3683 8.10054 27.1339 7.86612C26.8995 7.6317 26.5815 7.5 26.25 7.5Z" fill="currentColor"/></svg>',
+coin:'<svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M27.9997 10.6666C27.9997 8.45729 23.821 6.66663 18.6663 6.66663C13.5117 6.66663 9.33301 8.45729 9.33301 10.6666M27.9997 10.6666V16C27.9997 17.36 26.4183 18.56 23.9997 19.2826C22.4877 19.736 20.649 20 18.6663 20C16.6837 20 14.845 19.7346 13.333 19.2826C10.9157 18.56 9.33301 17.36 9.33301 16V10.6666M27.9997 10.6666C27.9997 12.0266 26.4183 13.2266 23.9997 13.9493C22.4877 14.4026 20.649 14.6666 18.6663 14.6666C16.6837 14.6666 14.845 14.4013 13.333 13.9493C10.9157 13.2266 9.33301 12.0266 9.33301 10.6666" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 15.9999V21.3333C4 22.6933 5.58267 23.8933 8 24.6159C9.512 25.0693 11.3507 25.3333 13.3333 25.3333C15.316 25.3333 17.1547 25.0679 18.6667 24.6159C21.084 23.8933 22.6667 22.6933 22.6667 21.3333V19.9999M4 15.9999C4 14.4039 6.18 13.0266 9.33333 12.3853M4 15.9999C4 17.3599 5.58267 18.5599 8 19.2826C9.512 19.7359 11.3507 19.9999 13.3333 19.9999C14.26 19.9999 15.1547 19.9426 16 19.8346" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'};
 function lst(c){var r=[];["PN","HL"].forEach(function(k){if(c==="ALL"||c==="NEW"||c===k)ITM[k].forEach(function(t,i){if(c!=="NEW"||NEWS[k+i])r.push([k,i])})});return r}
 function shop(){
- app.className="app";
+ app.className="app shp";
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="basket"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="mpt mpt2"><div class="mpl"><small>나의 포인트</small><span class="pt" id="ptx"></span></div><button class="vl" id="vlt">'+ic("basket")+'보관함</button></div><div id="gr"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav><div id="ov"></div><div id="sheet" role="dialog"></div>';
+ app.innerHTML='<div class="mpt3"><div class="mpl3"><small>나의 포인트</small><span class="pt3">'+SHI.coin+'<b id="ptx"></b></span></div><button class="vl3" id="vlt">보관함</button></div><div id="gr"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav><div id="ov"></div><div id="sheet" role="dialog"></div>';
  app.firstChild.style.paddingBottom="76px";
  var sheet=document.getElementById("sheet"),ov=document.getElementById("ov"),g=document.getElementById("gr");
  function cl(){sheet.classList.remove("on");ov.classList.remove("on")}
  function draw(){
-  document.getElementById("ptx").innerHTML='<i></i>'+PT+'P';
+  document.getElementById("ptx").textContent=PT+'P';
   document.querySelectorAll(".stb button").forEach(function(b){b.setAttribute("aria-selected",+b.dataset.t===STB)});
   if(STB===0){
    var p=Math.max(0,Math.min(1,(PT-500)/1500)),tk=[500,1000,1500,2000].map(function(v,k){return'<span class="tkm'+(PT>=v?" on":"")+'" style="left:'+k*100/3+'%"><i></i>'+v+'P</span>'}).join("");
    g.innerHTML='<div class="mbar" role="img" aria-label="내 포인트 '+PT+'P"><div class="mtr"><i style="width:'+p*100+'%"></i><b style="left:'+p*100+'%"></b></div>'+tk+'</div><div class="msg">'+MS.map(function(m){return'<div class="ms"><small>+'+m[2]+'P 획득</small><div class="mc2">'+ic(m[1])+(m[3]?'<em>완료</em>':'')+'</div><span>'+m[0]+' 포인트</span></div>'}).join("")+'</div>'}
   else{
    var gc=SC==="HL"?"g1":SC==="BM"||SC==="TH"?"g2":"g3";
-   g.innerHTML='<div class="cats" role="tablist">'+CAT.map(function(c){return'<button class="cat" role="tab" aria-selected="'+(SC===c[0])+'" data-c="'+c[0]+'"><span>'+(c[2]==="new"?'<b class="nw">NEW</b>':ic(c[2]))+'</span><small>'+c[1]+'</small></button>'}).join("")+'</div><div class="gd '+gc+'">'+lst(SC).map(function(r){var c=r[0],i=r[1],t=ITM[c][i],p=pc(c,i),own=OWN[c+i];
+   g.innerHTML='<div class="cats" role="tablist">'+CAT.map(function(c){return'<button class="cat" role="tab" aria-selected="'+(SC===c[0])+'" data-c="'+c[0]+'"><span>'+(SHI[c[0]]||ic(c[2]))+'</span><small>'+c[1]+'</small></button>'}).join("")+'</div><div class="gd '+gc+'">'+lst(SC).map(function(r){var c=r[0],i=r[1],t=ITM[c][i],p=pc(c,i),own=OWN[c+i];
     if(c==="HL")return'<button class="cd2 hlr" data-c="HL" data-i="'+i+'"><span class="hn">'+t[0]+ic("pen")+'</span><span class="hv">'+pv(c,i,COL[i%5])+'</span><span class="hp">'+(own?"보유":ic("plus"))+'</span></button>';
     return'<button class="cd2" data-c="'+c+'" data-i="'+i+'"><div class="pvw">'+pv(c,i,COL[i%5])+'</div><b>'+t[0]+'</b><span>'+(own?"보유 중":p?p+"P":"무료")+'</span></button>'}).join("")+'</div>'}}
  var draw0=draw;draw=function(){draw0();if(STB!==1||SC!=="MK")return;var gd=g.querySelector(".gd");if(!gd)return;
@@ -2237,10 +2297,10 @@ function hFit(){var sc=document.querySelector(".sc.hm"),tb=app.querySelector(".t
  var H=A[0],K=A.slice(1);
  app.classList.remove("hf1","hf2","hf3");A.forEach(function(c){c.style.zoom=""});sc.style.paddingTop="";sc.style.paddingBottom="";
  sc.querySelectorAll("[data-hfp]").forEach(function(e){e.style.paddingTop="";e.style.paddingBottom="";e.removeAttribute("data-hfp")});sc.querySelectorAll(".htk,.wkx .wkd em").forEach(function(e){e.style.height=""});
- K.forEach(function(c){c.style.marginTop="0px"});sc.scrollTop=0;var G=app.querySelector(".hd.hgt")?11:14;
+ K.forEach(function(c){c.style.marginTop="0px"});sc.scrollTop=0;var G=app.querySelector(".hg2")?0:app.querySelector(".hd.hgt")?11:14;
  function lim(){var hi=tb.querySelector("button:nth-child(3) .ic");return Math.min(tb.getBoundingClientRect().top,hi?hi.getBoundingClientRect().top:1e9)}
  function meas(){var t=H.getBoundingClientRect().bottom,h=K[K.length-1].getBoundingClientRect().bottom-K[0].getBoundingClientRect().top;return{av:lim()-t,h:h+G*(K.length+1)*(parseFloat(getComputedStyle(app).zoom)||1)}}
- var m=meas();if(m.h>m.av){app.classList.add("hf1");m=meas()}if(m.h>m.av){app.classList.add("hf2");m=meas()}if(m.h>m.av){app.classList.add("hf3");m=meas()}
+ var HG2=!!sc.querySelector(".hg2"),m=meas();if(!HG2){if(m.h>m.av){app.classList.add("hf1");m=meas()}if(m.h>m.av){app.classList.add("hf2");m=meas()}if(m.h>m.av){app.classList.add("hf3");m=meas()}}
  K.forEach(function(c,i){c.style.marginTop=G+"px"});
  /* 그래도 넘치면 홈 내용 전체를 같은 비율로 줄여서 아래 탭을 침범하지 않게 */
  function mz(z){var t=H.getBoundingClientRect().bottom;return{av:lim()-t,h:K[K.length-1].getBoundingClientRect().bottom-t+G*z*(parseFloat(getComputedStyle(app).zoom)||1)}}
@@ -2250,7 +2310,7 @@ function hFit(){var sc=document.querySelector(".sc.hm"),tb=app.querySelector(".t
  /* 남는 공간: 커뮤니티 인기글 줄 수 → 이번 주 기록 막대 → 나머지는 지금 읽는 책 카드 */
  var tk=sc.querySelector(".htk"),tw=sc.querySelector(".htw");if(tk){tk.style.height="";var RH=26,n=tw.children.length,rows=Math.max(1,Math.min(n,1+Math.floor(rem*0.5/RH)));tk.style.height=rows*RH+"px";tk.dataset.rows=rows;rem-=(rows-1)*RH;var dd=sc.querySelector(".htd");if(dd)dd.style.display=rows>=n?"none":""}
  var ems=sc.querySelectorAll(".wkx .wkd em");if(ems.length){ems.forEach(function(e){e.style.height=""});var b0=ems[0].getBoundingClientRect().height,x=Math.min(rem*0.4,22);ems.forEach(function(e){e.style.height=(b0+x)+"px"});rem-=x}
- if(rem>0){var T=[].slice.call(sc.querySelectorAll(".hero"));T.forEach(function(e){var cs=getComputedStyle(e);e.setAttribute("data-hfp","1");e.style.setProperty("padding-top",(parseFloat(cs.paddingTop)+rem/2)+"px","important");e.style.setProperty("padding-bottom",(parseFloat(cs.paddingBottom)+rem/2)+"px","important")})}
+ if(rem>0&&!sc.querySelector(".hg2")){var T=[].slice.call(sc.querySelectorAll(".hero"));T.forEach(function(e){var cs=getComputedStyle(e);e.setAttribute("data-hfp","1");e.style.setProperty("padding-top",(parseFloat(cs.paddingTop)+rem/2)+"px","important");e.style.setProperty("padding-bottom",(parseFloat(cs.paddingBottom)+rem/2)+"px","important")})}
  sc.style.paddingBottom=(sc.clientHeight-(lim()-sc.getBoundingClientRect().top)/(parseFloat(getComputedStyle(app).zoom)||1))+"px";doorH()}
 function doorH(){var g=document.querySelector(".hd.hgt .hga"),tb=app.querySelector(".tab");if(!g||!tb)return;var z=(parseFloat(g.closest(".hd").style.zoom)||1)*(parseFloat(getComputedStyle(app).zoom)||1);g.style.height=Math.max(150,(tb.getBoundingClientRect().top-g.getBoundingClientRect().top)/z+30)+"px"}
 window.addEventListener("resize",function(){if(app.classList.contains("hm"))hFit()});
@@ -2276,7 +2336,7 @@ function home(){
  +(function(){var d=psDay(),c=PCFG.DAILY_CAP,pc=Math.round(d.act*100/c);msSync();var nd=MS.filter(function(x){return x[3]}).length;
   var TPS=PO.filter(function(p){return p.v===0}).sort(function(a,b){return(b.l+b.c.length)-(a.l+a.c.length)}).slice(0,3),tp=TPS[0];
   return'<section class="blk hdu hdu1"><div class="box hrw hpx hpc" id="hpx" role="button" tabindex="0" aria-label="오늘의 포인트와 미션 보기"><div class="hsh"><b class="hst">오늘의 포인트</b><span class="hlk">미션 '+nd+'/'+MS.length+' 완료'+ic("next")+'</span></div><div class="hpr2"><div class="hpg3" role="progressbar" aria-label="오늘의 활동 포인트" aria-valuenow="'+d.act+'" aria-valuemin="0" aria-valuemax="'+c+'"><i style="width:'+pc+'%"></i></div><span class="hpn2"><b>'+d.act+'P</b> /'+c+'P</span></div></div></section><section class="blk hdu hdu1">'
-  +'<div class="box hcm"><div class="hsh"><b class="hst">커뮤니티 인기글</b><button class="hlk" id="hpo" data-id="0">커뮤니티'+ic("next")+'</button></div>'+(TPS.length?'<div class="hcg">'+TPS.slice(0,2).map(function(q){return'<button class="hcc" data-id="'+q.id+'"><span class="tg2">'+TN[q.t]+'</span><p>'+esc(q.x)+'</p><span class="hcf">'+ic("heart")+q.l+ic("chat")+q.c.length+'</span></button>'}).join("")+'</div>':'<p class="hce">아직 올라온 글이 없어요.</p>')+'</div>'+'</section>'})()
+  +'<div class="box hcm"><div class="hsh"><b class="hst">커뮤니티 인기글</b><button class="hlk" id="hpo" data-id="0">커뮤니티'+ic("next")+'</button></div>'+(TPS.length?'<div class="hcg">'+TPS.slice(0,2).map(function(q){return'<button class="hcc" data-id="'+q.id+'"><span class="hct"><span class="tg2">'+TN[q.t]+'</span><span class="hcf">'+ic("heart")+q.l+ic("chat")+q.c.length+'</span></span><p>'+esc(q.x)+'</p></button>'}).join("")+'</div>':'<p class="hce">아직 올라온 글이 없어요.</p>')+'</div>'+'</section>'})()
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.querySelectorAll(".rck").forEach(function(b){b.onclick=function(){var kk=+b.dataset.k;bookDt(kk,home,function(){PICKED=1;DEF=kk;reader(DEF)})}});app.querySelectorAll(".hgo").forEach(function(b){b.onclick=function(){if(HSM)return;reader(+b.dataset.k)}});
  var hsk=document.getElementById("hsk");if(hsk)hsk.onclick=function(){TFROM=home;testPg()};

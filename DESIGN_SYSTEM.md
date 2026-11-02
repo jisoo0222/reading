@@ -119,6 +119,24 @@
 - 오늘의 포인트: 진행 바 8(채움 `brand/primary-hover`) + "100P /300P"(12)
 - 커뮤니티 인기글: card-white 2개 나란히(사이 10)
 
+### 홈 간격 (Space 토큰)
+| 위치 | 간격 |
+|---|---|
+| 화면 좌우 여백 | `Space/leftright_side` 20 |
+| 위쪽 아치 시작 | `Space/sm` 8 |
+| 위쪽 영역 → 지금 읽는 책 | `Space/xl` 24 |
+| 표지 → 세로선 / 세로선 → 글 | `Space/sm` 8 / `Space/md` 12 |
+| 책 정보 → 이어읽기 버튼, 구분선 → 구역 제목 | `Space/lg` 16 |
+| 구역 제목 → 내용 | `Space/sm` 8 |
+| 구역 끝 → 다음 구분선 | 20 |
+| 커뮤니티 카드 사이 | `Space/gap` 10 |
+| 위쪽 영역 높이 | 258 |
+
+### 디지털 문구점
+- 포인트 카드: 381×127, 바탕 `Background/door`, 모서리 `Radius/card` 25, "나의 포인트" 16 Medium, 동전 아이콘 32 + 포인트 24 Semibold, 보관함 알약 버튼(흰 바탕, 모서리 200, 12 Medium `brand/primary`)
+- 탭 4개(전체보기 · 형광펜 · 스티커 · 제작하기): 아이콘 30 + 글자 11 Semibold, 기본 `brand/default` → 선택 `brand/primary` + 아래 막대 67×6, 탭 줄 아래 1px 선
+- 상품 목록: 바탕 `Background/default`, 3열, 카드 121×122 흰색 모서리 25, 가로 8 · 세로 25 간격, 이름 16 Semibold `text/default`, 가격 16 Regular `text/sub`
+
 ### 아이콘
 - Iconify 플러그인 아이콘 사용(uil · majesticons · ant-design · ri). 선 굵기 2, 끝 둥글게
 
