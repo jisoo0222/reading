@@ -140,6 +140,14 @@
 - 탭 4개(전체보기 · 형광펜 · 스티커 · 제작하기): 아이콘 30 + 글자 11 Semibold, 기본 `brand/default` → 선택 `brand/primary` + 아래 막대 67×6, 탭 줄 아래 1px 선
 - 상품 목록: 바탕 `Background/default`, 3열, 카드 121×122 흰색 모서리 25, 가로 8 · 세로 25 간격, 이름 16 Semibold `text/default`, 가격 16 Regular `text/sub`
 
+### 마이페이지 (피그마 1107:582 참고)
+- 위쪽: `Background/door` 바탕 책장, 선반 `brand/primary` 15
+- 시트: 흰 바탕, 위쪽 모서리 25, 손잡이 50×6 `Background/door`, 좌우 24
+- 프로필: 사진 60 · 이름 20 Semibold · "연령 · 하루 N쪽 목표" 12 `text/sub` · 오른쪽 원형 아이콘 버튼 30(1px 테두리)
+- AI 독서 성향: 회색(`Background/default`) 카드 모서리 20, 안쪽 16·20, 성향 코드 배지(`brand/primary`, 모서리 10, 12 Extra Bold 흰 글씨) + 이름 14 Semibold
+- 내 친구: 사진 50 + 이름 14 Medium, 사이 28
+- 읽은 책: 표지 35×50(모서리 5) · 제목 14 Semibold · 저자 12, 줄 사이 1px `Background/door`, 상태 알약(높이 30, 모서리 200) — 읽는 중은 흰 바탕+초록 테두리, 완독은 초록 바탕+흰 글씨
+
 ### 공통 규칙 (피그마 시안이 없는 화면 · 메인 화면 기준)
 도서관 · 장르 · 인기 순위 · 커뮤니티 · 게시글 · 알림 · 독서 달력 · 책 상세 · 설정 · 읽은 책 · 마이페이지 · 가입 단계에 같은 규칙을 써요.
 - 화면 양쪽 여백 16 (`Space/leftright_side`), 바탕 `Background/default`
