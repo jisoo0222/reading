@@ -1981,6 +1981,11 @@ body:has(.app.hso) #pawf{display:none!important}
 #app .obgo{width:100%!important;max-width:none!important;box-sizing:border-box}
 #app .opt{border-radius:var(--r-md)!important;border:1px solid var(--bd)!important;background:var(--card)}
 #app .opt[aria-pressed="true"],#app .opt.on{border-color:var(--pri)!important}
+
+/* 성향 테스트: 안내("나와 가장 가까운 행동을 골라 주세요.")를 질문 위에 */
+#app .qhn{margin:0 0 6px!important;text-align:center}
+#app .qhn+h1{margin-top:0!important;margin-bottom:20px!important;text-align:center;white-space:nowrap;overflow:hidden}
+#app .obp{padding-top:96px!important}
 </style>
 </head>
 <body>
@@ -2019,7 +2024,7 @@ function bar(n){var s="";for(var i=0;i<Q.length;i++)s+='<i class="'+(i<n?"on":""
 function ask(){
  var q=Q[step];
  var o=q.o.map(function(x,i){return'<button class="opt" data-i="'+i+'" aria-pressed="'+(ans[step]===i)+'"><span>'+x+'</span><span class="mk"></span></button>'}).join("");
- app.innerHTML=ost(3)+bar(step+1)+'<h1>'+q.t+'</h1><p class="hint">'+q.h+'</p><div class="opts">'+o+'</div><div class="foot">'+'<button class="btn ghost" id="bk">이전</button>'+'<button class="btn" id="nx">'+(step===Q.length-1?"프로필 만들기":"다음")+'</button></div>';
+ app.innerHTML=ost(3)+bar(step+1)+'<p class="hint qhn">'+q.h+'</p><h1>'+q.t+'</h1><div class="opts">'+o+'</div><div class="foot">'+'<button class="btn ghost" id="bk">이전</button>'+'<button class="btn" id="nx">'+(step===Q.length-1?"프로필 만들기":"다음")+'</button></div>';
  var nx=document.getElementById("nx");nx.disabled=ans[step]===null;
  app.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){
   ans[step]=+b.dataset.i;
@@ -2058,7 +2063,7 @@ function typePg(){
 var TFROM=home;
 function testPg(n,a){
  n=n||0;a=a||[null,null,null,null];var q=Q[n];app.className="app";
- app.innerHTML='<div class="sh2 tqh"><button class="ib" id="tq0" aria-label="뒤로">'+ic("back")+'</button><h2>테스트</h2><span class="sp3"></span></div>'+bar(n+1)+'<h1>'+q.t+'</h1><p class="hint">'+q.h+'</p><div class="opts">'+q.o.map(function(x,i){return'<button class="opt" data-i="'+i+'" aria-pressed="'+(a[n]===i)+'"><span>'+x+'</span><span class="mk"></span></button>'}).join("")+'</div><div class="foot"><button class="btn" id="tqg">'+(n===Q.length-1?"결과 보기":"다음")+'</button></div>';
+ app.innerHTML='<div class="sh2 tqh"><button class="ib" id="tq0" aria-label="뒤로">'+ic("back")+'</button><h2>테스트</h2><span class="sp3"></span></div>'+bar(n+1)+'<p class="hint qhn">'+q.h+'</p><h1>'+q.t+'</h1><div class="opts">'+q.o.map(function(x,i){return'<button class="opt" data-i="'+i+'" aria-pressed="'+(a[n]===i)+'"><span>'+x+'</span><span class="mk"></span></button>'}).join("")+'</div><div class="foot"><button class="btn" id="tqg">'+(n===Q.length-1?"결과 보기":"다음")+'</button></div>';
  window.scrollTo(0,0);app.scrollTop=0;
  var g=document.getElementById("tqg");g.disabled=a[n]===null;document.getElementById("tq0").onclick=function(){TFROM()};
  app.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){a[n]=+b.dataset.i;app.querySelectorAll(".opt").forEach(function(c){c.setAttribute("aria-pressed",c===b)});g.disabled=false}});
@@ -3596,7 +3601,7 @@ function shRender(){var o=document.getElementById("hsv");if(!o)return;shInit();v
 function pTip(t){var e=document.getElementById("ptip");if(e)e.remove();e=document.createElement("div");e.id="ptip";e.setAttribute("role","status");e.textContent=t;app.appendChild(e);requestAnimationFrame(function(){e.classList.add("on")});setTimeout(function(){e.classList.remove("on");setTimeout(function(){e.remove()},300)},2000)}
 
 /* 가입 화면: 질문(h1)은 한 줄 — 넘치면 글자를 줄여 맞춤 */
-(function(){function fit(){if(!app.querySelector(".ost"))return;app.querySelectorAll(".sc>h1,.sc .center>h1").forEach(function(h){h.style.fontSize="";var f=parseFloat(getComputedStyle(h).fontSize);while(f>15&&h.scrollWidth>h.clientWidth+1){f-=.5;h.style.fontSize=f+"px"}})}
+(function(){function fit(){if(!app.querySelector(".ost,.qhn"))return;app.querySelectorAll(".sc>h1,.sc .center>h1").forEach(function(h){h.style.fontSize="";var f=parseFloat(getComputedStyle(h).fontSize);while(f>15&&h.scrollWidth>h.clientWidth+1){f-=.5;h.style.fontSize=f+"px"}})}
  new MutationObserver(function(){requestAnimationFrame(fit)}).observe(app,{childList:true});window.addEventListener("resize",fit)})();
 
 /* 책 표지 문 모양: 위쪽 아치를 표지 폭의 절반(반원)으로 맞춤 */
