@@ -1902,6 +1902,33 @@ body:has(.app.hso) #pawf{display:none!important}
 #app:not(.hm):not(.rd):not(.onb):not(.spl) .sc:has(>.sh2:first-child){padding-top:0!important}
 #app:not(.hm) .sc>.sh2:first-child{margin-bottom:var(--s-v)!important}
 #app.pf .pfb{padding-top:0!important;padding-bottom:0!important;min-height:0!important}
+
+/* ===== 양쪽 여백 20 (Space/side) — 모든 화면 ===== */
+:root{--s-side:20px}
+.app,#app{--px:20px!important}
+#app .sc{padding-left:var(--px)!important;padding-right:var(--px)!important}
+#app .hd.hgt.hg2{margin:0 calc(-1*var(--px))!important}
+#app.shp .gd{padding-left:var(--px)!important;padding-right:var(--px)!important}
+#app.pf .pfb{padding-left:var(--px)!important;padding-right:var(--px)!important}
+#app .bdh{margin-left:0!important;margin-right:0!important}
+#app .lsrow,#app .lsrow.cwrow{margin-left:0!important;margin-right:0!important}
+
+/* ===== 가입(정보 입력) 화면: 가운데 정렬 · 질문 한 줄 ===== */
+#app:has(.ost) .sc{text-align:center}
+#app .ost{justify-content:center}
+#app:has(.ost) .sc>h1,#app:has(.ost) .center>h1{white-space:nowrap;overflow:hidden;text-align:center;margin-left:0;margin-right:0}
+#app:has(.ost) .hint{text-align:center}
+#app:has(.ost) .fld{text-align:center}
+#app:has(.ost) .fld input{text-align:center}
+#app:has(.ost) .och{justify-content:center}
+#app:has(.ost) .opt>span:first-child{text-align:center}
+#app:has(.ost) .foot{justify-content:center}
+#app:has(.ost) .hint{word-break:keep-all}
+#app .sc.hm>.blk.hdu{margin-top:16px!important}
+
+/* ===== 책 표지 = 문 모양 (위 반원 아치 + 아래 모서리 10) — 홈 표지와 같게 ===== */
+#app .cv,#app .bcv,#app .bdt .bdh .bcv,#app .sc.hm .hrc .rck i{border-radius:50% 50% var(--r-md) var(--r-md)/37.5% 37.5% var(--r-md) var(--r-md)!important;overflow:hidden}
+#app .ppx .pps{grid-auto-columns:124px!important}
 </style>
 </head>
 <body>
@@ -2006,7 +2033,7 @@ var AGE=null,GOAL=null,AGES=["10대","20대","30대","40대","50대 이상"],GO=
 function ost(n){return'<ol class="ost" aria-label="가입 단계 '+n+'/3">'+["기본 정보","독서 목표","독서 성향"].map(function(t,i){return'<li class="'+(i+1<n?"dn":i+1===n?"on":"")+'"'+(i+1===n?' aria-current="step"':'')+'><b>'+(i+1)+'</b><span>'+t+'</span></li>'}).join("")+'</ol>'}
 function info(){
  app.className="app";
- app.innerHTML=ost(1)+'<h1>반가워요!<br>먼저 나를 알려 주세요</h1><p class="hint">입력한 정보는 내 프로필에 쓰여요.</p>'
+ app.innerHTML=ost(1)+'<h1>반가워요! 나를 알려 주세요</h1><p class="hint">입력한 정보는 내 프로필에 쓰여요.</p>'
  +'<label class="fld">닉네임<input id="inm" maxlength="10" placeholder="10자 이내로 입력해 주세요" autocomplete="off"></label>'
  +'<div class="fld">연령대<div class="och" role="group" aria-label="연령대">'+AGES.map(function(a,i){return'<button data-i="'+i+'" aria-pressed="'+(AGE===i)+'">'+a+'</button>'}).join("")+'</div></div>'
  +'<div class="foot"><button class="btn" id="nx1">다음</button></div>';
@@ -2021,7 +2048,7 @@ function goal(){
  var cu=GOAL!==null&&GO.every(function(g){return g[0]!==GOAL}),cv=cu?GOAL:20;
  var o=GO.map(function(g){return'<button class="opt" data-v="'+g[0]+'" aria-pressed="'+(!cu&&GOAL===g[0])+'"><span>하루 '+g[0]+'쪽<small>'+gTip(g[0])+'</small></span><span class="mk"></span></button>'}).join("")
   +'<div class="opt gcu'+(cu?" on":"")+'" role="button" tabindex="0" data-c="1" aria-pressed="'+cu+'"><span style="flex:1">직접 설정<span class="gsl"><span class="gwh" id="gwh"><span class="gwl">하루</span><span class="gwv"><span class="gwc" id="gwc"><i class="gw" data-o="-2"></i><i class="gw" data-o="-1"></i><input type="number" id="gsr" inputmode="numeric" min="1" max="300" value="'+(cu?cv:20)+'" aria-label="하루 목표 쪽수, 위아래로 끌어서 바꾸기"><i class="gw" data-o="1"></i><i class="gw" data-o="2"></i></span></span><span class="gwl">쪽</span></span><small class="gwt"><span>숫자를 위아래로 드래그하거나,</span><span>직접 눌러 입력해 주세요.</span></small></span></span><span class="mk"></span></div>';
- app.innerHTML=ost(2)+'<h1>하루에 얼마나<br>읽어 볼까요?</h1><p class="hint">하루에 읽을 페이지 수를 정해 주세요. 목표를 채우면 알려 드려요.</p>'
+ app.innerHTML=ost(2)+'<h1>하루에 얼마나 읽어 볼까요?</h1><p class="hint">하루에 읽을 페이지 수를 정해 주세요. 목표를 채우면 알려 드려요.</p>'
  +'<div class="opts">'+o+'</div><div class="foot"><button class="btn ghost" id="bk1">이전</button><button class="btn" id="nx2">다음</button></div>';
  var nx=document.getElementById("nx2"),cb=app.querySelector(".gcu"),sr=document.getElementById("gsr");nx.disabled=GOAL===null;
  function pick(b){app.querySelectorAll(".opt").forEach(function(c){c.setAttribute("aria-pressed",c===b)});cb.classList.toggle("on",b===cb);nx.disabled=false}
@@ -3515,6 +3542,14 @@ function shRender(){var o=document.getElementById("hsv");if(!o)return;shInit();v
 
 /* 마이페이지 짧은 안내 */
 function pTip(t){var e=document.getElementById("ptip");if(e)e.remove();e=document.createElement("div");e.id="ptip";e.setAttribute("role","status");e.textContent=t;app.appendChild(e);requestAnimationFrame(function(){e.classList.add("on")});setTimeout(function(){e.classList.remove("on");setTimeout(function(){e.remove()},300)},2000)}
+
+/* 가입 화면: 질문(h1)은 한 줄 — 넘치면 글자를 줄여 맞춤 */
+(function(){function fit(){if(!app.querySelector(".ost"))return;app.querySelectorAll(".sc>h1,.sc .center>h1").forEach(function(h){h.style.fontSize="";var f=parseFloat(getComputedStyle(h).fontSize);while(f>15&&h.scrollWidth>h.clientWidth+1){f-=.5;h.style.fontSize=f+"px"}})}
+ new MutationObserver(function(){requestAnimationFrame(fit)}).observe(app,{childList:true});window.addEventListener("resize",fit)})();
+
+/* 책 표지 문 모양: 위쪽 아치를 표지 폭의 절반(반원)으로 맞춤 */
+(function(){var q=0,S=".cv,.bcv,.sc.hm .hrc .rck i,.sc.hm .hcv";function run(){q=0;app.querySelectorAll(S).forEach(function(e){var w=e.offsetWidth;if(!w)return;var r=Math.round(w/2)+"px";var v=r+" "+r+" var(--r-md) var(--r-md)";if(e.dataset.door!==v){e.dataset.door=v;e.style.setProperty("border-radius",v,"important")}})}
+ new MutationObserver(function(){if(!q){q=1;requestAnimationFrame(run)}}).observe(app,{childList:true,subtree:true});window.addEventListener("resize",function(){app.querySelectorAll("[data-door]").forEach(function(e){delete e.dataset.door});run()});run()})();
 </script>
 </body>
 </html>
