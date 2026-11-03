@@ -1880,6 +1880,20 @@ body:has(.app.hso) #pawf{display:none!important}
 #app .mpt3{margin-top:0!important}
 #app .lsrow{padding-top:0!important}
 #app.pf .sc{padding-top:0!important}
+
+/* ===== 아이콘 30 고정 (네비 제외, 글자 옆 작은 아이콘은 16) ===== */
+:root{--ic:30px;--ic-in:16px}
+#app .ib .ic,#app .csb2 .ic,#app .lhb .ic,#app .gnt span .ic,#app .nti .ic,#app .pmb .ic,#app .ptc2>.ic,#app .nbl .ic,#hsv .nbl .ic,.wfab .ic,#app .ntm>.ic{width:var(--ic)!important;height:var(--ic)!important}
+#app .ib{min-width:40px;min-height:40px}
+#app .csb2{width:40px!important;height:40px!important}
+#app.pf .pmb{width:40px!important;height:40px!important}
+#app .nti{width:48px!important;height:48px!important}
+#app .nti .env{width:30px;height:auto}
+#app .ntm{display:flex;align-items:center;gap:12px;width:100%;margin:0 0 12px;padding:16px;border:1px solid var(--bd-card);border-radius:var(--r-md);background:var(--card);font:inherit;color:var(--ink);text-align:left;cursor:pointer;position:relative}
+#app .ntm .ntx{flex:1;min-width:0}#app .ntm .ntx b{display:block;font-size:15px}#app .ntm .ntx small{font-size:12px;color:var(--sub)}
+#app .ntm .ntd{position:static}
+/* ===== 모서리 lg 30 (홈 슬라이딩 시트 · 팝업 · 카드) ===== */
+:root{--r-lg:30px;--r-sheet:30px;--r-popup:30px;--r-card:30px}
 </style>
 </head>
 <body>
@@ -2536,14 +2550,15 @@ function stamp(c,on,k){
 I.bellOn="M6 16v-5a6 6 0 0 1 9-5.2M18 11v5l1.5 2h-15M10 20a2 2 0 0 0 4 0";
 var NTF=[{k:"rq",q:1,t:"하린님이 『메밀꽃 필 무렵』 함께 읽기를 신청했어요.",tm:"방금 전",rd:0},{k:"fr",u:2,t:"하린님이 친구 신청을 보냈어요.",tm:"방금 전",rd:0},{k:"rm",t:"",tm:"10분 전",rd:0},{k:"pp",u:0,t:"지민님이 같은 책에 코멘트를 남겼어요.",tm:"1시간 전",rd:0},{k:"pt",t:"출석 포인트 10P가 쌓였어요.",tm:"어제",rd:1}],NIC={fr:"users",rm:"book",pp:"chat",pt:"gift",rq:"mail"};
 function ntfT(n){return n.k==="rm"?(GOAL?"오늘 목표 "+GOAL+"쪽, 아직 읽을 시간이 남았어요. 이어 읽어 볼까요?":"오늘도 한 쪽만 가볍게 읽어 볼까요?"):n.t}
-function unread(){return NTF.filter(function(n){return!n.rd}).length}
+function unread(){return NTF.filter(function(n){return!n.rd}).length+REQ.filter(function(r){return r.st===0}).length}
 var NFC="all",NCAT=[["all","전체"],["rq","우편"],["fr","친구"],["rm","독서"],["pp","커뮤니티"],["pt","포인트"]];
 function inbox(c){if(typeof c==="string")NFC=c;
  app.className="app";var VIS=NTF.map(function(n,i){return i}).filter(function(i){return NFC==="all"||NTF[i].k===NFC});
  app.innerHTML='<div class="sh2"><button class="ib" id="nb0" aria-label="뒤로">'+ic("back")+'</button><h2>알림</h2><button class="nall" id="nall"'+(NTF.some(function(n){return !n.rd})?'':' disabled')+'>모두 읽음</button></div>'
+ +(REQ.length?(function(){var nw=REQ.filter(function(r){return r.st===0}).length;return'<button class="ntm" id="ntm"><span class="nti">'+envSvg(0)+'</span><span class="ntx"><b>우체통</b><small>함께 읽자는 편지 '+REQ.length+'통'+(nw?' · 새 편지 '+nw+'통':'')+'</small></span>'+(nw?'<i class="ntd" aria-label="새 편지"></i>':'')+ic("next")+'</button>'})():'')
  +'<div class="ctf ntc" role="tablist" aria-label="알림 분류" id="ntc">'+NCAT.map(function(t){var u=NTF.filter(function(n){return !n.rd&&(t[0]==="all"||n.k===t[0])}).length;return'<button role="tab" data-c="'+t[0]+'" aria-selected="'+(NFC===t[0])+'">'+t[1]+(u?'<i class="ntu" aria-label="읽지 않음 '+u+'개">'+u+'</i>':'')+'</button>'}).join("")+'</div>'
  +(VIS.length?'<div class="ntl">'+VIS.map(function(i){var n=NTF[i];return'<button class="ntr'+(n.rd?"":" new")+'" data-i="'+i+'"><span class="nti">'+ic(NIC[n.k])+'</span><span class="ntx"><b>'+esc(ntfT(n))+'</b><small>'+n.tm+'</small></span>'+(n.rd?'':'<i class="ntd" aria-label="읽지 않음"></i>')+'</button>'}).join("")+'</div>':'<div class="emp">'+(NFC==="all"?'새 알림이 없어요.':'이 분류에는 알림이 없어요.')+'</div>');
- document.getElementById("nb0").onclick=home;document.getElementById("nall").onclick=function(){NTF.forEach(function(n){n.rd=1});inbox(NFC)};document.getElementById("ntc").onclick=function(e){var b=e.target.closest("button");if(b&&b.dataset.c!==NFC)inbox(b.dataset.c)};
+ document.getElementById("nb0").onclick=home;var ntm=document.getElementById("ntm");if(ntm)ntm.onclick=function(){var c=NFC;mailPg(function(){inbox(c)})};document.getElementById("nall").onclick=function(){NTF.forEach(function(n){n.rd=1});inbox(NFC)};document.getElementById("ntc").onclick=function(e){var b=e.target.closest("button");if(b&&b.dataset.c!==NFC)inbox(b.dataset.c)};
  app.querySelectorAll(".ntr").forEach(function(b){b.onclick=function(){var n=NTF[+b.dataset.i];n.rd=1;
   if(n.k==="rq"){inbox();if(reqBy(n.q))letter(n.q);else mailPg(inbox)}else if(n.k==="fr"){inbox();friend(n.u)}else if(n.k==="rm"||n.k==="pp")reader();else if(n.k==="pt")shop();else inbox()}})}
 var PLT={L:["#F6F6F6","#FFFFFF","#1F1E1E","#666161","#E3E3E3","#4CAE85","#FFFFFF","#E3E3E3"],D:["#1F1E1E","#444141","#F6F6F6","#C5C5C5","#666161","#D5D5D5","#1F1E1E","#D5D5D5"]},
@@ -3252,7 +3267,7 @@ function mailPg(back){MLB=back||profile;app.className="app mlp";window.scrollTo(
  +(REQ.length?'<div class="mll">'+REQ.map(function(r){var b=LB[r.k],mi=mIdx(r.from),c=mi>-1?M[mi][2]:"#9B7F9B";return'<button class="mlr" data-q="'+r.id+'"><span class="mle">'+envSvg(0)+'</span><span class="mlt"><b>'+r.from+'님의 편지</b><small>『'+b[0]+'』 함께 읽기 신청</small><small class="mlm">'+r.tm+'</small></span>'+(r.st===0?'<i class="ntd" aria-label="읽지 않음"></i>':'')+ic("next")+'</button>'}).join("")+'</div>':'<div class="emp">받은 편지가 없어요.</div>');
  document.getElementById("ml0").onclick=function(){MLB()};
  app.querySelectorAll(".mlr").forEach(function(b){b.onclick=function(){letter(+b.dataset.q,1)}})}
-function pawF(){var f=document.getElementById("pawf"),on=REQ.some(function(r){return r.st===0})&&!!app.querySelector("nav.tab");if(f)f.style.display=document.getElementById("dlg")?"none":"";
+function pawF(){var f0=document.getElementById("pawf");if(f0)f0.remove();return;var f=document.getElementById("pawf"),on=REQ.some(function(r){return r.st===0})&&!!app.querySelector("nav.tab");if(f)f.style.display=document.getElementById("dlg")?"none":"";
  if(!on){if(f)f.remove();return}
  if(!f){f=document.createElement("button");f.id="pawf";f.setAttribute("aria-label","함께 읽기 신청 편지 열기");f.innerHTML=envSvg(0)+'<i class="pwx" aria-hidden="true">!</i>';document.body.appendChild(f);
   f.onclick=function(){var r=REQ.filter(function(q){return q.st===0})[0];if(r)letter(r.id)}}
