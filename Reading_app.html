@@ -1923,6 +1923,29 @@ body:has(.app.hso) #pawf{display:none!important}
 /* ===== 책 표지 = 문 모양 (위 반원 아치 + 아래 모서리 10) — 홈 표지와 같게 ===== */
 #app .cv,#app .bcv,#app .bdt .bdh .bcv,#app .sc.hm .hrc .rck i{border-radius:50% 50% var(--r-md) var(--r-md)/37.5% 37.5% var(--r-md) var(--r-md)!important;overflow:hidden}
 #app .ppx .pps{grid-auto-columns:124px!important}
+
+/* 연령대 슬라이더 (한 줄) */
+#app .ags{position:relative;margin-top:14px;padding:0 10px}
+#app .ags input{-webkit-appearance:none;appearance:none;width:100%;height:24px;margin:0;background:transparent;cursor:pointer;position:relative;z-index:2}
+#app .ags::before{content:"";position:absolute;left:10px;right:10px;top:8px;height:8px;border-radius:var(--r-full);background:var(--card);border:1px solid var(--bd);box-sizing:border-box}
+#app .ags::after{content:"";position:absolute;left:10px;top:8px;height:8px;border-radius:var(--r-full);background:var(--pri)}
+#app .ags::after{width:calc((100% - 20px) * var(--f,0))}
+#app .ags input::-webkit-slider-runnable-track{height:24px;background:transparent}
+#app .ags input::-moz-range-track{height:24px;background:transparent}
+#app .ags input::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--card);border:2px solid var(--pri);box-shadow:0 2px 6px rgba(31,30,30,.18)}
+#app .ags input::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--card);border:2px solid var(--pri)}
+#app .ags.un input::-webkit-slider-thumb{border-color:var(--bd);box-shadow:none}
+#app .ags.un input::-moz-range-thumb{border-color:var(--bd)}
+#app .ags.un::after{display:none}
+#app .agl{display:flex;justify-content:space-between;margin:10px -10px 0}
+#app .agl span{flex:1;text-align:center;font-size:13px;font-weight:500;color:var(--tx3);cursor:pointer;white-space:nowrap;word-break:keep-all}
+#app .agl span.on{color:var(--strong);font-weight:700}
+
+#app .ags input{border:0!important;padding:0!important;box-shadow:none!important;height:24px!important;min-height:0!important;border-radius:0!important;background:transparent!important}
+#app .ags::before{left:22px!important;right:22px!important}
+#app .ags::after{left:22px!important;width:calc((100% - 44px) * var(--f,0))!important}
+#app .agl{position:relative;display:block!important;height:18px;margin:10px 0 0!important}
+#app .agl span{position:absolute;top:0;left:calc(22px + (100% - 44px) * var(--i) / 4);transform:translateX(-50%);flex:none}
 </style>
 </head>
 <body>
@@ -2029,12 +2052,14 @@ function info(){
  app.className="app";
  app.innerHTML=ost(1)+'<h1>반가워요! 나를 알려 주세요</h1><p class="hint">입력한 정보는 내 프로필에 쓰여요.</p>'
  +'<label class="fld">닉네임<input id="inm" maxlength="10" placeholder="10자 이내로 입력해 주세요" autocomplete="off"></label>'
- +'<div class="fld">연령대<div class="och" role="group" aria-label="연령대">'+AGES.map(function(a,i){return'<button data-i="'+i+'" aria-pressed="'+(AGE===i)+'">'+a+'</button>'}).join("")+'</div></div>'
+ +'<div class="fld">연령대<div class="ags'+(AGE===null?' un':'')+'" style="--f:'+((AGE===null?1:AGE)/(AGES.length-1))+'"><input type="range" id="agr" min="0" max="'+(AGES.length-1)+'" step="1" value="'+(AGE===null?1:AGE)+'" aria-label="연령대, 좌우로 밀어서 고르기" aria-valuetext="'+(AGE===null?'선택 안 함':AGES[AGE])+'"><div class="agl" aria-hidden="true">'+AGES.map(function(a,i){return'<span data-i="'+i+'" style="--i:'+i+'"'+(AGE===i?' class="on"':'')+'>'+a+'</span>'}).join("")+'</div></div></div>'
  +'<div class="foot"><button class="btn" id="nx1">다음</button></div>';
  var nm=document.getElementById("inm"),nx=document.getElementById("nx1");nm.value=ME;
  function ck(){nx.disabled=!nm.value.trim()||AGE===null}ck();
  nm.oninput=ck;
- app.querySelector(".och").onclick=function(e){var b=e.target.closest("button");if(!b)return;AGE=+b.dataset.i;app.querySelectorAll(".och button").forEach(function(c){c.setAttribute("aria-pressed",c===b)});ck()};
+ var ag=document.getElementById("agr"),agw=app.querySelector(".ags");function agSet(v){AGE=v;ag.value=v;agw.classList.remove("un");agw.style.setProperty("--f",v/(AGES.length-1));ag.setAttribute("aria-valuetext",AGES[v]);agw.querySelectorAll(".agl span").forEach(function(x){x.classList.toggle("on",+x.dataset.i===v)});ck()}
+ ag.oninput=function(){agSet(+ag.value)};ag.onpointerdown=function(){if(AGE===null)setTimeout(function(){agSet(+ag.value)},0)};
+ agw.querySelectorAll(".agl span").forEach(function(x){x.onclick=function(){agSet(+x.dataset.i)}});
  nx.onclick=function(){ME=nm.value.trim();goal()}}
 function gTip(v){return v<=15?"독서를 이제 막 시작해 보는 분께 추천해요.":v<=35?"가끔 책을 읽어 온 분께 추천해요.":"책 읽는 습관이 이미 있는 분께 추천해요."}
 function goal(){
