@@ -1969,9 +1969,6 @@ body:has(.app.hso) #pawf{display:none!important}
 #app .agf .ags2 button{flex:1;border:0!important;background:none!important;padding:0;display:grid;place-items:center;color:var(--tx3);cursor:pointer;outline:none!important;box-shadow:none!important;min-height:0}
 #app .agf .ags2 .ic{width:20px!important;height:20px!important}
 #app .agf .agu2 .ic{transform:rotate(-90deg)}#app .agf .agd2 .ic{transform:rotate(90deg)}
-@keyframes agsu{from{transform:translateY(10px);opacity:.2}to{transform:none;opacity:1}}
-@keyframes agsd{from{transform:translateY(-10px);opacity:.2}to{transform:none;opacity:1}}
-#app .agf.su input{animation:agsu .18s ease}#app .agf.sd input{animation:agsd .18s ease}
 #app .agf input{margin:0!important}
 #app .agf .agn{line-height:1;top:calc(50% + 1px)}
 
@@ -3606,7 +3603,7 @@ function pTip(t){var e=document.getElementById("ptip");if(e)e.remove();e=documen
 (function(){var q=0,S=".cv,.bcv,.sc.hm .hrc .rck i,.sc.hm .hcv";function run(){q=0;app.querySelectorAll(S).forEach(function(e){var w=e.offsetWidth;if(!w)return;var r=Math.round(w/2)+"px";var v=r+" "+r+" var(--r-md) var(--r-md)";if(e.dataset.door!==v){e.dataset.door=v;e.style.setProperty("border-radius",v,"important")}})}
  new MutationObserver(function(){if(!q){q=1;requestAnimationFrame(run)}}).observe(app,{childList:true,subtree:true});window.addEventListener("resize",function(){app.querySelectorAll("[data-door]").forEach(function(e){delete e.dataset.door});run()});run()})();
 
-/* 나이 입력칸: 닉네임처럼 칸 + 오른쪽 위아래 화살표, 휠·끌기로 숫자가 위아래로 넘어가요 */
+/* 나이 입력칸: 닉네임처럼 칸 + 오른쪽 위아래 화살표, 휠·끌기로 숫자만 바뀌어요 */
 var AGMIN=7,AGMAX=100;
 function ageOk(a){return typeof a==="number"&&a>=AGMIN&&a<=AGMAX}
 function ageTxt(a){return a<20?"10대":a>=50?"50대 이상":Math.floor(a/10)*10+"대"}
@@ -3614,7 +3611,7 @@ function ageFld(id,val){var v=ageOk(val)?val:"";return'<span class="agf"><input 
 function ageWire(inp,cb){var box=inp.closest(".agf");
  function val(){var n=parseInt(inp.value,10);return isNaN(n)?null:n}
  function out(){var n=val();box.classList.toggle("has",n!==null);cb(ageOk(n)?n:null)}
- function step(d){var n=val();n=n===null?20:n+d;n=Math.max(AGMIN,Math.min(AGMAX,n));inp.value=n;box.classList.remove("su","sd");void box.offsetWidth;box.classList.add(d>0?"su":"sd");out()}
+ function step(d){var n=val();n=n===null?20:n+d;n=Math.max(AGMIN,Math.min(AGMAX,n));inp.value=n;out()}
  inp.addEventListener("input",function(){if(inp.value.length>3)inp.value=inp.value.slice(0,3);out()});
  inp.addEventListener("keydown",function(e){if(e.key==="ArrowUp"){e.preventDefault();step(1)}else if(e.key==="ArrowDown"){e.preventDefault();step(-1)}});
  box.querySelector(".agu2").onclick=function(e){e.preventDefault();step(1)};box.querySelector(".agd2").onclick=function(e){e.preventDefault();step(-1)};
