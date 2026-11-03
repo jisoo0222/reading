@@ -1921,7 +1921,7 @@ body:has(.app.hso) #pawf{display:none!important}
 #app .sc.hm>.blk.hdu{margin-top:16px!important}
 
 /* ===== 책 표지 = 문 모양 (위 반원 아치 + 아래 모서리 10) — 홈 표지와 같게 ===== */
-#app .cv,#app .bcv,#app .bdt .bdh .bcv,#app .sc.hm .hrc .rck i{border-radius:50% 50% var(--r-md) var(--r-md)/37.5% 37.5% var(--r-md) var(--r-md)!important;overflow:hidden}
+#app .cv,#app .bcv,#app .bdt .bdh .bcv,#app .sc.hm .hrc .rck i,#app .rbw>i{border-radius:50% 50% var(--r-md) var(--r-md)/37.5% 37.5% var(--r-md) var(--r-md)!important;overflow:hidden}
 #app .ppx .pps{grid-auto-columns:124px!important}
 
 /* 연령대 슬라이더 (한 줄) */
@@ -2069,6 +2069,17 @@ body:has(.app.hso) #pawf{display:none!important}
 #app .gnc{margin-top:41px!important;gap:22px 0!important}
 #lmain>.fs+.fs{margin-top:14px!important}
 #app .gnc{margin-top:27px!important}
+
+/* ===== 홈 알림 버튼: 흰 원 대신 색 원(새 알림 있으면 알림 색, 없으면 초록), 점 없음 ===== */
+#hsv .nbl{background:var(--pri)!important;color:#fff!important}
+#hsv .nbl:has(.nbd){background:#FF4C86!important}
+#hsv .nbl .nbd{display:none!important}
+/* ===== 홈 커뮤니티 인기글: 글이 잘 보이게 ===== */
+#app .sc.hm .hcc{gap:6px!important;padding:9px 12px!important;justify-content:flex-start}
+#app .sc.hm .hcc .hct{display:flex;align-items:center;justify-content:space-between;gap:6px}
+#app .sc.hm .hcc .tg2{height:22px;padding:0 8px!important;font-size:11px!important;color:var(--tx2)!important}
+#app .sc.hm .hcc p{-webkit-line-clamp:2!important;font-size:13px!important;line-height:18px!important;font-weight:500;color:var(--ink)!important;margin:0}
+#app .sc.hm .hcc .hcf{margin:0!important;font-size:12px;color:var(--tx2)}
 </style>
 </head>
 <body>
@@ -2886,7 +2897,7 @@ function home(){
  +(function(){var d=psDay(),c=PCFG.DAILY_CAP,pc=Math.round(d.act*100/c);msSync();var nd=MS.filter(function(x){return x[3]}).length;
   var TPS=PO.filter(function(p){return p.v===0}).sort(function(a,b){return(b.l+b.c.length)-(a.l+a.c.length)}).slice(0,3),tp=TPS[0];
   return'<section class="blk hdu hdu1"><div class="box hrw hpx hpc" id="hpx" role="button" tabindex="0" aria-label="오늘의 포인트와 미션 보기"><div class="hsh"><b class="hst">오늘의 포인트</b><span class="hlk">미션 '+nd+'/'+MS.length+' 완료'+ic("next")+'</span></div><div class="hpr2"><div class="hpg3" role="progressbar" aria-label="오늘의 활동 포인트" aria-valuenow="'+d.act+'" aria-valuemin="0" aria-valuemax="'+c+'"><i style="width:'+pc+'%"></i></div><span class="hpn2"><b>'+d.act+'P</b> /'+c+'P</span></div></div></section><section class="blk hdu hdu1">'
-  +'<div class="box hcm"><div class="hsh"><b class="hst">커뮤니티 인기글</b><button class="hlk" id="hpo" data-id="0">커뮤니티'+ic("next")+'</button></div>'+(TPS.length?'<div class="hcg">'+TPS.slice(0,2).map(function(q){return'<button class="hcc" data-id="'+q.id+'"><span class="tg2">'+TN[q.t]+'</span><p>'+esc(q.x)+'</p><span class="hcf">'+ic("heart")+q.l+ic("chat")+q.c.length+'</span></button>'}).join("")+'</div>':'<p class="hce">아직 올라온 글이 없어요.</p>')+'</div>'+'</section>'})()
+  +'<div class="box hcm"><div class="hsh"><b class="hst">커뮤니티 인기글</b><button class="hlk" id="hpo" data-id="0">커뮤니티'+ic("next")+'</button></div>'+(TPS.length?'<div class="hcg">'+TPS.slice(0,2).map(function(q){return'<button class="hcc" data-id="'+q.id+'"><span class="hct"><span class="tg2">'+TN[q.t]+'</span><span class="hcf">'+ic("heart")+q.l+ic("chat")+q.c.length+'</span></span><p>'+esc(q.x)+'</p></button>'}).join("")+'</div>':'<p class="hce">아직 올라온 글이 없어요.</p>')+'</div>'+'</section>'})()
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.querySelectorAll(".rck").forEach(function(b){b.onclick=function(){var kk=+b.dataset.k;bookDt(kk,home,function(){PICKED=1;DEF=kk;reader(DEF)})}});app.querySelectorAll(".hgo").forEach(function(b){b.onclick=function(){if(HSM)return;reader(+b.dataset.k)}});
  var hsk=document.getElementById("hsk");if(hsk)hsk.onclick=function(){TFROM=home;testPg()};
@@ -3688,7 +3699,7 @@ function pTip(t){var e=document.getElementById("ptip");if(e)e.remove();e=documen
  new MutationObserver(function(){requestAnimationFrame(fit)}).observe(app,{childList:true});window.addEventListener("resize",fit)})();
 
 /* 책 표지 문 모양: 위쪽 아치를 표지 폭의 절반(반원)으로 맞춤 */
-(function(){var q=0,S=".cv,.bcv,.sc.hm .hrc .rck i,.sc.hm .hcv";function run(){q=0;app.querySelectorAll(S).forEach(function(e){var w=e.offsetWidth;if(!w)return;var r=Math.round(w/2)+"px";var v=r+" "+r+" var(--r-md) var(--r-md)";if(e.dataset.door!==v){e.dataset.door=v;e.style.setProperty("border-radius",v,"important")}})}
+(function(){var q=0,S=".cv,.bcv,.sc.hm .hrc .rck i,.sc.hm .hcv,.rbw>i";function run(){q=0;app.querySelectorAll(S).forEach(function(e){var w=e.offsetWidth;if(!w)return;var r=Math.round(w/2)+"px";var v=r+" "+r+" var(--r-md) var(--r-md)";if(e.dataset.door!==v){e.dataset.door=v;e.style.setProperty("border-radius",v,"important")}})}
  new MutationObserver(function(){if(!q){q=1;requestAnimationFrame(run)}}).observe(app,{childList:true,subtree:true});window.addEventListener("resize",function(){app.querySelectorAll("[data-door]").forEach(function(e){delete e.dataset.door});run()});run()})();
 
 /* 나이 입력칸: 닉네임처럼 칸 + 오른쪽 위아래 화살표, 휠·끌기로 숫자만 바뀌어요 */
