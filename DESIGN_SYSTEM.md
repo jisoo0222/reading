@@ -81,25 +81,23 @@
 |---|---|---|
 | `Radius/xs` | 5 | 책 썸네일, 책장 책등 |
 | `Radius/md` | 10 | **기본 모서리** — 버튼, 입력칸, 카드, 요일 칸 |
-| `Radius/popup` | 20 | 팝업 |
-| `Radius/sheet` | 25 | 시트 위 모서리 |
-| `Radius/nav` | 45.5 | 네비게이션 바 위 모서리 |
-| `Radius/cover` | 46.5 | 홈 책 표지 위쪽 아치(아래는 10) |
+| `Radius/lg` | 25 | 시트 위 모서리, 팝업, 문구점 카드 |
+| `Radius/xl` | 46 | 네비게이션 바 위 모서리, 홈 책 표지 아치(아래는 10) |
 | `Radius/full` | 999 | 칩, 진행 막대, 손잡이 |
 | `Space/xs·sm·md·lg·xl·2xl` | 4·8·12·16·24·32 | |
 | `Space/side` | 16 | 화면 양쪽 여백 |
-| `Space/lg` | 16 | 구역 사이(구분선 위아래 15~16) |
+| `Space/lg` | 16 | 구역 사이(구분선 위아래) |
 | `Size/button` | 56 | 중요 버튼 높이 |
 | `Size/input` | 51 | 검색칸 높이 |
-| `Size/icon-button` | 41 | 동그라미 아이콘 버튼(알림, 찜) |
-| `Size/chip` · `chip-sm` | 34 · 26 | 필터 칩 · 카드 안 태그/상태 알약 |
-| `Size/day-cell` | 36 (폭 39) | 요일 칸 |
+| `Size/chip` · `chip-sm` | 36 · 26 | 필터 칩·요일 칸 높이 · 카드 안 태그/상태 알약 |
 | `Size/progress` | 8 | 진행 막대 두께 |
-| `Size/avatar-sm·md·lg` | 40·50·60 | 상단 프로필 · 친구 · 내 프로필 |
+| `Size/circle-sm·md·lg` | 40·50·60 | 상단 프로필·알림/찜 동그라미 버튼 · 친구 사진·네비 홈 버튼 · 내 프로필 |
 | `Size/handle-w·h` | 50·6 | 시트 손잡이 |
-| `Size/shelf` | 15 | 책장 선반 두께 |
-| `Size/icon-xs·sm·md·lg` | 14·16·20·24 | 좋아요·댓글 · 화살표 · 알림 |
-| `Size/home-button` · `nav-height` · `header` | 50 · 91 · 56 | |
+| `Size/shelf` | 16 | 책장 선반 두께 |
+| `Size/icon-sm·md·lg` | 16·20·24 | 좋아요·댓글·화살표 · 알림 |
+| `Size/nav-height` · `header` | 91 · 56 | |
+
+> 차이가 작은 값은 하나로 합쳤어요: 모서리 20·25 → **25**, 45.5·46.5 → **46** / 칩·요일 칸 34·36 → **36** / 동그라미 40·41 → **40** / 아이콘 14·16 → **16** / 선반 15 → **16**
 
 ## 5. 효과 (Effect Styles)
 
@@ -110,13 +108,16 @@
 
 ## 6. 컴포넌트
 
-### 벽 + 책장 + 시트 (홈 · 마이페이지 위쪽)
-- 벽 `surface/wall`, 선반 365×15 `shelf/bar`(y208), 시트는 y240부터 `surface/sheet` · 위 모서리 25, 손잡이 50×6 `surface/wall`(y249)
-- 홈: 왼쪽 위 프로필 40(발바닥) + 이름 16 Semibold, 오른쪽 알림 동그라미 버튼 41(흰 바탕), 책등 33폭 8권(높이 103·115·131, `shelf/book-*`)
-- 마이페이지: 책등은 실제 읽은 책으로 보여 줘요
+### 홈 책장 (벽 + 책장 + 시트)
+- 벽 `surface/wall`, 선반 365×16 `shelf/bar`(y208), 시트는 y240부터 `surface/sheet` · 위 모서리 25, 손잡이 50×6 `surface/wall`(y249)
+- 왼쪽 위 프로필 40(발바닥) + **닉네임+님** 16 Semibold, 오른쪽 알림 동그라미 버튼 40(흰 바탕)
+- 책장은 내가 꽂은 실제 책이에요. 책등 33폭, 한 줄에 8권(높이 131·103·115 반복, `shelf/book-*` 노란색), 제목은 세로 11 Semibold
+- 접힌 상태: 첫째 줄만 보여요. 책을 누르면 책 정보, 손잡이·벽을 누르거나 아래로 끌면 펼쳐져요
+- 펼친 상태(피그마 1153:1461): 3단 책장(줄 아래 y208·397·602) + 오른쪽 아래 강아지, 시트는 맨 아래(손잡이 y815). 위로 밀거나 손잡이를 누르면 접혀요
+- 펼친 책장에서 책을 꾹 눌러 옮기고, 휴지통에 놓으면 빠져요. 마지막 칸의 + 로 완독한 책을 꽂아요
 
 ### navigation_bar
-- 흰 바탕, 위 모서리 45.5, 테두리 1.5px `nav/border`, 높이 91, 사이 25
+- 흰 바탕, 위 모서리 46, 테두리 1.5px `nav/border`, 높이 91, 사이 25
 - 아이콘 + 글자 11 Semibold, 기본 `icon/default` → 선택 `icon/active`, 가운데 홈 버튼 50
 
 ### 중요 버튼
@@ -124,7 +125,7 @@
 
 ### card-white (카드)
 - 흰 바탕, 테두리 1px `border/card`, 모서리 10
-- 홈 커뮤니티 인기글(위 태그 · 글 1줄 · 아래 좋아요/댓글 아이콘 14 + 숫자), 커뮤니티 글, 마이페이지 프로필 카드
+- 홈 커뮤니티 인기글(위 태그 · 글 1줄 · 아래 좋아요/댓글 아이콘 16 + 숫자), 커뮤니티 글, 마이페이지 프로필 카드
 
 ### 진행 막대
 - 높이 8, 모서리 999, 흰 바탕 + 1px `progress/border` 테두리 + `progress/fill` 채움
@@ -136,13 +137,14 @@
 - 라벨 SUN · MON · TUE · WED · THU · FRI · SAT (11 Semibold `text/tertiary`)
 
 ### 칩
-- 필터 칩: 높이 34, 모서리 999, 1px `border/default` + `text/secondary` → 선택하면 `chip/selected-bg` + `chip/selected-text`
+- 필터 칩: 높이 36, 모서리 999, 1px `border/default` + `text/secondary` → 선택하면 `chip/selected-bg` + `chip/selected-text`
 - 태그 칩(카드 안): 높이 26, 1px `border/default`, 12 Medium `text/tertiary`
 - 상태 알약(읽은 책): 높이 26 — 읽는 중은 흰 바탕 + 1px `brand/primary` 테두리, 완독은 `chip/selected-bg`
 
 ### 검색칸 · 동그라미 버튼
 - 검색칸: 높이 51, 흰 바탕, 1px `border/default`, 모서리 10, 오른쪽 돋보기
-- 동그라미 버튼: 41, 흰 바탕(도서관 찜 버튼은 검색칸 오른쪽)
+- 검색칸 안 입력창에는 테두리를 따로 두지 않아요(상자 하나)
+- 도서관: 검색칸 329 + 찜 동그라미 버튼 40 / 커뮤니티: 검색칸 382, 위 16
 - 검색칸 아래 1px `divider`, 위아래 15
 
 ### 구역 머리
@@ -160,14 +162,14 @@
 | 커뮤니티 인기글 · 카드 86 | 718–831 |
 | 네비게이션 바 | 841 |
 
-### 마이페이지 (시스템에 맞춰 바꾼 점)
-- 벽·선반·시트·손잡이는 홈과 같은 토큰
+### 마이페이지 (피그마 1153:2237 · 책장은 홈으로 옮김)
+- 책장 없이 `surface/sheet` 바탕, 위 30부터 프로필 카드
 - 프로필은 card-white 카드 안에: 사진 60 · 이름 20 Semibold · 보조 12, AI 독서 성향은 `surface/muted` 묶음, 성향 코드 배지는 `chip/selected-*`
 - 내 친구 · 읽은 책은 상자 없이 구역 머리 + `divider` (홈과 같은 방식)
 - 읽은 책 줄: 표지 35×50(모서리 5), 상태 알약은 위 "칩" 규칙
 
 ### 디지털 문구점
-- 포인트 카드: `surface/wall` 바탕, 동전 아이콘 32 + 포인트 24 Semibold, 보관함 알약 버튼
+- 포인트 카드: `surface/wall`(연초록) 바탕, 모서리 25, 동전 아이콘 32 + 포인트 24 Semibold, 보관함 알약 버튼(흰 바탕 · 12 Medium `brand/primary`)
 - 탭 4개(전체보기 · 형광펜 · 스티커 · 제작하기): 아이콘 30 + 글자 11 Semibold, 선택 `brand/primary` + 아래 막대
 - 상품 목록: 3열, 흰 카드, 이름 16 Semibold, 가격 16 Regular `text/secondary`
 
@@ -196,6 +198,6 @@
 | `--bd-card` | `border/card` |
 | `--divider` | `divider` |
 | `--bk-l` · `--bk-m` · `--bk-d` | `shelf/book-light` · `mid` · `deep` |
-| `--r-xs` · `--r-md`(=`--r-btn`) · `--r-sheet` · `--r-nav` · `--r-arch` · `--r-full` | `Radius/xs` · `md` · `sheet` · `nav` · `cover` · `full` |
-| `--h-btn` · `--h-input` · `--h-ibtn` · `--h-chip` · `--h-chip-sm` · `--h-prog` | `Size/button` · `input` · `icon-button` · `chip` · `chip-sm` · `progress` |
+| `--r-xs` · `--r-md`(=`--r-btn`) · `--r-lg`(=`--r-sheet`·`--r-popup`) · `--r-xl`(=`--r-nav`·`--r-arch`) · `--r-full` | `Radius/xs` · `md` · `lg` · `xl` · `full` |
+| `--h-btn` · `--h-input` · `--h-ibtn` · `--h-chip` · `--h-chip-sm` · `--h-prog` · `--h-shelf` | `Size/button` · `input` · `circle-sm` · `chip` · `chip-sm` · `progress` · `shelf` |
 | `--sh1` | Effect `primary` |
