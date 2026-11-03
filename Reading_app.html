@@ -2099,6 +2099,21 @@ body:has(.app.hso) #pawf{display:none!important}
 /* ===== 모든 책 표지 = 문 모양 (표지 그림이 붙는 모든 요소) ===== */
 #app [data-bt],#dlg [data-bt],#sheet [data-bt]{overflow:hidden}
 #app.pf .rbk>i,#app .rbk>i,#app .ser>i,#app .mpi>i,#app .bc,#app .bc2,#dlg .bc,#dlg .bc2{border-radius:50% 50% var(--r-md) var(--r-md)/37.5% 37.5% var(--r-md) var(--r-md)!important}
+
+/* 책 넘기는 면: 화면 전체 폭 (글자 위치는 그대로) */
+#app .sc.rdc>.bkw#tx,#app .bkw#tx{margin-left:calc(-1*var(--px))!important;margin-right:calc(-1*var(--px))!important;width:auto!important}
+#app .bkw#tx>.pgl{padding-left:calc(var(--px) + 20px)!important;padding-right:calc(var(--px) + 20px)!important}
+/* 글 고를 때 칠해지는 색: 메인색 */
+::selection{background:rgba(76,174,133,.3)}
+
+/* ===== 문장 카드 공유: 디자인 시스템 ===== */
+#dlg.qdl .qth{display:flex;justify-content:center;gap:12px;margin:16px 0 12px}
+#dlg.qdl .qth button{width:40px!important;height:40px!important;border-radius:50%!important;border:1px solid var(--bd)!important;font-size:13px;font-weight:600;padding:0;box-shadow:none!important;outline:none}
+#dlg.qdl .qth button[aria-pressed="true"]{border:2px solid var(--pri)!important;box-shadow:0 0 0 3px var(--card),0 0 0 4px var(--pri)!important}
+#dlg.qdl #qff{display:flex;justify-content:center;gap:8px;margin-bottom:18px}
+#dlg.qdl #qff button{height:var(--h-chip);padding:0 18px!important;border-radius:var(--r-full)!important;border:1px solid var(--bd)!important;background:var(--card)!important;color:var(--tx2)!important;font-size:14px;font-weight:600}
+#dlg.qdl #qff button[aria-pressed="true"]{background:var(--soft)!important;border-color:var(--soft)!important;color:var(--strong)!important}
+#dlg.qdl .qpv svg{border-radius:var(--r-md);box-shadow:0 4px 14px rgba(31,30,30,.12)}
 </style>
 </head>
 <body>
@@ -2276,7 +2291,7 @@ function typeSVG(key,t,names){
  +'<text x="520" y="'+(by+65)+'" text-anchor="middle" font-size="20" fill="#666161" '+F+'>독서 유형</text><text x="520" y="'+(by+101)+'" text-anchor="middle" font-size="30" font-weight="800" letter-spacing="4" fill="#4CAE85" '+F+'>'+e(mt[0])+'</text><text x="520" y="'+(by+135)+'" text-anchor="middle" font-size="20" fill="#1F1E1E" '+F+'>'+e(mt[1])+'</text>'
  +'</svg>'}
 function cardPNG(svg,cb,sc){sc=sc||1.5;var i=new Image();i.onload=function(){var c=document.createElement("canvas");c.width=i.width*sc;c.height=i.height*sc;var x=c.getContext("2d");x.scale(sc,sc);x.drawImage(i,0,0);c.toBlob(cb,"image/png")};i.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)}
-var QTH=[["양피지","#F3EDE7","#4F3A4F","#6A4F6A","#8A6A8A"],["라벤더","#6A4F6A","#F6F1EC","#F3EDE7","#E6DAE6"],["올리브","#B2A5D6","#F6F1EC","#F3EDE7","#E8EBDD"],["밤","#3A2B3A","#F3EDE7","#B2A5D6","#C9B3C9"],["종이","#F6F1EC","#4F3A4F","#B2A5D6","#8A6A8A"]];
+var QTH=[["종이","#FFFFFF","#1F1E1E","#4CAE85","#898585"],["연초록","#C6EED0","#1F1E1E","#267B58","#267B58"],["초록","#4CAE85","#FFFFFF","#FFFFFF","#DCF5E2"],["노랑","#FFF3A0","#1F1E1E","#4CAE85","#666161"],["밤","#1F1E1E","#F6F6F6","#A8E5B7","#B1AFAE"]];
 function qWrap(t,n){var L=[],c="";t.split(" ").forEach(function(w){while(w.length>n){if(c){L.push(c);c=""}L.push(w.slice(0,n));w=w.slice(n)}if((c?c+" "+w:w).length>n){L.push(c);c=w}else c=c?c+" "+w:w});if(c)L.push(c);return L}
 function quoteSVG(q,bt,au,th,serif){
  var T=QTH[th],e=function(x){return esc(String(x))},F=serif?'font-family="Noto Serif KR,Nanum Myeongjo,Batang,serif"':'font-family="Pretendard,Apple SD Gothic Neo,Noto Sans KR,sans-serif"',S='font-family="Pretendard,Apple SD Gothic Neo,Noto Sans KR,sans-serif"';
@@ -2299,7 +2314,7 @@ function quoteSVG(q,bt,au,th,serif){
  +'<text x="540" y="1740" text-anchor="middle" font-size="30" fill="'+T[4]+'" '+S+'>'+e(ME||"")+(ME?" 님이 읽고 있는 책 · ":"")+'AI 독서 습관</text>'
  +'</svg>'}
 function quoteShare(q,bt,au){
- var th=0,sf=1,x=pop('<h3>문장 카드로 공유</h3><p class="sm" style="font-size:12px;margin:-2px 0 10px">인스타그램 스토리(9:16) 크기로 만들어져요.</p><div class="qpv" id="qpv"></div><div class="qth" id="qth">'+QTH.map(function(t,i){return'<button data-i="'+i+'" aria-label="'+t[0]+' 배경" aria-pressed="'+(i===th)+'" style="background:'+t[1]+';color:'+t[2]+'">가</button>'}).join("")+'</div><div class="och" id="qff"><button data-f="1" aria-pressed="true">명조</button><button data-f="0" aria-pressed="false">고딕</button></div><div class="dbt"><button class="btn ghost" id="qsv">저장하기</button><button class="btn" id="qsh">공유하기</button></div><button class="btn ghost" id="qcx" style="width:100%;margin-top:8px">닫기</button>');
+ var th=0,sf=1,x=pop('<h3>문장 카드로 공유</h3><p class="sm" style="font-size:12px;margin:-2px 0 10px">인스타그램 스토리(9:16) 크기로 만들어져요.</p><div class="qpv" id="qpv"></div><div class="qth" id="qth">'+QTH.map(function(t,i){return'<button data-i="'+i+'" aria-label="'+t[0]+' 배경" aria-pressed="'+(i===th)+'" style="background:'+t[1]+';color:'+t[2]+'">가</button>'}).join("")+'</div><div class="och" id="qff"><button data-f="1" aria-pressed="true">명조</button><button data-f="0" aria-pressed="false">고딕</button></div><div class="dbt"><button class="btn ghost" id="qsv">저장하기</button><button class="btn" id="qsh">공유하기</button></div>');
  document.getElementById("dlg").classList.add("qdl");
  function svg(){return quoteSVG(q,bt,au,th,sf)}
  function r(){document.getElementById("qpv").innerHTML=svg();document.querySelectorAll("#qth button").forEach(function(b){b.setAttribute("aria-pressed",+b.dataset.i===th)});document.querySelectorAll("#qff button").forEach(function(b){b.setAttribute("aria-pressed",+b.dataset.f===sf)})}
@@ -2313,7 +2328,7 @@ function quoteShare(q,bt,au){
   if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],title:bt,text:t}).catch(function(){});
   else if(navigator.share)navigator.share({title:bt,text:t}).catch(function(){});
   else if(navigator.clipboard)navigator.clipboard.writeText(t)},1)};
- document.getElementById("qcx").onclick=x}
+ }
 var INV={},OTR=[["서연","#898585"],["민준","#666161"],["유나","#444141"],["태오","#1F1E1E"],["소율","#666161"]];
 function bookShare(bt,au,col){
  var url="https://ddokdok.app/book/"+encodeURIComponent(bt),cnt=MP.length+1;
