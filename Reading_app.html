@@ -1661,6 +1661,98 @@ nav.tab.nvb{border-color:var(--line)!important}
 .sc.hm .hero.hsk{justify-content:space-between!important}
 .sc.hm .hero.hsk h2{margin:0!important}
 .sc.hm .hero.hsk .hgo{margin-top:0!important}
+
+/* ===================== 디자인 시스템 v2 (피그마 1108:3473 기준) ===================== */
+:root{--tx2:#666161;--tx3:#898585;--bd:#C5C5C5;--bd-card:#4CAE85;--soft:#C6EED0;--strong:#267B58;--bk-l:#FFFEF5;--bk-m:#FEF7BB;--bk-d:#FFF3A0;
+ --r-btn:10px;--r-xs:5px;--r-md:10px;--r-sheet:25px;--r-nav:45.5px;--r-arch:46.5px;--r-full:999px;--h-btn:56px;--h-input:51px;--h-ibtn:41px;--h-chip:34px;--h-chip-sm:26px;--h-prog:8px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--tx2:#C5C5C5;--tx3:#B1AFAE;--bd:#898585;--bd-card:#A8E5B7;--soft:#174D37;--strong:#A8E5B7;--bk-l:#FBF7D7}}
+:root[data-theme="dark"],.app.dk{--tx2:#C5C5C5;--tx3:#B1AFAE;--bd:#898585;--bd-card:#A8E5B7;--soft:#174D37;--strong:#A8E5B7;--bk-l:#FBF7D7}
+
+/* 홈 위쪽: 프로필 줄 + 책장 + 시트 */
+#app .hd.hgt.hg3{height:258px!important;min-height:0!important;position:relative!important;padding:0!important;overflow:hidden;background:var(--door)!important}
+#app .hd.hgt.hg3::after{top:240px!important;bottom:0!important;height:auto!important;background:var(--bg)!important;border-radius:var(--r-sheet) var(--r-sheet) 0 0}
+#app .hg3 .hhd{position:absolute;left:50%;top:249px;width:50px;height:6px;margin-left:-25px;border-radius:var(--r-full);background:var(--door);z-index:1}
+#app .hg3 .htb{position:absolute;left:23px;right:20px;top:15px;display:flex;align-items:center;gap:10px;z-index:2}
+#app .hg3 .hav{position:static!important;width:40px!important;height:40px!important;flex:none;line-height:0}#app .hg3 .hav svg{width:40px;height:40px}
+#app .hg3 .hnm{position:static!important}
+#app .hg3 .hnm{margin:0;font-size:16px!important;font-weight:600;line-height:1.3;color:var(--ink)}
+#app .hd.hgt.hg3 .nbl{position:relative!important;top:auto!important;right:auto!important;margin:0 0 0 auto!important;width:var(--h-ibtn)!important;height:var(--h-ibtn)!important;padding:0!important;border-radius:50%!important;background:var(--card)!important;display:grid!important;place-items:center;color:var(--ink)!important}
+#app .hg3 .nbl .ic{width:20px!important;height:20px!important}
+#app .hg3 .nbd{top:7px;right:8px;border-color:var(--card)}
+#app .hg3 .hsf{position:absolute;left:48px;width:315px;top:77px;height:131px;display:flex;align-items:flex-end;justify-content:space-between}
+#app .hg3 .hsf i{display:block!important;position:static!important;width:33px!important;height:var(--h)!important;margin:0!important;border-radius:var(--r-xs)!important}
+#app .hg3 .spl{background:var(--bk-l)}.hg3 .spm{background:var(--bk-m)}.hg3 .spd{background:var(--bk-d)}
+#app .hg3 .hsb{position:absolute;left:23px;width:365px;top:208px;height:15px;background:var(--pri)}
+
+/* 홈 지금 읽는 책 */
+#app .sc.hm .hcv{border-radius:var(--r-arch) var(--r-arch) var(--r-md) var(--r-md)!important}
+#app .sc.hm .hif h2{font-size:24px!important;font-weight:600!important;line-height:1.25}
+#app .sc.hm .hif>p:not(.hpt){font-size:12px!important;font-weight:600;color:var(--tx3)!important}
+#app .sc.hm .hpt span{font-size:12px;color:var(--tx2)}
+#app .sc.hm .hpt b,#app .hpt b{font-size:12px;font-weight:800;color:var(--strong)!important}
+
+/* 진행 막대: 흰 바탕 + 초록 테두리 + 초록 채움 */
+#app .sc.hm .hpg,#app .sc.hm .hpg3{height:var(--h-prog)!important;background:var(--card)!important;border:1px solid var(--pri);border-radius:var(--r-full)!important;box-sizing:border-box;overflow:hidden}
+#app .sc.hm .hpg i,#app .sc.hm .hpg3 i{background:var(--pri)!important;border-radius:var(--r-full)!important;height:100%}
+
+/* 중요 버튼 */
+#app .hgo,#app .sc.hm .hgo{border-radius:var(--r-md)!important}
+#app .sc.hm .hgo{height:var(--h-btn)}
+
+/* 구역 머리: 제목 16 / 더보기 12 */
+#app .hst,#app .hsh .hst{font-size:16px;font-weight:600;color:var(--ink)!important}
+#app .hlk{font-size:12px!important;font-weight:500;color:var(--tx3)!important}
+#app .hsh .wkt{color:var(--ink)!important}.hsh .wkt b{color:var(--strong)!important}
+
+/* 요일 칸 */
+#app .sc.hm .wkc{border:1px solid var(--bd)!important;border-radius:var(--r-md)!important;color:var(--tx3)}
+#app .sc.hm .wkc.on{background:var(--soft)!important;border-color:var(--soft)!important;color:var(--strong)!important}
+#app .wkd2 small{color:var(--tx3)!important;font-size:11px;font-weight:600}
+
+/* 포인트 */
+#app .sc.hm .hpn2,#app .sc.hm .hpn2 b{color:var(--strong)!important}.sc.hm .hpn2 b{font-weight:800}
+
+/* 카드(card-white): 흰 바탕 + 초록 1px 테두리 + 모서리 10 */
+#app .sc.hm .hcc{border:1px solid var(--bd-card)!important;border-radius:var(--r-md)!important;gap:6px!important;padding:10px 12px!important}
+#app .sc.hm .hcc p{-webkit-line-clamp:1!important;font-size:12px!important}
+#app .sc.hm .hcf{margin-top:auto;font-size:12px;color:var(--tx3)}.sc.hm .hcf .ic{width:14px;height:14px}
+#app .po{border:1px solid var(--bd-card)!important;border-radius:var(--r-md)!important;box-shadow:none!important}
+
+/* 태그 칩(작은): 26 / 회색 테두리 */
+#app .tg2{display:inline-flex;align-items:center;height:var(--h-chip-sm);padding:0 10px!important;border:1px solid var(--bd)!important;border-radius:var(--r-full)!important;background:var(--card)!important;color:var(--tx3)!important;font-size:12px!important;font-weight:500!important;box-sizing:border-box}
+
+/* 필터 칩: 34 / 선택 = 연초록 */
+#app .ctf.ctf2 button{min-height:0!important;height:var(--h-chip);display:inline-flex;align-items:center;border:1px solid var(--bd)!important;color:var(--tx2)!important;box-sizing:border-box}
+#app .ctf.ctf2 button[aria-selected="true"],#app .ctf.ctf2 button[aria-pressed="true"]{background:var(--soft)!important;border-color:var(--soft)!important;color:var(--strong)!important}
+
+/* 검색칸 51 / 동그라미 아이콘 버튼 41 */
+#app .csr{min-height:var(--h-input);box-sizing:border-box;border:1px solid var(--bd)!important;border-radius:var(--r-md)!important;background:var(--card)!important;box-shadow:none!important}
+#app .lsrow{display:flex;align-items:center;gap:12px}
+#app .lsrow .lsr{order:1;flex:1}
+#app .lsrow .lhb{order:2;flex:none;width:var(--h-ibtn)!important;height:var(--h-ibtn)!important;border-radius:50%!important;background:var(--card)!important;display:grid;place-items:center}
+
+/* 네비게이션 바: 초록 테두리 */
+#app nav.tab.nvb{border-color:var(--pri)!important;border-width:1.5px!important}
+
+/* 마이페이지: 홈과 같은 벽·선반·시트 */
+#app.pf #shf{background:var(--door)!important}
+#app.pf .sfl{background:var(--pri)!important}
+#app.pf .pfb{background:var(--bg)!important}
+#app.pf .pfg i{background:var(--door)!important}
+#app.pf .pbx2{margin-top:12px;padding:20px 16px!important;background:var(--card)!important;border:1px solid var(--bd-card)!important;border-radius:var(--r-md)!important}
+#app.pf .pnm small{color:var(--tx2)}
+#app.pf .pmb{border-color:var(--bd)!important}
+#app.pf .ptk{background:var(--soft)!important;color:var(--strong)!important;border-radius:var(--r-md)}
+#app.pf .pme:not(.pmb){font-size:12px;font-weight:500;color:var(--tx3)!important}
+#app.pf .rbk{border-bottom-color:var(--divider)!important}
+#app.pf .rbs{height:var(--h-chip-sm);padding:0 10px!important;border:1px solid var(--pri)!important;background:var(--card)!important;color:var(--strong)!important;box-sizing:border-box}
+#app.pf .rbs.dn{background:var(--soft)!important;border-color:var(--soft)!important;color:var(--strong)!important}
+
+/* 지금 읽는 책: 표지 옆 초록 세로선 없앰 (피그마에 없음) */
+#app .sc.hm .hif{border-left:0!important;margin-left:7px!important;padding-left:0!important}
+/* 검색칸 아래 구분선 (도서관·커뮤니티, y82) */
+#app .lsrow{padding-bottom:15px;margin-bottom:0!important;border-bottom:1px solid var(--divider)}
+#app .lsrow.cwrow+#tyb,#app #tyb{margin-top:15px!important}
 </style>
 </head>
 <body>
@@ -2502,24 +2594,25 @@ window.addEventListener("resize",function(){if(app.classList.contains("hm"))hFit
 function hMis(){var d=psDay();msSync();
  var x=pop('<h3>오늘의 미션</h3><p class="sm" style="font-size:13px;margin:-2px 0 12px">보유 <b>'+PT+'P</b> · 오늘 <b>'+d.act+'P</b> / '+PCFG.DAILY_CAP+'P</p><div class="hml">'+MS.map(function(m,i){return[m,i]}).sort(function(a,b){return a[0][3]-b[0][3]}).map(function(r){var m=r[0],i=r[1],g=d.got[MK[i]];return'<div class="hmr'+(m[3]?" dn":"")+'"><span>'+ic(m[3]?"check":m[1])+'</span><div><b>'+m[0]+'</b><small>'+MSD[i]+'</small></div><em>'+(m[3]?(g!==undefined&&g<m[2]?"완료 +"+g+"P":"완료"):"+"+m[2]+"P")+'</em></div>'}).join("")+'</div><div class="dbt"><button class="btn ghost" id="hmx">닫기</button><button class="btn" id="hms">디지털 문구점</button></div>');
  document.getElementById("hmx").onclick=x;document.getElementById("hms").onclick=function(){x();shop()}}
+var PAW='<svg viewBox="0 0 40 40" width="40" height="40"><circle cx="20" cy="20" r="20" fill="#FFE0EA"/><g fill="#FF9FBE"><ellipse cx="20" cy="25" rx="8" ry="6.2"/><ellipse cx="11.6" cy="17.4" rx="3" ry="3.7" transform="rotate(-25 11.6 17.4)"/><ellipse cx="20" cy="13.2" rx="3" ry="3.7"/><ellipse cx="28.4" cy="17.4" rx="3" ry="3.7" transform="rotate(25 28.4 17.4)"/></g></svg>';
 function home(){
  app.className="app hm";window.scrollTo(0,0);if(BK!==DEF)useBk(DEF);
  var REC=!PICKED&&!!RKEY,pct=Math.round(pg*100/TOT),DB=LB[DEF],ti=new Date().getDay(),G=GOAL||10,tdp=RDY.d===todayStr()?Object.keys(RDY.p).length:0;
  var wv="일월화수목금토".split("").map(function(w,i){return i<ti?WK[i]:i===ti?tdp:null}),mx=Math.max(G,Math.max.apply(null,wv.map(function(v){return v||0}))),rd=wv.filter(function(v){return v}).length,sm=wv.reduce(function(a,v){return a+(v||0)},0);
- var bars="일월화수목금토".split("").map(function(w,i){var v=wv[i];return'<div class="wkd2'+(i===ti?" td":"")+'"><span class="wkc'+(v?" on":"")+'" aria-label="'+w+'요일 '+(v?v+'쪽 읽음':'기록 없음')+'">'+(v?v+'쪽':'-')+'</span><small>'+"SMTWTFS".charAt(i)+'</small></div>'}).join(""),wp=Math.round(sm*100/(G*(ti+1)));
+ var bars="일월화수목금토".split("").map(function(w,i){var v=wv[i];return'<div class="wkd2'+(i===ti?" td":"")+'"><span class="wkc'+(v?" on":"")+'" aria-label="'+w+'요일 '+(v?v+'쪽 읽음':'기록 없음')+'">'+(v?v+'쪽':'-')+'</span><small>'+["SUN","MON","TUE","WED","THU","FRI","SAT"][i]+'</small></div>'}).join(""),wp=Math.round(sm*100/(G*(ti+1)));
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="home"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
  var hero=SKT&&!RKEY&&!PICKED?'<section class="hero hrc hsk"><small>추천 독서</small><h2>RBTI 검사 받고<br>첫 책 추천 받기!</h2><button class="hgo" id="hsk">검사하기</button></section>':REC?'<section class="hero hrc"><small>추천 독서</small><h2>'+esc(ME)+'님께 맞는<br>첫 책을 골라 보세요</h2><div class="hrl">'+recList(RKEY).map(function(r){var b=LB[r.k];return'<button class="rck" data-k="'+r.k+'" aria-label="'+b[0]+' 읽기 시작"><i style="background:'+b[2]+'"></i><b>'+b[0]+'</b><small>일치도 '+r.m.length*25+'%</small></button>'}).join("")+'</div></section>'
   :(OPN.length&&!OPN.some(function(k){return bprog(k).c<100}))?(function(){var f=LB[OPN[0]][0],R=recNext();return'<section class="hero hrc"><small>추천 독서</small><h2 class="hfin"><span class="hf1t">『'+esc(f)+'』'+((f.charCodeAt(f.length-1)-44032)%28?"을":"를")+' 완독했어요!</span><span>다음 책을 골라볼까요?</span></h2><div class="hrl">'+R.map(function(r){var b=LB[r.k];return'<button class="rck" data-k="'+r.k+'" aria-label="'+b[0]+' 책 정보 보기"><i style="background:'+b[2]+'"></i><b>'+b[0]+'</b><small>일치도 '+r.p+'%</small></button>'}).join("")+'</div></section>'})()
   :(function(){var L=RLs().filter(function(k){return bprog(k).c<100}).slice(0,3);if(!L.length)L=[RLs()[0]];var h=L.map(function(k,i){var B=LB[k],q=bprog(k);return'<section class="hero"'+(i?'':' id="rc"')+'><div class="htp"><div class="hcv" data-k="'+k+'" style="background:'+B[2]+'"><b>'+B[0]+'</b>'+(function(){var L=mpFor(k);return L.length?'<span class="hmt" aria-label="같이 읽는 메이트 '+L.map(function(m){return m[0]}).join(", ")+'">'+L.slice(0,3).map(function(m){return'<i style="background:'+m[2]+'">'+m[0].charAt(0)+'</i>'}).join("")+'</span>':''})()+'</div><div class="hif"><small>'+(i?"최근에 읽던 책":"지금 읽는 책")+'</small><h2>'+B[0]+'</h2><p>'+B[1]+'</p><div class="hpg" role="progressbar" aria-label="진행률" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div><p class="hpt"><span>'+q.p+'/'+q.t+'쪽</span><b>'+q.c+'%</b></p></div></div>'
   +'<div class="hgl"><span>오늘 목표</span><div class="hgm"><i style="width:'+Math.min(100,Math.round(tdp*100/G))+'%"></i></div><b>'+tdp+' / '+G+'쪽</b></div><button class="hgo" data-k="'+k+'">이어읽기</button></section>'}).join("");
   return L.length>1?'<div class="rcwrap"><div class="rcscroll" id="rcscroll" aria-label="최근에 읽던 책, 옆으로 넘겨 보기">'+h+'</div><div class="rcdots" id="hdots">'+L.map(function(_,i){return'<button aria-label="'+(i+1)+'번째 책 보기" aria-current="'+(i===0)+'"></button>'}).join("")+'</div></div>':h})();
- app.innerHTML='<header class="hd hgt hg2"><span class="hga" aria-hidden="true"></span><div class="hgx"><h1>'+(ME?'<span>안녕하세요,</span><br>'+esc(ME)+'님!':'안녕하세요!')+'</h1></div><img class="hdg" src="'+DOGI+'" alt="" aria-hidden="true"><button class="ib nbl" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'">'+ic(unread()?"bellOn":"bell")+(unread()?'<i class="nbd"></i>':'')+'</button></header>'
+ app.innerHTML='<header class="hd hgt hg2 hg3"><div class="htb"><span class="hav" aria-hidden="true">'+PAW+'</span><h1 class="hnm">'+(ME?esc(ME)+'님':'안녕하세요!')+'</h1><button class="ib nbl" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'">'+ic(unread()?"bellOn":"bell")+(unread()?'<i class="nbd"></i>':'')+'</button></div><div class="hsf" aria-hidden="true">'+[[131,"m"],[103,"l"],[115,"d"],[131,"d"],[103,"l"],[115,"d"],[131,"m"],[115,"d"]].map(function(b){return'<i class="sp'+b[1]+'" style="--h:'+b[0]+'px"></i>'}).join("")+'</div><span class="hsb" aria-hidden="true"></span><span class="hhd" aria-hidden="true"></span></header>'
  +hero
  +'<section class="blk"><div class="box wkx" id="hdt" role="button" tabindex="0" aria-label="이번 주 기록, 독서 달력 보기"><div class="hsh"><span class="wkt"><b>'+rd+'일</b> 읽었어요</span><span class="hlk">달력보기'+ic("next")+'</span></div><div class="wkr2">'+bars+'</div></div></section>'
  +(function(){var d=psDay(),c=PCFG.DAILY_CAP,pc=Math.round(d.act*100/c);msSync();var nd=MS.filter(function(x){return x[3]}).length;
   var TPS=PO.filter(function(p){return p.v===0}).sort(function(a,b){return(b.l+b.c.length)-(a.l+a.c.length)}).slice(0,3),tp=TPS[0];
   return'<section class="blk hdu hdu1"><div class="box hrw hpx hpc" id="hpx" role="button" tabindex="0" aria-label="오늘의 포인트와 미션 보기"><div class="hsh"><b class="hst">오늘의 포인트</b><span class="hlk">미션 '+nd+'/'+MS.length+' 완료'+ic("next")+'</span></div><div class="hpr2"><div class="hpg3" role="progressbar" aria-label="오늘의 활동 포인트" aria-valuenow="'+d.act+'" aria-valuemin="0" aria-valuemax="'+c+'"><i style="width:'+pc+'%"></i></div><span class="hpn2"><b>'+d.act+'P</b> /'+c+'P</span></div></div></section><section class="blk hdu hdu1">'
-  +'<div class="box hcm"><div class="hsh"><b class="hst">커뮤니티 인기글</b><button class="hlk" id="hpo" data-id="0">커뮤니티'+ic("next")+'</button></div>'+(TPS.length?'<div class="hcg">'+TPS.slice(0,2).map(function(q){return'<button class="hcc" data-id="'+q.id+'"><span class="hct"><span class="tg2">'+TN[q.t]+'</span><span class="hcf">'+ic("heart")+q.l+ic("chat")+q.c.length+'</span></span><p>'+esc(q.x)+'</p></button>'}).join("")+'</div>':'<p class="hce">아직 올라온 글이 없어요.</p>')+'</div>'+'</section>'})()
+  +'<div class="box hcm"><div class="hsh"><b class="hst">커뮤니티 인기글</b><button class="hlk" id="hpo" data-id="0">커뮤니티'+ic("next")+'</button></div>'+(TPS.length?'<div class="hcg">'+TPS.slice(0,2).map(function(q){return'<button class="hcc" data-id="'+q.id+'"><span class="tg2">'+TN[q.t]+'</span><p>'+esc(q.x)+'</p><span class="hcf">'+ic("heart")+q.l+ic("chat")+q.c.length+'</span></button>'}).join("")+'</div>':'<p class="hce">아직 올라온 글이 없어요.</p>')+'</div>'+'</section>'})()
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.querySelectorAll(".rck").forEach(function(b){b.onclick=function(){var kk=+b.dataset.k;bookDt(kk,home,function(){PICKED=1;DEF=kk;reader(DEF)})}});app.querySelectorAll(".hgo").forEach(function(b){b.onclick=function(){if(HSM)return;reader(+b.dataset.k)}});
  var hsk=document.getElementById("hsk");if(hsk)hsk.onclick=function(){TFROM=home;testPg()};

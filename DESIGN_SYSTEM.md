@@ -1,6 +1,7 @@
-# 똑독(DDOKDOK) 디자인 시스템
+# 똑독(DDOKDOK) 디자인 시스템 v2
 
-피그마 파일 **똑독-DDOKDOK-**의 Variables·Effect Styles·컴포넌트를 기준으로 정리한 문서예요. (2026.11.02 기준)
+피그마 파일 **똑독-DDOKDOK-**의 라이트모드 시안(섹션 `1108:3473`: 메인화면 · 도서관 · 커뮤니티 · 디지털 문구점)을 기준으로 새로 정리한 문서예요. (2026.11.03 기준)
+마이페이지 시안은 참고만 하고, 이 문서의 규칙에 맞춰 바꿔서 적용했어요.
 
 - 화면 크기: **412 × 917**
 - 글꼴: **Pretendard**
@@ -28,68 +29,77 @@
 
 | 토큰 | light | dark | 쓰는 곳 |
 |---|---|---|---|
-| `brand/primary` | green/500 `#4CAE85` | green/300 `#A8E5B7` | 메인 버튼, 선택된 탭, 진행 바 |
-| `brand/primary-hover` | green/600 `#267B58` | green/100 `#DCF5E2` | 누른 상태, 홈 버튼 선택 |
-| `brand/secondary` | pink/400 `#FF7BA6` | pink/300 `#FF9FBE` | 보조 강조 |
-| `brand/secondary-hover` | pink/600 `#E4195B` | pink/100 `#FFE0EA` | 보조 강조 누른 상태 |
-| `brand/default` | neutral/400 `#C5C5C5` | neutral/100 `#F6F6F6` | 선택 안 된 탭, 저자 이름 |
-| `text/default` | neutral/900 `#1F1E1E` | neutral/100 `#F6F6F6` | 기본 글씨 |
-| `text/sub` | neutral/700 `#666161` | neutral/400 `#C5C5C5` | 보조 글씨, 링크 |
-| `text/emphasis` | green/600 `#267B58` | green/300 `#A8E5B7` | 섹션 제목, 강조 숫자 |
-| `text/on-primary` | neutral/0 `#FFFFFF` | neutral/900 `#1F1E1E` | 메인 버튼 위 글씨 |
-| `text/disabled` | neutral/400 `#C5C5C5` | neutral/600 `#898585` | 비활성 글씨 |
-| `Background/default` | neutral/100 `#F6F6F6` | neutral/900 `#1F1E1E` | 화면 배경 |
-| `Background/door` | green/200 `#C6EED0` | green/800 `#174D37` | 홈 위쪽 문 바깥 |
-| `Background/card` | neutral/0 `#FFFFFF` | neutral/800 `#444141` | 카드 |
-| `Background/section` | neutral/200 `#E3E3E3` | neutral/800 `#444141` | 구역 배경 |
-| `border/default` | neutral/200 `#E3E3E3` | neutral/800 `#444141` | 기본 테두리 |
-| `border/brand` | green/200 `#C6EED0` | green/700 `#186344` | 요일 칸 테두리 |
-| `divider` | neutral/300 `#D5D5D5` | neutral/800 `#444141` | 구분선 |
-| `state/selected-bg` | green/200 `#C6EED0` | green/800 `#174D37` | 선택·완료 바탕 (요일 칸, 칩, 안 읽은 알림) |
-| `state/selected-text` | green/600 `#267B58` | green/300 `#A8E5B7` | 선택·완료 글씨 |
-| `progress/track` | green/200 `#C6EED0` | green/800 `#174D37` | 진행 바 바탕 |
-| `progress/fill` | green/500 `#4CAE85` | green/300 `#A8E5B7` | 진행 바 채움 |
-| `state/success` | green/500 | green/300 | 완독·달성 |
-| `state/warning` | yellow/500 `#FFF3A0` | yellow/500 | 주의 |
-| `state/error` | pink/600 `#E4195B` | pink/500 `#FF4C86` | 삭제 경고 |
-| `state/badge` | pink/500 `#FF4C86` | pink/500 | 알림 점 |
-| `overlay` | `#000000` 40% | `#000000` 60% | 팝업 뒤 어둡게 |
-| `Shadow/primary` | `#898585` 50% | `#000000` 50% | 그림자 색 |
-| `Shadow/secondary` | `#666161` 50% | `#000000` 60% | 그림자 색 |
+| `brand/primary` | green/500 | green/300 | 중요 버튼, 진행 막대 채움·테두리, 네비 선택, 홈 버튼, 책장 선반 |
+| `brand/primary-strong` | green/600 | green/100 | 강조 숫자(3%, 1일, 100P) |
+| `brand/primary-soft` | green/200 | green/800 | 읽은 날 칸, 선택한 칩 바탕 |
+| `brand/secondary` · `-strong` | pink/400 · pink/600 | pink/300 · pink/100 | 보조 색(프로필 발바닥 등) |
+| `surface/wall` | green/200 | green/800 | 홈·마이페이지 위쪽 벽(책장 뒤) |
+| `surface/sheet` | neutral/100 | neutral/900 | 올라오는 시트, 일반 화면 바탕 |
+| `surface/card` | neutral/0 | neutral/800 | 카드, 입력칸, 네비, 동그라미 버튼 |
+| `surface/muted` | neutral/100 | neutral/900 | 카드 안 회색 묶음(AI 독서 성향) |
+| `text/primary` | neutral/900 | neutral/100 | 제목, 본문 |
+| `text/secondary` | neutral/700 | neutral/400 | 저자, 보조 설명, 쪽수 |
+| `text/tertiary` | neutral/600 | neutral/500 | "전체 보기"·"달력보기", 요일 라벨, 태그 칩 |
+| `text/accent` | green/600 | green/300 | 강조 글자 |
+| `text/on-primary` | neutral/0 | neutral/900 | 초록 버튼 위 글자 |
+| `text/disabled` | neutral/400 | neutral/600 | 비활성 |
+| `border/default` | neutral/400 | neutral/600 | 입력칸, 칩, 요일 칸 테두리 |
+| `border/card` | green/500 | green/300 | 카드 테두리 1px |
+| `border/subtle` | neutral/200 | neutral/800 | 약한 구분 |
+| `divider` | neutral/300 | neutral/800 | 구역 사이 선 |
+| `progress/track` · `border` · `fill` | neutral/0 · green/500 · green/500 | neutral/800 · green/300 · green/300 | 진행 막대 |
+| `icon/default` · `icon/active` | neutral/400 · green/500 | neutral/600 · green/300 | 네비 아이콘 |
+| `nav/border` | green/500 | green/300 | 네비게이션 바 테두리 |
+| `shelf/bar` | green/500 | green/600 | 책장 선반 |
+| `shelf/book-light` · `mid` · `deep` | yellow/100 · 400 · 500 | yellow/300 · 400 · 500 | 홈 책장 책등 |
+| `chip/selected-bg` · `text` | green/200 · green/600 | green/800 · green/300 | 선택한 칩, 상태 알약 |
+| `state/success` · `warning` · `error` · `badge` | green/500 · yellow/500 · pink/600 · pink/500 | | 상태 |
+| `overlay` | `#000` 40% | `#000` 60% | 팝업 뒤 배경 |
+| `Shadow/primary` · `secondary` | | | 그림자 |
 
-> 책 표지 색(12가지 조합)은 책을 구분하는 정보라 이 팔레트와 따로 관리해요. 팔레트를 바꿀 때 바꾸지 않아요.
-
-> **초록은 포인트에만 써요.** `brand/primary`(초록)는 메인 버튼(이어읽기·독서하기·검사하기), 내비게이션의 선택된 탭과 홈 버튼, 진행 바 채움, 독서 달력의 읽은 날 별, 안 읽은 알림 점, 문구점의 선택된 탭 막대·동전 아이콘처럼 **포인트가 필요한 곳에만** 써요. 제목·칩·태그·배지·카드·배경·친구 프로필·책장 선반 등 나머지는 모두 뉴트럴(`neutral` 계열)로 써요.
+> 초록은 **포인트에만** 써요: 중요 버튼, 진행 막대, 카드 테두리, 네비, 책장 선반·벽, 선택 상태. 글자·칩·칸 테두리는 뉴트럴이에요.
+> 피그마 시안의 `#B1AFAE`(neutral/500) 링크 글자는 읽기 어려워서 `text/tertiary`를 neutral/600으로 정했어요.
 
 ## 3. 글자 (Typography)
 
-**기본 값 (Typography Primitives)**
+크기 단계(`Scale/01~08`): 11 · 12 · 14 · 16 · 20 · 24 · 32 · 40
 
-| 종류 | 값 |
-|---|---|
-| Family Sans | Pretendard |
-| Weight | Thin 100 · Extra Light 200 · Light 300 · Regular 400 · Medium 500 · Semibold 600 · Bold 700 · Extra Bold 800 · Black 900 |
-| Scale | 01 `7` · 02 `10` · 03 `13` · 04 `16` · 05 `20` · 06 `24` · 07 `32` · 08 `36` · 09 `40` · 10 `48` |
-| Leading | Narrow 100% · Medium 150% · Wide 200% |
-
-**용도별 (Typography)**
-
-| 용도 | 굵기 | Large | Base | Small | 줄 간격 |
-|---|---|---|---|---|---|
-| Title Page | Bold 700 | 40 | 32 | 24 | |
-| Subtitle | Semibold 600 | 16 | 13 | 10 | |
-| Body | Regular 400 | 16 | 13 | 10 | 150% |
-| Caption | | | 12 | 11 | |
-| Button | Semibold 600 | | 16 | | |
-| Number | Bold 700 | | 20 | | |
+| 역할 | 크기 | 굵기 | 쓰는 곳 |
+|---|---|---|---|
+| Display | 24 | Semibold | 책 제목 |
+| Title | 20 | Semibold | 프로필 이름, 위 칸 제목 |
+| Heading | 16 | Semibold | 구역 제목, 상단 이름 |
+| Body | 14 | Medium | 본문, 친구 이름 |
+| Caption | 12 | Medium | 쪽수, "전체 보기", 태그 칩 |
+| Label | 11 | Semibold | 네비 글자, 요일 라벨(SUN~SAT) |
+| Button | 16 | Semibold | 버튼 글자 |
+| Number | 12 | Extra Bold | 강조 숫자(3%, 100P) |
 
 ## 4. 크기 · 간격 (Size)
 
-| 종류 | 토큰 = 값 |
-|---|---|
-| 모서리 (4단계로 통일) | **10** `Radius/book-cover` · `Radius/cell` · `Radius/card-sm` · `Radius/input` / **20** `Radius/button` · `Radius/popup` / **25** `Radius/card` / **999** `Radius/bar` · `Radius/chip` |
-| 간격 | `Space/xs` 4 · `Space/sm` 8 · `Space/gap` 10 · `Space/md` 12 · `Space/lg` 16 · `Space/leftright_side` **16** (화면 양쪽 여백) · `Space/section` 20 · `Space/xl` 24 · `Space/2xl` 32 · `Space/updown_side` 70 |
-| 요소 크기 | `Size/header` 56 · `Size/icon-sm` 16 · `Size/icon-md` 20 · `Size/icon-lg` 24 · `Size/touch-min` 44 · `Size/home-button` 50 · `Size/nav-height` 91 |
+| 토큰 | 값 | 쓰는 곳 |
+|---|---|---|
+| `Radius/xs` | 5 | 책 썸네일, 책장 책등 |
+| `Radius/md` | 10 | **기본 모서리** — 버튼, 입력칸, 카드, 요일 칸 |
+| `Radius/popup` | 20 | 팝업 |
+| `Radius/sheet` | 25 | 시트 위 모서리 |
+| `Radius/nav` | 45.5 | 네비게이션 바 위 모서리 |
+| `Radius/cover` | 46.5 | 홈 책 표지 위쪽 아치(아래는 10) |
+| `Radius/full` | 999 | 칩, 진행 막대, 손잡이 |
+| `Space/xs·sm·md·lg·xl·2xl` | 4·8·12·16·24·32 | |
+| `Space/side` | 16 | 화면 양쪽 여백 |
+| `Space/lg` | 16 | 구역 사이(구분선 위아래 15~16) |
+| `Size/button` | 56 | 중요 버튼 높이 |
+| `Size/input` | 51 | 검색칸 높이 |
+| `Size/icon-button` | 41 | 동그라미 아이콘 버튼(알림, 찜) |
+| `Size/chip` · `chip-sm` | 34 · 26 | 필터 칩 · 카드 안 태그/상태 알약 |
+| `Size/day-cell` | 36 (폭 39) | 요일 칸 |
+| `Size/progress` | 8 | 진행 막대 두께 |
+| `Size/avatar-sm·md·lg` | 40·50·60 | 상단 프로필 · 친구 · 내 프로필 |
+| `Size/handle-w·h` | 50·6 | 시트 손잡이 |
+| `Size/shelf` | 15 | 책장 선반 두께 |
+| `Size/icon-xs·sm·md·lg` | 14·16·20·24 | 좋아요·댓글 · 화살표 · 알림 |
+| `Size/home-button` · `nav-height` · `header` | 50 · 91 · 56 | |
 
 ## 5. 효과 (Effect Styles)
 
@@ -100,84 +110,92 @@
 
 ## 6. 컴포넌트
 
-### navigation_bar (하단 내비게이션)
-- 바탕: `Background/card`, 테두리 1.5px `brand/primary`, 위쪽 모서리 45.5, 높이 91
-- 버튼 5개(도서관 · 디지털 문구점 · 홈 · 커뮤니티 · 마이페이지), 버튼 사이 25, 묶음 폭 358
-- 버튼: 아이콘(높이 18~20) + 글자 11 Semibold, 아이콘과 글자 사이 5
-- 색: 기본 `brand/default` `#C5C5C5` → 선택 `brand/primary` `#4CAE85`
-- 홈: 지름 50 원 + 흰 집 아이콘, 기본 `#4CAE85` → 선택 `#267B58`
-- 변형: `Property 1 = Default / selected`, 다크용 `navigation_bar_dark`
+### 벽 + 책장 + 시트 (홈 · 마이페이지 위쪽)
+- 벽 `surface/wall`, 선반 365×15 `shelf/bar`(y208), 시트는 y240부터 `surface/sheet` · 위 모서리 25, 손잡이 50×6 `surface/wall`(y249)
+- 홈: 왼쪽 위 프로필 40(발바닥) + 이름 16 Semibold, 오른쪽 알림 동그라미 버튼 41(흰 바탕), 책등 33폭 8권(높이 103·115·131, `shelf/book-*`)
+- 마이페이지: 책등은 실제 읽은 책으로 보여 줘요
+
+### navigation_bar
+- 흰 바탕, 위 모서리 45.5, 테두리 1.5px `nav/border`, 높이 91, 사이 25
+- 아이콘 + 글자 11 Semibold, 기본 `icon/default` → 선택 `icon/active`, 가운데 홈 버튼 50
 
 ### 중요 버튼
-- 높이 56, 모서리 `Radius/button` 20, 바탕 `brand/primary`, 글자 `text/on-primary` 16 Semibold (예: 이어읽기)
+- 높이 56, 모서리 10, `brand/primary` 바탕, 16 Semibold 흰 글씨
 
-### card-white
-- 바탕 `Background/card`, 모서리 `Radius/card-sm` 10, 테두리 없음 (홈 커뮤니티 인기글 카드, 목록 카드)
+### card-white (카드)
+- 흰 바탕, 테두리 1px `border/card`, 모서리 10
+- 홈 커뮤니티 인기글(위 태그 · 글 1줄 · 아래 좋아요/댓글 아이콘 14 + 숫자), 커뮤니티 글, 마이페이지 프로필 카드
 
-### 홈 화면 (메인화면 412×917)
-- 위쪽: `Background/door` 바탕 위에 흰 아치(폭 412 · 높이 230), 인사말 "안녕하세요,"(24 Bold) / "OO님!"(32 Bold), 오른쪽에 캐릭터 도기, 알림 아이콘(25, `brand/primary`)
-- 지금 읽는 책: 표지 93×137(모서리 10) · 세로선 3px `brand/primary` · "지금 읽는 책" 12 Semibold · 책 제목 24 · 저자 12 `brand/default` · 진행 바 8(`progress/track`·`progress/fill`) · 쪽수 12 · 퍼센트 12 Extra Bold `text/emphasis` · 중요 버튼
-- 구역 구분: 카드 상자 대신 1px `divider`
-- 구역 제목: 16 Semibold `text/emphasis`, 오른쪽 링크 12 Medium `text/sub` + 화살표 16
-- 이번 주 기록: "N일 읽었어요", 요일 칸 39×36(모서리 10, 테두리 `border/brand`, 읽은 날 바탕 `Background/door`, 글자 12 `text/emphasis`), 아래 요일 S M T W T F S(11 Semibold)
-- 오늘의 포인트: 진행 바 8(채움 `brand/primary-hover`) + "100P /300P"(12)
-- 커뮤니티 인기글: card-white 2개 나란히(사이 10)
-- 위 칸(지금 읽는 책 · 검사 권유 · 첫 책 고르기 · 완독 후 추천)은 높이 **209로 고정**하고 그 안에서만 내용이 바뀜 → 아래 구역 위치는 항상 같음
+### 진행 막대
+- 높이 8, 모서리 999, 흰 바탕 + 1px `progress/border` 테두리 + `progress/fill` 채움
+- 쪽수 12 `text/secondary`, 퍼센트 12 Extra Bold `brand/primary-strong`
 
-### 홈 간격 (Space 토큰)
-| 위치 | 간격 |
+### 요일 칸
+- 39×36, 모서리 10, 1px `border/default`, 안 글자 12
+- 읽은 날: `brand/primary-soft` 바탕 + `brand/primary-strong` 글자
+- 라벨 SUN · MON · TUE · WED · THU · FRI · SAT (11 Semibold `text/tertiary`)
+
+### 칩
+- 필터 칩: 높이 34, 모서리 999, 1px `border/default` + `text/secondary` → 선택하면 `chip/selected-bg` + `chip/selected-text`
+- 태그 칩(카드 안): 높이 26, 1px `border/default`, 12 Medium `text/tertiary`
+- 상태 알약(읽은 책): 높이 26 — 읽는 중은 흰 바탕 + 1px `brand/primary` 테두리, 완독은 `chip/selected-bg`
+
+### 검색칸 · 동그라미 버튼
+- 검색칸: 높이 51, 흰 바탕, 1px `border/default`, 모서리 10, 오른쪽 돋보기
+- 동그라미 버튼: 41, 흰 바탕(도서관 찜 버튼은 검색칸 오른쪽)
+- 검색칸 아래 1px `divider`, 위아래 15
+
+### 구역 머리
+- 제목 16 Semibold `text/primary`, 오른쪽 "전체 보기"(또는 "달력보기" 등) 12 Medium `text/tertiary` + 화살표 16
+- 구역 사이 1px `divider`
+
+### 홈 화면 위치 (412×917)
+| 요소 | y |
 |---|---|
-| 화면 좌우 여백 | `Space/leftright_side` 16 (모든 화면 같음) |
-| 위쪽 아치 시작 | `Space/sm` 8 |
-| 위쪽 영역 → 지금 읽는 책 | `Space/xl` 24 |
-| 표지 → 세로선 / 세로선 → 글 | `Space/sm` 8 / `Space/md` 12 |
-| 책 정보 → 이어읽기 버튼, 구분선 → 구역 제목 | `Space/lg` 16 |
-| 구역 제목 → 내용 | `Space/sm` 8 |
-| 구역 끝 → 다음 구분선 | `Space/section` 20 |
-| 커뮤니티 카드 사이 | `Space/gap` 10 |
-| 위쪽 영역 높이 | 258 |
+| 벽 · 책장 | 0–240 |
+| 시트 시작 · 손잡이 | 240 · 249 |
+| 지금 읽는 책(표지 93×137, 위 칸 높이 209 고정) | 282–491 |
+| 이번 주 기록 | 524 |
+| 오늘의 포인트 | 639 |
+| 커뮤니티 인기글 · 카드 86 | 718–831 |
+| 네비게이션 바 | 841 |
+
+### 마이페이지 (시스템에 맞춰 바꾼 점)
+- 벽·선반·시트·손잡이는 홈과 같은 토큰
+- 프로필은 card-white 카드 안에: 사진 60 · 이름 20 Semibold · 보조 12, AI 독서 성향은 `surface/muted` 묶음, 성향 코드 배지는 `chip/selected-*`
+- 내 친구 · 읽은 책은 상자 없이 구역 머리 + `divider` (홈과 같은 방식)
+- 읽은 책 줄: 표지 35×50(모서리 5), 상태 알약은 위 "칩" 규칙
 
 ### 디지털 문구점
-- 포인트 카드: 381×127, 바탕 `Background/door`, 모서리 `Radius/card` 25, "나의 포인트" 16 Medium, 동전 아이콘 32 + 포인트 24 Semibold, 보관함 알약 버튼(흰 바탕, 모서리 200, 12 Medium `brand/primary`)
-- 탭 4개(전체보기 · 형광펜 · 스티커 · 제작하기): 아이콘 30 + 글자 11 Semibold, 기본 `brand/default` → 선택 `brand/primary` + 아래 막대 67×6, 탭 줄 아래 1px 선
-- 상품 목록: 바탕 `Background/default`, 3열, 카드 121×122 흰색 모서리 25, 가로 8 · 세로 25 간격, 이름 16 Semibold `text/default`, 가격 16 Regular `text/sub`
+- 포인트 카드: `surface/wall` 바탕, 동전 아이콘 32 + 포인트 24 Semibold, 보관함 알약 버튼
+- 탭 4개(전체보기 · 형광펜 · 스티커 · 제작하기): 아이콘 30 + 글자 11 Semibold, 선택 `brand/primary` + 아래 막대
+- 상품 목록: 3열, 흰 카드, 이름 16 Semibold, 가격 16 Regular `text/secondary`
 
-### 마이페이지 (피그마 1107:582 참고)
-- 위쪽: `Background/door` 바탕 책장, 선반 `brand/primary` 15
-- 시트: 흰 바탕, 위쪽 모서리 25, 손잡이 50×6 `Background/door`, 좌우 24
-- 프로필: 사진 60 · 이름 20 Semibold · "연령 · 하루 N쪽 목표" 12 `text/sub` · 오른쪽 원형 아이콘 버튼 30(1px 테두리)
-- AI 독서 성향: 회색(`Background/default`) 카드 모서리 20, 안쪽 16·20, 성향 코드 배지(`brand/primary`, 모서리 10, 12 Extra Bold 흰 글씨) + 이름 14 Semibold
-- 내 친구: 사진 50 + 이름 14 Medium, 사이 28
-- 읽은 책: 표지 35×50(모서리 5) · 제목 14 Semibold · 저자 12, 줄 사이 1px `Background/door`, 상태 알약(높이 30, 모서리 200) — 읽는 중은 흰 바탕+초록 테두리, 완독은 초록 바탕+흰 글씨
-
-### 공통 규칙 (피그마 시안이 없는 화면 · 메인 화면 기준)
-도서관 · 장르 · 인기 순위 · 커뮤니티 · 게시글 · 알림 · 독서 달력 · 책 상세 · 설정 · 읽은 책 · 마이페이지 · 가입 단계에 같은 규칙을 써요.
-- 화면 양쪽 여백 16 (`Space/leftright_side`), 바탕 `Background/default`
-- 위쪽 제목 줄: 높이 56 (`Size/header`), 흰 바탕, 아래 1px `divider`, 제목 18 Bold
-- 구역: 상자 없이 1px `divider`로 나눔 (구분선 → 제목 16, 구역 사이 20), 제목 16 Semibold `text/emphasis`, 오른쪽 "전체 보기" 12 Medium `text/sub` + 화살표 16
-- 목록 카드: 흰 바탕, 모서리 10, 안쪽 여백 14~16, 최소 높이 64 (순위 88), 제목 16 Semibold · 보조 13
-- 버튼: 높이 56, 모서리 20, 16 Semibold / 보조 버튼은 흰 바탕 + 1.5px `brand/primary`
-- 칩: 높이 40, 모서리 999, 14 Semibold, 기본은 흰 바탕 + 1px `state/selected-bg` 테두리 + `text/sub`, 선택하면 `state/selected-bg` 바탕 + `state/selected-text`
-- 입력칸: 모서리 10
-- 팝업: 모서리 20, 뒤 배경 `overlay` 40%
-- 장르 아이콘 원 56 + 이름 13 Semibold, 인기 책 카드 폭 124
+### 그 밖의 화면 (시안이 없는 화면)
+- 바탕 `surface/sheet`, 양쪽 여백 16, 위쪽 제목 줄 56 + 아래 `divider`
+- 구역은 상자 없이 `divider`로 나누고, 목록은 흰 카드(모서리 10)
+- 버튼·입력칸·칩은 위 컴포넌트 규칙을 그대로 써요
 
 ### 아이콘
-- Iconify 플러그인 아이콘 사용(uil · majesticons · ant-design · ri). 선 굵기 2, 끝 둥글게
+- Iconify 플러그인 아이콘(uil · majesticons · ant-design · ri). 선 굵기 2, 끝 둥글게
 
 ## 7. 앱 CSS 변수 연결
 
 | 앱 CSS 변수 | 피그마 토큰 |
 |---|---|
 | `--pri` | `brand/primary` |
-| `--emp` | `text/emphasis` (= `brand/primary-hover`) |
-| `--ink` | `text/default` |
-| `--sub` | `text/sub` |
+| `--strong` | `brand/primary-strong` |
+| `--soft` · `--door` | `brand/primary-soft` · `surface/wall` |
+| `--bg` | `surface/sheet` |
+| `--card` | `surface/card` |
+| `--ink` | `text/primary` |
+| `--sub` · `--tx2` | `text/secondary` |
+| `--tx3` | `text/tertiary` |
 | `--onpri` | `text/on-primary` |
-| `--bg` | `Background/default` |
-| `--card` | `Background/card` |
-| `--lav` | `Background/door` · `progress/track` · `border/brand` |
-| `--line` | `border/default` |
+| `--bd` | `border/default` |
+| `--bd-card` | `border/card` |
 | `--divider` | `divider` |
-| `--r-cover` · `--r-cell` · `--r-btn` · `--r-card` | `Radius/book-cover` · `Radius/cell` · `Radius/button` · `Radius/card` |
+| `--bk-l` · `--bk-m` · `--bk-d` | `shelf/book-light` · `mid` · `deep` |
+| `--r-xs` · `--r-md`(=`--r-btn`) · `--r-sheet` · `--r-nav` · `--r-arch` · `--r-full` | `Radius/xs` · `md` · `sheet` · `nav` · `cover` · `full` |
+| `--h-btn` · `--h-input` · `--h-ibtn` · `--h-chip` · `--h-chip-sm` · `--h-prog` | `Size/button` · `input` · `icon-button` · `chip` · `chip-sm` · `progress` |
 | `--sh1` | Effect `primary` |
