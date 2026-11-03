@@ -1804,6 +1804,27 @@ nav.tab.nvb{border-color:var(--line)!important}
 #app .hg3 .hsb{height:var(--h-shelf)}
 #hsv .hsl{height:var(--h-shelf)}
 #app .lsrow{gap:14px!important}
+
+/* ===== 홈 책장: 마이페이지 방식 — 책장은 시트 뒤, 시트를 내리고 올림 ===== */
+#hsv{transform:none!important;opacity:1!important;transition:none!important;z-index:0}
+#app.hm .sc.hm{z-index:1;background:linear-gradient(to bottom,transparent 240px,var(--bg) 240px) local;pointer-events:none;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+#app.hm .sc.hm>*{pointer-events:auto}
+#app.hm .sc.hm>.hd.hgt.hg3{background:transparent!important;pointer-events:none;overflow:visible}
+#app.hm .sc.hm>.hd.hgt.hg3 .hhd{pointer-events:auto}
+#app.hso .sc.hm{transform:translateY(var(--hsy,566px));pointer-events:auto}
+#app.hso .sc.hm>*{pointer-events:none}#app.hso .sc.hm>.hd.hgt.hg3 .hhd{pointer-events:auto}
+#app.hm #hsv .nbl{position:absolute;left:auto;right:-328px;top:0;width:var(--h-ibtn);height:var(--h-ibtn);border-radius:50%;background:var(--card);display:grid;place-items:center;color:var(--ink);padding:0}
+#app.hm #hsv .htb{right:20px;left:23px}
+#app.hm #hsv .nbl{position:static;margin-left:auto}
+#app.hm #hsv .nbl .ic{width:20px;height:20px}#app.hm #hsv .nbd{top:7px;right:8px;border-color:var(--card)}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* 위쪽 제목 줄이 잘리지 않게: 스크롤 영역 위 여백과 상관없이 맨 위에 붙임 */
+#app .sc:has(>.sh2:first-child){padding-top:0!important}
+#app .sc>.sh2:first-child{top:0!important;margin-top:0!important}
+
+#app.hm nav.tab{z-index:5}
+#hsv{-webkit-user-select:none;user-select:none}
+body:has(.app.hso) #pawf{display:none!important}
 </style>
 </head>
 <body>
@@ -2614,7 +2635,7 @@ function home(){
   :(function(){var L=RLs().filter(function(k){return bprog(k).c<100}).slice(0,3);if(!L.length)L=[RLs()[0]];var h=L.map(function(k,i){var B=LB[k],q=bprog(k);return'<section class="hero"'+(i?'':' id="rc"')+'><div class="htp"><div class="hcv" data-k="'+k+'" style="background:'+B[2]+'"><b>'+B[0]+'</b>'+(function(){var L=mpFor(k);return L.length?'<span class="hmt" aria-label="같이 읽는 메이트 '+L.map(function(m){return m[0]}).join(", ")+'">'+L.slice(0,3).map(function(m){return'<i style="background:'+m[2]+'">'+m[0].charAt(0)+'</i>'}).join("")+'</span>':''})()+'</div><div class="hif"><small>'+(i?"최근에 읽던 책":"지금 읽는 책")+'</small><h2>'+B[0]+'</h2><p>'+B[1]+'</p><div class="hpg" role="progressbar" aria-label="진행률" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div><p class="hpt"><span>'+q.p+'/'+q.t+'쪽</span><b>'+q.c+'%</b></p></div></div>'
   +'<div class="hgl"><span>오늘 목표</span><div class="hgm"><i style="width:'+Math.min(100,Math.round(tdp*100/G))+'%"></i></div><b>'+tdp+' / '+G+'쪽</b></div><button class="hgo" data-k="'+k+'">이어읽기</button></section>'}).join("");
   return L.length>1?'<div class="rcwrap"><div class="rcscroll" id="rcscroll" aria-label="최근에 읽던 책, 옆으로 넘겨 보기">'+h+'</div><div class="rcdots" id="hdots">'+L.map(function(_,i){return'<button aria-label="'+(i+1)+'번째 책 보기" aria-current="'+(i===0)+'"></button>'}).join("")+'</div></div>':h})();
- app.innerHTML='<header class="hd hgt hg2 hg3"><div class="htb"><span class="hav" aria-hidden="true">'+PAW+'</span><h1 class="hnm">'+(ME?esc(ME)+'님':'안녕하세요!')+'</h1><button class="ib nbl" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'">'+ic(unread()?"bellOn":"bell")+(unread()?'<i class="nbd"></i>':'')+'</button></div><div class="hsf" id="hsf">'+shSpines(0,0)+'</div><span class="hsb" aria-hidden="true"></span><button class="hhd" id="hhd" aria-label="내 책장 펼쳐 보기"></button></header>'
+ app.innerHTML='<header class="hd hgt hg2 hg3"><h1 class="hnm sr">'+(ME?esc(ME)+'님의 서재':'내 서재')+'</h1><button class="hhd" id="hhd" aria-label="내 책장 펼쳐 보기"></button></header>'
  +hero
  +'<section class="blk"><div class="box wkx" id="hdt" role="button" tabindex="0" aria-label="이번 주 기록, 독서 달력 보기"><div class="hsh"><span class="wkt"><b>'+rd+'일</b> 읽었어요</span><span class="hlk">달력보기'+ic("next")+'</span></div><div class="wkr2">'+bars+'</div></div></section>'
  +(function(){var d=psDay(),c=PCFG.DAILY_CAP,pc=Math.round(d.act*100/c);msSync();var nd=MS.filter(function(x){return x[3]}).length;
@@ -2645,7 +2666,7 @@ function home(){
   el.onkeydown=function(e){if(e.key==="Enter")el.onclick(e);if(e.key==="Escape")thide()}});
  document.querySelector(".sc").addEventListener("click",thide);
  var tb=app.querySelectorAll(".tab button");tb[0].onclick=tabStamp;tb[1].onclick=shop;tb[3].onclick=community;tb[4].onclick=profile;requestAnimationFrame(hFit);
- document.getElementById("hbl").onclick=function(){inbox("all")};shHome();
+ shHome();
  document.getElementById("hdt").onclick=function(){calendar()};document.getElementById("hdt").onkeydown=function(e){if(e.key==="Enter")calendar()};
 }
 I.globe="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18";I.mail="M4 6h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zM3.500 7l8.500 6.500L20.500 7";I.users="M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM3 19c0-3 3-5 6-5s6 2 6 5M16 11a2.5 2.5 0 1 0 0-5M17 14c2.5.3 4 2 4 5";
@@ -3372,35 +3393,36 @@ function shAdd(after){var A=RDB.map(function(_,k){return k}).filter(function(k){
  var x=pop('<h3>책장에 책 꽂기</h3><div class="sah"><p class="sm sad">책장에는 완독한 책만 꽂을 수 있어요.</p><button class="rbf" id="rbf" aria-pressed="'+!!RBR+'" aria-label="'+(RBR?'처음 읽은 책부터 보는 중, 누르면 최근 읽은 순':'최근 읽은 책부터 보는 중, 누르면 처음 읽은 순')+'">'+ic("sort")+(RBR?'처음 읽은 순':'최근 읽은 순')+'</button></div><div class="sel">'+(A.length?A.map(function(k){var b=RDB[k];return'<button class="ser sea" data-k="'+k+'"><i data-bt="'+esc(b[0])+'" style="background:'+BC[k%3]+'"></i><span class="sen"><b>'+b[0]+'</b><small>'+b[1]+'</small><em class="sed">완독 '+b[3]+'</em></span>'+ic("plus")+'</button>'}).join(""):'<p class="pfe" style="padding:8px 0">꽂을 수 있는 책을 모두 꽂았어요.</p>')+'</div><button class="btn ghost" id="sax" style="width:100%;margin-top:12px">닫기</button>');
  document.getElementById("sax").onclick=x;document.getElementById("rbf").onclick=function(){RBR=!RBR;x();shAdd(after)};
  document.querySelectorAll("#dlg .sea").forEach(function(b){b.onclick=function(){var k=+b.dataset.k,q=shAddRow();if(q<0){x();return}SHR[q].push(k);SHB=[].concat.apply([],SHR);x();after()}})}
-/* 홈 화면: 첫째 줄 책 누르면 정보, 손잡이·벽을 누르거나 아래로 끌면 책장 펼치기 */
-function shHome(){var hd=app.querySelector(".hg3");if(!hd)return;var row=document.getElementById("hsf");shFit(row);
- row.querySelectorAll(".hsp").forEach(function(b){b.onclick=function(e){e.stopPropagation();shInfo(+b.dataset.k)}});
- var a=row.querySelector(".hsa");if(a)a.onclick=function(e){e.stopPropagation();shAdd(function(){var sy=document.querySelector(".sc").scrollTop;home();document.querySelector(".sc").scrollTop=sy})};
- document.getElementById("hhd").onclick=function(e){e.stopPropagation();shOpen()};
- hd.addEventListener("click",function(e){if(!e.target.closest("button"))shOpen()});
- var sc=document.querySelector(".sc"),y0=null;
- sc.addEventListener("touchstart",function(e){y0=sc.scrollTop<=0&&e.target.closest(".hg3")?e.touches[0].clientY:null},{passive:true});
- sc.addEventListener("touchend",function(e){if(y0!==null&&e.changedTouches[0].clientY-y0>40)shOpen();y0=null});
- hd.addEventListener("pointerdown",function(e){if(e.pointerType==="mouse")y0=e.clientY});hd.addEventListener("pointerup",function(e){if(e.pointerType==="mouse"&&y0!==null&&e.clientY-y0>40){e.stopPropagation();shOpen()}y0=null})}
-function shOpen(){if(document.getElementById("hsv"))return;var o=document.createElement("div");o.id="hsv";o.setAttribute("role","dialog");o.setAttribute("aria-label","내 책장");
- var t=app.querySelector("nav.tab");o.style.bottom=t?(app.clientHeight-t.offsetTop)+"px":"0";app.appendChild(o);shRender();
- var sc=document.querySelector(".sc");if(sc)sc.setAttribute("aria-hidden","true");requestAnimationFrame(function(){o.classList.add("on")});var x=document.getElementById("hsx");if(x)x.focus();
- o.addEventListener("keydown",function(e){if(e.key==="Escape")shClose()})}
-function shClose(){var o=document.getElementById("hsv");if(!o)return;o.classList.remove("on");var sc=document.querySelector(".sc");if(sc)sc.removeAttribute("aria-hidden");setTimeout(function(){o.remove();if(app.classList.contains("hm")){var sy=sc?sc.scrollTop:0;home();var s2=document.querySelector(".sc");if(s2)s2.scrollTop=sy}},260)}
-function shRender(){var o=document.getElementById("hsv");if(!o)return;shInit();
- o.innerHTML='<div class="htb"><span class="hav" aria-hidden="true">'+PAW+'</span><b class="hnm">'+(ME?esc(ME)+'님':'')+'</b></div>'
+/* 홈 화면: 마이페이지처럼 책장은 시트 뒤에 깔려 있고, 시트(.sc)를 아래로 내리면 3단 책장이 드러나요 */
+var SHG={y:null,t:null,g0:0};
+function shGs(y,t){var sc=document.querySelector(".sc.hm");SHG.y=y;SHG.t=t;SHG.g0=sc?sc.scrollTop:0}
+function shGe(y){if(SHG.y===null)return;if(window.SDRAG){SHG.y=null;return}var d=y-SHG.y,gt=SHG.t,open=app.classList.contains("hso");SHG.y=null;
+ if(!open&&d>40&&SHG.g0<=0)shOpen();else if(open&&d<-40)shClose();else if(open&&Math.abs(d)<8&&gt&&gt.closest&&gt.closest(".sc")&&!gt.closest("#hhd"))shClose();else if(!open&&Math.abs(d)<8&&gt&&gt.closest&&gt.closest("#hsv")&&!gt.closest("button"))shOpen()}
+function shHome(){if(!app.classList.contains("hm"))return;var o=document.getElementById("hsv");if(o)o.remove();o=document.createElement("div");o.id="hsv";o.setAttribute("aria-label","내 책장");
+ var t=app.querySelector("nav.tab");o.style.bottom=t?(app.clientHeight-t.offsetTop)+"px":"0";app.insertBefore(o,app.firstChild);app.classList.remove("hso");shRender()}
+function shOpen(){if(app.classList.contains("hso"))return;var sc=document.querySelector(".sc.hm"),o=document.getElementById("hsv");if(!sc||!o)return;
+ sc.scrollTop=0;var D=o.offsetHeight-35-240;app.style.setProperty("--hsy",D+"px");app.classList.add("hso");sc.setAttribute("aria-hidden","true");document.getElementById("hhd").setAttribute("aria-label","내 책장 접기")}
+function shClose(){if(!app.classList.contains("hso"))return;app.classList.remove("hso");var sc=document.querySelector(".sc.hm");if(sc)sc.removeAttribute("aria-hidden");var h=document.getElementById("hhd");if(h)h.setAttribute("aria-label","내 책장 펼쳐 보기")}
+function shRender(){var o=document.getElementById("hsv");if(!o)return;shInit();var u=unread();
+ o.innerHTML='<div class="htb"><span class="hav" aria-hidden="true">'+PAW+'</span><b class="hnm">'+(ME?esc(ME)+'님':'')+'</b><button class="ib nbl" id="hbl" aria-label="알림'+(u?' (읽지 않은 알림 '+u+'개)':'')+'">'+ic(u?"bellOn":"bell")+(u?'<i class="nbd"></i>':'')+'</button></div>'
  +[0,1,2].map(function(r){return'<div class="hsr" data-r="'+r+'" style="top:'+[77,266,471][r]+'px"><div class="hsb2">'+shSpines(r,1)+'</div><i class="hsl"></i></div>'}).join("")
- +'<img class="hdog" src="'+DOGS+'" alt="" aria-hidden="true"><button class="hsx" id="hsx" aria-label="책장 접기"><i></i></button>';
- shFit(o);document.getElementById("hsx").onclick=shClose;var a=o.querySelector(".hsa");if(a)a.onclick=function(){shAdd(shRender)};
- var y0=null;o.addEventListener("pointerdown",function(e){y0=e.target.closest(".hsp")?null:e.clientY});o.addEventListener("pointerup",function(e){if(y0!==null&&!window.SDRAG&&y0-e.clientY>40)shClose();y0=null});
- o.addEventListener("touchstart",function(e){y0=e.target.closest(".hsp")?null:e.touches[0].clientY},{passive:true});o.addEventListener("touchend",function(e){if(y0!==null&&!window.SDRAG&&y0-e.changedTouches[0].clientY>40)shClose();y0=null});
- /* 꾹 눌러 옮기기 · 휴지통에 놓아 빼기 */
+ +'<img class="hdog" src="'+DOGS+'" alt="" aria-hidden="true">';
+ shFit(o);document.getElementById("hbl").onclick=function(){inbox("all")};
+ var a=o.querySelector(".hsa");if(a)a.onclick=function(){shAdd(shRender)};
+ var sc=document.querySelector(".sc.hm");
+ /* 손잡이: 펼치기/접기 */
+ document.getElementById("hhd").onclick=function(e){e.stopPropagation();app.classList.contains("hso")?shClose():shOpen()};
+ /* 끌기: 닫힌 상태에서 위쪽 책장을 아래로 끌면 펼침, 펼친 상태에서 위로 밀면 접힘, 펼친 상태에서 시트를 누르면 접힘 (마이페이지와 같은 방식) */
+ [sc,o].forEach(function(el){if(!el||el._shg)return;el._shg=1;el.addEventListener("touchstart",function(e){shGs(e.touches[0].clientY,e.target)},{passive:true});el.addEventListener("touchend",function(e){shGe(e.changedTouches[0].clientY)});
+  el.addEventListener("pointerdown",function(e){if(e.pointerType==="mouse")shGs(e.clientY,e.target)});el.addEventListener("pointerup",function(e){if(e.pointerType==="mouse")shGe(e.clientY)})});
+ if(sc&&!sc._shc){sc._shc=1;sc.addEventListener("click",function(e){if(app.classList.contains("hso")&&!e.target.closest("#hhd")){e.preventDefault();e.stopPropagation()}},true)}
+ /* 꾹 눌러 옮기기 · 휴지통에 놓아 빼기 (펼친 상태에서만) */
  var stb=document.getElementById("stb");if(!stb){stb=document.createElement("div");stb.id="stb";stb.setAttribute("aria-hidden","true");stb.innerHTML=ic("trash");app.appendChild(stb)}
- function tbShow(){var x=document.getElementById("hsx").getBoundingClientRect(),a=app.getBoundingClientRect(),z=parseFloat(getComputedStyle(app).zoom)||1;stb.style.top=((x.top-a.top)/z-stb.offsetHeight-14)+"px";stb.classList.add("on")}
+ function tbShow(){var a=app.getBoundingClientRect(),z=parseFloat(getComputedStyle(app).zoom)||1,y=o.offsetHeight-35;stb.style.top=(y-stb.offsetHeight-14)+"px";stb.classList.add("on")}
  function tbHide(){stb.classList.remove("on","hot")}
  function onTb(e){if(!stb.classList.contains("on"))return false;var r=stb.getBoundingClientRect();return e.clientX>=r.left-10&&e.clientX<=r.right+10&&e.clientY>=r.top-16&&e.clientY<=r.bottom+10}
  o.querySelectorAll(".hsp").forEach(function(el){var tm=null,x0,y1,drag=false,moved=false;
-  el.addEventListener("pointerdown",function(e){x0=e.clientX;y1=e.clientY;moved=false;drag=false;tm=setTimeout(function(){drag=true;window.SDRAG=1;el.classList.add("drg");tbShow();try{el.setPointerCapture(e.pointerId)}catch(_){}if(navigator.vibrate)navigator.vibrate(15)},200)});
+  el.addEventListener("pointerdown",function(e){x0=e.clientX;y1=e.clientY;moved=false;drag=false;if(!app.classList.contains("hso"))return;tm=setTimeout(function(){drag=true;window.SDRAG=1;el.classList.add("drg");tbShow();try{el.setPointerCapture(e.pointerId)}catch(_){}if(navigator.vibrate)navigator.vibrate(15)},200)});
   function tgt(e){var best=null,bd=1e9;o.querySelectorAll(".hsp").forEach(function(q){if(q===el)return;var r=q.getBoundingClientRect(),d=Math.hypot(r.left+r.width/2-e.clientX,r.top+r.height/2-e.clientY);if(d<bd){bd=d;best=q}});if(best&&bd<60)return{el:best};
    var row=null;o.querySelectorAll(".hsr").forEach(function(q){var r=q.getBoundingClientRect();if(e.clientY>=r.top-10&&e.clientY<=r.bottom+10)row=q});return row?{row:row}:null}
   el.addEventListener("pointermove",function(e){if(!drag){if(Math.abs(e.clientX-x0)+Math.abs(e.clientY-y1)>8){clearTimeout(tm);moved=true}return}e.preventDefault();var z=parseFloat(getComputedStyle(app).zoom)||1;el.style.transform="translate("+(e.clientX-x0)/z+"px,"+(e.clientY-y1)/z+"px) rotate(-3deg)";
@@ -3411,7 +3433,7 @@ function shRender(){var o=document.getElementById("hsv");if(!o)return;shInit();
     else if(t&&t.row){var r2=+t.row.dataset.r;if(r2!==r0&&SHR[r2].length<SHPER){SHR[r0].splice(j0,1);SHR[r2].push(k)}else if(r2===r0){SHR[r0].splice(j0,1);SHR[r0].push(k)}}}
    SHB=[].concat.apply([],SHR);shRender()}
   el.addEventListener("pointerup",end);el.addEventListener("pointercancel",end);el.addEventListener("contextmenu",function(e){e.preventDefault()});
-  el.onclick=function(){if(el.dataset.nd){delete el.dataset.nd;return}if(moved)return;shInfo(+el.dataset.k)}})}
+  el.onclick=function(e){e.stopPropagation();if(el.dataset.nd){delete el.dataset.nd;return}if(moved)return;shInfo(+el.dataset.k)}})}
 </script>
 </body>
 </html>
