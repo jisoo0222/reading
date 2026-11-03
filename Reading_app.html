@@ -2087,6 +2087,11 @@ body:has(.app.hso) #pawf{display:none!important}
 #app .ppx .pps{padding-top:12px!important;margin-top:-10px!important}
 #app .bk>.dst2{left:-6px!important;right:auto!important}
 #app .ppx .bk>.dst2{display:none!important}
+
+/* 홈 알림 버튼: 흰 바탕 · 초록 종 · 새 알림이면 분홍 종, 종은 정가운데 */
+#hsv .nbl,#hsv .nbl:has(.nbd){background:#fff!important;color:var(--pri)!important;display:grid!important;place-items:center!important;padding:0!important;line-height:0}
+#hsv .nbl.nun{color:#FF4C86!important}
+#hsv .nbl .ic{display:block;margin:0!important;transform:translateY(-1.5px)}
 </style>
 </head>
 <body>
@@ -3667,7 +3672,7 @@ function shOpen(){if(app.classList.contains("hso"))return;var sc=document.queryS
  sc.scrollTop=0;var D=o.offsetHeight-35-240;app.style.setProperty("--hsy",D+"px");app.classList.add("hso");sc.setAttribute("aria-hidden","true");document.getElementById("hhd").setAttribute("aria-label","내 책장 접기")}
 function shClose(){if(!app.classList.contains("hso"))return;app.classList.remove("hso");var sc=document.querySelector(".sc.hm");if(sc)sc.removeAttribute("aria-hidden");var h=document.getElementById("hhd");if(h)h.setAttribute("aria-label","내 책장 펼쳐 보기")}
 function shRender(){var o=document.getElementById("hsv");if(!o)return;shInit();var u=unread();
- o.innerHTML='<div class="htb"><span class="hav" aria-hidden="true">'+PAW+'</span><b class="hnm">'+(ME?esc(ME)+'님':'')+'</b><button class="ib nbl" id="hbl" aria-label="알림'+(u?' (읽지 않은 알림 '+u+'개)':'')+'">'+ic(u?"bellOn":"bell")+(u?'<i class="nbd"></i>':'')+'</button></div>'
+ o.innerHTML='<div class="htb"><span class="hav" aria-hidden="true">'+PAW+'</span><b class="hnm">'+(ME?esc(ME)+'님':'')+'</b><button class="ib nbl'+(u?' nun':'')+'" id="hbl" aria-label="알림'+(u?' (읽지 않은 알림 '+u+'개)':'')+'">'+ic("bell")+'</button></div>'
  +[0,1,2].map(function(r){return'<div class="hsr" data-r="'+r+'" style="top:'+[77,266,471][r]+'px"><div class="hsb2">'+shSpines(r,1)+'</div><i class="hsl"></i></div>'}).join("")
  +'<img class="hdog" src="'+DOGS+'" alt="" aria-hidden="true">';
  shFit(o);document.getElementById("hbl").onclick=function(){inbox("all")};
