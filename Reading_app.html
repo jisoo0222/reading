@@ -1965,10 +1965,10 @@ body:has(.app.hso) #pawf{display:none!important}
 <script>
 var AX=[["완독형","선택형"],["분석형","공감형"],["깊이형","넓이형"],["정보형","재미형"]];
 var Q=[
-{a:0,t:"읽던 책이 재미없어지면 어떻게 하나요?",h:"나와 가장 가까운 행동을 선택해 주세요.",o:["시작한 책은 웬만하면 끝까지 읽어요.","잠시 쉬었다가 다시 읽을 마음이 들면 이어서 읽어요.","흥미가 떨어진 이유를 생각해보고 조금 더 읽을지 결정해요.","지금 끌리지 않는다면 과감하게 다른 책으로 넘어가요."]},
-{a:1,t:"책을 덮고 나면 어떤 생각이 먼저 드나요?",h:"나와 가장 가까운 행동을 선택해 주세요.",o:["글의 구성과 전개가 얼마나 탄탄했는지 돌아봐요.","글이 전달하는 주장에 동의할 수 있는지 따져봐요.","등장인물이나 글쓴이가 왜 그런 선택을 했는지 생각해요.","읽는 동안 느꼈던 감정과 장면들이 계속 떠올라요."]},
-{a:2,t:"새로운 관심사가 생기면 어떻게 하나요?",h:"나와 가장 가까운 행동을 선택해 주세요.",o:["한 분야를 정하면 관련 책과 자료를 찾아 깊이 있게 공부해요.","대표적인 책 몇 권을 읽으며 그 분야의 핵심을 이해해요.","서로 다른 관점의 책을 읽으며 관심 분야의 전체적인 지도를 그려요.","한 가지에 머무르기보다 새로운 분야를 계속 발견하고 옮겨다녀요."]},
-{a:3,t:"책을 펴는 가장 큰 이유는 무엇인가요?",h:"나와 가장 가까운 행동을 선택해 주세요.",o:["읽고 나서 새로운 지식이나 실용적인 정보를 얻는 것이 중요해요.","새로운 관점이나 생각할 거리를 얻을 수 있다면 좋아요.","이야기의 전개나 문장의 표현이 흥미로우면 계속 읽게 돼요.","특별한 목적 없이 책을 읽는 시간 자체를 즐겨요."]},
+{a:0,t:"읽던 책이 재미없어지면 어떻게 하나요?",h:"나와 가장 가까운 행동을 골라 주세요.",o:["시작한 책은 웬만하면 끝까지 읽어요.","잠시 쉬었다가 다시 읽을 마음이 들면 이어서 읽어요.","흥미가 떨어진 이유를 생각해보고 조금 더 읽을지 결정해요.","지금 끌리지 않는다면 과감하게 다른 책으로 넘어가요."]},
+{a:1,t:"책을 덮고 나면 어떤 생각이 먼저 드나요?",h:"나와 가장 가까운 행동을 골라 주세요.",o:["글의 구성과 전개가 얼마나 탄탄했는지 돌아봐요.","글이 전달하는 주장에 동의할 수 있는지 따져봐요.","등장인물이나 글쓴이가 왜 그런 선택을 했는지 생각해요.","읽는 동안 느꼈던 감정과 장면들이 계속 떠올라요."]},
+{a:2,t:"새로운 관심사가 생기면 어떻게 하나요?",h:"나와 가장 가까운 행동을 골라 주세요.",o:["한 분야를 정하면 관련 책과 자료를 찾아 깊이 있게 공부해요.","대표적인 책 몇 권을 읽으며 그 분야의 핵심을 이해해요.","서로 다른 관점의 책을 읽으며 관심 분야의 전체적인 지도를 그려요.","한 가지에 머무르기보다 새로운 분야를 계속 발견하고 옮겨다녀요."]},
+{a:3,t:"책을 펴는 가장 큰 이유는 무엇인가요?",h:"나와 가장 가까운 행동을 골라 주세요.",o:["읽고 나서 새로운 지식이나 실용적인 정보를 얻는 것이 중요해요.","새로운 관점이나 생각할 거리를 얻을 수 있다면 좋아요.","이야기의 전개나 문장의 표현이 흥미로우면 계속 읽게 돼요.","특별한 목적 없이 책을 읽는 시간 자체를 즐겨요."]},
 ];
 var T={
 FADI:["완벽주의 전략 독서가","계획을 세워 한 권을 빈틈없이 끝까지 읽어 내는 독자"],
@@ -2051,7 +2051,7 @@ function testRes(){
  document.getElementById("re").onclick=function(){testPg()}}
 function result(){
  var c=calcType(),key=c.key,t=c.t,names=c.names,rows=c.rows;RKEY=key;
- app.innerHTML=bar(Q.length)+'<h1>독서 성향이 분석되었어요</h1><div class="tcard" id="tcd">'+typeSVG(key,t,names)+'</div><div class="tbt tbc"><button class="tci" id="tsv">'+ic("dl")+'이미지 저장</button><button class="tci" id="tsh">'+ic("share")+'공유하기</button></div>'
+ app.innerHTML=bar(Q.length)+'<h1>독서 성향을 알아봤어요</h1><div class="tcard" id="tcd">'+typeSVG(key,t,names)+'</div><div class="tbt tbc"><button class="tci" id="tsv">'+ic("dl")+'이미지 저장</button><button class="tci" id="tsh">'+ic("share")+'공유하기</button></div>'
  +'<div class="sec"><h3>성향 분석</h3>'+rows+'</div>'+recBox(key)
  +'<div class="foot rsf"><button class="btn ghost" id="re">다시 하기</button><button class="btn" id="go">홈으로 가기</button></div>';
  document.getElementById("go").onclick=home;
@@ -2084,7 +2084,7 @@ function goal(){
  app.className="app";
  var cu=GOAL!==null&&GO.every(function(g){return g[0]!==GOAL}),cv=cu?GOAL:20;
  var o=GO.map(function(g){return'<button class="opt" data-v="'+g[0]+'" aria-pressed="'+(!cu&&GOAL===g[0])+'"><span>하루 '+g[0]+'쪽<small>'+gTip(g[0])+'</small></span><span class="mk"></span></button>'}).join("")
-  +'<div class="opt gcu'+(cu?" on":"")+'" role="button" tabindex="0" data-c="1" aria-pressed="'+cu+'"><span style="flex:1">직접 설정<span class="gsl"><span class="gwh" id="gwh"><span class="gwl">하루</span><span class="gwv"><span class="gwc" id="gwc"><i class="gw" data-o="-2"></i><i class="gw" data-o="-1"></i><input type="number" id="gsr" inputmode="numeric" min="1" max="300" value="'+(cu?cv:20)+'" aria-label="하루 목표 쪽수, 위아래로 끌어서 바꾸기"><i class="gw" data-o="1"></i><i class="gw" data-o="2"></i></span></span><span class="gwl">쪽</span></span><small class="gwt"><span>숫자를 위아래로 드래그하거나,</span><span>직접 눌러 입력해 주세요.</span></small></span></span><span class="mk"></span></div>';
+  +'<div class="opt gcu'+(cu?" on":"")+'" role="button" tabindex="0" data-c="1" aria-pressed="'+cu+'"><span style="flex:1">직접 설정<span class="gsl"><span class="gwh" id="gwh"><span class="gwl">하루</span><span class="gwv"><span class="gwc" id="gwc"><i class="gw" data-o="-2"></i><i class="gw" data-o="-1"></i><input type="number" id="gsr" inputmode="numeric" min="1" max="300" value="'+(cu?cv:20)+'" aria-label="하루 목표 쪽수, 위아래로 끌어서 바꾸기"><i class="gw" data-o="1"></i><i class="gw" data-o="2"></i></span></span><span class="gwl">쪽</span></span><small class="gwt"><span>숫자를 위아래로 밀거나,</span><span>직접 눌러 입력해 주세요.</span></small></span></span><span class="mk"></span></div>';
  app.innerHTML=ost(2)+'<h1>하루에 얼마나 읽어 볼까요?</h1><p class="hint">하루에 읽을 페이지 수를 정해 주세요. 목표를 채우면 알려 드려요.</p>'
  +'<div class="opts">'+o+'</div><div class="foot"><button class="btn ghost" id="bk1">이전</button><button class="btn" id="nx2">다음</button></div>';
  var nx=document.getElementById("nx2"),cb=app.querySelector(".gcu"),sr=document.getElementById("gsr");nx.disabled=GOAL===null;
@@ -2113,7 +2113,7 @@ function tiIntro(){
  +'<h1>독서TI 검사</h1><p class="hint tis"><span>4개의 질문으로 나의 독서 성향을 알아보고,</span><span>나에게 꼭 맞는 책과 독서 메이트를 추천받아 보세요!</span></p><button class="tsk" id="tsk">검사 건너뛰기</button></div>'
  +'<div class="foot"><button class="btn ghost" id="tib">이전</button><button class="btn" id="tig">시작하기</button></div>';
  document.getElementById("tib").onclick=goal;document.getElementById("tig").onclick=function(){step=0;ask()};
- document.getElementById("tsk").onclick=function(){var x=pop('<h3>정말 스킵하시겠어요?</h3><p style="word-break:keep-all">검사를 건너뛰면 나에게 맞는 첫 책을 추천받을 수 없어요. 홈에서 언제든 다시 검사할 수 있어요.</p><div class="dbt"><button class="btn ghost" id="skn">취소</button><button class="btn" id="sky">스킵하기</button></div>');document.getElementById("skn").onclick=x;document.getElementById("sky").onclick=function(){x();SKT=1;home()}}}
+ document.getElementById("tsk").onclick=function(){var x=pop('<h3>정말 건너뛸까요?</h3><p style="word-break:keep-all">검사를 건너뛰면 나에게 맞는 첫 책을 추천받을 수 없어요. 홈에서 언제든 다시 검사할 수 있어요.</p><div class="dbt"><button class="btn ghost" id="skn">취소</button><button class="btn" id="sky">건너뛰기</button></div>');document.getElementById("skn").onclick=x;document.getElementById("sky").onclick=function(){x();SKT=1;home()}}}
 var SKT=0,RK={4:"FEDJ",5:"SEWJ",6:"FADJ",7:"FADI",8:"FADI",9:"FEDJ",10:"SAWJ"},RKEY="",PICKED=0;
 function tWrap(t,n){var w=t.split(" "),L=[],c="";w.forEach(function(x){if((c+" "+x).trim().length>n&&c){L.push(c);c=x}else c=(c+" "+x).trim()});if(c)L.push(c);return L}
 function typeSVG(key,t,names){
@@ -2215,7 +2215,7 @@ function invitePop(bt){
  document.getElementById("ivl").onclick=function(e){var b=e.target.closest(".ivb");if(!b)return;var n=b.dataset.n;if(iv[n])delete iv[n];else if(!full())iv[n]=b.dataset.c;r()};
  document.getElementById("ivx").onclick=function(){x();matePop(bt)}}
 function doneBk(k){var b=LB[k];if(!b)return;bonusDone(k);if(!RDB.some(function(r){return r[0]===b[0]}))RDB.push([b[0],b[1],BD[k]?BD[k].length:0,ymd()]);
- var x=pop('<div class="dnb"><span class="dnc" style="background:'+b[2]+'"><b>'+esc(b[0])+'</b></span><h3>『'+esc(b[0])+'』'+((b[0].charCodeAt(b[0].length-1)-44032)%28?'을':'를')+' 다 읽었어요!</h3><dl class="dnd"><div><dt>처음 읽기 시작한 날</dt><dd>'+(SDT[k]||ymd())+'</dd></div><div><dt>완독한 날</dt><dd>'+ymd()+'</dd></div></dl><p class="dnm">커뮤니티에 글을 남겨보세요!</p></div><div class="dbt"><button class="btn ghost" id="dnh">홈으로 가기</button><button class="btn" id="dnc">커뮤니티</button></div>');
+ var x=pop('<div class="dnb"><span class="dnc" style="background:'+b[2]+'"><b>'+esc(b[0])+'</b></span><h3>『'+esc(b[0])+'』'+((b[0].charCodeAt(b[0].length-1)-44032)%28?'을':'를')+' 다 읽었어요!</h3><dl class="dnd"><div><dt>처음 읽기 시작한 날</dt><dd>'+(SDT[k]||ymd())+'</dd></div><div><dt>완독한 날</dt><dd>'+ymd()+'</dd></div></dl><p class="dnm">읽은 느낌을 커뮤니티에 가볍게 남겨 볼까요?</p></div><div class="dbt"><button class="btn ghost" id="dnh">홈으로 가기</button><button class="btn" id="dnc">커뮤니티</button></div>');
  document.getElementById("dnh").onclick=function(){x();home()};document.getElementById("dnc").onclick=function(){x();community()}}
 /* ===== 포인트 규칙 설정 (여기 숫자만 바꾸면 조건·보상이 바뀌어요) ===== */
 var PCFG={
@@ -2233,7 +2233,7 @@ function msSync(){var s=psDay();MS.forEach(function(m,i){var k=MK[i];m[2]=PCFG.A
 function award(k,quiet){var s=psDay(),c=PCFG.ACT[k];if(!c||(k in s.got))return 0;
  var give=Math.max(0,Math.min(c.p,PCFG.DAILY_CAP-s.act));s.got[k]=give;s.act+=give;PT+=give;msSync();
  var nm=MS[MK.indexOf(k)][0];
- if(quiet){}else if(give<c.p)ptToast("오늘의 활동 포인트 상한까지 "+give+"P가 지급되었습니다.");else ptToast(nm+" 미션 달성 · +"+give+"P");
+ if(quiet){}else if(give<c.p)ptToast("오늘 받을 수 있는 포인트를 다 채워서 "+give+"P만 받았어요.");else ptToast(nm+" 미션 달성 · +"+give+"P");
  if(typeof hpRef==="function")hpRef();return give}
 function bonusDone(bk){if(bk==null||DONEPAID[bk]||("done" in psDay().got))return 0;DONEPAID[bk]=1;return award("done")}
 function readToday(){var s=psDay(),t=s.d;RDAYS[t]=1;
@@ -2275,7 +2275,7 @@ function chips(a,g){return a.map(function(x){return'<span class="chip'+(g?" g":"
 function lk(v){return'<svg class="ic l'+v+'" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 11h12v9H6z"/><path d="'+["M8 11V8a4 4 0 0 1 8 0v3","M8 11V8a4 4 0 0 1 8 0v1","M8 9V6a4 4 0 0 1 8 0"][v]+'"/></svg>'}
 function friend(i,pf){
  var m=M[i],n=m[0],P=PF[n],fr0=!!FR[n];
- function sec(t,v,h,x){var ok=v===2||(v===1&&FR[n]);return'<section class="fs"><div class="fsh"><h3>'+t+'</h3><span class="fsr"><span class="lkt l'+v+'">'+lk(v)+VL[v]+'</span>'+(ok&&x?x:'')+'</span></div>'+(ok?h:'<div class="lkb">'+lk(v)+'<span>'+(v===0?"비공개 설정 중입니다.":"친구에게만 공개돼요.")+'</span></div>')+'</section>'}
+ function sec(t,v,h,x){var ok=v===2||(v===1&&FR[n]);return'<section class="fs"><div class="fsh"><h3>'+t+'</h3><span class="fsr"><span class="lkt l'+v+'">'+lk(v)+VL[v]+'</span>'+(ok&&x?x:'')+'</span></div>'+(ok?h:'<div class="lkb">'+lk(v)+'<span>'+(v===0?"나만 볼 수 있어요.":"친구에게만 공개돼요.")+'</span></div>')+'</section>'}
  var HF=[128,112,136,120,104,132],shelf=P.b.length?'<div class="sfw fsf" role="list" aria-label="'+n+' 님의 책장">'+(function(){var r=[],h="";for(var q=0;q<P.b.length;q+=5)r.push(P.b.slice(q,q+5));return r.map(function(row,ri){return'<div class="sfr"><div class="sfb">'+row.map(function(t,j){var k=ri*5+j,lt=k%3===2;return'<span class="sfs" role="listitem" data-st="'+esc(t)+'" style="height:'+HF[k%6]+'px;background:'+BC[k%3]+';color:'+(lt?"#4F3A4F":"#F6F1EC")+'"><span>'+t+'</span></span>'}).join("")+'</div><i class="sfl"></i></div>'}).join("")})()+'</div>':'<p class="sm" style="color:var(--sub)">아직 책장에 책이 없어요.</p>';
  /* 친구의 커뮤니티 글: 글마다 공개 범위를 지키고, 누르면 커뮤니티에서 그 글을 열어요 */
  var FP=PO.filter(function(p){return p.u===n&&!p.mine&&(p.v===0||(p.v===1&&FR[n]))});
@@ -2338,7 +2338,7 @@ function profile(){
  app.classList.add("pf");var scx=document.querySelector(".sc"),pfx=app.querySelector(".pfb");scx.style.paddingBottom="0";pfx.style.paddingBottom="90px";
  document.getElementById("rp").onclick=function(){if(RKEY||ans.indexOf(null)<0)typePg();else{TFROM=profile;testPg()}};
  document.getElementById("pme").onclick=meEdit;
- document.getElementById("pset").onclick=setPg;document.getElementById("plk").onclick=function(){PRIV=PRIV?0:1;var sy=document.querySelector(".sc").scrollTop;profile();document.querySelector(".sc").scrollTop=sy;pTip(PRIV?"프로필이 비공개로 바뀌었습니다.":"프로필이 공개로 바뀌었습니다.")};
+ document.getElementById("pset").onclick=setPg;document.getElementById("plk").onclick=function(){PRIV=PRIV?0:1;var sy=document.querySelector(".sc").scrollTop;profile();document.querySelector(".sc").scrollTop=sy;pTip(PRIV?"프로필을 비공개로 바꿨어요.":"프로필을 공개로 바꿨어요.")};
  app.querySelectorAll(".pfc[data-i]").forEach(function(b){b.onclick=function(){friend(+b.dataset.i,1)}});var pfa=document.getElementById("pfa");if(pfa)pfa.onclick=frList;
  var rbm=document.getElementById("rbm");if(rbm)rbm.onclick=function(){RPB=profile;readPg(1)};
 
@@ -2367,7 +2367,7 @@ function readPg(srt,flt){flt=flt||0;
 function frList(){
  var row=function(m,i){return'<button class="frw" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>취향 일치도 '+m[1]+'%</small>'+ic("next")+'</button>'},F=[],R=[];
  M.forEach(function(m,i){(FR[m[0]]?F:R).push(row(m,i))});
- var x=pop('<h3>내 친구 '+F.length+'</h3>'+(F.length?'<div class="frl">'+F.join("")+'</div>':'<p class="frE">아직 친구가 없어요!</p>'+(R.length?'<h4 class="frH">추천 친구</h4><div class="frl">'+R.join("")+'</div>':''))+'<button class="btn ghost" id="flx" style="width:100%;margin-top:14px">닫기</button>');
+ var x=pop('<h3>내 친구 '+F.length+'</h3>'+(F.length?'<div class="frl">'+F.join("")+'</div>':'<p class="frE">아직 친구가 없어요.</p>'+(R.length?'<h4 class="frH">추천 친구</h4><div class="frl">'+R.join("")+'</div>':''))+'<button class="btn ghost" id="flx" style="width:100%;margin-top:14px">닫기</button>');
  document.getElementById("flx").onclick=x;
  document.querySelectorAll("#dlg .frw").forEach(function(b){b.onclick=function(){x();friend(+b.dataset.i,1)}})}
 function meEdit(){
@@ -2523,7 +2523,7 @@ function mpFor(k){var L=BMT[k];if(!L)return[["지민",34,"#4CAE85"],["은우",12
 function cmOK(n){var L=BMT[BK];return !L||L.indexOf(n)>-1}
 function bkStart(k,go){go=go||function(){reader(k)};if(OPN.indexOf(k)>-1&&BMT[k]){go();return}mateSel(k,go)}
 function mateSel(k,go){var F=M.filter(function(m){return FR[m[0]]}),sel=[];
- var x=pop('<h3>독서 메이트를 선택하세요!</h3><p class="sm" style="font-size:12px;margin:-2px 0 10px">『'+esc(LB[k][0])+'』를 함께 읽을 메이트를 골라 주세요. 고른 메이트의 코멘트만 책에 보여요.</p>'
+ var x=pop('<h3>함께 읽을 메이트를 골라 볼까요?</h3><p class="sm" style="font-size:12px;margin:-2px 0 10px">『'+esc(LB[k][0])+'』를 함께 읽을 메이트를 골라 주세요. 고른 메이트의 코멘트만 책에 보여요.</p>'
   +(F.length?'<div class="mts msl">'+F.map(function(m){return'<button class="mtc" data-n="'+esc(m[0])+'" aria-pressed="false"><span class="mav" style="background:'+m[2]+'">'+esc(m[0]).charAt(0)+'</span><b>'+esc(m[0])+'</b><small>취향 일치도 '+m[1]+'%</small><em>친구</em></button>'}).join("")+'</div>'
    :'<div class="msn"><p>아직 친구가 없어요.</p><small>친구를 추가하면 함께 읽고 서로의 코멘트를 볼 수 있어요.</small><button class="btn ghost" id="msf" style="width:100%;margin-top:10px">친구 추가하러 가기</button></div>')
   +'<button class="btn" id="msg" style="width:100%;margin-top:12px">혼자 읽기 시작</button>');
@@ -2675,10 +2675,10 @@ function csPop(){
  var x=pop('<h3>고객센터</h3><p class="sm" style="color:var(--sub);font-size:13px">운영 시간은 평일 10:00–18:00예요. 문의를 남기면 순서대로 답변해 드려요.</p><textarea id="csq" rows="4" placeholder="문의 내용을 적어 주세요" aria-label="문의 내용"></textarea><p id="cse" style="color:var(--sub);font-size:13px;min-height:18px;margin:4px 0 0"></p><div class="dbt"><button class="btn ghost" id="csn">닫기</button><button class="btn" id="csy">보내기</button></div>');
  document.getElementById("csn").onclick=x;
  document.getElementById("csy").onclick=function(){var v=document.getElementById("csq").value.trim();if(!v){document.getElementById("cse").textContent="문의 내용을 입력해 주세요.";return}
-  var d=document.getElementById("dlg");d.innerHTML='<h3>접수 완료</h3><p class="sm" style="color:var(--sub)">문의가 접수되었습니다. 답변이 오면 알려드리겠습니다.</p><button class="btn" id="cso" style="width:100%;margin-top:14px">확인</button>';document.getElementById("cso").onclick=x}}
+  var d=document.getElementById("dlg");d.innerHTML='<h3>접수 완료</h3><p class="sm" style="color:var(--sub)">문의를 잘 받았어요. 답변이 오면 알려 드릴게요.</p><button class="btn" id="cso" style="width:100%;margin-top:14px">확인</button>';document.getElementById("cso").onclick=x}}
 function setPg(){
  app.className="app";
- var NT=[["서비스 오픈 안내","2026.10.01","AI 독서 습관 앱이 문을 열었어요. 독서 프로필을 만들고 메이트와 함께 읽어 보세요."],["정기 점검 안내","2026.10.05","더 안정적인 서비스를 위해 새벽 시간에 짧은 점검이 있을 수 있어요."]];
+ var NT=[["똑독이 문을 열었어요","2026.10.01","AI 독서 습관 앱이 문을 열었어요. 독서 프로필을 만들고 메이트와 함께 읽어 보세요."],["정기 점검 안내","2026.10.05","더 안정적인 서비스를 위해 새벽 시간에 짧은 점검이 있을 수 있어요."]];
  var TM=[["제1조 (목적)","이 약관은 서비스의 이용 조건과 절차, 이용자와 서비스 운영자의 권리와 의무를 정하는 것을 목적으로 해요."],["제2조 (이용자의 책임)","이용자는 다른 이용자를 존중하고, 타인의 저작물이나 개인정보를 허락 없이 게시하지 않아야 해요."],["제3조 (서비스의 변경)","운영자는 서비스의 일부를 변경하거나 중단할 수 있으며, 중요한 변경은 공지사항으로 알려요."]];
  var PV=[["수집하는 정보","독서 기록, 코멘트, 프로필 설정처럼 서비스를 제공하는 데 필요한 최소한의 정보만 수집해요."],["이용 목적","맞춤 책 추천, 독서 메이트 연결, 독서 기록 정리를 위해 사용해요."],["보관과 삭제","이용자가 요청하거나 탈퇴하면 관련 정보를 지체 없이 삭제해요."]];
  function art(a){return a.map(function(x){return'<p class="sm"><b>'+x[0]+'</b><br><span style="color:var(--sub);font-size:13px">'+x[1]+'</span></p>'}).join("")}
@@ -2931,7 +2931,7 @@ function community(){
    document.getElementById("n").onclick=function(){d.remove();document.getElementById("ov2").remove()};
    document.getElementById("y").onclick=function(){sv();var t=tx.trim();
     if(!t){msg="내용을 입력해 주세요.";r();return}
-    if(ty!=="자유"&&!bk){msg="책을 선택해 주세요.";r();return}
+    if(ty!=="자유"&&!bk){msg="책을 골라 주세요.";r();return}
     if(ty==="밸런스"&&(!o[0].trim()||!o[1].trim())){msg="선택지를 두 개 입력해 주세요.";r();return}
     var np={id:Date.now(),t:ty,u:ME,mine:1,tm:"방금 전",v:vs,x:t,l:0,c:[]};if(ty!=="자유"){np.bt=bk;if(bk[3]>-1)np.b=bk[3]}if(ty==="밸런스"){np.o=[o[0].trim(),o[1].trim()];np.n=[0,0]}
     PO.unshift(np);d.remove();document.getElementById("ov2").remove();feed()};
@@ -3255,7 +3255,7 @@ function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':(typeof
  if(!window.TUTD)setTimeout(tut,400);
  function tut(){if(!document.getElementById("lf"))return;
   var ov=document.createElement("div");ov.id="tut";app.appendChild(ov);
-  var C=[["hl","형광펜","문구점에서 산 펜 중 어떤 형광펜으로 칠할지 골라요. 칠하기는 글을 드래그한 뒤 말풍선에서 해요."],["memo","스티커","스티커를 골라 글을 적고, 원하는 자리에 붙여요. 직접 만든 스티커도 쓸 수 있어요."],["wd","단어 사전","모르는 단어의 뜻을 바로 찾아봐요."],["ch","인물 사전","나만 보는 인물 메모예요. 추가한 이름은 본문에서 색으로 표시돼요."],["sh","책 공유","지금 읽는 책을 링크로 친구에게 공유해요. 문장 카드는 글을 드래그한 뒤 말풍선에서 만들어요."],["set","읽기 설정","낮·밤 모드, 넘김·스크롤, 글자 크기, 글씨체, 스포 방지를 바꿔요."],["pg","쪽 이동","슬라이더를 끌어 원하는 쪽으로 가요. 메이트가 어디쯤 읽는지도 보여요."]],i=0;
+  var C=[["hl","형광펜","문구점에서 산 펜 중 어떤 형광펜으로 칠할지 골라요. 칠하기는 글을 길게 눌러 고른 뒤 말풍선에서 해요."],["memo","스티커","스티커를 골라 글을 적고, 원하는 자리에 붙여요. 직접 만든 스티커도 쓸 수 있어요."],["wd","단어 사전","모르는 단어의 뜻을 바로 찾아봐요."],["ch","인물 사전","나만 보는 인물 메모예요. 추가한 이름은 본문에서 색으로 표시돼요."],["sh","책 공유","지금 읽는 책을 링크로 친구에게 공유해요. 문장 카드는 글을 길게 눌러 고른 뒤 말풍선에서 만들어요."],["set","읽기 설정","낮·밤 모드, 넘김·스크롤, 글자 크기, 글씨체, 스포 방지를 바꿔요."],["pg","쪽 이동","슬라이더를 끌어 원하는 쪽으로 가요. 메이트가 어디쯤 읽는지도 보여요."]],i=0;
   function done(){ov.remove();window.TUTD=1;cpClose();toast("이제 편하게 읽어 보세요")}
   function s1(){ov.className="t1";ov.innerHTML='<div class="tbx tb1"><b>읽기 도구 열기</b><p>화면 아래에서 위로 밀어 보세요.<br>형광펜, 코멘트, 쪽 이동 같은 도구가 나와요.</p><button class="tsk">건너뛰기</button></div><div class="tar" aria-hidden="true"><i></i>'+ic("back")+'</div>';
    var y0=null;function st(y){y0=y}function en(y){if(y0!==null&&y0-y>40){cpOpen();setTimeout(step,340)}y0=null}
@@ -3493,7 +3493,7 @@ function obScene(n){
  return h+'</svg>'}
 function onb(){
  app.className="app onb";
- var T=[["똑똑,<br>함께 읽을래요?","한 권의 책이<br>새로운 이야기로 이어지는 곳,<br>똑독입니다."],
+ var T=[["똑똑,<br>함께 읽을래요?","한 권의 책이<br>새로운 이야기로 이어지는 곳,<br>똑독이에요."],
   ["책장을 넘기는 순간,<br>새로운 세계가 열려요.","좋은 이야기는<br>언제나 또 다른 이야기를 불러오니까요."],
   ["친구와 함께,<br>더 멀리, 더 깊이.","같이 읽고, 나누고, 발견하는<br>나만의 독서 여정을 시작해 보세요."]];
  app.innerHTML='<div class="obw" role="region" aria-label="똑독 소개"><div class="obs" id="obs">'+T.map(function(t,i){return'<section class="obp" aria-label="'+(i+1)+' / 3"><h1>'+t[0]+'</h1><p>'+t[1]+'</p><div class="obi">'+obScene(i)+'</div></section>'}).join("")+'</div>'
