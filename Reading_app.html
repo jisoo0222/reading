@@ -2095,6 +2095,10 @@ body:has(.app.hso) #pawf{display:none!important}
 #hsv .nbl .ic{display:block;margin:0!important;transform:translateY(-1.5px)}
 #hsv .htb .nbl{position:relative!important;left:auto!important;right:auto!important;top:auto!important}
 #hsv .nbl.nun::after{top:5px!important;left:auto!important;right:5px!important;width:8px!important;height:8px!important;border-width:1.5px!important}
+
+/* ===== 모든 책 표지 = 문 모양 (표지 그림이 붙는 모든 요소) ===== */
+#app [data-bt],#dlg [data-bt],#sheet [data-bt]{overflow:hidden}
+#app.pf .rbk>i,#app .rbk>i,#app .ser>i,#app .mpi>i,#app .bc,#app .bc2,#dlg .bc,#dlg .bc2{border-radius:50% 50% var(--r-md) var(--r-md)/37.5% 37.5% var(--r-md) var(--r-md)!important}
 </style>
 </head>
 <body>
@@ -3714,7 +3718,7 @@ function pTip(t){var e=document.getElementById("ptip");if(e)e.remove();e=documen
  new MutationObserver(function(){requestAnimationFrame(fit)}).observe(app,{childList:true});window.addEventListener("resize",fit)})();
 
 /* 책 표지 문 모양: 위쪽 아치를 표지 폭의 절반(반원)으로 맞춤 */
-(function(){var q=0,S=".cv,.bcv,.sc.hm .hrc .rck i,.sc.hm .hcv,.rbw>i";function run(){q=0;app.querySelectorAll(S).forEach(function(e){var w=e.offsetWidth;if(!w)return;var r=Math.round(w/2)+"px";var v=r+" "+r+" var(--r-md) var(--r-md)";if(e.dataset.door!==v){e.dataset.door=v;e.style.setProperty("border-radius",v,"important")}})}
+(function(){var q=0,S=".cv,.bcv,.sc.hm .hrc .rck i,.sc.hm .hcv,.rbw>i,[data-bt]";function run(){q=0;app.querySelectorAll(S).forEach(function(e){var w=e.offsetWidth;if(!w)return;var r=Math.round(w/2)+"px";var v=r+" "+r+" var(--r-md) var(--r-md)";if(e.dataset.door!==v){e.dataset.door=v;e.style.setProperty("border-radius",v,"important")}})}
  new MutationObserver(function(){if(!q){q=1;requestAnimationFrame(run)}}).observe(app,{childList:true,subtree:true});window.addEventListener("resize",function(){app.querySelectorAll("[data-door]").forEach(function(e){delete e.dataset.door});run()});run()})();
 
 /* 나이 입력칸: 닉네임처럼 칸 + 오른쪽 위아래 화살표, 휠·끌기로 숫자만 바뀌어요 */
