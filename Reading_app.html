@@ -2090,8 +2090,11 @@ body:has(.app.hso) #pawf{display:none!important}
 
 /* 홈 알림 버튼: 흰 바탕 · 초록 종 · 새 알림이면 분홍 종, 종은 정가운데 */
 #hsv .nbl,#hsv .nbl:has(.nbd){background:#fff!important;color:var(--pri)!important;display:grid!important;place-items:center!important;padding:0!important;line-height:0}
-#hsv .nbl.nun{color:#FF4C86!important}
+#hsv .nbl.nun::after{content:"";position:absolute;top:7px;left:8px;width:9px;height:9px;border-radius:50%;background:#FF4C86;border:2px solid #fff}
+#hsv .nbl{position:relative}
 #hsv .nbl .ic{display:block;margin:0!important;transform:translateY(-1.5px)}
+#hsv .htb .nbl{position:relative!important;left:auto!important;right:auto!important;top:auto!important}
+#hsv .nbl.nun::after{top:5px!important;left:5px!important;width:8px!important;height:8px!important;border-width:1.5px!important}
 </style>
 </head>
 <body>
