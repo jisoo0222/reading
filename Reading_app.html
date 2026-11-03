@@ -1894,6 +1894,14 @@ body:has(.app.hso) #pawf{display:none!important}
 #app .ntm .ntd{position:static}
 /* ===== 모서리 lg 30 (홈 슬라이딩 시트 · 팝업 · 카드) ===== */
 :root{--r-lg:30px;--r-sheet:30px;--r-popup:30px;--r-card:30px}
+
+/* ===== 위아래 여백 30 (Space/vertical): 메인·독서·온보딩·스플래시 제외 모든 화면 ===== */
+:root{--s-v:30px}
+#app:not(.hm):not(.rd):not(.onb):not(.spl) .sc{padding-top:var(--s-v)!important;padding-bottom:var(--s-v)!important}
+#app:not(.hm):not(.rd):not(.onb):not(.spl):has(>nav.tab) .sc{padding-bottom:calc(var(--s-v) + 80px)!important}
+#app:not(.hm):not(.rd):not(.onb):not(.spl) .sc:has(>.sh2:first-child){padding-top:0!important}
+#app:not(.hm) .sc>.sh2:first-child{margin-bottom:var(--s-v)!important}
+#app.pf .pfb{padding-top:0!important;padding-bottom:0!important;min-height:0!important}
 </style>
 </head>
 <body>
