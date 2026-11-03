@@ -1835,7 +1835,7 @@ body:has(.app.hso) #pawf{display:none!important}
 #pawf{background:var(--door,#C6EED0)!important}#pawf::after{border-color:var(--door,#C6EED0)!important}
 
 /* ===== 마이페이지 (피그마 1153:2237) ===== */
-#app.pf .pfb{background:var(--bg)!important;padding:46px 19px 0!important}
+#app.pf .pfb{background:var(--bg)!important;padding:46px 19px 110px!important}
 #app.pf .pbx2{background:none!important;border:0!important;border-radius:0!important;padding:0!important;margin:0!important}
 #app.pf .pbt{display:flex;align-items:center;gap:16px}
 #app.pf .av3{width:60px!important;height:60px!important}
@@ -1867,6 +1867,19 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.pf .rbs.dn{background:var(--pri)!important;border-color:var(--pri)!important;color:#fff!important}
 #app.pf .pset2{display:none!important}
 #app.pf .myp{margin-top:16px}
+
+/* 자물쇠 = 프로필 공개/비공개, 설정은 아래 줄로 */
+#app.pf .pset2{display:flex!important}
+#app.pf #plk.on{background:var(--pri)!important;border-color:var(--pri)!important;color:#fff!important}
+#ptip{position:absolute;left:50%;bottom:110px;z-index:60;transform:translate(-50%,8px);opacity:0;transition:opacity .25s,transform .25s;background:var(--ink);color:var(--bg);font-size:13px;font-weight:500;padding:10px 16px;border-radius:var(--r-full);white-space:nowrap;pointer-events:none}
+#ptip.on{opacity:1;transform:translate(-50%,0)}
+
+/* ===== 기본 윗 여백 (Space/top 16): 탭 화면은 모두 위 16에서 시작 ===== */
+:root{--s-top:16px}
+#app .sc:has(>.mpt3:first-child),#app .sc:has(>.lsrow:first-child){padding-top:var(--s-top)!important}
+#app .mpt3{margin-top:0!important}
+#app .lsrow{padding-top:0!important}
+#app.pf .sc{padding-top:0!important}
 </style>
 </head>
 <body>
@@ -2201,7 +2214,7 @@ function friend(i,pf){
  main();document.getElementById("fcl").focus()
 }
 I.check="M5 12l5 5 9-10";
-var MYT=["#슬로우리더","#논리·분석","#재미형"],MYX=["#소설","#에세이","#새벽독서"],ME="",MEP="",SHB=[0,1,2,3,4,5,6],SHMAX=24;
+var MYT=["#슬로우리더","#논리·분석","#재미형"],MYX=["#소설","#에세이","#새벽독서"],ME="",MEP="",PRIV=0,SHB=[0,1,2,3,4,5,6],SHMAX=24;
 function myShelf(){if(BK!==DEF)useBk(DEF);var d=LB[DEF];return[{t:d[0],a:d[1],c:d[2],s:"읽는 중 · "+Math.round(pg*100/TOT)+"%",k:DEF}].concat(RDB.map(function(b,k){return{t:b[0],a:b[1],c:BC[k%3],s:"완독 "+b[3]}}))}
 function bkTile(b){return'<div class="bkm"><div class="c" style="background:'+b.c+'"></div><p>'+b.t+'</p><small>'+b.s+'</small></div>'}
 function shelfHTML(L){var H=[128,112,136,120,104,132,116,124,108,130],rows=[];for(var i=0;i<L.length;i+=5)rows.push(L.slice(i,i+5));while(rows.length<3)rows.push([]);
@@ -2225,7 +2238,7 @@ function profile(){
  var hm=[["stamp","독서우표"],["chat","커뮤니티"],["basket","문구점"]];
  var hh=hm.map(function(h,i){return'<button class="hc" data-k="'+i+'"><span>'+ic(h[0])+'</span>'+h[1]+'</button>'}).join("");
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="person"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="pfb"><section class="box pbx2"><div class="pbt"><div class="av3" style="'+avS()+'">'+(MEP?'':esc(ME).charAt(0))+'</div><div class="pnm"><h2>'+esc(ME)+'</h2><small>'+(AGE!==null?AGES[AGE]+' · ':'')+'하루 '+(GOAL||10)+'쪽 목표</small></div><button class="pme pmb" id="plk" aria-label="설정">'+lk(0)+'</button><button class="pme pmb" id="pme" aria-label="프로필 편집">'+ic("pen")+'</button></div>'
+ app.innerHTML='<div class="pfb"><section class="box pbx2"><div class="pbt"><div class="av3" style="'+avS()+'">'+(MEP?'':esc(ME).charAt(0))+'</div><div class="pnm"><h2>'+esc(ME)+'</h2><small>'+(AGE!==null?AGES[AGE]+' · ':'')+'하루 '+(GOAL||10)+'쪽 목표</small></div><button class="pme pmb'+(PRIV?' on':'')+'" id="plk" aria-pressed="'+!!PRIV+'" aria-label="'+(PRIV?'프로필 비공개, 누르면 공개로 바꾸기':'프로필 공개, 누르면 비공개로 바꾸기')+'">'+lk(PRIV?0:2)+'</button><button class="pme pmb" id="pme" aria-label="프로필 편집">'+ic("pen")+'</button></div>'
  +(function(){var k=RKEY||(ans.indexOf(null)<0?calcType().key:""),t=k&&T[k];return'<button class="ptc2" id="rp"><span class="ptl"><small>AI 독서 성향</small><span class="ptr">'+(t?'<em class="ptk">'+k+'</em><b>'+t[0]+'</b>':'<b>나의 독서 유형 알아보기</b>')+'</span></span>'+ic("next")+'</button>'})()
  +'</section>'
  +'<section class="fs"><div class="fsh"><h3>내 친구 '+fc+'</h3><button class="pme" id="pfr">전체 보기'+ic("next")+'</button></div><div class="box pfl">'+(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):'<p class="pfe">아직 친구가 없어요.</p><button class="pfc pfa" id="pfa"><span>'+ic("plus")+'</span><b>친구 찾기</b></button>')+'</div></section>'
@@ -2239,7 +2252,7 @@ function profile(){
  app.classList.add("pf");var scx=document.querySelector(".sc"),pfx=app.querySelector(".pfb");scx.style.paddingBottom="0";pfx.style.paddingBottom="90px";
  document.getElementById("rp").onclick=function(){if(RKEY||ans.indexOf(null)<0)typePg();else{TFROM=profile;testPg()}};
  document.getElementById("pme").onclick=meEdit;
- document.getElementById("pset").onclick=setPg;document.getElementById("plk").onclick=setPg;
+ document.getElementById("pset").onclick=setPg;document.getElementById("plk").onclick=function(){PRIV=PRIV?0:1;var sy=document.querySelector(".sc").scrollTop;profile();document.querySelector(".sc").scrollTop=sy;pTip(PRIV?"프로필이 비공개로 바뀌었습니다.":"프로필이 공개로 바뀌었습니다.")};
  app.querySelectorAll(".pfc[data-i]").forEach(function(b){b.onclick=function(){friend(+b.dataset.i,1)}});var pfa=document.getElementById("pfa");if(pfa)pfa.onclick=frList;
  var rbm=document.getElementById("rbm");if(rbm)rbm.onclick=function(){RPB=profile;readPg(1)};
 
@@ -3476,6 +3489,9 @@ function shRender(){var o=document.getElementById("hsv");if(!o)return;shInit();v
    SHB=[].concat.apply([],SHR);shRender()}
   el.addEventListener("pointerup",end);el.addEventListener("pointercancel",end);el.addEventListener("contextmenu",function(e){e.preventDefault()});
   el.onclick=function(e){e.stopPropagation();if(el.dataset.nd){delete el.dataset.nd;return}if(moved)return;shInfo(+el.dataset.k)}})}
+
+/* 마이페이지 짧은 안내 */
+function pTip(t){var e=document.getElementById("ptip");if(e)e.remove();e=document.createElement("div");e.id="ptip";e.setAttribute("role","status");e.textContent=t;app.appendChild(e);requestAnimationFrame(function(){e.classList.add("on")});setTimeout(function(){e.classList.remove("on");setTimeout(function(){e.remove()},300)},2000)}
 </script>
 </body>
 </html>
