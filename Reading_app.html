@@ -1825,6 +1825,48 @@ nav.tab.nvb{border-color:var(--line)!important}
 #app.hm nav.tab{z-index:5}
 #hsv{-webkit-user-select:none;user-select:none}
 body:has(.app.hso) #pawf{display:none!important}
+
+/* ===== 피그마 색 따르기 (1108:3473) ===== */
+:root{--tx3:#B1AFAE}
+#app .tg2{color:var(--bd)!important}
+#app .sc.hm .wkc{color:var(--strong)}
+#app .sc.hm .hif>p:not(.hpt){color:var(--bd)!important}
+/* 떠 있는 편지 버튼: 연한 초록 */
+#pawf{background:var(--door,#C6EED0)!important}#pawf::after{border-color:var(--door,#C6EED0)!important}
+
+/* ===== 마이페이지 (피그마 1153:2237) ===== */
+#app.pf .pfb{background:var(--bg)!important;padding:46px 19px 0!important}
+#app.pf .pbx2{background:none!important;border:0!important;border-radius:0!important;padding:0!important;margin:0!important}
+#app.pf .pbt{display:flex;align-items:center;gap:16px}
+#app.pf .av3{width:60px!important;height:60px!important}
+#app.pf .pnm h2{font-size:20px!important;font-weight:600;color:var(--ink)}
+#app.pf .pnm small{font-size:12px;font-weight:600;color:#898585}
+#app.pf .pmb{width:30px!important;height:30px!important;border:1px solid #898585!important;border-radius:50%!important;background:none!important;color:#898585!important;flex:none}
+#app.pf .pmb .ic{width:16px;height:16px}
+#app.pf #plk{margin-left:auto}#app.pf #pme{margin-left:22px!important}
+#app.pf .ptc2{margin-top:20px!important;min-height:87px;padding:0 20px!important;background:var(--card)!important;border-radius:var(--r-lg)!important}
+#app.pf .ptl small{font-size:12px;font-weight:600;color:#898585}
+#app.pf .ptk{height:30px;min-width:59px;display:inline-grid;place-items:center;padding:0 12px!important;background:var(--pri)!important;color:#fff!important;border-radius:var(--r-md)!important;font-size:12px;font-weight:800;box-sizing:border-box}
+#app.pf .ptr b{font-size:14px;font-weight:600;color:var(--ink)}
+#app.pf .ptc2>.ic{width:20px;height:20px;color:var(--ink)}
+#app.pf .fs{margin-top:27px!important;padding-top:27px!important;border-top:1px solid var(--divider)!important}
+#app.pf .fs:last-of-type{padding-bottom:27px;border-bottom:1px solid var(--divider)}
+#app.pf .fsh h3{font-size:16px!important;font-weight:600;color:var(--ink)!important}
+#app.pf .fsh .pme{font-size:12px;font-weight:500;color:var(--tx3)!important}
+#app.pf .pfl{display:flex!important;justify-content:flex-start!important;gap:31px!important;padding:16px 0 0!important;background:none!important;border:0!important}
+#app.pf .pfl .pfc{gap:6px}
+#app.pf .pfc span{width:50px!important;height:50px!important}
+#app.pf .pfc b{font-size:14px!important;font-weight:500!important;color:var(--ink)}
+#app.pf .pfc small{display:none}
+#app.pf .rbl{display:flex;flex-direction:column;gap:20px!important;margin-top:24px}
+#app.pf .rbk{border:0!important;padding:0!important;min-height:50px!important;gap:6px!important;background:none!important}
+#app.pf .rbk>i{width:35px!important;height:50px!important;border-radius:var(--r-xs)!important}
+#app.pf .rbt b{font-size:14px!important;font-weight:600;color:var(--ink)}
+#app.pf .rbt small{font-size:12px!important;color:#898585!important}
+#app.pf .rbs{height:30px!important;padding:0 14px!important;border-radius:var(--r-full)!important;font-size:12px!important;font-weight:500!important;border:1.5px solid var(--pri)!important;background:none!important;color:var(--ink)!important}
+#app.pf .rbs.dn{background:var(--pri)!important;border-color:var(--pri)!important;color:#fff!important}
+#app.pf .pset2{display:none!important}
+#app.pf .myp{margin-top:16px}
 </style>
 </head>
 <body>
@@ -2183,7 +2225,7 @@ function profile(){
  var hm=[["stamp","독서우표"],["chat","커뮤니티"],["basket","문구점"]];
  var hh=hm.map(function(h,i){return'<button class="hc" data-k="'+i+'"><span>'+ic(h[0])+'</span>'+h[1]+'</button>'}).join("");
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="person"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="pfb"><section class="box pbx2"><div class="pbt"><div class="av3" style="'+avS()+'">'+(MEP?'':esc(ME).charAt(0))+'</div><div class="pnm"><h2>'+esc(ME)+'</h2><small>'+(AGE!==null?AGES[AGE]+' · ':'')+'하루 '+(GOAL||10)+'쪽 목표</small></div><button class="pme pmb" id="pme" aria-label="프로필 편집">'+ic("pen")+'</button></div>'
+ app.innerHTML='<div class="pfb"><section class="box pbx2"><div class="pbt"><div class="av3" style="'+avS()+'">'+(MEP?'':esc(ME).charAt(0))+'</div><div class="pnm"><h2>'+esc(ME)+'</h2><small>'+(AGE!==null?AGES[AGE]+' · ':'')+'하루 '+(GOAL||10)+'쪽 목표</small></div><button class="pme pmb" id="plk" aria-label="설정">'+lk(0)+'</button><button class="pme pmb" id="pme" aria-label="프로필 편집">'+ic("pen")+'</button></div>'
  +(function(){var k=RKEY||(ans.indexOf(null)<0?calcType().key:""),t=k&&T[k];return'<button class="ptc2" id="rp"><span class="ptl"><small>AI 독서 성향</small><span class="ptr">'+(t?'<em class="ptk">'+k+'</em><b>'+t[0]+'</b>':'<b>나의 독서 유형 알아보기</b>')+'</span></span>'+ic("next")+'</button>'})()
  +'</section>'
  +'<section class="fs"><div class="fsh"><h3>내 친구 '+fc+'</h3><button class="pme" id="pfr">전체 보기'+ic("next")+'</button></div><div class="box pfl">'+(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):'<p class="pfe">아직 친구가 없어요.</p><button class="pfc pfa" id="pfa"><span>'+ic("plus")+'</span><b>친구 찾기</b></button>')+'</div></section>'
@@ -2197,7 +2239,7 @@ function profile(){
  app.classList.add("pf");var scx=document.querySelector(".sc"),pfx=app.querySelector(".pfb");scx.style.paddingBottom="0";pfx.style.paddingBottom="90px";
  document.getElementById("rp").onclick=function(){if(RKEY||ans.indexOf(null)<0)typePg();else{TFROM=profile;testPg()}};
  document.getElementById("pme").onclick=meEdit;
- document.getElementById("pset").onclick=setPg;
+ document.getElementById("pset").onclick=setPg;document.getElementById("plk").onclick=setPg;
  app.querySelectorAll(".pfc[data-i]").forEach(function(b){b.onclick=function(){friend(+b.dataset.i,1)}});var pfa=document.getElementById("pfa");if(pfa)pfa.onclick=frList;
  var rbm=document.getElementById("rbm");if(rbm)rbm.onclick=function(){RPB=profile;readPg(1)};
 

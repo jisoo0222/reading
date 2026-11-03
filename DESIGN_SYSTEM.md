@@ -39,7 +39,7 @@
 | `surface/muted` | neutral/100 | neutral/900 | 카드 안 회색 묶음(AI 독서 성향) |
 | `text/primary` | neutral/900 | neutral/100 | 제목, 본문 |
 | `text/secondary` | neutral/700 | neutral/400 | 저자, 보조 설명, 쪽수 |
-| `text/tertiary` | neutral/600 | neutral/500 | "전체 보기"·"달력보기", 요일 라벨, 태그 칩 |
+| `text/tertiary` | neutral/500 | neutral/500 | "전체 보기"·"달력보기", 요일 라벨, 태그 칩 |
 | `text/accent` | green/600 | green/300 | 강조 글자 |
 | `text/on-primary` | neutral/0 | neutral/900 | 초록 버튼 위 글자 |
 | `text/disabled` | neutral/400 | neutral/600 | 비활성 |
@@ -58,7 +58,7 @@
 | `Shadow/primary` · `secondary` | | | 그림자 |
 
 > 초록은 **포인트에만** 써요: 중요 버튼, 진행 막대, 카드 테두리, 네비, 책장 선반·벽, 선택 상태. 글자·칩·칸 테두리는 뉴트럴이에요.
-> 피그마 시안의 `#B1AFAE`(neutral/500) 링크 글자는 읽기 어려워서 `text/tertiary`를 neutral/600으로 정했어요.
+> 색은 피그마 시안을 따라요: 링크·요일 라벨 `#B1AFAE`, 카드 안 태그 `#C5C5C5`, 요일 칸 글자 초록, 떠 있는 편지 버튼 연초록.
 
 ## 3. 글자 (Typography)
 
@@ -163,11 +163,13 @@
 | 커뮤니티 인기글 · 카드 86 | 718–831 |
 | 네비게이션 바 | 841 |
 
-### 마이페이지 (피그마 1153:2237 · 책장은 홈으로 옮김)
-- 책장 없이 `surface/sheet` 바탕, 위 30부터 프로필 카드
-- 프로필은 card-white 카드 안에: 사진 60 · 이름 20 Semibold · 보조 12, AI 독서 성향은 `surface/muted` 묶음, 성향 코드 배지는 `chip/selected-*`
-- 내 친구 · 읽은 책은 상자 없이 구역 머리 + `divider` (홈과 같은 방식)
-- 읽은 책 줄: 표지 35×50(모서리 5), 상태 알약은 위 "칩" 규칙
+### 마이페이지 (피그마 1153:2237)
+- 바탕 `surface/sheet`, 좌우 19, 위 46부터 시작 (책장은 홈으로 옮김)
+- 프로필 줄: 사진 60 · 이름 20 Semibold · 보조 12 Semibold `#898585`, 오른쪽 동그라미 버튼 30 두 개(자물쇠 · 연필, 1px `#898585` 테두리, 사이 22)
+- AI 독서 성향: 흰 카드(`surface/card`) 높이 87, 모서리 25, 라벨 12 · 성향 코드 배지(`brand/primary`, 30 높이, 모서리 10, 흰 12 Extra Bold) · 이름 14 Semibold · 화살표 20
+- 구역은 1px `divider`로 나눠요(위아래 27). 제목 16 Semibold, "전체 보기" 12 Medium `text/tertiary`
+- 내 친구: 사진 50 + 이름 14 Medium, 사이 31
+- 읽은 책: 썸네일 35×50(모서리 5) · 제목 14 Semibold · 저자 12, 줄 사이 20. 상태 알약 높이 30, 모서리 999 — 읽는 중은 1.5px 초록 테두리 + 검정 글자, 완독은 초록 바탕 + 흰 글자
 
 ### 디지털 문구점
 - 포인트 카드: `surface/wall`(연초록) 바탕, 모서리 25, 동전 아이콘 32 + 포인트 24 Semibold, 보관함 알약 버튼(흰 바탕 · 12 Medium `brand/primary`)
