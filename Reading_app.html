@@ -2026,6 +2026,12 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.pf .pfl{gap:28.75px!important}
 /* 독서TI 결과 막대의 발바닥 표시: 메인색 */
 #app .paw svg,#app .paw svg *{fill:var(--pri)!important}
+
+/* ===== 문구점 상품: 아래 시트 대신 가운데 팝업 ===== */
+#app.shp #sheet{position:absolute!important;left:20px!important;right:20px!important;top:50%!important;bottom:auto!important;width:auto!important;max-width:none!important;max-height:86%;overflow:auto;transform:translateY(-46%) scale(.97)!important;opacity:0;pointer-events:none;border-radius:var(--r-lg)!important;border:0!important;box-shadow:0 12px 40px rgba(31,30,30,.22);padding:24px 20px 20px!important;transition:opacity .2s ease,transform .2s ease;display:block!important;visibility:hidden}
+#app.shp #sheet.on{transform:translateY(-50%) scale(1)!important;opacity:1;pointer-events:auto;visibility:visible}
+#app.shp #sheet .dh{text-align:center;margin-top:0}
+#app.shp #ov.on{background:var(--overlay,rgba(0,0,0,.4))!important;opacity:1!important}
 </style>
 </head>
 <body>
@@ -2466,7 +2472,7 @@ function meEdit(){
 var PT=1700,OWN={TH0:1},SC="ALL",CS={},OP={},STB=1,MY=[],SLOT=[],
 RDB=[["느리게 읽는 밤","이서윤",224,"2026.08.12"],["나의 작은 서재","박하은",180,"2026.07.03"],["여행의 이유","김도현",256,"2026.06.14"],["마음의 구조","최유진",312,"2026.05.20"],["한 줄의 추리","정민우",288,"2026.04.08"],["작은 습관의 지도","한서진",200,"2026.03.11"],["밤의 도서관","오지윤",340,"2026.02.02"],["달의 정원","윤서하",208,"2026.01.10"]],
 CAT=[["ALL","전체보기","grid"],["HL","형광펜","pen"],["PN","스티커","memo"],["MK","제작하기","plus"]],
-COL=["#FFF3A0","#FFBBD1","#BDE6F7","#D5D5D5","#FEF7BB"],
+COL=["#FFF3A0","#FFBBD1","#BDE6F7","#D5D5D5","#FEF7BB"],SCOL=["#C5C5C5","#FFF3A0","#FFBBD1","#BDE6F7","#D5D5D5","#FEF7BB"],
 ITM={PN:[["접힌 스티커",0,200],["타원 스티커",1,200],["테이프 스티커",2,250],["체크 스티커",3,250],["클립 스티커",4,250],["하트 스티커",5,300],["스프링 노트",6,300],["마스킹 스티커",7,300],["말풍선 스티커",8,350]],
 HL:[["펜",5,150],["마커",14,200],["연필",8,150],["테마펜",10,250],["붓펜",16,300],["점선펜",6,250]],
 BM:[["리본",0,150],["깃발",1,150],["탭",2,200],["화살표",3,200]],
@@ -2508,7 +2514,7 @@ function shop(){
    var gc=SC==="HL"?"g1":SC==="BM"||SC==="TH"?"g2":"g3";
    g.innerHTML='<div class="cats" role="tablist">'+CAT.map(function(c){return'<button class="cat" role="tab" aria-selected="'+(SC===c[0])+'" data-c="'+c[0]+'"><span>'+(SHI[c[0]]||ic(c[2]))+'</span><small>'+c[1]+'</small></button>'}).join("")+'</div><div class="gd '+gc+'">'+lst(SC).map(function(r){var c=r[0],i=r[1],t=ITM[c][i],p=pc(c,i),own=OWN[c+i];
     if(c==="HL")return'<button class="cd2 hlr" data-c="HL" data-i="'+i+'"><span class="hn">'+t[0]+ic("pen")+'</span><span class="hv">'+pv(c,i,COL[i%5])+'</span><span class="hp">'+(own?"보유":ic("plus"))+'</span></button>';
-    return'<button class="cd2" data-c="'+c+'" data-i="'+i+'"><div class="pvw">'+pv(c,i,COL[i%5])+'</div><b>'+t[0]+'</b><span>'+(own?"보유 중":p?p+"P":"무료")+'</span></button>'}).join("")+'</div>'}}
+    return'<button class="cd2" data-c="'+c+'" data-i="'+i+'"><div class="pvw">'+pv(c,i,c==="PN"?SCOL[0]:COL[i%5])+'</div><b>'+t[0]+'</b><span>'+(own?"보유 중":p?p+"P":"무료")+'</span></button>'}).join("")+'</div>'}}
  var draw0=draw;draw=function(){draw0();if(STB!==1||SC!=="MK")return;var gd=g.querySelector(".gd");if(!gd)return;
   gd.outerHTML='<button class="mkc" id="mkc"><span>'+ic("pen")+'</span><div><b>직접 만들기</b><small>그림을 그려 나만의 스티커를 만들어요</small></div>'+ic("next")+'</button><h4 class="lgh">내가 만든 스티커</h4>'+(MY.length?'<div class="gd g3">'+MY.map(function(m,k){return'<div class="cd2 mys"><div class="pvw"><img src="'+m.u+'" alt="'+esc(m.n)+'"><button class="msh" data-sh="'+k+'" aria-label="'+esc(m.n)+' 내보내기"><svg class="icf" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.500 3.500 21 10l-7.500 6.500v-3.800c-4.200 0-7.100 1.500-9.500 5.300.4-6.200 3.800-10.400 9.500-11z" fill="currentColor"/></svg></button></div><b>'+esc(m.n)+'</b></div>'}).join("")+'</div>':'<div class="emp">아직 만든 스티커가 없어요. 직접 만들어 보세요.</div>');
   document.getElementById("mkc").onclick=craft;
@@ -2522,11 +2528,11 @@ function shop(){
     else fetch(m.u).then(function(q){return q.blob()}).then(function(bl){var f=new File([bl],m.n+".png",{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],title:m.n}).then(x,function(){});else done("이 기기에서는 다른 앱으로 보낼 수 없어요")})}})}});
  };
  function detail(c,i){
-  var t=ITM[c][i],id=c+i,p=pc(c,i);if(!(id in CS))CS[id]=i%5;
-  var sw=c==="TH"?"":'<div class="sg"><b>색상</b><div>'+COL.map(function(x,k){return'<button class="sw" data-k="'+k+'" aria-label="색상 '+(k+1)+'" aria-pressed="'+(CS[id]===k)+'" style="background:'+x+'"></button>'}).join("")+'</div></div>';
+  var t=ITM[c][i],id=c+i,p=pc(c,i),PAL=c==="PN"?SCOL:COL;if(!(id in CS))CS[id]=c==="PN"?0:i%5;
+  var sw=c==="TH"?"":'<div class="sg"><b>색상</b><div>'+PAL.map(function(x,k){return'<button class="sw" data-k="'+k+'" aria-label="'+(c==="PN"&&k===0?'기본 회색':'색상 '+(k+1))+'" aria-pressed="'+(CS[id]===k)+'" style="background:'+x+'"></button>'}).join("")+'</div></div>';
   var own=!!OWN[id],low=PT<p;
   sheet.dataset.c=c;sheet.dataset.i=i;
-  sheet.innerHTML='<h3 class="dh">'+t[0]+'</h3><div class="gp"><svg class="gpb" aria-hidden="true"><defs><pattern id="gpt" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="currentColor" stroke-width="1" opacity=".3"/></pattern></defs><rect width="100%" height="100%" fill="url(#gpt)"/></svg><div class="gpv">'+pv(c,i,COL[CS[id]])+'</div></div>'+sw
+  sheet.innerHTML='<h3 class="dh">'+t[0]+'</h3><div class="gp"><svg class="gpb" aria-hidden="true"><defs><pattern id="gpt" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="currentColor" stroke-width="1" opacity=".3"/></pattern></defs><rect width="100%" height="100%" fill="url(#gpt)"/></svg><div class="gpv">'+pv(c,i,PAL[CS[id]])+'</div></div>'+sw
    +'<p class="pr3">가격 <b>'+(p?p+"P":"무료")+'</b> · 내 포인트 '+PT+'P</p><button class="btn" id="buy" style="width:100%"'+(own||low?" disabled":"")+'>'+(own?"보유 중":low?"포인트가 부족해요":"구매")+'</button>'+(own?'<button class="btn" id="go" style="width:100%;margin-top:8px">보관함에서 적용하기</button>':'')+'<button class="btn ghost cl">닫기</button>';
   sheet.classList.add("on");ov.classList.add("on")}
  draw();
@@ -3176,7 +3182,7 @@ function pH(pi){return PAGES[pi].map(function(p,pj){return'<p class="pp'+(isHd(p
    var v=[n,t||"설명이 없어요."];ed?CH[k]=v:CH.push(v);rt();x();dic()};
   d.onkeydown=function(e){if(e.key==="Escape")x()};
   document.getElementById("cn").focus()}
- function mcol(i){if(typeof i==="string")return"transparent";if(i<=-2){var bq=bstOf(i);return bq?bq[2]:MDF}return i<0?MDF:COL[("PN"+i) in CS?CS["PN"+i]:i%5]}
+ function mcol(i){if(typeof i==="string")return"transparent";if(i<=-2){var bq=bstOf(i);return bq?bq[2]:MDF}return i<0?MDF:SCOL[("PN"+i) in CS?CS["PN"+i]:0]}
  function mshp(i){if(typeof i==="string"){var u=MY[+i.slice(1)];return u?"background-image:url("+u.u+");background-size:contain;background-repeat:no-repeat;background-position:center":""}return i===-1?"border-radius:4px;border:1.5px solid #E6DCD2":""}
  var BST=[[-2,"둥근 메모","#E3B7B0"],[-3,"별 스티커","#E9D58B"],[-4,"구름 스티커","#BFD0D8"],[-5,"라벨 스티커","#B9C7A5"]];
 function bstOf(i){for(var q=0;q<BST.length;q++)if(BST[q][0]===i)return BST[q];return null}
