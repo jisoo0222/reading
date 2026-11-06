@@ -2131,16 +2131,6 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.shp .cat small{font-size:14px!important;font-weight:600;line-height:20px}
 #app.shp .cat[aria-selected="true"]{color:var(--pri)!important}
 #app.shp .cat[aria-selected="true"]::after{left:0;transform:none;width:100%;height:3px}
-/* 책장 위치 설정: 목록 정렬과 별도 관리 */
-#hsv .hsp{touch-action:pan-y}
-#hsv #hssettings{flex:none;color:var(--pri);background:var(--card);border-radius:50%}
-.ssrow{padding:16px 0;border-bottom:1px solid var(--divider)}
-.ssrow h3{font-size:16px;margin:0 0 12px}.ssrow h3 small{font-size:12px;color:var(--sub);float:right}
-.ssbooks{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;border-bottom:8px solid var(--pri);padding-bottom:8px}
-.ssbook{height:120px;min-width:0;border:1px solid var(--bd);border-radius:5px;background:var(--bk-l);color:var(--ink);padding:6px 2px;display:flex;align-items:center;flex-direction:column;gap:4px;cursor:pointer}
-.ssbook small{font-size:11px;color:var(--sub)}.ssbook span{writing-mode:vertical-rl;font-size:12px;max-height:86px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ssadd{background:var(--card);justify-content:center}.ssadd .ic{width:30px;height:30px;color:var(--pri)}
-.ssactions{display:flex;gap:12px;margin-top:24px}.ssactions .btn{flex:1}
 </style>
 </head>
 <body>
@@ -2504,7 +2494,6 @@ function profile(){
  +(function(){var L=readList();return'<section class="fs"><div class="fsh"><h3>읽은 책 '+L.length+'권</h3><button class="pme" id="rbm">전체 보기'+ic("next")+'</button></div><div class="rbl" id="rbl">'+L.map(function(b,i){return'<div class="rbk'+(i>4?" xtra":"")+'"><i data-bt="'+esc(b.t)+'" style="background:'+b.c+'"></i><span class="rbt"><b>'+esc(b.t)+'</b><small>'+esc(b.a)+'</small></span><em class="rbs'+(b.done?" dn":"")+'">'+b.s+'</em></div>'}).join("")+'</div>'+'</section>'})()
  +(function(){var ids=LB.map(function(_,k){return k}).filter(function(k){return HB[k]});return'<section class="fs"><div class="fsh"><h3>찜한 책 '+ids.length+'권</h3><button class="pme" id="plm">전체 보기'+ic("next")+'</button></div><div class="rbl">'+(ids.length?ids.slice(0,5).map(function(k){var b=LB[k];return'<button class="rbk plbook" data-k="'+k+'"><i data-bt="'+esc(b[0])+'" style="background:'+b[2]+'"></i><span class="rbt"><b>'+esc(b[0])+'</b><small>'+esc(b[1])+'</small></span>'+ic("next")+'</button>'}).join(""):'<p class="pfe">찜한 책이 없어요. 책 표지의 하트를 누르면 여기에 모여요.</p>')+'</div></section>'})()
  +(function(){var MP2=PO.filter(function(p){return p.mine});return'<section class="fs"><div class="fsh"><h3>내 글 '+MP2.length+'개</h3><button class="pme" id="mym">전체 보기'+ic("next")+'</button></div><div class="box myp">'+(MP2.length?MP2.slice(0,2).map(function(p){var bk=p.b!==undefined?LB[p.b]:p.bt;return'<button class="pst fpo" data-pid="'+p.id+'"><span class="fpt"><em>'+TN[p.t]+'</em><small>'+p.tm+'</small></span><span class="fpx">'+esc(p.x)+'</span>'+(bk?'<span class="fpb">'+ic("book")+esc(bk[0])+'</span>':'')+'<span class="fpa">'+ic("heart")+(p.l+(LKD[p.id]?1:0))+ic("chat")+p.c.length+'</span></button>'}).join(""):'<p class="pfe">아직 쓴 글이 없어요. 커뮤니티에 첫 글을 남겨 보세요.</p>')+'</div></section>'})()
- +'<button class="pset2" id="pshelf">'+ic("book")+'<span>책장 설정</span>'+ic("next")+'</button>'
  +'<button class="pset2" id="pset">'+ic("cog")+'<span>설정</span>'+ic("next")+'</button>'
  +'</div>'
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
@@ -2514,7 +2503,6 @@ function profile(){
  document.getElementById("rp").onclick=function(){if(RKEY||ans.indexOf(null)<0)typePg();else{TFROM=profile;testPg()}};
  document.getElementById("pme").onclick=meEdit;
  document.getElementById("pset").onclick=setPg;
- document.getElementById("pshelf").onclick=function(){shelfSettings(profile)};
  app.querySelectorAll(".pfc[data-i]").forEach(function(b){b.onclick=function(){friend(+b.dataset.i,1)}});var pfa=document.getElementById("pfa");if(pfa)pfa.onclick=frList;
  var rbm=document.getElementById("rbm");if(rbm)rbm.onclick=function(){RPB=profile;readPg(1)};
 
@@ -3715,21 +3703,10 @@ function shInfo(k){var b=shBk(k);var x=pop('<div class="bi"><div class="bc" data
 function shAddRow(){var ar=-1;for(var q=2;q>=0;q--)if(SHR[q].length){ar=SHR[q].length<SHPER?q:q+1;break}if(ar<0)ar=0;return ar>2?-1:ar}
 function shSpines(ri,drag){shInit();return SHR[ri].map(function(k,j){var p=j%8,t=RDB[k][0];return'<button class="hsp bk'+SPC[p]+'" data-k="'+k+'" data-r="'+ri+'" data-j="'+j+'" style="--h:'+SPH[p]+'px" aria-label="'+esc(t)+' 정보 보기'+(drag?', 길게 눌러 옮기거나 휴지통에 놓아 빼기':'')+'"><span>'+esc(t)+'</span></button>'}).join("")+(ri===shAddRow()?'<button class="hsa" aria-label="책장에 책 꽂기">'+ic("plus")+'</button>':'')}
 function shFit(root){root.querySelectorAll(".hsp").forEach(function(el){var sp=el.firstChild,f=11;el.style.fontSize="";while(f>8&&sp.scrollHeight>el.clientHeight-14){f-=.5;el.style.fontSize=f+"px"}})}
-/* 책 목록의 정렬과 분리된 책장 배치 설정 */
-function shelfPlace(rows,r,j,k){var old=rows[r][j],found=null;rows.forEach(function(row,ri){var ji=row.indexOf(k);if(ji>=0)found=[ri,ji]});
- if(found){if(old===undefined){rows[found[0]].splice(found[1],1);if(found[0]===r&&found[1]<j)j--}else rows[found[0]][found[1]]=old}
- rows[r][j]=k;return rows}
-function shelfSettings(back){back=back||home;shInit();var draft=SHR.map(function(row){return row.slice()});
- function draw(){app.className="app";
-  app.innerHTML='<div class="sh2"><button class="ib" id="ssback" aria-label="취소하고 돌아가기">'+ic("back")+'</button><h2>책장 설정</h2><span class="sp3"></span></div><p class="spc">책을 눌러 위치를 바꾸거나 책장에서 빼 보세요.<br>빈자리에 완독한 책을 꽂을 수 있어요.</p><div class="ssettings">'+draft.map(function(row,r){return'<section class="ssrow"><h3>'+(r+1)+'단 <small>'+row.length+'/8권</small></h3><div class="ssbooks">'+row.map(function(k,j){return'<button class="ssbook" data-r="'+r+'" data-j="'+j+'" aria-label="'+(r+1)+'단 '+(j+1)+'번째 '+esc(RDB[k][0])+' 위치 설정"><small>'+(j+1)+'</small><span>'+esc(RDB[k][0])+'</span></button>'}).join("")+(row.length<8?'<button class="ssbook ssadd" data-r="'+r+'" data-j="'+row.length+'" aria-label="'+(r+1)+'단에 책 꽂기">'+ic("plus")+'</button>':'')+'</div></section>'}).join("")+'</div><div class="ssactions"><button class="btn ghost" id="sscancel">취소</button><button class="btn" id="sssave">저장</button></div>';
-  document.getElementById("ssback").onclick=back;document.getElementById("sscancel").onclick=back;
-  document.getElementById("sssave").onclick=function(){SHR=draft.map(function(row){return row.slice()});SHB=[].concat.apply([],SHR);back();pTip("책장 위치를 저장했어요.")};
-  app.querySelectorAll(".ssbook").forEach(function(b){b.onclick=function(){choose(+b.dataset.r,+b.dataset.j)}})}
- function choose(r,j){var old=draft[r][j],placed=[].concat.apply([],draft),ids=RDB.map(function(_,k){return k}).filter(function(k){return k!==old});
-  var close=pop('<h3>'+(r+1)+'단 '+(j+1)+'번째 자리</h3><p class="sm">'+(old===undefined?'이 자리에 꽂을 책을 골라 주세요. 이미 꽂힌 책은 이 자리로 옮겨요.':'다른 책장에 꽂힌 책을 고르면 두 책의 자리를 바꿔요.')+'</p><div class="sel">'+ids.map(function(k){var b=RDB[k];return'<button class="ser sea" data-k="'+k+'"><i data-bt="'+esc(b[0])+'" style="background:'+BC[k%3]+'"></i><span class="sen"><b>'+esc(b[0])+'</b><small>'+esc(b[1])+(placed.indexOf(k)>=0?' · 책장에 꽂힌 책':'')+'</small></span></button>'}).join("")+(ids.length?'':'<p class="pfe">꽂을 수 있는 책이 없어요.</p>')+'</div>'+(old!==undefined?'<button class="btn ghost" id="ssremove" style="width:100%;margin-top:12px">책장에서 빼기</button>':'')+'<button class="btn ghost" id="ssclose" style="width:100%;margin-top:12px">닫기</button>');
-  document.getElementById("ssclose").onclick=close;var rm=document.getElementById("ssremove");if(rm)rm.onclick=function(){draft[r].splice(j,1);close();draw()};
-  app.querySelectorAll("#dlg .sea").forEach(function(b){b.onclick=function(){shelfPlace(draft,r,j,+b.dataset.k);close();draw()}})}
- draw()}
+function shAdd(after){var A=RDB.map(function(_,k){return k}).filter(function(k){return SHB.indexOf(k)<0}).sort(function(a,b){var c=RDB[b][3]<RDB[a][3]?-1:RDB[b][3]>RDB[a][3]?1:0;return RBR?-c:c});
+ var x=pop('<h3>책장에 책 꽂기</h3><div class="sah"><p class="sm sad">책장에는 완독한 책만 꽂을 수 있어요.</p><button class="rbf" id="rbf" aria-pressed="'+!!RBR+'" aria-label="'+(RBR?'처음 읽은 책부터 보는 중, 누르면 최근 읽은 순':'최근 읽은 책부터 보는 중, 누르면 처음 읽은 순')+'">'+ic("sort")+(RBR?'처음 읽은 순':'최근 읽은 순')+'</button></div><div class="sel">'+(A.length?A.map(function(k){var b=RDB[k];return'<button class="ser sea" data-k="'+k+'"><i data-bt="'+esc(b[0])+'" style="background:'+BC[k%3]+'"></i><span class="sen"><b>'+b[0]+'</b><small>'+b[1]+'</small><em class="sed">완독 '+b[3]+'</em></span>'+ic("plus")+'</button>'}).join(""):'<p class="pfe" style="padding:8px 0">꽂을 수 있는 책을 모두 꽂았어요.</p>')+'</div><button class="btn ghost" id="sax" style="width:100%;margin-top:12px">닫기</button>');
+ document.getElementById("sax").onclick=x;document.getElementById("rbf").onclick=function(){RBR=!RBR;x();shAdd(after)};
+ document.querySelectorAll("#dlg .sea").forEach(function(b){b.onclick=function(){var k=+b.dataset.k,q=shAddRow();if(q<0){x();return}SHR[q].push(k);SHB=[].concat.apply([],SHR);x();after()}})}
 /* 홈 화면: 마이페이지처럼 책장은 시트 뒤에 깔려 있고, 시트(.sc)를 아래로 내리면 3단 책장이 드러나요 */
 var SHG={y:null,t:null,g0:0};
 function shGs(y,t){var sc=document.querySelector(".sc.hm");SHG.y=y;SHG.t=t;SHG.g0=sc?sc.scrollTop:0}
@@ -3741,12 +3718,11 @@ function shOpen(){if(app.classList.contains("hso"))return;var sc=document.queryS
  sc.scrollTop=0;var D=o.offsetHeight-35-240;app.style.setProperty("--hsy",D+"px");app.classList.add("hso");sc.setAttribute("aria-hidden","true");document.getElementById("hhd").setAttribute("aria-label","내 책장 접기")}
 function shClose(){if(!app.classList.contains("hso"))return;app.classList.remove("hso");var sc=document.querySelector(".sc.hm");if(sc)sc.removeAttribute("aria-hidden");var h=document.getElementById("hhd");if(h)h.setAttribute("aria-label","내 책장 펼쳐 보기")}
 function shRender(){var o=document.getElementById("hsv");if(!o)return;shInit();var u=unread();
- o.innerHTML='<div class="htb"><span class="hav" aria-hidden="true">'+PAW+'</span><b class="hnm">'+(ME?esc(ME)+'님':'')+'</b><button class="ib" id="hssettings" aria-label="책장 설정">'+ic("cog")+'</button><button class="ib nbl'+(u?' nun':'')+'" id="hbl" aria-label="알림'+(u?' (읽지 않은 알림 '+u+'개)':'')+'">'+ic("bell")+'</button></div>'
- +[0,1,2].map(function(r){return'<div class="hsr" data-r="'+r+'" style="top:'+[77,266,471][r]+'px"><div class="hsb2">'+shSpines(r,0)+'</div><i class="hsl"></i></div>'}).join("")
+ o.innerHTML='<div class="htb"><span class="hav" aria-hidden="true">'+PAW+'</span><b class="hnm">'+(ME?esc(ME)+'님':'')+'</b><button class="ib nbl'+(u?' nun':'')+'" id="hbl" aria-label="알림'+(u?' (읽지 않은 알림 '+u+'개)':'')+'">'+ic("bell")+'</button></div>'
+ +[0,1,2].map(function(r){return'<div class="hsr" data-r="'+r+'" style="top:'+[77,266,471][r]+'px"><div class="hsb2">'+shSpines(r,1)+'</div><i class="hsl"></i></div>'}).join("")
  +'<img class="hdog" src="'+DOGS+'" alt="" aria-hidden="true">';
  shFit(o);document.getElementById("hbl").onclick=function(){inbox("all")};
- document.getElementById("hssettings").onclick=function(){shelfSettings(home)};
- var a=o.querySelector(".hsa");if(a)a.onclick=function(){shelfSettings(home)};
+ var a=o.querySelector(".hsa");if(a)a.onclick=function(){shAdd(shRender)};
  var sc=document.querySelector(".sc.hm");
  /* 손잡이: 펼치기/접기 */
  document.getElementById("hhd").onclick=function(e){e.stopPropagation();app.classList.contains("hso")?shClose():shOpen()};
@@ -3754,7 +3730,24 @@ function shRender(){var o=document.getElementById("hsv");if(!o)return;shInit();v
  [sc,o].forEach(function(el){if(!el||el._shg)return;el._shg=1;el.addEventListener("touchstart",function(e){shGs(e.touches[0].clientY,e.target)},{passive:true});el.addEventListener("touchend",function(e){shGe(e.changedTouches[0].clientY)});
   el.addEventListener("pointerdown",function(e){if(e.pointerType==="mouse")shGs(e.clientY,e.target)});el.addEventListener("pointerup",function(e){if(e.pointerType==="mouse")shGe(e.clientY)})});
  if(sc&&!sc._shc){sc._shc=1;sc.addEventListener("click",function(e){if(app.classList.contains("hso")&&!e.target.closest("#hhd")){e.preventDefault();e.stopPropagation()}},true)}
- o.querySelectorAll(".hsp").forEach(function(el){el.onclick=function(e){e.stopPropagation();shInfo(+el.dataset.k)}})}
+ /* 꾹 눌러 옮기기 · 휴지통에 놓아 빼기 (펼친 상태에서만) */
+ var stb=document.getElementById("stb");if(!stb){stb=document.createElement("div");stb.id="stb";stb.setAttribute("aria-hidden","true");stb.innerHTML=ic("trash");app.appendChild(stb)}
+ function tbShow(){var a=app.getBoundingClientRect(),z=parseFloat(getComputedStyle(app).zoom)||1,y=o.offsetHeight-35;stb.style.top=(y-stb.offsetHeight-14)+"px";stb.classList.add("on")}
+ function tbHide(){stb.classList.remove("on","hot")}
+ function onTb(e){if(!stb.classList.contains("on"))return false;var r=stb.getBoundingClientRect();return e.clientX>=r.left-10&&e.clientX<=r.right+10&&e.clientY>=r.top-16&&e.clientY<=r.bottom+10}
+ o.querySelectorAll(".hsp").forEach(function(el){var tm=null,x0,y1,drag=false,moved=false;
+  el.addEventListener("pointerdown",function(e){x0=e.clientX;y1=e.clientY;moved=false;drag=false;if(!app.classList.contains("hso"))return;tm=setTimeout(function(){drag=true;window.SDRAG=1;el.classList.add("drg");tbShow();try{el.setPointerCapture(e.pointerId)}catch(_){}if(navigator.vibrate)navigator.vibrate(15)},200)});
+  function tgt(e){var best=null,bd=1e9;o.querySelectorAll(".hsp").forEach(function(q){if(q===el)return;var r=q.getBoundingClientRect(),d=Math.hypot(r.left+r.width/2-e.clientX,r.top+r.height/2-e.clientY);if(d<bd){bd=d;best=q}});if(best&&bd<60)return{el:best};
+   var row=null;o.querySelectorAll(".hsr").forEach(function(q){var r=q.getBoundingClientRect();if(e.clientY>=r.top-10&&e.clientY<=r.bottom+10)row=q});return row?{row:row}:null}
+  el.addEventListener("pointermove",function(e){if(!drag){if(Math.abs(e.clientX-x0)+Math.abs(e.clientY-y1)>8){clearTimeout(tm);moved=true}return}e.preventDefault();var z=parseFloat(getComputedStyle(app).zoom)||1;el.style.transform="translate("+(e.clientX-x0)/z+"px,"+(e.clientY-y1)/z+"px) rotate(-3deg)";
+   o.querySelectorAll(".tgt").forEach(function(q){q.classList.remove("tgt")});var ht=onTb(e);stb.classList.toggle("hot",ht);el.classList.toggle("trs",ht);if(ht)return;var t=tgt(e);if(t)(t.el||t.row.querySelector(".hsb2")).classList.add("tgt")});
+  function end(e){clearTimeout(tm);if(!drag)return;drag=false;var del=onTb(e);tbHide();var r0=+el.dataset.r,j0=+el.dataset.j,k=+el.dataset.k;setTimeout(function(){window.SDRAG=0},50);el.dataset.nd="1";
+   if(del){SHR[r0].splice(j0,1)}else{var t=tgt(e);
+    if(t&&t.el){var r1=+t.el.dataset.r,j1=+t.el.dataset.j;if(r1!==r0&&SHR[r1].length>=SHPER){var k1=SHR[r1][j1];SHR[r1][j1]=k;SHR[r0][j0]=k1}else{SHR[r0].splice(j0,1);if(r1===r0&&j1>j0)j1--;SHR[r1].splice(r1===r0&&j1>=j0?j1+1:j1,0,k)}}
+    else if(t&&t.row){var r2=+t.row.dataset.r;if(r2!==r0&&SHR[r2].length<SHPER){SHR[r0].splice(j0,1);SHR[r2].push(k)}else if(r2===r0){SHR[r0].splice(j0,1);SHR[r0].push(k)}}}
+   SHB=[].concat.apply([],SHR);shRender()}
+  el.addEventListener("pointerup",end);el.addEventListener("pointercancel",end);el.addEventListener("contextmenu",function(e){e.preventDefault()});
+  el.onclick=function(e){e.stopPropagation();if(el.dataset.nd){delete el.dataset.nd;return}if(moved)return;shInfo(+el.dataset.k)}})}
 
 /* 마이페이지 짧은 안내 */
 function pTip(t){var e=document.getElementById("ptip");if(e)e.remove();e=document.createElement("div");e.id="ptip";e.setAttribute("role","status");e.textContent=t;app.appendChild(e);requestAnimationFrame(function(){e.classList.add("on")});setTimeout(function(){e.classList.remove("on");setTimeout(function(){e.remove()},300)},2000)}
