@@ -1843,7 +1843,7 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.pf .pnm small{font-size:12px;font-weight:600;color:#898585}
 #app.pf .pmb{width:30px!important;height:30px!important;border:1px solid #898585!important;border-radius:50%!important;background:none!important;color:#898585!important;flex:none}
 #app.pf .pmb .ic{width:16px;height:16px}
-#app.pf #plk{margin-left:auto}#app.pf #pme{margin-left:22px!important}
+#app.pf #pme{margin-left:auto!important}
 #app.pf .ptc2{margin-top:20px!important;min-height:87px;padding:0 20px!important;background:var(--card)!important;border-radius:var(--r-lg)!important}
 #app.pf .ptl small{font-size:12px;font-weight:600;color:#898585}
 #app.pf .ptk{height:30px;min-width:59px;display:inline-grid;place-items:center;padding:0 12px!important;background:var(--pri)!important;color:#fff!important;border-radius:var(--r-md)!important;font-size:12px;font-weight:800;box-sizing:border-box}
@@ -1870,7 +1870,9 @@ body:has(.app.hso) #pawf{display:none!important}
 
 /* 자물쇠 = 프로필 공개/비공개, 설정은 아래 줄로 */
 #app.pf .pset2{display:flex!important}
-#app.pf #plk.on{background:var(--pri)!important;border-color:var(--pri)!important;color:#fff!important}
+#dlg .mp-lock{width:var(--h-ibtn);height:var(--h-ibtn);padding:0;flex:none;display:grid;place-items:center;border:1px solid var(--bd);border-radius:50%;background:var(--card);color:var(--pri)}
+#dlg .mp-lock[aria-pressed="true"]{background:var(--pri);border-color:var(--pri);color:var(--onpri)}
+#dlg .mp-lock .ic{width:var(--ic);height:var(--ic);color:inherit}
 #ptip{position:absolute;left:50%;bottom:110px;z-index:60;transform:translate(-50%,8px);opacity:0;transition:opacity .25s,transform .25s;background:var(--ink);color:var(--bg);font-size:13px;font-weight:500;padding:10px 16px;border-radius:var(--r-full);white-space:nowrap;pointer-events:none}
 #ptip.on{opacity:1;transform:translate(-50%,0)}
 
@@ -2218,14 +2220,12 @@ var AGE=null,GOAL=null,AGES=["10대","20대","30대","40대","50대 이상"],GO=
 function ost(n){return'<ol class="ost" aria-label="가입 단계 '+n+'/3">'+["기본 정보","독서 목표","독서 성향"].map(function(t,i){return'<li class="'+(i+1<n?"dn":i+1===n?"on":"")+'"'+(i+1===n?' aria-current="step"':'')+'><b>'+(i+1)+'</b><span>'+t+'</span></li>'}).join("")+'</ol>'}
 function info(){
  app.className="app";
- app.innerHTML=ost(1)+'<h1>반가워요! 나를 알려 주세요</h1><p class="hint">입력한 정보는 내 프로필에 쓰여요.</p>'
+ app.innerHTML=ost(1)+'<h1>반가워요! 나를 알려 주세요</h1><p class="hint">프로필에 쓸 닉네임을 알려 주세요.</p>'
  +'<label class="fld">닉네임<input id="inm" maxlength="10" placeholder="10자 이내로 입력해 주세요" autocomplete="off"></label>'
- +'<label class="fld">나이'+ageFld("iag",AGE)+'</label>'
  +'<div class="foot"><button class="btn" id="nx1">다음</button></div>';
  var nm=document.getElementById("inm"),nx=document.getElementById("nx1");nm.value=ME;
- function ck(){nx.disabled=!nm.value.trim()||!ageOk(AGE)}ck();
+ function ck(){nx.disabled=!nm.value.trim()}ck();
  nm.oninput=ck;
-  ageWire(document.getElementById("iag"),function(v){AGE=v;ck()});
  nx.onclick=function(){ME=nm.value.trim();goal()}}
 function gTip(v){return v<=15?"독서를 이제 막 시작해 보는 분께 추천해요.":v<=35?"가끔 책을 읽어 온 분께 추천해요.":"책 읽는 습관이 이미 있는 분께 추천해요."}
 function goal(){
@@ -2472,7 +2472,7 @@ function profile(){
  var hm=[["stamp","독서우표"],["chat","커뮤니티"],["basket","문구점"]];
  var hh=hm.map(function(h,i){return'<button class="hc" data-k="'+i+'"><span>'+ic(h[0])+'</span>'+h[1]+'</button>'}).join("");
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="person"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="pfb"><section class="box pbx2"><div class="pbt"><div class="av3" style="'+avS()+'">'+(MEP?'':esc(ME).charAt(0))+'</div><div class="pnm"><h2>'+esc(ME)+'</h2><small>'+(ageOk(AGE)?ageTxt(AGE)+' · ':'')+'하루 '+(GOAL||10)+'쪽 목표</small></div><button class="pme pmb'+(PRIV?' on':'')+'" id="plk" aria-pressed="'+!!PRIV+'" aria-label="'+(PRIV?'프로필 비공개, 누르면 공개로 바꾸기':'프로필 공개, 누르면 비공개로 바꾸기')+'">'+lk(PRIV?0:2)+'</button><button class="pme pmb" id="pme" aria-label="프로필 편집">'+ic("pen")+'</button></div>'
+ app.innerHTML='<div class="pfb"><section class="box pbx2"><div class="pbt"><div class="av3" style="'+avS()+'">'+(MEP?'':esc(ME).charAt(0))+'</div><div class="pnm"><h2>'+esc(ME)+'</h2><small>'+(ageOk(AGE)?ageTxt(AGE)+' · ':'')+'하루 '+(GOAL||10)+'쪽 목표</small></div><button class="pme pmb" id="pme" aria-label="프로필 편집">'+ic("pen")+'</button></div>'
  +(function(){var k=RKEY||(ans.indexOf(null)<0?calcType().key:""),t=k&&T[k];return'<button class="ptc2" id="rp"><span class="ptl"><small>AI 독서 성향</small><span class="ptr">'+(t?'<em class="ptk">'+k+'</em><b>'+t[0]+'</b>':'<b>나의 독서 유형 알아보기</b>')+'</span></span>'+ic("next")+'</button>'})()
  +'</section>'
  +'<section class="fs"><div class="fsh"><h3>내 친구 '+fc+'</h3><button class="pme" id="pfr">전체 보기'+ic("next")+'</button></div><div class="box pfl">'+(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):'<p class="pfe">아직 친구가 없어요.</p><button class="pfc pfa" id="pfa"><span>'+ic("plus")+'</span><b>친구 찾기</b></button>')+'</div></section>'
@@ -2486,7 +2486,7 @@ function profile(){
  app.classList.add("pf");var scx=document.querySelector(".sc"),pfx=app.querySelector(".pfb");scx.style.paddingBottom="0";pfx.style.paddingBottom="90px";
  document.getElementById("rp").onclick=function(){if(RKEY||ans.indexOf(null)<0)typePg();else{TFROM=profile;testPg()}};
  document.getElementById("pme").onclick=meEdit;
- document.getElementById("pset").onclick=setPg;document.getElementById("plk").onclick=function(){PRIV=PRIV?0:1;var sy=document.querySelector(".sc").scrollTop;profile();document.querySelector(".sc").scrollTop=sy;pTip(PRIV?"프로필을 비공개로 바꿨어요.":"프로필을 공개로 바꿨어요.")};
+ document.getElementById("pset").onclick=setPg;
  app.querySelectorAll(".pfc[data-i]").forEach(function(b){b.onclick=function(){friend(+b.dataset.i,1)}});var pfa=document.getElementById("pfa");if(pfa)pfa.onclick=frList;
  var rbm=document.getElementById("rbm");if(rbm)rbm.onclick=function(){RPB=profile;readPg(1)};
 
@@ -2519,15 +2519,17 @@ function frList(){
  document.getElementById("flx").onclick=x;
  document.querySelectorAll("#dlg .frw").forEach(function(b){b.onclick=function(){x();friend(+b.dataset.i,1)}})}
 function meEdit(){
- var v={n:ME,p:MEP,s:SHB.slice(),ag:AGE,go:GOAL,rv:RECV},o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-labelledby","dt");
+ var v={n:ME,p:MEP,s:SHB.slice(),ag:AGE,go:GOAL,rv:RECV,pr:PRIV},o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-labelledby","dt");
  function x(){o.remove();d.remove()}
  function main(){
   d.innerHTML='<h3 id="dt">내 프로필</h3><div class="mep"><div class="av3" id="mav" style="'+(v.p?'background:var(--pri) center/cover no-repeat url('+v.p+')':'')+'">'+(v.p?'':esc(v.n||ME).charAt(0))+'</div><label class="fadd mphl" for="mfi" id="mph" role="button" tabindex="0">프로필 사진 바꾸기</label><input type="file" id="mfi" class="mfi2" accept="image/*,.heic,.heif,.jpg,.jpeg,.png,.gif,.webp"></div>'
-   +'<label class="mel">이름<input id="mnm" maxlength="10" autocomplete="off"></label>'
+   +'<label class="mel">닉네임<input id="mnm" maxlength="10" autocomplete="off"></label>'
    +'<label class="mel mfe">나이'+ageFld("mag",v.ag)+'</label>'
    +'<div class="mel mfe">하루 목표<div class="och" id="mgo">'+GO.map(function(g){return'<button data-v="'+g[0]+'" aria-pressed="'+(v.go===g[0])+'">'+g[0]+'쪽</button>'}).join("")+'</div><div class="gsl mgs"><span class="gin">직접 입력 <input type="number" id="mgr" inputmode="numeric" min="1" max="300" value="'+(v.go||"")+'" aria-label="하루 목표 쪽수"> 쪽</span></div></div>'
+   +'<div class="mel mrc"><div><b>프로필 공개 설정</b><small id="mpr-state" aria-live="polite">'+(v.pr?'프로필이 비공개예요.':'프로필이 공개예요.')+'</small></div><button type="button" class="mp-lock" id="mpr" aria-pressed="'+!!v.pr+'" aria-label="'+(v.pr?'프로필 공개로 바꾸기':'프로필 비공개로 바꾸기')+'">'+lk(v.pr?0:2)+'</button></div>'
    +'<div class="mel mrc"><div><b>추천 친구로 보이기</b><small>켜 두면 다른 독자에게 나를 추천 친구·추천 메이트로 보여줘요.</small></div><button class="swc" role="switch" id="mrv" aria-checked="'+!!v.rv+'" aria-label="추천 친구로 보이기"><i></i></button></div>'
    +'<p id="mer" style="color:var(--sub);font-size:13px;margin:8px 0 0;min-height:18px"></p><div class="dbt"><button class="btn ghost" id="mcx">취소</button><button class="btn" id="msv">저장</button></div>';
+  document.getElementById("mpr").onclick=function(){v.pr=v.pr?0:1;this.setAttribute("aria-pressed",!!v.pr);this.setAttribute("aria-label",v.pr?"프로필 공개로 바꾸기":"프로필 비공개로 바꾸기");this.innerHTML=lk(v.pr?0:2);document.getElementById("mpr-state").textContent=v.pr?"프로필이 비공개예요.":"프로필이 공개예요."};
   document.getElementById("mrv").onclick=function(){v.rv=v.rv?0:1;this.setAttribute("aria-checked",!!v.rv)};
   var nm=document.getElementById("mnm"),fi=document.getElementById("mfi");nm.value=v.n;nm.oninput=function(){v.n=nm.value;if(!v.p)document.getElementById("mav").textContent=esc(v.n.trim()||ME).charAt(0)};
   document.getElementById("mph").onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();fi.click()}};
@@ -2542,7 +2544,7 @@ function meEdit(){
    im.onerror=function(){(window.URL||window.webkitURL).revokeObjectURL(url);er.textContent="이 사진 형식은 열 수 없어요. JPG나 PNG 사진으로 다시 골라 주세요."};
    im.src=url;fi.value=""};
   document.getElementById("mcx").onclick=x;
-  document.getElementById("msv").onclick=function(){var n=v.n.trim();if(!n){document.getElementById("mer").textContent="이름을 입력해 주세요.";return}ME=n;MEP=v.p;AGE=v.ag;GOAL=v.go;RECV=v.rv;x();profile()}}
+  document.getElementById("msv").onclick=function(){var n=v.n.trim();if(!n){document.getElementById("mer").textContent="닉네임을 입력해 주세요.";return}var changed=PRIV!==v.pr;ME=n;MEP=v.p;AGE=v.ag;GOAL=v.go;RECV=v.rv;PRIV=v.pr;x();profile();if(changed)pTip(PRIV?"프로필을 비공개로 바꿨어요.":"프로필을 공개로 바꿨어요.")}}
  function pick(){
   d.innerHTML='<h3 id="dt">책장에 보여줄 책</h3><p class="sm" style="font-size:13px">홈 책장에 꽂을 책을 골라 주세요. 최대 '+SHMAX+'권까지 고를 수 있어요.</p><div class="mpl">'+RDB.map(function(b,k){var on=v.s.indexOf(k)>-1;return'<button class="mpi" data-k="'+k+'" aria-pressed="'+on+'"><i data-bt="'+esc(b[0])+'" style="background:'+BC[k%3]+'"></i><span><b>'+b[0]+'</b><small>'+b[1]+'</small></span><em aria-hidden="true">'+(on?ic("check"):"")+'</em></button>'}).join("")+'</div><p id="mer" style="color:var(--sub);font-size:13px;margin:8px 0 0;min-height:18px"></p><button class="btn" id="mdn" style="width:100%;margin-top:6px">완료</button>';
   d.querySelector(".mpl").onclick=function(e){var b=e.target.closest(".mpi");if(!b)return;var k=+b.dataset.k,i=v.s.indexOf(k);
