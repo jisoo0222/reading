@@ -2173,7 +2173,7 @@ function calcType(){
   var sd=sum[i]!==0?sum[i]:last[i],side=sd<0?0:1,m=Math.abs(sum[i]),strong=m>=2;
   var nm=AX[i][side];key+="FSAEDWIJ".charAt(i*2+side);names.push(nm);
   var p=strong?100:62;if(!side)p=100-p;
-  rows+='<div class="ax"><div class="lb"><span'+(side?'>'+AX[i][0]:'><b>'+AX[i][0]+'</b>')+'</span><span>'+(side?'<b>'+AX[i][1]+'</b>':AX[i][1])+'</span></div><div class="trk"><i class="paw stk" style="left:'+p+'%"><svg viewBox="0 0 40 40" aria-hidden="true"><g class="so"><path d="M20 18.5c-4.6 0-10.5 6-10.5 11 0 3.6 2.7 4.8 5.4 4.8 2 0 3.2-1 5.1-1s3.1 1 5.1 1c2.7 0 5.4-1.2 5.4-4.8 0-5-5.9-11-10.5-11z"/><ellipse cx="8.6" cy="18.2" rx="3.4" ry="3.9" transform="rotate(-20 8.6 18.2)"/><ellipse cx="15" cy="10.6" rx="3.6" ry="4.2" transform="rotate(-8 15 10.6)"/><ellipse cx="25" cy="10.6" rx="3.6" ry="4.2" transform="rotate(8 25 10.6)"/><ellipse cx="31.4" cy="18.2" rx="3.4" ry="3.9" transform="rotate(20 31.4 18.2)"/></g><g class="st"><path d="M20 18.5c-4.6 0-10.5 6-10.5 11 0 3.6 2.7 4.8 5.4 4.8 2 0 3.2-1 5.1-1s3.1 1 5.1 1c2.7 0 5.4-1.2 5.4-4.8 0-5-5.9-11-10.5-11z"/><ellipse cx="8.6" cy="18.2" rx="3.4" ry="3.9" transform="rotate(-20 8.6 18.2)"/><ellipse cx="15" cy="10.6" rx="3.6" ry="4.2" transform="rotate(-8 15 10.6)"/><ellipse cx="25" cy="10.6" rx="3.6" ry="4.2" transform="rotate(8 25 10.6)"/><ellipse cx="31.4" cy="18.2" rx="3.4" ry="3.9" transform="rotate(20 31.4 18.2)"/></g><g class="pd"><path d="M20 18.5c-4.6 0-10.5 6-10.5 11 0 3.6 2.7 4.8 5.4 4.8 2 0 3.2-1 5.1-1s3.1 1 5.1 1c2.7 0 5.4-1.2 5.4-4.8 0-5-5.9-11-10.5-11z"/></g><g class="te"><ellipse cx="8.6" cy="18.2" rx="3.4" ry="3.9" transform="rotate(-20 8.6 18.2)"/><ellipse cx="15" cy="10.6" rx="3.6" ry="4.2" transform="rotate(-8 15 10.6)"/><ellipse cx="25" cy="10.6" rx="3.6" ry="4.2" transform="rotate(8 25 10.6)"/><ellipse cx="31.4" cy="18.2" rx="3.4" ry="3.9" transform="rotate(20 31.4 18.2)"/></g></svg></i></div><h4>'+(strong?'뚜렷한 '+nm:nm+'에 가까움')+'</h4><p>'+D[i][side]+'</p></div>';
+  rows+='<div class="ax"><div class="lb"><span'+(side?'>'+AX[i][0]:'><b>'+AX[i][0]+'</b>')+'</span><span>'+(side?'<b>'+AX[i][1]+'</b>':AX[i][1])+'</span></div><div class="trk"><i style="left:'+p+'%" aria-hidden="true"></i></div><h4>'+(strong?'뚜렷한 '+nm:nm+'에 가까움')+'</h4><p>'+D[i][side]+'</p></div>';
  }
  return{key:key,t:T[key],names:names,rows:rows}}
 function cardWire(key,t,names){
@@ -2266,10 +2266,10 @@ var SKT=0,RK={4:"FEDJ",5:"SEWJ",6:"FADJ",7:"FADI",8:"FADI",9:"FEDJ",10:"SAWJ"},R
 function tWrap(t,n){var w=t.split(" "),L=[],c="";w.forEach(function(x){if((c+" "+x).trim().length>n&&c){L.push(c);c=x}else c=(c+" "+x).trim()});if(c)L.push(c);return L}
 function typeSVG(key,t,names){
  var bk=LB[recList(key)[0].k][0],mk=key.charAt(0)+key.charAt(1)+(key.charAt(2)==="D"?"W":"D")+key.charAt(3),mt=[mk,T[mk][0]],e=function(x){return esc(String(x))},F='font-family="Pretendard,Apple SD Gothic Neo,Noto Sans KR,sans-serif"';
- var d=tWrap(t[1],16).map(function(l,i){return'<text x="360" y="'+(586+i*38)+'" text-anchor="middle" font-size="27" fill="#1F1E1E" '+F+'>'+e(l)+'</text>'}).join(""),dy=586+tWrap(t[1],16).length*38;
- var cw=150,cx=360-(names.length*cw+(names.length-1)*12)/2;
- var ch=names.map(function(n,i){var x=cx+i*(cw+12);return'<rect x="'+x+'" y="'+(dy+6)+'" width="'+cw+'" height="46" rx="23" fill="none" stroke="#4CAE85" stroke-width="2"/><text x="'+(x+cw/2)+'" y="'+(dy+37)+'" text-anchor="middle" font-size="24" font-weight="600" fill="#4CAE85" '+F+'>'+e(n)+'</text>'}).join("");
- var by=dy+96;
+ var d=tWrap(t[1],16).map(function(l,i){return'<text x="360" y="'+(626+i*38)+'" text-anchor="middle" font-size="27" fill="#1F1E1E" '+F+'>'+e(l)+'</text>'}).join(""),dy=626+tWrap(t[1],16).length*38;
+ var cw=300,cx=48;
+ var ch=names.map(function(n,i){var x=cx+(i%2)*(cw+24),y=dy+6+Math.floor(i/2)*80;return'<rect x="'+x+'" y="'+y+'" width="'+cw+'" height="64" rx="32" fill="none" stroke="#4CAE85" stroke-width="2"/><text x="'+(x+cw/2)+'" y="'+(y+42)+'" text-anchor="middle" font-size="28" font-weight="600" fill="#4CAE85" '+F+'>'+e(n)+'</text>'}).join("");
+ var by=dy+194;
  return'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 '+(by+210)+'" width="720" height="'+(by+210)+'" role="img" aria-label="나의 독서 유형 카드: '+e(t[0])+'">'
  +'<rect x="2" y="2" width="716" height="'+(by+206)+'" rx="40" fill="#FFFFFF" stroke="#E3E3E3" stroke-width="3"/>'
  +'<rect x="250" y="44" width="220" height="44" rx="22" fill="#E3E3E3"/><text x="360" y="74" text-anchor="middle" font-size="21" fill="#666161" '+F+'>나의 독서 유형은?</text>'
