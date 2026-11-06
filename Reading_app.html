@@ -2123,6 +2123,14 @@ body:has(.app.hso) #pawf{display:none!important}
 #app .lnav button[aria-pressed="true"]{background:var(--soft);border-color:var(--pri);color:var(--strong)}
 #app .plbook{width:100%;border:0;background:none;text-align:left;font:inherit;color:var(--ink);cursor:pointer;padding:0}
 #app .plbook>.ic{width:16px;height:16px;color:var(--tx3);flex:none}
+/* 디지털 문구점 상단 메뉴와 텍스트 탭 */
+#app.shp .sc>.shopnav:first-child{position:sticky;top:0;z-index:4;min-height:56px;box-sizing:border-box;margin:0 calc(-1*var(--px)) var(--s-v);padding:0 calc(var(--px) - 8px);background:var(--card);border-bottom:1px solid var(--divider)}
+#app.shp .shopnav h2{font-size:16px;font-weight:600;color:var(--ink)}
+#app.shp .cats{margin:24px 0 0!important;border-bottom:1px solid var(--divider)}
+#app.shp .cat{flex:1;margin:0;padding:12px 0!important;min-height:48px;justify-content:center;color:var(--sub)!important}
+#app.shp .cat small{font-size:14px!important;font-weight:600;line-height:20px}
+#app.shp .cat[aria-selected="true"]{color:var(--pri)!important}
+#app.shp .cat[aria-selected="true"]::after{left:0;transform:none;width:100%;height:3px}
 </style>
 </head>
 <body>
@@ -2594,7 +2602,7 @@ function lst(c){var r=[];["PN","HL"].forEach(function(k){if(c==="ALL"||c==="NEW"
 function shop(){
  app.className="app shp";
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="basket"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="mpt3"><div class="mpl3"><small>나의 포인트</small><span class="pt3">'+SHI.coin+'<b id="ptx"></b></span></div><button class="vl3" id="vlt">보관함</button></div><div id="gr"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav><div id="ov"></div><div id="sheet" role="dialog"></div>';
+ app.innerHTML='<nav class="sh2 shopnav" aria-label="디지털 문구점 상단 메뉴"><button class="ib" id="shopback" aria-label="홈으로">'+ic("back")+'</button><h2>디지털 문구점</h2><span class="sp3"></span></nav><div class="mpt3"><div class="mpl3"><small>나의 포인트</small><span class="pt3">'+SHI.coin+'<b id="ptx"></b></span></div><button class="vl3" id="vlt">보관함</button></div><div id="gr"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav><div id="ov"></div><div id="sheet" role="dialog"></div>';
  app.firstChild.style.paddingBottom="76px";
  var sheet=document.getElementById("sheet"),ov=document.getElementById("ov"),g=document.getElementById("gr");
  function cl(){sheet.classList.remove("on");ov.classList.remove("on")}
@@ -2606,7 +2614,7 @@ function shop(){
    g.innerHTML='<div class="mbar" role="img" aria-label="내 포인트 '+PT+'P"><div class="mtr"><i style="width:'+p*100+'%"></i><b style="left:'+p*100+'%"></b></div>'+tk+'</div><div class="msg">'+MS.map(function(m){return'<div class="ms"><small>+'+m[2]+'P 획득</small><div class="mc2">'+ic(m[1])+(m[3]?'<em>완료</em>':'')+'</div><span>'+m[0]+' 포인트</span></div>'}).join("")+'</div>'}
   else{
    var gc=SC==="HL"?"g1":SC==="BM"||SC==="TH"?"g2":"g3";
-   g.innerHTML='<div class="cats" role="tablist">'+CAT.map(function(c){return'<button class="cat" role="tab" aria-selected="'+(SC===c[0])+'" data-c="'+c[0]+'"><span>'+(SHI[c[0]]||ic(c[2]))+'</span><small>'+c[1]+'</small></button>'}).join("")+'</div><div class="gd '+gc+'">'+lst(SC).map(function(r){var c=r[0],i=r[1],t=ITM[c][i],p=pc(c,i),own=OWN[c+i];
+   g.innerHTML='<div class="cats" role="tablist">'+CAT.map(function(c){return'<button class="cat" role="tab" aria-selected="'+(SC===c[0])+'" data-c="'+c[0]+'"><small>'+c[1]+'</small></button>'}).join("")+'</div><div class="gd '+gc+'">'+lst(SC).map(function(r){var c=r[0],i=r[1],t=ITM[c][i],p=pc(c,i),own=OWN[c+i];
     if(c==="HL")return'<button class="cd2 hlr" data-c="HL" data-i="'+i+'"><span class="hn">'+t[0]+ic("pen")+'</span><span class="hv">'+pv(c,i,COL[i%5])+'</span><span class="hp">'+(own?"보유":ic("plus"))+'</span></button>';
     return'<button class="cd2" data-c="'+c+'" data-i="'+i+'"><div class="pvw">'+pv(c,i,c==="PN"?SCOL[0]:COL[i%5])+'</div><b>'+t[0]+'</b><span>'+(own?"보유 중":p?p+"P":"무료")+'</span></button>'}).join("")+'</div>'}}
  var draw0=draw;draw=function(){draw0();if(STB!==1||SC!=="MK")return;var gd=g.querySelector(".gd");if(!gd)return;
@@ -2638,6 +2646,7 @@ function shop(){
   else if(b.dataset.k!==undefined){CS[id]=+b.dataset.k;detail(c,i)}
   else if(b.id==="go")vault(2,shop);
   else if(b.id==="buy"&&!OWN[id]&&PT>=pc(c,i)){PT-=pc(c,i);OWN[id]=1;draw();detail(c,i)}};
+ document.getElementById("shopback").onclick=home;
  document.getElementById("vlt").onclick=function(){vault(2,shop)};
  var tb=app.querySelectorAll(".tab button");tb[0].onclick=tabStamp;tb[2].onclick=home;tb[3].onclick=community;tb[4].onclick=profile;
 }
