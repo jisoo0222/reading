@@ -171,6 +171,9 @@
 - 읽은 날: `brand/primary-soft` 바탕 + `brand/primary-strong` 글자
 - 라벨 SUN · MON · TUE · WED · THU · FRI · SAT (11 Semibold `text/tertiary`)
 
+### 독서 달력
+- 읽은 날은 동그라미로 표시하고, "읽은 날" 범례도 같은 동그라미를 써요.
+
 ### 칩
 - 필터 칩: 높이 36, 모서리 999, 1px `border/default` + `text/secondary` → 선택하면 `chip/selected-bg` + `chip/selected-text`
 - 태그 칩(카드 안): 높이 26, 1px `border/default`, 12 Medium `text/tertiary`
@@ -236,7 +239,7 @@
 - Iconify 플러그인 아이콘(uil · majesticons · ant-design · ri). 선 굵기 2, 끝 둥글게
 - 크기: 네비를 뺀 모든 단독 아이콘은 **30** 고정. 글자 바로 옆 작은 아이콘만 16
 - 아이콘을 감싸는 동그라미 버튼은 40(`Size/circle-sm`), 알림 분류 동그라미는 48
-- 떠 있는 버튼(플로팅)은 쓰지 않아요. 예외: 커뮤니티 글쓰기 버튼(글쓰기 유일한 입구)
+- 떠 있는 버튼(플로팅)은 쓰지 않아요. 예외: 커뮤니티 글쓰기 버튼(글쓰기 유일한 입구). 글쓰기 버튼은 오른쪽 하단에 두고 오른쪽 여백 20, 하단 네비게이션 위 간격 20을 유지해요.
 
 ## 7. 앱 CSS 변수 연결
 
