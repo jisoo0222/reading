@@ -6,11 +6,11 @@ const fs = require('fs');
 const path = require('path');
 
 const PORT = Number(process.env.PORT) || 5173;
-// GitHub 자동 가져오기: Claude가 고쳐서 올린 최신 Reading_app.html 을 1분마다 확인해 내려받아요.
+// GitHub 자동 가져오기: main 브랜치의 최신 Reading_app.html 을 1분마다 확인해 내려받아요.
 // 끄려면:  node dev-server.js --local
 const SYNC = !process.argv.includes('--local');
 const REPO = 'jisoo0222/reading';
-const BRANCH = 'claude/ai-reading-habit-app-dss6gh';
+const BRANCH = 'main';
 const SYNC_MS = 60 * 1000; // GitHub 무료 확인 횟수(시간당 60번)를 넘지 않게 1분 간격
 // dev-server.js 가 저장소 폴더에 있든 android 폴더 안에 있든 Reading_app.html 을 알아서 찾아요.
 const FILE = [path.join(__dirname, 'Reading_app.html'), path.join(__dirname, '..', 'Reading_app.html')]
