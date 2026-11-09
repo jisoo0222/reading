@@ -37,6 +37,7 @@ import java.util.Map;
  */
 public class MainActivity extends Activity {
     private static final int REQ_FILE = 41;
+    private static final int REQ_SHARE = 42;
     private static final String ASSET_URL = "file:///android_asset/index.html";
     /** 앱에 들어 있는 Pretendard 글꼴을 웹 화면에 건네줄 때 쓰는 가상 주소 */
     private static final String FONT_URL = "https://dokdok.app.font/PretendardVariable.woff2";
@@ -128,6 +129,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onActivityResult(int req, int res, Intent data) {
         super.onActivityResult(req, res, data);
+        if (req == REQ_SHARE) {
+            web.evaluateJavascript("window.__shareResult && window.__shareResult(" + (res == RESULT_OK) + ")", null);
+            return;
+        }
         if (req != REQ_FILE || fileCb == null) return;
         Uri[] r = null;
         if (res == RESULT_OK && data != null && data.getData() != null) r = new Uri[]{data.getData()};
@@ -139,7 +144,9 @@ public class MainActivity extends Activity {
     public void onBackPressed() {
         // 팝업이 열려 있으면 닫고, 아니면 앱 안의 '뒤로' 버튼을 누른 것처럼 동작. 더 갈 곳이 없으면 앱 종료.
         web.evaluateJavascript(
-            "(function(){var o=document.getElementById('ov2');if(o){o.click();return 'x'}" +
+            "(function(){var d=document.querySelector('dialog[open]');if(d){d.close();return 'x'}" +
+            "var o=document.getElementById('ov2');if(o){o.click();return 'x'}" +
+            "var s=document.getElementById('sheet'),ov=document.getElementById('ov');if(s&&s.classList.contains('on')){if(ov)ov.click();else s.classList.remove('on');return 'x'}" +
             "var b=document.querySelector('[aria-label=\"뒤로\"]');if(b){b.click();return 'b'}return ''})()",
             v -> { if (v == null || v.equals("\"\"") || v.equals("null")) MainActivity.super.onBackPressed(); });
     }
@@ -177,7 +184,11 @@ public class MainActivity extends Activity {
                 i.setType("text/plain");
                 i.putExtra(Intent.EXTRA_SUBJECT, title);
                 i.putExtra(Intent.EXTRA_TEXT, text);
-                startActivity(Intent.createChooser(i, "공유하기"));
+                try {
+                    startActivityForResult(Intent.createChooser(i, "공유하기"), REQ_SHARE);
+                } catch (Exception e) {
+                    web.evaluateJavascript("window.__shareResult && window.__shareResult(false)", null);
+                }
             });
         }
     }
@@ -196,7 +207,7 @@ public class MainActivity extends Activity {
     private static final String SHIM =
         "(function(){if(window.__dk)return;window.__dk=1;var B=window.AndroidBridge;if(!B)return;" +
         "var fs=document.createElement('style');fs.textContent=\"@font-face{font-family:Pretendard;src:url('" + FONT_URL + "') format('woff2');font-weight:45 920;font-style:normal;font-display:swap}\";document.head.appendChild(fs);" +
-        "navigator.share=function(d){d=d||{};B.shareText(d.title||'',[d.text,d.url].filter(Boolean).join('\\n'));return Promise.resolve()};" +
+        "navigator.share=function(d){d=d||{};return new Promise(function(resolve,reject){if(window.__shareResult){reject(new Error('Share already open'));return}window.__shareResult=function(ok){window.__shareResult=null;if(ok)resolve();else{var e=new Error('Share cancelled');e.name='AbortError';reject(e)}};try{B.shareText(d.title||'',[d.text,d.url].filter(Boolean).join('\\n'))}catch(e){window.__shareResult=null;reject(e)}})};" +
         "navigator.canShare=function(){return false};" +
         "var oc=HTMLAnchorElement.prototype.click;HTMLAnchorElement.prototype.click=function(){" +
         "if(this.download&&/^(blob:|data:)/.test(this.href)){var n=this.download,h=this.href;" +
