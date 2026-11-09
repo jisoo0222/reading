@@ -2419,20 +2419,25 @@ function quoteShare(q,bt,au){
  document.getElementById("qff").onclick=function(e){var b=e.target.closest("button");if(b){sf=+b.dataset.f;r()}};
  function mis(){award("share")}
  var fn="문장카드_"+bt+".png";
- document.getElementById("qsv").onclick=function(){cardPNG(svg(),function(b){var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=fn;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},1000);mis()},1)};
- document.getElementById("qsh").onclick=function(){cardPNG(svg(),function(b){var f=new File([b],fn,{type:"image/png"}),t="“"+q+"” — 『"+bt+"』";mis();
-  if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],title:bt,text:t}).catch(function(){});
-  else if(navigator.share)navigator.share({title:bt,text:t}).catch(function(){});
-  else if(navigator.clipboard)navigator.clipboard.writeText(t)},1)};
+ document.getElementById("qsv").onclick=function(){cardPNG(svg(),function(b){var a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=fn;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},1000)},1)};
+ document.getElementById("qsh").onclick=function(){cardPNG(svg(),function(b){var f=new File([b],fn,{type:"image/png"}),t="“"+q+"” — 『"+bt+"』";
+  if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],title:bt,text:t}).then(mis,shareFailed);
+  else if(navigator.share)navigator.share({title:bt,text:t}).then(mis,shareFailed);
+  else copySharedText(t).then(mis,shareFailed)},1)};
  }
 var INV={},OTR=[["서연","#898585"],["민준","#666161"],["유나","#444141"],["태오","#1F1E1E"],["소율","#666161"]];
+function copySharedText(t){
+ if(!navigator.clipboard||!navigator.clipboard.writeText)return Promise.reject(new Error("clipboard unavailable"));
+ return navigator.clipboard.writeText(t);
+}
+function shareFailed(e){if(!e||e.name!=="AbortError")ptToast("공유하지 못했어요. 다시 시도해 주세요.")}
 function bookShare(bt,au,col){
  var url="https://ddokdok.app/book/"+encodeURIComponent(bt),cnt=MP.length+1;
  var x=pop('<h3>책 공유하기</h3><div class="bshc"><span class="bshv" style="background:'+col+'"><b>'+esc(bt)+'</b></span><span class="bsht"><small>똑독에서 함께 읽어요</small><b>'+esc(bt)+'</b><em>'+esc(au)+'</em><i>지금 '+cnt+'명이 같이 읽는 중</i></span></div>'
   +'<div class="bsho"><button id="bsl">'+ic("link")+'<span>링크 복사</span></button><button id="bsa">'+ic("bksh")+'<span>다른 앱으로 공유</span></button></div><p class="bshm" id="bsm" role="status"></p><button class="btn ghost" id="bsx" style="width:100%;margin-top:6px">닫기</button>');
  var m=document.getElementById("bsm"),t="『"+bt+"』 "+au+" — 똑독에서 같이 읽어요\n"+url;
- document.getElementById("bsl").onclick=function(){award("share");if(navigator.clipboard)navigator.clipboard.writeText(url).catch(function(){});m.textContent="책 링크를 복사했어요."};
- document.getElementById("bsa").onclick=function(){award("share");if(navigator.share)navigator.share({title:bt,text:t,url:url}).catch(function(){});else{if(navigator.clipboard)navigator.clipboard.writeText(t).catch(function(){});m.textContent="공유할 수 있는 앱이 없어서 링크를 복사했어요."}};
+ document.getElementById("bsl").onclick=function(){copySharedText(url).then(function(){m.textContent="책 링크를 복사했어요.";award("share")},function(){m.textContent="링크를 복사하지 못했어요. 다시 시도해 주세요."})};
+ document.getElementById("bsa").onclick=function(){if(navigator.share)navigator.share({title:bt,text:t,url:url}).then(function(){award("share")},shareFailed);else copySharedText(t).then(function(){m.textContent="책 링크를 복사했어요.";award("share")},function(){m.textContent="링크를 복사하지 못했어요. 다시 시도해 주세요."})};
  document.getElementById("bsx").onclick=x}
 function mIdx(n){for(var i=0;i<M.length;i++)if(M[i][0]===n)return i;return -1}
 function matePop(bt){
@@ -2510,7 +2515,7 @@ function warn(cb){
  o.onclick=x;app.appendChild(o);app.appendChild(d);
  document.getElementById("dg").onclick=function(){x();if(cb)cb()};document.getElementById("dc").onclick=function(){x();reader()};document.getElementById("dc").focus();
  d.onkeydown=function(e){if(e.key==="Escape")x()}}
-var FR={"지민":1,"은우":1},REQ={},VL=["비공개","친구공개","전체공개"],BC=["#6A4F6A","#B2A5D6","#C9B3C9"],
+var FR={"지민":1,"은우":1},FRIEND_REQ={},VL=["비공개","친구공개","전체공개"],BC=["#6A4F6A","#B2A5D6","#C9B3C9"],
 PF={"지민":{t:["#슬로우리더","#감정·공감"],g:["고전","인문학","여행"],sv:2,pv:1,b:["느리게 읽는 밤","나의 작은 서재","여행의 이유"],p:["오늘 읽은 문장이 하루 종일 마음에 남았다.","천천히 읽는 시간이 가장 좋다."]},
 "은우":{t:["#몰입독서","#논리·분석"],g:["소설","심리학"],sv:1,pv:2,b:["마음의 구조","한 줄의 추리","밤의 도서관"],p:["결말을 알고 다시 읽으면 복선이 보인다.","추리 소설은 두 번 읽을 때 진짜다."]},
 "하린":{t:["#새벽독서","#힐링"],g:["에세이","시"],sv:0,pv:1,b:[],p:["새벽에 읽는 시는 조금 더 조용하다.","오늘은 한 장만 읽어도 충분했다."]},
@@ -2527,18 +2532,18 @@ function friend(i,pf){
  var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.className="fdl";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label",n+" 프로필");
  function x(){o.remove();d.remove();if(pf===4){matePop(BT);return}if(!!FR[n]!==fr0){if(pf===1)profile();else if(pf===2)community();else if(pf===3&&typeof FCB==="function")FCB()}}
  function main(){var fr=!!FR[n];
-  d.innerHTML='<section class="box pbx"><div class="pbt"><button class="av2" id="ph" aria-label="'+n+' 프로필 사진 크게 보기" style="background:'+m[2]+'">'+n.charAt(0)+'<i class="mb" aria-label="나와의 매칭률 '+m[1]+'%">'+m[1]+'%</i></button><div class="pnm"><h2>'+n+'</h2><small>취향 일치도 '+m[1]+'%</small></div><button class="fadd'+(!fr&&REQ[n]?" rq":"")+'" id="fa" aria-pressed="'+fr+'">'+(fr?"친구 추가됨":REQ[n]?"신청 중":"친구 추가 +")+'</button></div></section>'
+  d.innerHTML='<section class="box pbx"><div class="pbt"><button class="av2" id="ph" aria-label="'+n+' 프로필 사진 크게 보기" style="background:'+m[2]+'">'+n.charAt(0)+'<i class="mb" aria-label="나와의 매칭률 '+m[1]+'%">'+m[1]+'%</i></button><div class="pnm"><h2>'+n+'</h2><small>취향 일치도 '+m[1]+'%</small></div><button class="fadd'+(!fr&&FRIEND_REQ[n]?" rq":"")+'" id="fa" aria-pressed="'+fr+'">'+(fr?"친구 추가됨":FRIEND_REQ[n]?"신청 중":"친구 추가 +")+'</button></div></section>'
    +sec(n+" 님의 책장",P.sv,shelf)+sec(n+" 님의 글",P.pv,posts,FP.length?'<button class="pme" id="fpall">전체 보기'+ic("next")+'</button>':"")+'<button class="btn ghost" id="fcl" style="width:100%;margin-top:16px">닫기</button>';
   document.getElementById("fcl").onclick=x;
   function leave(){o.remove();d.remove();var pd=document.getElementById("dlg");if(pd)pd.remove();var po=document.getElementById("ov2");if(po)po.remove()}
   d.querySelectorAll(".fpo").forEach(function(b){b.onclick=function(){leave();OPENP=+b.dataset.pid;community()}});
   var fpa=document.getElementById("fpall");if(fpa)fpa.onclick=function(){leave();CU=n;community()};
-  document.getElementById("fa").onclick=function(){if(FR[n])FR[n]=false;else REQ[n]=!REQ[n];main()};
+  document.getElementById("fa").onclick=function(){if(FR[n])FR[n]=false;else FRIEND_REQ[n]=!FRIEND_REQ[n];main()};
   document.getElementById("ph").onclick=photo}
  function photo(){var fr=!!FR[n];
-  d.innerHTML='<div class="ph" style="background:'+m[2]+'">'+n.charAt(0)+'<i class="mb">나와의 매칭률 '+m[1]+'%</i>'+(fr||REQ[n]?'':'<button class="pl" id="pl" aria-label="친구 신청">'+ic("plus")+'</button>')+'</div><div class="chips" style="margin-top:14px">'+chips(P.g,1)+'</div><button class="btn ghost" id="pc2" style="width:100%;margin-top:16px;flex:none">닫기</button>';
+  d.innerHTML='<div class="ph" style="background:'+m[2]+'">'+n.charAt(0)+'<i class="mb">나와의 매칭률 '+m[1]+'%</i>'+(fr||FRIEND_REQ[n]?'':'<button class="pl" id="pl" aria-label="친구 신청">'+ic("plus")+'</button>')+'</div><div class="chips" style="margin-top:14px">'+chips(P.g,1)+'</div><button class="btn ghost" id="pc2" style="width:100%;margin-top:16px;flex:none">닫기</button>';
   document.getElementById("pc2").onclick=main;document.getElementById("pc2").focus();
-  var pl=document.getElementById("pl");if(pl)pl.onclick=function(){REQ[n]=true;main()}}
+  var pl=document.getElementById("pl");if(pl)pl.onclick=function(){FRIEND_REQ[n]=true;main()}}
  o.onclick=x;app.appendChild(o);app.appendChild(d);
  d.onkeydown=function(e){if(e.key==="Escape")x()};
  main();document.getElementById("fcl").focus()
@@ -3051,7 +3056,7 @@ function home(){
   window.addEventListener("pointerup",function(){if(!dn)return;dn=false;if(hs.isConnected){var i=Math.round(hs.scrollLeft/hsw());hs.style.scrollSnapType="";hs.scrollTo({left:i*hsw(),behavior:"smooth"})}setTimeout(function(){HSM=false},0)})}
  document.getElementById("hpx").onclick=hMis;document.getElementById("hpx").onkeydown=function(e){if(e.key==="Enter")hMis()};
  var hpo=document.getElementById("hpo");hpo.onclick=function(){OPENP=0;community()};app.querySelectorAll(".hcc").forEach(function(c){c.onclick=function(){OPENP=+c.dataset.id;community()}});
- window.hpRef=function(){var h=document.getElementById("hpx");if(!h||!h.isConnected)return;var sy=document.querySelector(".sc")?document.querySelector(".sc").scrollTop:0;home();var sc2=document.querySelector(".sc");if(sc2)sc2.scrollTop=sy};if(!NEW_ACCOUNT)award("att",1);
+ window.hpRef=function(){var h=document.getElementById("hpx");if(!h||!h.isConnected)return;var sy=document.querySelector(".sc")?document.querySelector(".sc").scrollTop:0;home();var sc2=document.querySelector(".sc");if(sc2)sc2.scrollTop=sy};if(!NEW_ACCOUNT||todayStr()!==SIGNUP_DAY)award("att",1);
  var tip=document.createElement("div");tip.className="mtp";tip.setAttribute("role","tooltip");app.appendChild(tip);
  function tshow(el){var i=+el.dataset.i,a=app.getBoundingClientRect(),r=el.getBoundingClientRect();tip.innerHTML='<b>'+MS[i][0]+' 포인트 · +'+MS[i][2]+'P</b>'+MSD[i];tip.classList.add("on");tip.dataset.i=i;
   var w=tip.offsetWidth,cx=r.left-a.left+r.width/2,l=Math.min(Math.max(8,cx-w/2),a.width-w-8);tip.style.left=l+"px";tip.style.top=(r.top-a.top-tip.offsetHeight-10)+"px";tip.style.setProperty("--ax",(cx-l)+"px")}
@@ -3094,7 +3099,7 @@ function community(){
   var bal="";
   if(p.o){var v=VT[p.id],n0=p.n[0]+(v===0?1:0),n1=p.n[1]+(v===1?1:0),t=n0+n1,pc0=Math.round(n0/t*100);
    bal=v===undefined?'<div class="bal">'+p.o.map(function(o,k){return'<button data-v="'+k+'">'+esc(o)+'</button>'}).join('<span>VS</span>')+'</div>':'<div class="bal res">'+[n0,n1].map(function(n,k){var pp=k?100-pc0:pc0;return'<div class="br'+(v===k?" me":"")+'"><i style="width:'+pp+'%"></i><span>'+esc(p.o[k])+'</span><em>'+pp+'%</em></div>'}).join("")+'</div>'}
-  return'<article class="po" data-id="'+p.id+'"><div class="ph2"><button class="pav2" data-u="'+esc(un)+'" style="'+avBg(un)+'" aria-label="'+esc(un)+' 프로필">'+avTx(un)+'</button><div class="pn"><b>'+esc(un)+'</b><small>'+p.tm+(p.ed?' · <em class="edt">수정됨</em>':'')+'</small></div><span class="vis">'+vic(p.v)+VIS[p.v][1]+'</span>'+(me?'':fr?'<span class="fp2 on">친구</span>':'<button class="fp2'+(REQ[p.u]?" rq":"")+'" data-f="'+p.u+'">'+(REQ[p.u]?"신청 중":"친구 추가")+'</button>')+(me&&!full?'<button class="pmn" data-menu="'+p.id+'" aria-label="글 메뉴">'+ic("more")+'</button>':'')+'</div>'
+  return'<article class="po" data-id="'+p.id+'"><div class="ph2"><button class="pav2" data-u="'+esc(un)+'" style="'+avBg(un)+'" aria-label="'+esc(un)+' 프로필">'+avTx(un)+'</button><div class="pn"><b>'+esc(un)+'</b><small>'+p.tm+(p.ed?' · <em class="edt">수정됨</em>':'')+'</small></div><span class="vis">'+vic(p.v)+VIS[p.v][1]+'</span>'+(me?'':fr?'<span class="fp2 on">친구</span>':'<button class="fp2'+(FRIEND_REQ[p.u]?" rq":"")+'" data-f="'+p.u+'">'+(FRIEND_REQ[p.u]?"신청 중":"친구 추가")+'</button>')+(me&&!full?'<button class="pmn" data-menu="'+p.id+'" aria-label="글 메뉴">'+ic("more")+'</button>':'')+'</div>'
    +'<span class="tg2">'+TN[p.t]+'</span><p class="pt2'+(full?" open":"")+'">'+esc(p.x)+'</p>'+(!full&&p.x.length>70?'<button class="mre">더보기</button>':'')+bk+(p.img?'<img class="pim" src="'+p.img+'" alt="공유한 모음집 항목">':'')+bal
    +(tc&&!full?'<div class="tc"><small>인기 댓글</small><span class="pav2 s" style="'+avBg(tc[3]?ME:tc[0])+'">'+avTx(tc[3]?ME:tc[0])+'</span><span class="tx"><b>'+esc(tc[3]?ME:tc[0])+'</b> '+esc(tc[1])+'</span><em>'+ic("heart")+tc[2]+'</em></div>':'')
    +'<div class="pa"><button data-l="'+p.id+'" aria-pressed="'+lk2+'">'+ic("heart")+(p.l+(lk2?1:0))+'</button><button data-cm="'+p.id+'" aria-label="댓글 '+p.c.length+'개">'+ic("chat")+p.c.length+'</button></div></article>'}
@@ -3136,12 +3141,13 @@ function community(){
   inD=true;app.className="app";
   app.innerHTML='<div class="sh2"><button class="ib" id="d0" aria-label="뒤로">'+ic("back")+'</button><h2>게시글</h2>'+(p.mine?'<button class="ib" id="dmn" aria-label="글 메뉴">'+ic("more")+'</button>':'<span class="sp3"></span>')+'</div><div id="dp"></div>';
   app.firstChild.style.paddingBottom="84px";
-  var bar=document.createElement("form");bar.className="cmbar";bar.innerHTML='<input id="ci" placeholder="댓글을 입력하세요" aria-label="댓글 입력" autocomplete="off"><button class="btn" id="cy">등록</button>';app.appendChild(bar);
+  var bar=document.createElement("form");bar.className="cmbar";bar.innerHTML='<input id="ci" placeholder="댓글을 입력하세요" aria-label="댓글 입력" autocomplete="off"><button class="btn" id="cy" type="button">등록</button>';app.appendChild(bar);
   var dp=document.getElementById("dp"),ci=document.getElementById("ci");
   function rd(){dp.innerHTML=post(p,true)+'<h3 class="cmh">댓글 '+p.c.length+'</h3>'+(p.c.length?p.c.map(function(c,ci){var n=c[3]?ME:c[0];return'<div class="cmr">'+(c[3]?'<span class="pav2 s" style="'+avBg(n)+'">'+avTx(n)+'</span>':'<button class="pav2 s" data-u="'+esc(n)+'" aria-label="'+esc(n)+' 프로필 보기" style="background:'+colOf(n)+'">'+esc(n).charAt(0)+'</button>')+'<div><div class="cmn"><b>'+esc(n)+(c[4]?'<em class="edt"> · 수정됨</em>':'')+'</b>'+(c[3]?'<span class="cmx"><button data-ce="'+ci+'">수정</button><button data-cd="'+ci+'">삭제</button></span>':'')+'</div><p>'+esc(c[1])+'</p></div></div>'}).join(""):'<div class="emp">첫 댓글을 남겨 보세요.</div>')}
   ref=rd;CUR=p;rd();
   dp.onclick=pclk;
-  bar.onsubmit=function(e){e.preventDefault();var v=ci.value.trim();if(!v)return;p.c.push([ME,v,0,1]);ci.value="";rd();award("talk");document.querySelector(".sc").scrollTop=1e6};
+  function submitComment(e){if(e)e.preventDefault();var v=ci.value.trim();if(!v)return;p.c.push([ME,v,0,1]);ci.value="";rd();award("talk");document.querySelector(".sc").scrollTop=1e6}
+  document.getElementById("cy").onclick=submitComment;bar.onsubmit=submitComment;ci.onkeydown=function(e){if(e.key==="Enter"&&!e.isComposing)submitComment(e)};
   document.getElementById("d0").onclick=community;
   var dm=document.getElementById("dmn");if(dm)dm.onclick=function(){menu(id,true)};
   if(foc)ci.focus()}
@@ -3157,7 +3163,7 @@ function community(){
   if(!b){if(art&&!inD&&!e.target.closest("img"))detail(+art.dataset.id);return}
   var id=+(b.dataset.l||b.dataset.cm||0);
   if(b.dataset.menu)menu(+b.dataset.menu);
-  else if(b.dataset.f){REQ[b.dataset.f]=!REQ[b.dataset.f];ref()}
+  else if(b.dataset.f){FRIEND_REQ[b.dataset.f]=!FRIEND_REQ[b.dataset.f];ref()}
   else if(b.dataset.l){LKD[id]=!LKD[id];ref()}
   else if(b.dataset.cm){if(inD)document.getElementById("ci").focus();else detail(id,1)}
   else if(b.dataset.b!==undefined){var k=+b.dataset.b;warn(function(){bookDt(k,community)})}
@@ -3569,11 +3575,11 @@ function snsConsent(provider){
 }
 
 
-var NEW_ACCOUNT=false,LOGIN_STATE=null;
+var NEW_ACCOUNT=false,SIGNUP_DAY="",LOGIN_STATE=null;
 function beginSignup(){
- if(!NEW_ACCOUNT)LOGIN_STATE=JSON.stringify({ME,MEP,AGE,GOAL,ans,step,SKT,RKEY,PICKED,FR,REQ,INV,PT,PS,DONEPAID,STRK,RDAYS,WK,RDY,RLOG,RDB,SHB,OWN,CS,OP,MY,SLOT,HB,AP,THI,MYT,MYX,OPN,DEF,BK,ST,SDT,DNB,BMT,MP,und,my,BM,MMO,cur,pg,PAGES,PGN,TOT,BT,S,CMTS,CH,NTF,LKD,VT,PO,BGO,SHR:typeof SHR==="undefined"?null:SHR});
- NEW_ACCOUNT=true;ME="";MEP="";AGE=null;GOAL=null;ans=[null,null,null,null];step=0;SKT=0;RKEY="";PICKED=0;
- FR={};REQ=[];INV={};BMT={};MP=[];NTF=[];
+ if(!NEW_ACCOUNT)LOGIN_STATE=JSON.stringify({ME,MEP,AGE,GOAL,ans,step,SKT,RKEY,PICKED,FR,FRIEND_REQ,REQ,INV,PT,PS,DONEPAID,STRK,RDAYS,WK,RDY,RLOG,RDB,SHB,OWN,CS,OP,MY,SLOT,HB,AP,THI,MYT,MYX,OPN,DEF,BK,ST,SDT,DNB,BMT,MP,und,my,BM,MMO,cur,pg,PAGES,PGN,TOT,BT,S,CMTS,CH,NTF,LKD,VT,PO,BGO,SHR:typeof SHR==="undefined"?null:SHR});
+ NEW_ACCOUNT=true;SIGNUP_DAY=todayStr();ME="";MEP="";AGE=null;GOAL=null;ans=[null,null,null,null];step=0;SKT=0;RKEY="";PICKED=0;
+ FR={};FRIEND_REQ={};REQ=[];INV={};BMT={};MP=[];NTF=[];
  PT=0;PS={d:todayStr(),act:0,got:{}};DONEPAID={};STRK={paidEnd:""};RDAYS={};WK=[0,0,0,0,0,0,0];RDY={d:todayStr(),p:{}};RLOG={};
  RDB=[];SHB=[];window.SHR=[[],[],[]];OPN=[];ST={};SDT={};DNB={};BGO={};HB={};
  und={};my={};BM=[];MMO={};cur=0;pg=0;CMTS=[];CH=[];S=null;
@@ -3583,7 +3589,7 @@ function beginSignup(){
 }
 function restoreLoginState(){
  if(!NEW_ACCOUNT||!LOGIN_STATE)return;
- var saved=JSON.parse(LOGIN_STATE);({ME,MEP,AGE,GOAL,ans,step,SKT,RKEY,PICKED,FR,REQ,INV,PT,PS,DONEPAID,STRK,RDAYS,WK,RDY,RLOG,RDB,SHB,OWN,CS,OP,MY,SLOT,HB,AP,THI,MYT,MYX,OPN,DEF,BK,ST,SDT,DNB,BMT,MP,und,my,BM,MMO,cur,pg,PAGES,PGN,TOT,BT,S,CMTS,CH,NTF,LKD,VT,PO,BGO}=saved);window.SHR=saved.SHR;NEW_ACCOUNT=false;window.hpRef=null;
+ var saved=JSON.parse(LOGIN_STATE);({ME,MEP,AGE,GOAL,ans,step,SKT,RKEY,PICKED,FR,FRIEND_REQ,REQ,INV,PT,PS,DONEPAID,STRK,RDAYS,WK,RDY,RLOG,RDB,SHB,OWN,CS,OP,MY,SLOT,HB,AP,THI,MYT,MYX,OPN,DEF,BK,ST,SDT,DNB,BMT,MP,und,my,BM,MMO,cur,pg,PAGES,PGN,TOT,BT,S,CMTS,CH,NTF,LKD,VT,PO,BGO}=saved);window.SHR=saved.SHR;NEW_ACCOUNT=false;window.hpRef=null;
 }
 
 function loginPage(){
