@@ -2161,8 +2161,6 @@ body:has(.app.hso) #pawf{display:none!important}
 .consent-heading h2{font-size:16px;font-weight:600}
 .consent-heading .ib{width:32px;height:32px}
 .consent-intro{padding:0 0 24px}
-.consent-logo{width:48px;height:38px;margin-bottom:16px}
-.consent-logo svg{display:block;width:100%;height:100%}
 .consent-intro h1{font-size:20px;font-weight:600;line-height:1.45;letter-spacing:-.02em}
 .consent-intro p{font-size:14px;color:var(--sub);margin-top:12px}
 .consent-all{display:flex;align-items:center;gap:12px;min-height:64px;padding:16px;background:var(--card);border:1px solid var(--bd);border-radius:10px;cursor:pointer;font-size:16px;font-weight:600}
@@ -3523,7 +3521,7 @@ function snsConsent(provider){
  var dialog=document.createElement("dialog"),trigger=document.activeElement;
  dialog.className="consent-popup";dialog.setAttribute("aria-labelledby","consent-title");
  dialog.innerHTML='<div class="consent-heading"><h2 id="consent-title">약관 동의</h2><button class="ib" id="consent-back" aria-label="닫기"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>'
- +'<section class="consent-intro"><div class="consent-logo">'+logoSVG()+'</div><h1>똑독을 시작하기 전에<br>확인해 주세요</h1><p>'+name+'로 함께할 준비를 해요.</p></section>'
+ +'<section class="consent-intro"><h1>똑독을 시작하기 전에<br>확인해 주세요</h1><p>'+name+'로 함께할 준비를 해요.</p></section>'
  +'<label class="consent-all"><input id="sns-all" type="checkbox"><span>전체 동의</span></label>'
  +'<div class="consent-list"><section class="consent-item"><div class="consent-row"><label><input id="sns-terms" type="checkbox"><span><em>[필수]</em>이용약관 동의</span></label><button class="consent-more" data-panel="sns-terms-detail" aria-label="이용약관 내용 보기" aria-expanded="false" aria-controls="sns-terms-detail">'+ic("next")+'</button></div>'
  +'<div class="consent-detail" id="sns-terms-detail" hidden><p><b>서비스 이용</b>똑독에서 독서 목표를 정하고, 책을 읽고, 기록과 감상을 나눌 수 있어요.</p><p><b>함께 지킬 약속</b>다른 사람의 개인정보나 저작물을 허락 없이 게시하지 않고, 서로의 생각과 취향을 존중해 주세요.</p><p><b>동의하지 않는 경우</b>동의하지 않고 로그인 화면으로 돌아갈 수 있어요.</p></div></section>'
