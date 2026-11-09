@@ -2210,6 +2210,26 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.pf .rbs{font-size:11px!important;padding:0 8px!important;height:26px!important;flex:none}
 #app.pf .rbs.dn{background:var(--soft)!important;color:var(--strong)!important;border:0!important}
 @media(max-width:360px){#app .sc.hm .htp{gap:12px}#app .sc.hm .hcv{width:104px!important}#app.pf .rbk{gap:12px!important}#app.pf .rbt b{font-size:18px!important}}
+
+/* 홈 여백 정리 · 인기글 반응은 본문 아래 · 읽은 책 목록 축소 */
+#app .sc.hm>.hero,#app .sc.hm>.rcwrap{height:auto!important;min-height:174px!important;max-height:none;margin-top:16px!important}
+#app .sc.hm .rcscroll{height:auto}
+#app .sc.hm .rcscroll>.hero{height:auto!important;min-height:174px}
+#app .sc.hm>.blk{margin-top:12px!important;padding-top:8px!important}
+#app .sc.hm>.blk+.blk{margin-top:12px!important}
+#app .sc.hm .hcc{height:108px;gap:5px!important}
+#app .sc.hm .hcc>.hcf{display:flex;align-items:center;gap:5px;align-self:flex-start;margin-top:auto!important}
+#app.pf #rbl{gap:10px!important;margin-top:10px}
+#app.pf #rbl .rbk{min-height:43px!important;gap:8px!important}
+#app.pf #rbl .rbk>i{width:29px!important;height:43px!important}
+#app.pf #rbl .rbt b{font-size:14px!important;line-height:1.25!important}
+#app.pf #rbl .rbt small{font-size:11px!important;margin-top:3px!important}
+#app.pf #rbl .rbs{font-size:10px!important;height:22px!important;padding:0 6px!important}
+
+#mgwh{margin-top:12px}
+.gwh #mgr{width:76px;height:46px;margin:2px 0;border:0;background:transparent;font:inherit;font-size:22px;font-weight:700;color:var(--pri);text-align:center;padding:0;cursor:ns-resize;-moz-appearance:textfield}
+.gwh #mgr:focus{outline:none;cursor:text;background:var(--card);border-radius:8px}
+.gwh #mgr::-webkit-inner-spin-button,.gwh #mgr::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 </style>
 </head>
 <body>
@@ -2622,14 +2642,27 @@ function frList(){
  var x=pop('<h3>내 친구 '+F.length+'</h3>'+(F.length?'<div class="frl">'+F.join("")+'</div>':'<p class="frE">아직 친구가 없어요.</p>'+(R.length?'<h4 class="frH">추천 친구</h4><div class="frl">'+R.join("")+'</div>':''))+'<button class="btn ghost" id="flx" style="width:100%;margin-top:14px">닫기</button>');
  document.getElementById("flx").onclick=x;
  document.querySelectorAll("#dlg .frw").forEach(function(b){b.onclick=function(){x();friend(+b.dataset.i,1)}})}
+function profileGoalWheel(wh,sr,change){
+ var wc=wh.querySelector(".gwc"),drag=null;
+ function step(v,k){if(!k)return v;return k>0?(v%5?Math.ceil(v/5)*5:v+5)+(k-1)*5:(v%5?Math.floor(v/5)*5:v-5)+(k+1)*5}
+ function render(){var v=Math.round(+sr.value)||0;wc.querySelectorAll(".gw").forEach(function(e){var n=step(v,+e.dataset.o);e.textContent=n>=1&&n<=300?n:""})}
+ function input(){var n=Math.round(+sr.value);change(n>=1&&n<=300?n:null);render()}
+ function set(n){sr.value=Math.max(1,Math.min(300,n));input()}
+ wh.addEventListener("pointerdown",function(e){if(e.target===sr&&document.activeElement===sr)return;drag={y:e.clientY,v:+sr.value||10,id:e.pointerId,m:false}});
+ wh.addEventListener("pointermove",function(e){if(!drag)return;var dy=e.clientY-drag.y;if(!drag.m&&Math.abs(dy)>4){drag.m=true;wh.setPointerCapture(drag.id);wh.classList.add("drg")}if(!drag.m)return;e.preventDefault();var k=Math.round(-dy/30);set(step(drag.v,k));wc.style.transform="translateY("+(dy+k*30)+"px)"});
+ function end(){if(!drag)return;var moved=drag.m;drag=null;wc.style.transform="";wh.classList.remove("drg");if(moved){wh.dataset.dragged="1";setTimeout(function(){delete wh.dataset.dragged},0)}}
+ wh.addEventListener("pointerup",end);wh.addEventListener("pointercancel",end);
+ wh.addEventListener("click",function(e){if(wh.dataset.dragged){e.preventDefault();e.stopPropagation();return}if(e.target.classList.contains("gw")&&e.target.textContent)set(+e.target.textContent)},true);
+ wh.addEventListener("wheel",function(e){e.preventDefault();if(e.deltaY)set(step(+sr.value||10,e.deltaY>0?1:-1))},{passive:false});
+ sr.onkeydown=function(e){if(e.key==="ArrowUp"||e.key==="ArrowDown"){e.preventDefault();set(step(+sr.value||10,e.key==="ArrowUp"?1:-1))}};sr.oninput=input;sr.onchange=input;render();
+}
 function meEdit(){
  var v={n:ME,p:MEP,s:SHB.slice(),ag:AGE,go:GOAL,rv:RECV,pr:PRIV},o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-labelledby","dt");
  function x(){o.remove();d.remove()}
  function main(){
   d.innerHTML='<h3 id="dt">내 프로필</h3><div class="mep"><div class="av3" id="mav" style="'+(v.p?'background:var(--pri) center/cover no-repeat url('+v.p+')':'')+'">'+(v.p?'':esc(v.n||ME).charAt(0))+'</div><label class="fadd mphl" for="mfi" id="mph" role="button" tabindex="0">프로필 사진 바꾸기</label><input type="file" id="mfi" class="mfi2" accept="image/*,.heic,.heif,.jpg,.jpeg,.png,.gif,.webp"></div>'
    +'<label class="mel">닉네임<input id="mnm" maxlength="10" autocomplete="off"></label>'
-   +'<label class="mel mfe">나이'+ageFld("mag",v.ag)+'</label>'
-   +'<div class="mel mfe">하루 목표<div class="och" id="mgo">'+GO.map(function(g){return'<button data-v="'+g[0]+'" aria-pressed="'+(v.go===g[0])+'">'+g[0]+'쪽</button>'}).join("")+'</div><div class="gsl mgs"><span class="gin">직접 입력 <input type="number" id="mgr" inputmode="numeric" min="1" max="300" value="'+(v.go||"")+'" aria-label="하루 목표 쪽수"> 쪽</span></div></div>'
+   +'<div class="mel mfe">하루 목표<div class="gwh" id="mgwh"><span class="gwl">하루</span><span class="gwv"><span class="gwc"><i class="gw" data-o="-2"></i><i class="gw" data-o="-1"></i><input type="number" id="mgr" inputmode="numeric" min="1" max="300" value="'+(v.go||10)+'" aria-label="하루 목표 쪽수, 위아래로 끌어서 바꾸기"><i class="gw" data-o="1"></i><i class="gw" data-o="2"></i></span></span><span class="gwl">쪽</span></div><small class="gwt">숫자를 위아래로 밀어서 조절해 주세요.</small></div>'
    +'<div class="mel mrc"><div><b>프로필 공개 설정</b><small id="mpr-state" aria-live="polite">'+(v.pr?'프로필이 비공개예요.':'프로필이 공개예요.')+'</small></div><button type="button" class="mp-lock" id="mpr" aria-pressed="'+!!v.pr+'" aria-label="'+(v.pr?'프로필 공개로 바꾸기':'프로필 비공개로 바꾸기')+'">'+lk(v.pr?0:2)+'</button></div>'
    +'<div class="mel mrc"><div><b>추천 친구로 보이기</b><small>켜 두면 다른 독자에게 나를 추천 친구·추천 메이트로 보여줘요.</small></div><button class="swc" role="switch" id="mrv" aria-checked="'+!!v.rv+'" aria-label="추천 친구로 보이기"><i></i></button></div>'
    +'<p id="mer" style="color:var(--sub);font-size:13px;margin:8px 0 0;min-height:18px"></p><div class="dbt"><button class="btn ghost" id="mcx">취소</button><button class="btn" id="msv">저장</button></div>';
@@ -2637,9 +2670,7 @@ function meEdit(){
   document.getElementById("mrv").onclick=function(){v.rv=v.rv?0:1;this.setAttribute("aria-checked",!!v.rv)};
   var nm=document.getElementById("mnm"),fi=document.getElementById("mfi");nm.value=v.n;nm.oninput=function(){v.n=nm.value;if(!v.p)document.getElementById("mav").textContent=esc(v.n.trim()||ME).charAt(0)};
   document.getElementById("mph").onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();fi.click()}};
-  document.getElementById("mag")&&ageWire(document.getElementById("mag"),function(x){v.ag=x});
-  document.getElementById("mgo").onclick=function(e){var b=e.target.closest("button");if(!b)return;v.go=+b.dataset.v;this.querySelectorAll("button").forEach(function(c){c.setAttribute("aria-pressed",c===b)});document.getElementById("mgr").value=v.go};
-  document.getElementById("mgr").oninput=function(){var n=Math.round(+this.value);if(n>=1&&n<=300)v.go=n;document.querySelectorAll("#mgo button").forEach(function(c){c.setAttribute("aria-pressed",+c.dataset.v===v.go)})};
+  profileGoalWheel(document.getElementById("mgwh"),document.getElementById("mgr"),function(n){v.go=n;document.getElementById("msv").disabled=n===null});
   fi.onchange=function(){var f=fi.files&&fi.files[0],er=document.getElementById("mer");if(!f)return;er.textContent="";
    if(!/^image\//.test(f.type)&&!/\.(heic|heif|jpe?g|png|gif|webp|bmp)$/i.test(f.name)){er.textContent="이미지 파일만 올릴 수 있어요.";return}
    function set(u){v.p=u;var a=document.getElementById("mav");a.textContent="";a.style.background="var(--pri) center/cover no-repeat url("+u+")"}
@@ -3041,7 +3072,7 @@ function home(){
  +(function(){var d=psDay(),c=PCFG.DAILY_CAP,pc=Math.round(d.act*100/c);msSync();var nd=MS.filter(function(x){return x[3]}).length;
   var TPS=PO.filter(function(p){return p.v===0}).sort(function(a,b){return(b.l+b.c.length)-(a.l+a.c.length)}).slice(0,3),tp=TPS[0];
   return'<section class="blk hdu hdu1"><div class="box hrw hpx hpc" id="hpx" role="button" tabindex="0" aria-label="오늘의 포인트와 미션 보기"><div class="hsh"><b class="hst">오늘의 포인트</b><span class="hlk">미션 '+nd+'/'+MS.length+' 완료'+ic("next")+'</span></div><div class="hpr2"><div class="hpg3" role="progressbar" aria-label="오늘의 활동 포인트" aria-valuenow="'+d.act+'" aria-valuemin="0" aria-valuemax="'+c+'"><i style="width:'+pc+'%"></i></div><span class="hpn2"><b>'+d.act+'P</b> /'+c+'P</span></div></div></section><section class="blk hdu hdu1">'
-  +'<div class="box hcm"><div class="hsh"><b class="hst">커뮤니티 인기글</b><button class="hlk" id="hpo" data-id="0">커뮤니티'+ic("next")+'</button></div>'+(TPS.length?'<div class="hcg">'+TPS.slice(0,2).map(function(q){return'<button class="hcc" data-id="'+q.id+'"><span class="hct"><span class="tg2">'+TN[q.t]+'</span><span class="hcf">'+ic("heart")+q.l+ic("chat")+q.c.length+'</span></span><p>'+esc(q.x)+'</p></button>'}).join("")+'</div>':'<p class="hce">아직 올라온 글이 없어요.</p>')+'</div>'+'</section>'})()
+  +'<div class="box hcm"><div class="hsh"><b class="hst">커뮤니티 인기글</b><button class="hlk" id="hpo" data-id="0">커뮤니티'+ic("next")+'</button></div>'+(TPS.length?'<div class="hcg">'+TPS.slice(0,2).map(function(q){return'<button class="hcc" data-id="'+q.id+'"><span class="hct"><span class="tg2">'+TN[q.t]+'</span></span><p>'+esc(q.x)+'</p><span class="hcf">'+ic("heart")+q.l+ic("chat")+q.c.length+'</span></button>'}).join("")+'</div>':'<p class="hce">아직 올라온 글이 없어요.</p>')+'</div>'+'</section>'})()
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.querySelectorAll(".rck").forEach(function(b){b.onclick=function(){var kk=+b.dataset.k;bookDt(kk,home,function(){PICKED=1;DEF=kk;reader(DEF)})}});app.querySelectorAll(".hgo[data-k]").forEach(function(b){b.onclick=function(){if(HSM)return;reader(+b.dataset.k)}});
  var firstBook=document.getElementById("first-book");if(firstBook)firstBook.onclick=library;
@@ -3641,9 +3672,9 @@ document.addEventListener("mouseup",function(){if(!D)return;var d=D;D=null;if(!d
 (function(){var X='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
  function close(t){if(t.id==="dlg"){var o=document.getElementById("ov2");if(o&&o.onclick){o.click();return}if(o)o.remove();t.remove();return}
   var ov=document.getElementById("ov");if(ov&&ov.onclick){ov.click();return}t.classList.remove("on");if(ov)ov.classList.remove("on")}
- function hasClose(t){return [].some.call(t.querySelectorAll("button:not(.pxb)"),function(x){return x.textContent.trim()==="닫기"})}
+ function hasClose(t){return [].some.call(t.querySelectorAll("button:not(.pxb)"),function(x){return /^(닫기|취소)$/.test(x.textContent.trim())})}
  function add(){["dlg","sheet"].forEach(function(id){var t=document.getElementById(id);if(!t)return;
-  /* 아래에 '닫기' 버튼이 있는 팝업은 위쪽 X를 두지 않아요 */
+  /* 아래에 '닫기' 또는 '취소' 버튼이 있는 팝업은 위쪽 X를 두지 않아요 */
   var old=t.querySelector(":scope>.pxb");if(hasClose(t)){if(old)old.remove();return}
   if(t.dataset.nox||old)return;if(id==="sheet"&&!t.classList.contains("on"))return;
   var b=document.createElement("button");b.className="pxb";b.type="button";b.setAttribute("aria-label","닫기");b.innerHTML=X;b.onclick=function(e){e.stopPropagation();close(t)};t.insertBefore(b,t.firstChild)})}
