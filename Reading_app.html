@@ -3476,7 +3476,10 @@ document.addEventListener("mouseup",function(){if(!D)return;var d=D;D=null;if(!d
  document.addEventListener("click",function(e){if(!e.isTrusted||(e.clientX===0&&e.clientY===0))return;var ap=document.getElementById("app");if(!ap)return;
   if(ap.classList.contains("rd"))return;
   var r=ap.getBoundingClientRect(),c=getComputedStyle(ap).getPropertyValue("--pri").trim()||"#6A4F6A",d=SZ/2;
-  var w=document.createElement("i");w.className="ckfx";w.style.cssText="left:"+(e.clientX-r.left-d/2)+"px;top:"+(e.clientY-r.top-d/2)+"px;width:"+d+"px;height:"+d+"px;border:"+SW+"px solid "+c;ap.appendChild(w);
+  /* 화면 좌표를 앱 내부 좌표로 바꿔 축소된 화면에서도 누른 자리에 표시해요. */
+  var sx=r.width/ap.offsetWidth||1,sy=r.height/ap.offsetHeight||1;
+  var x=(e.clientX-r.left)/sx-ap.clientLeft+ap.scrollLeft,y=(e.clientY-r.top)/sy-ap.clientTop+ap.scrollTop;
+  var w=document.createElement("i");w.className="ckfx";w.style.cssText="left:"+(x-d/2)+"px;top:"+(y-d/2)+"px;width:"+d+"px;height:"+d+"px;border:"+SW+"px solid "+c;ap.appendChild(w);
   w.animate([{transform:"scale(.5)",borderWidth:SW+"px"},{transform:"scale(2)",borderWidth:"0px"}],{duration:DUR,easing:"cubic-bezier(.215,.61,.355,1)",fill:"forwards"});
   w.animate([{opacity:1},{opacity:1,offset:.8},{opacity:0}],{duration:DUR,easing:"linear",fill:"forwards"});
   setTimeout(function(){w.remove()},DUR+60)},true)})();
