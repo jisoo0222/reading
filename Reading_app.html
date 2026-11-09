@@ -2153,6 +2153,18 @@ body:has(.app.hso) #pawf{display:none!important}
 .auth-provider.kakao{background:#FEE500;color:#191919;border-color:#FEE500}
 .auth-provider.google{background:#fff;color:#1F1E1E;border-color:#C5C5C5}
 .auth button:focus-visible,.auth input:focus-visible{outline:3px solid var(--pri);outline-offset:3px}
+/* 가입 제목과 SNS 동의 창 */
+.signup-heading h2{flex:1;text-align:center}
+#dlg .sns-consent{word-break:keep-all}
+#dlg .sns-consent h3{padding-right:30px;font-size:20px}
+#dlg .sns-consent p{font-size:12px;margin:8px 0 12px}
+#dlg .sns-demo{padding:12px;background:var(--bg);border-radius:10px}
+.sns-consent details{border-top:1px solid var(--divider);padding:12px 0}
+.sns-consent summary{cursor:pointer;font-size:14px;font-weight:600;line-height:1.6}
+.sns-check{display:flex;align-items:center;gap:12px;min-height:48px;font-size:14px;cursor:pointer}
+#dlg .sns-check input{display:block;flex:none;width:20px;height:20px;margin:0;padding:0;accent-color:var(--pri)}
+#dlg .sns-consent .dbt{margin-top:16px}
+#dlg .sns-consent .btn{font-size:14px;padding:12px 8px}
 </style>
 </head>
 <body>
@@ -2191,7 +2203,7 @@ function bar(n){var s="";for(var i=0;i<Q.length;i++)s+='<i class="'+(i<n?"on":""
 function ask(){
  var q=Q[step];
  var o=q.o.map(function(x,i){return'<button class="opt" data-i="'+i+'" aria-pressed="'+(ans[step]===i)+'"><span>'+x+'</span><span class="mk"></span></button>'}).join("");
- app.innerHTML=ost(3)+bar(step+1)+'<p class="hint qhn">'+q.h+'</p><h1>'+q.t+'</h1><div class="opts">'+o+'</div><div class="foot">'+'<button class="btn ghost" id="bk">이전</button>'+'<button class="btn" id="nx">'+(step===Q.length-1?"프로필 만들기":"다음")+'</button></div>';
+ app.innerHTML=signupHeader()+ost(3)+bar(step+1)+'<p class="hint qhn">'+q.h+'</p><h1>'+q.t+'</h1><div class="opts">'+o+'</div><div class="foot">'+'<button class="btn ghost" id="bk">이전</button>'+'<button class="btn" id="nx">'+(step===Q.length-1?"프로필 만들기":"다음")+'</button></div>';
  var nx=document.getElementById("nx");nx.disabled=ans[step]===null;
  app.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){
   ans[step]=+b.dataset.i;
@@ -2200,7 +2212,7 @@ function ask(){
  document.getElementById("bk").onclick=function(){if(step){step--;ask()}else tiIntro()};
 }
 function load(){
- app.innerHTML=ost(3)+bar(Q.length)+'<div class="center" role="status"><div class="ring"></div><h1>독서 성향을 분석하고 있어요</h1><p class="hint">답변을 바탕으로 프로필을 만드는 중이에요.</p></div>';
+ app.innerHTML=signupHeader()+ost(3)+bar(Q.length)+'<div class="center" role="status"><div class="ring"></div><h1>독서 성향을 분석하고 있어요</h1><p class="hint">답변을 바탕으로 프로필을 만드는 중이에요.</p></div>';
  setTimeout(result,1600);
 }
 function calcType(){
@@ -2246,7 +2258,7 @@ function testRes(){
  document.getElementById("re").onclick=function(){testPg()}}
 function result(){
  var c=calcType(),key=c.key,t=c.t,names=c.names,rows=c.rows;RKEY=key;
- app.innerHTML=bar(Q.length)+'<h1>독서 성향을 알아봤어요</h1><div class="tcard" id="tcd">'+typeSVG(key,t,names)+'</div><div class="tbt tbc"><button class="tci" id="tsv">'+ic("dl")+'이미지 저장</button><button class="tci" id="tsh">'+ic("share")+'공유하기</button></div>'
+ app.innerHTML=signupHeader()+bar(Q.length)+'<h1>독서 성향을 알아봤어요</h1><div class="tcard" id="tcd">'+typeSVG(key,t,names)+'</div><div class="tbt tbc"><button class="tci" id="tsv">'+ic("dl")+'이미지 저장</button><button class="tci" id="tsh">'+ic("share")+'공유하기</button></div>'
  +'<div class="sec"><h3>성향 분석</h3>'+rows+'</div>'+recBox(key)
  +'<div class="foot rsf"><button class="btn ghost" id="re">다시 하기</button><button class="btn" id="go">홈으로 가기</button></div>';
  document.getElementById("go").onclick=home;
@@ -2254,10 +2266,11 @@ function result(){
  document.getElementById("re").onclick=function(){step=0;ans=[null,null,null,null];ask()};
 }
 var AGE=null,GOAL=null,AGES=["10대","20대","30대","40대","50대 이상"],GO=[[10,""],[30,""],[50,""]],RDY={d:"",p:{}};
+function signupHeader(back){return '<div class="sh2 signup-heading">'+(back?'<button class="ib" id="signup-back" aria-label="로그인으로 돌아가기">'+ic("back")+'</button>':'<span class="sp3"></span>')+'<h2>회원가입</h2><span class="sp3"></span></div>'}
 function ost(n){return'<ol class="ost" aria-label="가입 단계 '+n+'/3">'+["기본 정보","독서 목표","독서 성향"].map(function(t,i){return'<li class="'+(i+1<n?"dn":i+1===n?"on":"")+'"'+(i+1===n?' aria-current="step"':'')+'><b>'+(i+1)+'</b><span>'+t+'</span></li>'}).join("")+'</ol>'}
 function info(){
  app.className="app";
- app.innerHTML='<div class="sh2"><button class="ib" id="signup-back" aria-label="로그인으로 돌아가기">'+ic("back")+'</button><h2>회원가입</h2><span class="sp3"></span></div>'+ost(1)+'<h1>반가워요! 나를 알려 주세요</h1><p class="hint">프로필에 쓸 닉네임을 알려 주세요.</p>'
+ app.innerHTML=signupHeader(true)+ost(1)+'<h1>반가워요! 나를 알려 주세요</h1><p class="hint">프로필에 쓸 닉네임을 알려 주세요.</p>'
  +'<label class="fld">닉네임<input id="inm" maxlength="10" placeholder="10자 이내로 입력해 주세요" autocomplete="off"></label>'
  +'<div class="foot"><button class="btn" id="nx1">다음</button></div>';
  document.getElementById("signup-back").onclick=loginPage;
@@ -2271,7 +2284,7 @@ function goal(){
  var cu=GOAL!==null&&GO.every(function(g){return g[0]!==GOAL}),cv=cu?GOAL:20;
  var o=GO.map(function(g){return'<button class="opt" data-v="'+g[0]+'" aria-pressed="'+(!cu&&GOAL===g[0])+'"><span>하루 '+g[0]+'쪽<small>'+gTip(g[0])+'</small></span><span class="mk"></span></button>'}).join("")
   +'<div class="opt gcu'+(cu?" on":"")+'" role="button" tabindex="0" data-c="1" aria-pressed="'+cu+'"><span style="flex:1">직접 설정<span class="gsl"><span class="gwh" id="gwh"><span class="gwl">하루</span><span class="gwv"><span class="gwc" id="gwc"><i class="gw" data-o="-2"></i><i class="gw" data-o="-1"></i><input type="number" id="gsr" inputmode="numeric" min="1" max="300" value="'+(cu?cv:20)+'" aria-label="하루 목표 쪽수, 위아래로 끌어서 바꾸기"><i class="gw" data-o="1"></i><i class="gw" data-o="2"></i></span></span><span class="gwl">쪽</span></span><small class="gwt"><span>숫자를 위아래로 밀거나,</span><span>직접 눌러 입력해 주세요.</span></small></span></span><span class="mk"></span></div>';
- app.innerHTML=ost(2)+'<h1>하루에 얼마나 읽어 볼까요?</h1><p class="hint">하루에 읽을 페이지 수를 정해 주세요. 목표를 채우면 알려 드려요.</p>'
+ app.innerHTML=signupHeader()+ost(2)+'<h1>하루에 얼마나 읽어 볼까요?</h1><p class="hint">하루에 읽을 페이지 수를 정해 주세요. 목표를 채우면 알려 드려요.</p>'
  +'<div class="opts">'+o+'</div><div class="foot"><button class="btn ghost" id="bk1">이전</button><button class="btn" id="nx2">다음</button></div>';
  var nx=document.getElementById("nx2"),cb=app.querySelector(".gcu"),sr=document.getElementById("gsr");nx.disabled=GOAL===null;
  function pick(b){app.querySelectorAll(".opt").forEach(function(c){c.setAttribute("aria-pressed",c===b)});cb.classList.toggle("on",b===cb);nx.disabled=false}
@@ -2295,7 +2308,7 @@ function goal(){
  nx.onclick=tiIntro}
 function tiIntro(){
  app.className="app";
- app.innerHTML=ost(3)+'<div class="tin"><svg viewBox="0 0 200 160" width="168" height="134" aria-hidden="true"><circle cx="100" cy="82" r="70" fill="var(--card)"/><path d="M100 58c-14-7-32-7-44-2v54c12-5 30-5 44 2z" fill="var(--bg)" stroke="var(--pri)" stroke-width="3" stroke-linejoin="round"/><path d="M100 58c14-7 32-7 44-2v54c-12-5-30-5-44 2z" fill="var(--bg)" stroke="var(--pri)" stroke-width="3" stroke-linejoin="round"/><path d="M100 58v54" stroke="var(--pri)" stroke-width="3"/></svg>'
+ app.innerHTML=signupHeader()+ost(3)+'<div class="tin"><svg viewBox="0 0 200 160" width="168" height="134" aria-hidden="true"><circle cx="100" cy="82" r="70" fill="var(--card)"/><path d="M100 58c-14-7-32-7-44-2v54c12-5 30-5 44 2z" fill="var(--bg)" stroke="var(--pri)" stroke-width="3" stroke-linejoin="round"/><path d="M100 58c14-7 32-7 44-2v54c-12-5-30-5-44 2z" fill="var(--bg)" stroke="var(--pri)" stroke-width="3" stroke-linejoin="round"/><path d="M100 58v54" stroke="var(--pri)" stroke-width="3"/></svg>'
  +'<h1>독서TI 검사</h1><p class="hint tis"><span>4개의 질문으로 나의 독서 성향을 알아보고,</span><span>나에게 꼭 맞는 책과 독서 메이트를 추천받아 보세요!</span></p><button class="tsk" id="tsk">검사 건너뛰기</button></div>'
  +'<div class="foot"><button class="btn ghost" id="tib">이전</button><button class="btn" id="tig">시작하기</button></div>';
  document.getElementById("tib").onclick=goal;document.getElementById("tig").onclick=function(){step=0;ask()};
@@ -3481,18 +3494,45 @@ function splash(){app.className="app spl";
  app.innerHTML='<div class="spw" role="img" aria-label="똑독, 똑똑, 같이 읽을래?">'+logoSVG()+'<h1>똑독</h1><p class="dke">DDOKDOK</p><p class="dks">똑똑, 같이 읽을래?</p></div>';
  var t=setTimeout(go,2200);function go(){clearTimeout(t);app.onclick=null;onb()}app.onclick=go}
 /* 계정 인증은 서버 연동 전이에요. 입력 정보는 저장하거나 전송하지 않아요. */
+/* SNS 안내·동의 흐름의 시제품. 제공자 인증이나 법적 동의 기록으로 사용하지 않아요.
+   참고: https://developers.kakao.com/docs/ko/kakaologin/common
+   https://developers.google.com/identity/openid-connect/openid-connect */
+function snsConsent(provider){
+ var name=provider==="kakao"?"카카오":"구글",trigger=document.getElementById("auth-"+provider);
+ var detail=provider==="kakao"?"카카오가 표시하는 동의 화면에서 똑독에 제공할 정보를 확인해요. 닉네임·프로필 사진·이메일은 앱 설정과 사용자의 동의에 따라 제공돼요.":"구글이 표시하는 계정 선택·동의 화면에서 똑독에 제공할 정보를 확인해요. 요청한 권한에 따라 계정 식별 정보·이메일·기본 프로필이 포함될 수 있어요.";
+ var close=pop('<div class="sns-consent"><h3 id="sns-title">'+name+' 로그인 안내</h3><p class="sns-demo">동의 화면 체험이에요. 실제 SNS 계정에 연결하거나 개인정보를 가져오지 않아요.</p>'
+ +'<details><summary>계정 연결 전 확인해 주세요</summary><p>'+detail+'</p><p>SNS 비밀번호는 똑독에 입력하지 않아요. 실제 연결은 해당 서비스의 공식 화면에서 진행하고, 동의하지 않으면 취소할 수 있어요.</p></details>'
+ +'<details><summary>똑독 이용약관 보기 · 예시</summary><p>독서 기록과 감상 공유 기능을 체험할 수 있어요. 다른 사람의 개인정보나 저작물을 허락 없이 게시하지 않고, 서로의 생각을 존중해 주세요.</p><p>현재는 시제품 약관 예시예요. 정식 서비스에서는 운영자가 확정한 이용 조건과 권리·의무를 안내해요.</p></details>'
+ +'<label class="sns-check"><input id="sns-terms" type="checkbox"><span>[필수] 이용약관에 동의해요 · 예시</span></label>'
+ +'<details><summary>개인정보 안내 보기 · 예시</summary><p>이 체험에서는 SNS 정보와 동의 기록을 저장하거나 전송하지 않아요.</p><p>정식 연결 전에는 수집 항목·이용 목적·보유 기간·동의 거부 시 영향을 확정해 안내해야 해요. 제공자의 실제 동의 화면에서 허용한 정보만 받아야 해요.</p></details>'
+ +'<label class="sns-check"><input id="sns-privacy" type="checkbox"><span>[필수] 개인정보 안내를 확인했어요 · 예시</span></label>'
+ +'<div class="dbt"><button class="btn ghost" id="sns-cancel">취소</button><button class="btn" id="sns-continue" disabled>동의하고 체험하기</button></div></div>');
+ var dialog=document.getElementById("dlg"),terms=document.getElementById("sns-terms"),privacy=document.getElementById("sns-privacy"),next=document.getElementById("sns-continue");
+ dialog.setAttribute("aria-labelledby","sns-title");
+ function cancel(){close();if(trigger&&trigger.isConnected)trigger.focus()}
+ function update(){next.disabled=!(terms.checked&&privacy.checked)}
+ terms.onchange=privacy.onchange=update;
+ document.getElementById("sns-cancel").onclick=cancel;document.getElementById("ov2").onclick=cancel;
+ next.onclick=function(){update();if(next.disabled)return;close();home()};
+ dialog.onkeydown=function(e){if(e.key==="Escape"){e.preventDefault();cancel();return}if(e.key!=="Tab")return;var items=Array.from(dialog.querySelectorAll('button:not(:disabled),input,summary')).filter(function(el){return el.getClientRects().length});var first=items[0],last=items[items.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}};
+ document.getElementById("sns-cancel").focus();
+}
+
 function loginPage(){
  app.onclick=null;app.className="app auth";
  app.innerHTML='<header class="auth-brand">'+logoSVG()+'<h1>똑독</h1><p>똑똑, 같이 읽을래요?</p></header>'
- +'<form class="auth-form" id="login-form"><h2>로그인</h2><label class="auth-field" for="login-email">이메일<input id="login-email" name="email" type="email" autocomplete="username" placeholder="이메일을 입력해 주세요" required></label><label class="auth-field" for="login-password">비밀번호<input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="비밀번호를 입력해 주세요" required></label><button class="btn" type="submit">로그인</button></form>'
+ +'<form class="auth-form" id="login-form"><h2>로그인</h2><label class="auth-field" for="login-email">이메일<input id="login-email" name="email" type="email" autocomplete="username" placeholder="이메일을 입력해 주세요" required></label><label class="auth-field" for="login-password">비밀번호<input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="비밀번호를 입력해 주세요" required></label><button class="btn" id="login-submit" type="submit" disabled>로그인</button></form>'
  +'<div class="auth-join"><span>똑독이 처음이신가요?</span><button class="auth-link" id="auth-signup" type="button">회원가입</button></div>'
  +'<section class="auth-social" aria-labelledby="auth-social-title"><h2 id="auth-social-title">SNS 로그인</h2><div class="auth-providers"><button class="auth-provider kakao" id="auth-kakao" type="button" aria-label="카카오로 로그인" title="카카오로 로그인"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.5 3 2 6.5 2 10.8c0 2.8 1.9 5.2 4.7 6.6l-1 3.6c-.1.3.2.5.4.4l4.3-2.9 1.6.1c5.5 0 10-3.5 10-7.8S17.5 3 12 3z"/></svg></button>'
  +'<button class="auth-provider google" id="auth-google" type="button" aria-label="구글로 로그인" title="구글로 로그인"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M21.6 12.2c0-.7-.1-1.4-.2-2.1H12v4h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.8 3-4.3 3-7.4z"/><path fill="#34A853" d="M12 22c2.7 0 5-1 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.2H3.1v2.6A10 10 0 0 0 12 22z"/><path fill="#FBBC05" d="M6.4 13.9a6 6 0 0 1 0-3.8V7.5H3.1a10 10 0 0 0 0 9z"/><path fill="#EA4335" d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.8A9.6 9.6 0 0 0 12 2a10 10 0 0 0-8.9 5.5l3.3 2.6C7.2 7.7 9.4 5.9 12 5.9z"/></svg></button></div></section>';
  document.getElementById("auth-signup").onclick=info;
- function pending(name){pTip(name+"은 아직 이용할 수 없어요.")}
- document.getElementById("login-form").onsubmit=function(e){e.preventDefault();document.getElementById("login-password").value="";pending("이메일 로그인")};
- document.getElementById("auth-kakao").onclick=function(){pending("카카오 로그인")};
- document.getElementById("auth-google").onclick=function(){pending("구글 로그인")};
+ var form=document.getElementById("login-form"),email=document.getElementById("login-email"),password=document.getElementById("login-password"),submit=document.getElementById("login-submit");
+ function valid(){return email.validity.valid&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)&&password.value.trim().length>0}
+ function update(){submit.disabled=!valid()}
+ form.addEventListener("input",update);form.addEventListener("change",update);form.addEventListener("focusin",update);update();
+ form.onsubmit=function(e){e.preventDefault();update();if(submit.disabled)return;password.value="";email.value="";home()};
+ document.getElementById("auth-kakao").onclick=function(){snsConsent("kakao")};
+ document.getElementById("auth-google").onclick=function(){snsConsent("google")};
 }
 
 (function(){var D=null;
