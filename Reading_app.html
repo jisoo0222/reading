@@ -2417,6 +2417,39 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.shp .gd.g3 .cd2>b{font-size:16px!important;font-weight:600;line-height:20px;text-align:center;min-height:20px}
 #app.shp .gd.g3 .cd2>span{font-size:12px!important;line-height:18px;color:var(--sub);text-align:center}
 
+
+/* 마이페이지 1262:2122: 아카이빙 이동 구성은 사용자 답변 후 변경 */
+#app.pf,#app.pf .sc,#app.pf .pfb{background:var(--card)!important}
+#app.pf .sc{transform:none;transition:none}
+#app.pf .pnm h2{font-size:20px!important;font-weight:600;line-height:25px}
+#app.pf .pnm small{font-size:12px!important;font-weight:600;color:var(--tx3)!important}
+#app.pf .pbt{gap:16px;min-height:60px}
+#app.pf .av3{width:60px!important;height:60px!important;flex:none}
+#app.pf .pme.pmb{width:30px;height:30px;border:1px solid var(--bd);background:var(--card);border-radius:50%}
+#app.pf .pme.pmb>.ic{width:16px!important;height:16px!important;color:var(--tx3)}
+#app.pf .ptc2{height:87px;min-height:87px;margin-top:20px!important;padding:13px 20px!important;background:var(--bg)!important;border:.5px solid #444141!important;border-radius:10px!important}
+#app.pf .ptl small{font-size:12px!important;font-weight:600;color:var(--tx3)}
+#app.pf .ptr{margin-top:6px;gap:13px}
+#app.pf .ptk{height:30px;min-width:59px;border-radius:10px;font-size:12px!important;background:var(--pri);color:var(--onpri)}
+#app.pf .ptr>b{font-size:14px!important;font-weight:600;line-height:18px}
+#app.pf .ptc2>.ic{width:20px!important;height:20px!important}
+#app.pf .fs{border-top:1px solid var(--bd)!important;margin-top:24px!important;padding-top:24px!important}
+#app.pf .fsh h3{font-size:16px!important;font-weight:600}
+#app.pf .pfl{margin-top:18px!important;gap:29px!important}
+#app.pf .pfc{width:50px;min-width:50px;flex:none;gap:6px}
+#app.pf .pfc>span{width:50px;height:50px}
+#app.pf .pfc>b{font-size:14px!important;font-weight:500}
+#app.pf .pfc>small{display:none}
+#app.pf #rbl{gap:14px!important;margin-top:24px!important}
+#app.pf #rbl .rbk{min-height:50px!important;gap:6px!important}
+#app.pf #rbl .rbk>i{width:35px!important;height:50px!important;flex:none}
+#app.pf #rbl .rbt b{font-size:14px!important;font-weight:600!important;line-height:20px!important}
+#app.pf #rbl .rbt small{font-size:12px!important;line-height:18px;color:var(--tx3)!important;margin-top:3px!important}
+#app.pf #rbl .rbs{font-size:12px!important;height:27px!important;padding:0 10px!important;max-width:140px;white-space:nowrap}
+#app.pf #rbl .rbs.dn{background:var(--pri)!important;color:var(--onpri)!important}
+#app.pf .pset2{font-size:11px!important;color:var(--tx3)!important}
+#app.pf .pset2>.ic{width:24px!important;height:24px!important}
+
 </style>
 </head>
 <body>
@@ -2787,8 +2820,8 @@ function profile(){
  app.innerHTML='<div class="pfb"><section class="box pbx2"><div class="pbt"><div class="av3" style="'+avS()+'">'+(MEP?'':esc(ME).charAt(0))+'</div><div class="pnm"><h2>'+esc(ME)+'</h2><small>'+(ageOk(AGE)?ageTxt(AGE)+' · ':'')+'하루 '+(GOAL||10)+'쪽 목표</small></div><button class="pme pmb" id="pme" aria-label="프로필 편집">'+ic("pen")+'</button></div>'
  +(function(){var k=RKEY||(ans.indexOf(null)<0?calcType().key:""),t=k&&T[k];return'<button class="ptc2" id="rp"><span class="ptl"><small>AI 독서 성향</small><span class="ptr">'+(t?'<em class="ptk">'+k+'</em><b>'+t[0]+'</b>':'<b>나의 독서 유형 알아보기</b>')+'</span></span>'+ic("next")+'</button>'})()
  +'</section>'
- +'<section class="fs"><div class="fsh"><h3>내 친구 '+fc+'</h3><button class="pme" id="pfr">전체 보기'+ic("next")+'</button></div><div class="box pfl">'+(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):'<p class="pfe">아직 친구가 없어요.</p><button class="pfc pfa" id="pfa"><span>'+ic("plus")+'</span><b>친구 찾기</b></button>')+'</div></section>'
- +(function(){var L=readList();return'<section class="fs"><div class="fsh"><h3>읽은 책 '+L.length+'권</h3><button class="pme" id="rbm">전체 보기'+ic("next")+'</button></div><div class="rbl" id="rbl">'+L.map(function(b,i){return'<div class="rbk'+(i>4?" xtra":"")+'"><i data-bt="'+esc(b.t)+'" style="background:'+b.c+'"></i><span class="rbt"><b>'+esc(b.t)+'</b><small>'+esc(b.a)+'</small></span><em class="rbs'+(b.done?" dn":"")+'">'+b.s+'</em></div>'}).join("")+(L.length?'':'<p class="pfe">아직 읽은 책이 없어요.</p>')+'</div>'+'</section>'})()
+ +'<section class="fs"><div class="fsh"><h3>독서 메이트 '+fc+'</h3><button class="pme" id="pfr">전체 보기'+ic("next")+'</button></div><div class="box pfl">'+(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):'<p class="pfe">아직 친구가 없어요.</p><button class="pfc pfa" id="pfa"><span>'+ic("plus")+'</span><b>친구 찾기</b></button>')+'</div></section>'
+ +(function(){var L=readList();return'<section class="fs"><div class="fsh"><h3>읽은 책 '+L.length+'권</h3><button class="pme" id="rbm">전체 보기'+ic("next")+'</button></div><div class="rbl" id="rbl">'+L.map(function(b,i){return'<div class="rbk'+(i>2?" xtra":"")+'"><i data-bt="'+esc(b.t)+'" style="background:'+b.c+'"></i><span class="rbt"><b>'+esc(b.t)+'</b><small>'+esc(b.a)+'</small></span><em class="rbs'+(b.done?" dn":"")+'">'+b.s+'</em></div>'}).join("")+(L.length?'':'<p class="pfe">아직 읽은 책이 없어요.</p>')+'</div>'+'</section>'})()
  +(function(){var ids=LB.map(function(_,k){return k}).filter(function(k){return HB[k]});return'<section class="fs"><div class="fsh"><h3>찜한 책 '+ids.length+'권</h3><button class="pme" id="plm">전체 보기'+ic("next")+'</button></div><div class="rbl">'+(ids.length?ids.slice(0,5).map(function(k){var b=LB[k];return'<button class="rbk plbook" data-k="'+k+'"><i data-bt="'+esc(b[0])+'" style="background:'+b[2]+'"></i><span class="rbt"><b>'+esc(b[0])+'</b><small>'+esc(b[1])+'</small></span>'+ic("next")+'</button>'}).join(""):'<p class="pfe">찜한 책이 없어요. 책 표지의 하트를 누르면 여기에 모여요.</p>')+'</div></section>'})()
  +(function(){var MP2=PO.filter(function(p){return p.mine});return'<section class="fs"><div class="fsh"><h3>내 글 '+MP2.length+'개</h3><button class="pme" id="mym">전체 보기'+ic("next")+'</button></div><div class="box myp">'+(MP2.length?MP2.slice(0,2).map(function(p){var bk=p.b!==undefined?LB[p.b]:p.bt;return'<button class="pst fpo" data-pid="'+p.id+'"><span class="fpt"><em>'+TN[p.t]+'</em><small>'+p.tm+'</small></span><span class="fpx">'+esc(p.x)+'</span>'+(bk?'<span class="fpb">'+ic("book")+esc(bk[0])+'</span>':'')+'<span class="fpa">'+ic("heart")+(p.l+(LKD[p.id]?1:0))+ic("chat")+p.c.length+'</span></button>'}).join(""):'<p class="pfe">아직 쓴 글이 없어요. 커뮤니티에 첫 글을 남겨 보세요.</p>')+'</div></section>'})()
  +'<button class="pset2" id="pset">'+ic("cog")+'<span>설정</span>'+ic("next")+'</button>'
