@@ -2231,11 +2231,54 @@ body:has(.app.hso) #pawf{display:none!important}
 .gwh #mgr{width:76px;height:46px;margin:2px 0;border:0;background:transparent;font:inherit;font-size:22px;font-weight:700;color:var(--pri);text-align:center;padding:0;cursor:ns-resize;-moz-appearance:textfield}
 .gwh #mgr:focus{outline:none;cursor:text;background:var(--card);border-radius:8px}
 .gwh #mgr::-webkit-inner-spin-button,.gwh #mgr::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+
+/* 디자인 시스템 v3 · Figma 1262:1852 */
+:root{--pri:#3E9370;--strong:#296A4F;--bd-card:#3E9370;--bd:#B1AFAE;--tx3:#898585;--sheet:#E3E3E3;--shelf-bar:#4B4B4B;--h-header:60px;--r-home-card:24px}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--pri:#A8E5B7;--strong:#A8E5B7;--bd-card:#A8E5B7;--bd:#898585;--sheet:#1F1E1E;--shelf-bar:#898585}}
+:root[data-theme="dark"],.app.dk{--pri:#A8E5B7;--strong:#A8E5B7;--bd-card:#A8E5B7;--bd:#898585;--sheet:#1F1E1E;--shelf-bar:#898585}
+#app.hm{background:var(--card)}
+#app.hm .sc.hm{background:var(--card)!important;pointer-events:auto;transform:none;transition:none;padding-top:0!important;padding-bottom:90px!important}
+#app.hm .sc.hm>.hd.hgt.hg3{height:216px!important;min-height:216px!important;background:var(--sheet)!important;pointer-events:auto;overflow:hidden}
+#app.hm .sc.hm>.hd.hgt.hg3::after{display:none}
+#app .fixed-shelf{position:absolute;left:20px;right:20px;top:62px;height:157.57px}
+#app .fixed-shelf .liked-spines{position:absolute;left:28px;right:29px;bottom:11.76px;display:flex;justify-content:flex-start;gap:7px;align-items:flex-end}
+#app .liked-spine{flex:0 0 33px;width:33px;height:var(--spine-h);padding:8px 5px;border:0;border-radius:5px 5px 0 0;background:var(--spine-c);color:#203726;cursor:pointer;display:flex;justify-content:center;overflow:hidden}
+#app .liked-spine span{writing-mode:vertical-rl;text-orientation:upright;font-size:10px;line-height:1.1;overflow:hidden;max-height:100%}
+#app .fixed-shelf .fixed-bar{position:absolute;left:0;right:0;top:140.72px;height:16.85px;background:var(--shelf-bar)}
+#app .fixed-bell{position:absolute;right:20px;top:15px;width:51px;height:51px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--card);cursor:pointer}
+#app .fixed-bell img{width:25px;height:25px}.fixed-bell .nbd{position:absolute;top:5px;right:6px}
+#app.hm .sc.hm>.hero,#app.hm .sc.hm>.rcwrap{margin:21px -4px 0!important;min-height:206px!important;height:206px!important;flex:none}
+#app.hm .sc.hm .hero{padding:22px 20px!important;background:var(--card)!important;border:.5px solid var(--bd)!important;border-radius:var(--r-home-card)!important;box-shadow:0 0 4px #0004!important;min-height:206px!important;height:206px!important}
+#app.hm .sc.hm .htp{height:159px;align-items:stretch;gap:13px}
+#app.hm .sc.hm .hcv{width:108px!important;height:159px!important;flex:none}
+#app.hm .sc.hm .hif{margin:0;padding:3px 0 0;border:0}
+#app.hm .sc.hm .hif h2{font-size:24px!important;margin:6px 0 3px;line-height:1.25!important}
+#app.hm .sc.hm .hif>p:not(.hpt){font-size:12px!important;color:var(--bd)!important}
+#app.hm .sc.hm .hpg{height:7px;margin-top:auto;flex:none}
+#app.hm .sc.hm .hpt{margin:3px 0 0;font-size:11px!important;line-height:16px}
+#app.hm .sc.hm .hpt span,#app.hm .sc.hm .hpt b{font-size:11px!important}
+#app.hm .sc.hm .hgo{height:33px!important;min-height:33px!important;margin-top:7px!important;font-size:12px!important;flex:none;border-radius:12px!important}
+#app.hm .sc.hm .hgo>.ic{display:none}
+#app.hm .sc.hm .rcscroll{height:206px}.rcwrap .rcdots{position:absolute;bottom:3px;left:0;right:0}
+#app.hm .sc.hm .hero.hrc,#app.hm .sc.hm .hero.hempty{display:flex;flex-direction:column;justify-content:center}
+#app.hm .sc.hm>.blk{margin:16px 0 0!important;padding:0!important;border:0}
+#app.hm .sc.hm>.blk+.blk{margin:24px 0 0!important;padding-top:20px!important;border-top:1px solid var(--bd)!important}
+#app.hm .sc.hm .blk>.box{padding:0!important}
+#app.hm .sc.hm .hsh{margin-bottom:10px}
+#app.hm .sc.hm .wkc{color:var(--strong)!important}
+#app.hm .sc.hm .hlk{color:var(--sub)!important}
+#app.hm .sc.hm .hcc{height:119px;min-height:119px;padding:10px 8px!important}
+#app.hm .sc.hm .hcc p{font-size:13px!important;line-height:18px!important;-webkit-line-clamp:3!important}
+#app.hm .sc.hm .hcc .tg2{font-size:10px!important;height:20px;padding:0 7px!important}
+#app.hm .sc.hm .hcf{font-size:10px}
+#app nav.tab.nvb{height:75px!important;min-height:75px!important;padding-top:13px!important;padding-bottom:10px!important}
+
 </style>
 </head>
 <body>
 <main class="app" id="app"></main>
 <script>
+var FIGMA_ASSETS={"home_imgRiNotification2Line":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjI1IiBoZWlnaHQ9IjI1IiB2aWV3Qm94PSIwIDAgMjUgMjUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGlkPSJyaTpub3RpZmljYXRpb24tMi1saW5lIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTIyLjkxNjcgMjAuODMzM0gyLjA4MzMzVjE4Ljc1SDMuMTI1VjExLjQ5MDZDMy4xMjUgNi4yOTQ3OSA3LjMyMjkyIDIuMDgzMzMgMTIuNSAyLjA4MzMzQzE3LjY3NzEgMi4wODMzMyAyMS44NzUgNi4yOTQ3OSAyMS44NzUgMTEuNDkwNlYxOC43NUgyMi45MTY3VjIwLjgzMzNaTTUuMjA4MzMgMTguNzVIMTkuNzkxN1YxMS40OTA2QzE5Ljc5MTcgNy40NDU4MyAxNi41MjcxIDQuMTY2NjcgMTIuNSA0LjE2NjY3QzguNDcyOTIgNC4xNjY2NyA1LjIwODMzIDcuNDQ1ODMgNS4yMDgzMyAxMS40OTA2VjE4Ljc1Wk05Ljg5NTgzIDIxLjg3NUgxNS4xMDQyQzE1LjEwNDIgMjIuNTY1NyAxNC44Mjk4IDIzLjIyOCAxNC4zNDE0IDIzLjcxNjRDMTMuODUzIDI0LjIwNDggMTMuMTkwNyAyNC40NzkyIDEyLjUgMjQuNDc5MkMxMS44MDkzIDI0LjQ3OTIgMTEuMTQ3IDI0LjIwNDggMTAuNjU4NiAyMy43MTY0QzEwLjE3MDIgMjMuMjI4IDkuODk1ODMgMjIuNTY1NyA5Ljg5NTgzIDIxLjg3NVoiIGZpbGw9IiM0NDQxNDEiLz4KPC9nPgo8L3N2Zz4K"};
 var AX=[["완독형","선택형"],["분석형","공감형"],["깊이형","넓이형"],["정보형","재미형"]];
 var Q=[
 {a:0,t:"읽던 책이 재미없어지면 어떻게 하나요?",h:"나와 가장 가까운 행동을 골라 주세요.",o:["시작한 책은 웬만하면 끝까지 읽어요.","잠시 쉬었다가 다시 읽을 마음이 들면 이어서 읽어요.","흥미가 떨어진 이유를 생각해보고 조금 더 읽을지 결정해요.","지금 끌리지 않는다면 과감하게 다른 책으로 넘어가요."]},
@@ -3023,27 +3066,7 @@ function calendar(y,m,sd){
 var WK=[14,9,0,18,12,7,11],RLOG={};function hm(){var d=new Date(),z=function(n){return(n<10?"0":"")+n};return z(d.getHours())+":"+z(d.getMinutes())}
 var OPENP=0;
 /* 홈 한 화면 맞춤: 내용이 아래 탭바 위에 다 들어오게 하고, 맨 위 여백과 탭바 위 여백을 같게. 남는 공간은 섹션 사이에 고르게 나눠요 */
-function hFit(){var sc=document.querySelector(".sc.hm"),tb=app.querySelector(".tab");if(!sc||!tb||!app.classList.contains("hm"))return;
- /* 위쪽 프로필·알림 줄은 제자리에 두고, 아래 카드들 사이 간격은 같게, 남는 공간은 카드 높이를 늘려 채워요 */
- var A=[].slice.call(sc.children).filter(function(c){return c.offsetParent!==null&&getComputedStyle(c).position!=="absolute"&&getComputedStyle(c).position!=="fixed"});if(A.length<2)return;
- var H=A[0],K=A.slice(1);
- app.classList.remove("hf1","hf2","hf3");A.forEach(function(c){c.style.zoom=""});sc.style.paddingTop="";sc.style.paddingBottom="";
- sc.querySelectorAll("[data-hfp]").forEach(function(e){e.style.paddingTop="";e.style.paddingBottom="";e.removeAttribute("data-hfp")});sc.querySelectorAll(".htk,.wkx .wkd em").forEach(function(e){e.style.height=""});
- K.forEach(function(c){c.style.marginTop="0px"});sc.scrollTop=0;var G=app.querySelector(".hg2")?0:app.querySelector(".hd.hgt")?11:14;
- function lim(){var hi=tb.querySelector("button:nth-child(3) .ic");return Math.min(tb.getBoundingClientRect().top,hi?hi.getBoundingClientRect().top:1e9)}
- function meas(){var t=H.getBoundingClientRect().bottom,h=K[K.length-1].getBoundingClientRect().bottom-K[0].getBoundingClientRect().top;return{av:lim()-t,h:h+G*(K.length+1)*(parseFloat(getComputedStyle(app).zoom)||1)}}
- var HG2=!!sc.querySelector(".hg2"),m=meas();if(!HG2){if(m.h>m.av){app.classList.add("hf1");m=meas()}if(m.h>m.av){app.classList.add("hf2");m=meas()}if(m.h>m.av){app.classList.add("hf3");m=meas()}}
- K.forEach(function(c,i){c.style.marginTop=G+"px"});
- /* 그래도 넘치면 홈 내용 전체를 같은 비율로 줄여서 아래 탭을 침범하지 않게 */
- function mz(z){var t=H.getBoundingClientRect().bottom;return{av:lim()-t,h:K[K.length-1].getBoundingClientRect().bottom-t+G*z*(parseFloat(getComputedStyle(app).zoom)||1)}}
- if(m.h>m.av){var m2=mz(1);if(m2.h>m2.av){var z=1;for(var t=0;t<5&&m2.h>m2.av;t++){z=Math.max(.6,z*m2.av/m2.h-.004);A.forEach(function(c){c.style.zoom=z});m2=mz(z)}}m={av:m2.av,h:m2.h}}
- if(m.h>m.av){doorH();return}/* 아주 작은 화면이면 스크롤 */
- var AZ=parseFloat(getComputedStyle(app).zoom)||1;var rem=(m.av-m.h)/AZ;
- /* 남는 공간: 커뮤니티 인기글 줄 수 → 이번 주 기록 막대 → 나머지는 지금 읽는 책 카드 */
- var tk=sc.querySelector(".htk"),tw=sc.querySelector(".htw");if(tk){tk.style.height="";var RH=26,n=tw.children.length,rows=Math.max(1,Math.min(n,1+Math.floor(rem*0.5/RH)));tk.style.height=rows*RH+"px";tk.dataset.rows=rows;rem-=(rows-1)*RH;var dd=sc.querySelector(".htd");if(dd)dd.style.display=rows>=n?"none":""}
- var ems=sc.querySelectorAll(".wkx .wkd em");if(ems.length){ems.forEach(function(e){e.style.height=""});var b0=ems[0].getBoundingClientRect().height,x=Math.min(rem*0.4,22);ems.forEach(function(e){e.style.height=(b0+x)+"px"});rem-=x}
- if(rem>0&&!sc.querySelector(".hg2")){var T=[].slice.call(sc.querySelectorAll(".hero"));T.forEach(function(e){var cs=getComputedStyle(e);e.setAttribute("data-hfp","1");e.style.setProperty("padding-top",(parseFloat(cs.paddingTop)+rem/2)+"px","important");e.style.setProperty("padding-bottom",(parseFloat(cs.paddingBottom)+rem/2)+"px","important")})}
- sc.style.paddingBottom=(sc.clientHeight-(lim()-sc.getBoundingClientRect().top)/(parseFloat(getComputedStyle(app).zoom)||1))+"px";doorH()}
+function hFit(){return}
 function doorH(){var g=document.querySelector(".hd.hgt .hga"),tb=app.querySelector(".tab");if(!g||!tb)return;var z=(parseFloat(g.closest(".hd").style.zoom)||1)*(parseFloat(getComputedStyle(app).zoom)||1);g.style.height=Math.max(150,(tb.getBoundingClientRect().top-g.getBoundingClientRect().top)/z+30)+"px"}
 window.addEventListener("resize",function(){if(app.classList.contains("hm"))hFit()});
 
@@ -3063,7 +3086,7 @@ function home(){
   :(function(){var L=RLs().filter(function(k){return bprog(k).c<100}).slice(0,3);if(!L.length)L=[RLs()[0]];var h=L.map(function(k,i){var B=LB[k],q=bprog(k);return'<section class="hero"'+(i?'':' id="rc"')+'><div class="htp"><div class="hcv" data-k="'+k+'" style="background:'+B[2]+'"><b>'+B[0]+'</b>'+(function(){var L=mpFor(k);return L.length?'<span class="hmt" aria-label="같이 읽는 메이트 '+L.map(function(m){return m[0]}).join(", ")+'">'+L.slice(0,3).map(function(m){return'<i style="background:'+m[2]+'">'+m[0].charAt(0)+'</i>'}).join("")+'</span>':''})()+'</div><div class="hif"><small>'+(i?"최근에 읽던 책":"지금 읽는 책")+'</small><h2>'+B[0]+'</h2><p>'+B[1]+'</p><div class="hpg" role="progressbar" aria-label="진행률" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div><p class="hpt"><span>'+q.p+'/'+q.t+'쪽</span><b>'+q.c+'%</b></p><button class="hgo" data-k="'+k+'"><span>이어읽기</span>'+ic("next")+'</button></div></div>'
   +'<div class="hgl"><span>오늘 목표</span><div class="hgm"><i style="width:'+Math.min(100,Math.round(tdp*100/G))+'%"></i></div><b>'+tdp+' / '+G+'쪽</b></div></section>'}).join("");
   return L.length>1?'<div class="rcwrap"><div class="rcscroll" id="rcscroll" aria-label="최근에 읽던 책, 옆으로 넘겨 보기">'+h+'</div><div class="rcdots" id="hdots">'+L.map(function(_,i){return'<button aria-label="'+(i+1)+'번째 책 보기" aria-current="'+(i===0)+'"></button>'}).join("")+'</div></div>':h})();
- app.innerHTML='<header class="hd hgt hg2 hg3"><h1 class="hnm sr">'+(ME?esc(ME)+'님의 서재':'내 서재')+'</h1><button class="hhd" id="hhd" aria-label="내 책장 펼쳐 보기"></button></header>'
+ app.innerHTML='<header class="hd hgt hg2 hg3"><h1 class="sr">찜한 책장</h1></header>'
  +hero
  +'<section class="blk"><div class="box wkx" id="hdt" role="button" tabindex="0" aria-label="이번 주 기록, 독서 달력 보기"><div class="hsh"><span class="wkt"><b>'+rd+'일</b> 읽었어요</span><span class="hlk">달력보기'+ic("next")+'</span></div><div class="wkr2">'+bars+'</div></div></section>'
  +(function(){var d=psDay(),c=PCFG.DAILY_CAP,pc=Math.round(d.act*100/c);msSync();var nd=MS.filter(function(x){return x[3]}).length;
@@ -3891,47 +3914,14 @@ function shAdd(after){var A=RDB.map(function(_,k){return k}).filter(function(k){
  var x=pop('<h3>책장에 책 꽂기</h3><div class="sah"><p class="sm sad">책장에는 완독한 책만 꽂을 수 있어요.</p><button class="rbf" id="rbf" aria-pressed="'+!!RBR+'" aria-label="'+(RBR?'처음 읽은 책부터 보는 중, 누르면 최근 읽은 순':'최근 읽은 책부터 보는 중, 누르면 처음 읽은 순')+'">'+ic("sort")+(RBR?'처음 읽은 순':'최근 읽은 순')+'</button></div><div class="sel">'+(A.length?A.map(function(k){var b=RDB[k];return'<button class="ser sea" data-k="'+k+'"><i data-bt="'+esc(b[0])+'" style="background:'+BC[k%3]+'"></i><span class="sen"><b>'+b[0]+'</b><small>'+b[1]+'</small><em class="sed">완독 '+b[3]+'</em></span>'+ic("plus")+'</button>'}).join(""):'<p class="pfe" style="padding:8px 0">꽂을 수 있는 책을 모두 꽂았어요.</p>')+'</div><button class="btn ghost" id="sax" style="width:100%;margin-top:12px">닫기</button>');
  document.getElementById("sax").onclick=x;document.getElementById("rbf").onclick=function(){RBR=!RBR;x();shAdd(after)};
  document.querySelectorAll("#dlg .sea").forEach(function(b){b.onclick=function(){var k=+b.dataset.k,q=shAddRow();if(q<0){x();return}SHR[q].push(k);SHB=[].concat.apply([],SHR);x();after()}})}
-/* 홈 화면: 마이페이지처럼 책장은 시트 뒤에 깔려 있고, 시트(.sc)를 아래로 내리면 3단 책장이 드러나요 */
-var SHG={y:null,t:null,g0:0};
-function shGs(y,t){var sc=document.querySelector(".sc.hm");SHG.y=y;SHG.t=t;SHG.g0=sc?sc.scrollTop:0}
-function shGe(y){if(SHG.y===null)return;if(window.SDRAG){SHG.y=null;return}var d=y-SHG.y,gt=SHG.t,open=app.classList.contains("hso");SHG.y=null;
- if(!open&&d>40&&SHG.g0<=0)shOpen();else if(open&&d<-40)shClose();else if(open&&Math.abs(d)<8&&gt&&gt.closest&&gt.closest(".sc")&&!gt.closest("#hhd"))shClose();else if(!open&&Math.abs(d)<8&&gt&&gt.closest&&gt.closest("#hsv")&&!gt.closest("button"))shOpen()}
-function shHome(){if(!app.classList.contains("hm"))return;var o=document.getElementById("hsv");if(o)o.remove();o=document.createElement("div");o.id="hsv";o.setAttribute("aria-label","내 책장");
- var t=app.querySelector("nav.tab");o.style.bottom=t?(app.clientHeight-t.offsetTop)+"px":"0";app.insertBefore(o,app.firstChild);app.classList.remove("hso");shRender()}
-function shOpen(){if(app.classList.contains("hso"))return;var sc=document.querySelector(".sc.hm"),o=document.getElementById("hsv");if(!sc||!o)return;
- sc.scrollTop=0;var D=o.offsetHeight-35-240;app.style.setProperty("--hsy",D+"px");app.classList.add("hso");sc.setAttribute("aria-hidden","true");document.getElementById("hhd").setAttribute("aria-label","내 책장 접기")}
-function shClose(){if(!app.classList.contains("hso"))return;app.classList.remove("hso");var sc=document.querySelector(".sc.hm");if(sc)sc.removeAttribute("aria-hidden");var h=document.getElementById("hhd");if(h)h.setAttribute("aria-label","내 책장 펼쳐 보기")}
-function shRender(){var o=document.getElementById("hsv");if(!o)return;shInit();var u=unread();
- o.innerHTML='<div class="htb"><span class="hav" aria-hidden="true">'+PAW+'</span><b class="hnm">'+(ME?esc(ME)+'님':'')+'</b><button class="ib nbl'+(u?' nun':'')+'" id="hbl" aria-label="알림'+(u?' (읽지 않은 알림 '+u+'개)':'')+'">'+ic("bell")+'</button></div>'
- +[0,1,2].map(function(r){return'<div class="hsr" data-r="'+r+'" style="top:'+[77,266,471][r]+'px"><div class="hsb2">'+shSpines(r,1)+'</div><i class="hsl"></i></div>'}).join("")
- +'<img class="hdog" src="'+DOGS+'" alt="" aria-hidden="true">';
- shFit(o);document.getElementById("hbl").onclick=function(){inbox("all")};
- var a=o.querySelector(".hsa");if(a)a.onclick=function(){shAdd(shRender)};
- var sc=document.querySelector(".sc.hm");
- /* 손잡이: 펼치기/접기 */
- document.getElementById("hhd").onclick=function(e){e.stopPropagation();app.classList.contains("hso")?shClose():shOpen()};
- /* 끌기: 닫힌 상태에서 위쪽 책장을 아래로 끌면 펼침, 펼친 상태에서 위로 밀면 접힘, 펼친 상태에서 시트를 누르면 접힘 (마이페이지와 같은 방식) */
- [sc,o].forEach(function(el){if(!el||el._shg)return;el._shg=1;el.addEventListener("touchstart",function(e){shGs(e.touches[0].clientY,e.target)},{passive:true});el.addEventListener("touchend",function(e){shGe(e.changedTouches[0].clientY)});
-  el.addEventListener("pointerdown",function(e){if(e.pointerType==="mouse")shGs(e.clientY,e.target)});el.addEventListener("pointerup",function(e){if(e.pointerType==="mouse")shGe(e.clientY)})});
- if(sc&&!sc._shc){sc._shc=1;sc.addEventListener("click",function(e){if(app.classList.contains("hso")&&!e.target.closest("#hhd")){e.preventDefault();e.stopPropagation()}},true)}
- /* 꾹 눌러 옮기기 · 휴지통에 놓아 빼기 (펼친 상태에서만) */
- var stb=document.getElementById("stb");if(!stb){stb=document.createElement("div");stb.id="stb";stb.setAttribute("aria-hidden","true");stb.innerHTML=ic("trash");app.appendChild(stb)}
- function tbShow(){var a=app.getBoundingClientRect(),z=parseFloat(getComputedStyle(app).zoom)||1,y=o.offsetHeight-35;stb.style.top=(y-stb.offsetHeight-14)+"px";stb.classList.add("on")}
- function tbHide(){stb.classList.remove("on","hot")}
- function onTb(e){if(!stb.classList.contains("on"))return false;var r=stb.getBoundingClientRect();return e.clientX>=r.left-10&&e.clientX<=r.right+10&&e.clientY>=r.top-16&&e.clientY<=r.bottom+10}
- o.querySelectorAll(".hsp").forEach(function(el){var tm=null,x0,y1,drag=false,moved=false;
-  el.addEventListener("pointerdown",function(e){x0=e.clientX;y1=e.clientY;moved=false;drag=false;if(!app.classList.contains("hso"))return;tm=setTimeout(function(){drag=true;window.SDRAG=1;el.classList.add("drg");tbShow();try{el.setPointerCapture(e.pointerId)}catch(_){}if(navigator.vibrate)navigator.vibrate(15)},200)});
-  function tgt(e){var best=null,bd=1e9;o.querySelectorAll(".hsp").forEach(function(q){if(q===el)return;var r=q.getBoundingClientRect(),d=Math.hypot(r.left+r.width/2-e.clientX,r.top+r.height/2-e.clientY);if(d<bd){bd=d;best=q}});if(best&&bd<60)return{el:best};
-   var row=null;o.querySelectorAll(".hsr").forEach(function(q){var r=q.getBoundingClientRect();if(e.clientY>=r.top-10&&e.clientY<=r.bottom+10)row=q});return row?{row:row}:null}
-  el.addEventListener("pointermove",function(e){if(!drag){if(Math.abs(e.clientX-x0)+Math.abs(e.clientY-y1)>8){clearTimeout(tm);moved=true}return}e.preventDefault();var z=parseFloat(getComputedStyle(app).zoom)||1;el.style.transform="translate("+(e.clientX-x0)/z+"px,"+(e.clientY-y1)/z+"px) rotate(-3deg)";
-   o.querySelectorAll(".tgt").forEach(function(q){q.classList.remove("tgt")});var ht=onTb(e);stb.classList.toggle("hot",ht);el.classList.toggle("trs",ht);if(ht)return;var t=tgt(e);if(t)(t.el||t.row.querySelector(".hsb2")).classList.add("tgt")});
-  function end(e){clearTimeout(tm);if(!drag)return;drag=false;var del=onTb(e);tbHide();var r0=+el.dataset.r,j0=+el.dataset.j,k=+el.dataset.k;setTimeout(function(){window.SDRAG=0},50);el.dataset.nd="1";
-   if(del){SHR[r0].splice(j0,1)}else{var t=tgt(e);
-    if(t&&t.el){var r1=+t.el.dataset.r,j1=+t.el.dataset.j;if(r1!==r0&&SHR[r1].length>=SHPER){var k1=SHR[r1][j1];SHR[r1][j1]=k;SHR[r0][j0]=k1}else{SHR[r0].splice(j0,1);if(r1===r0&&j1>j0)j1--;SHR[r1].splice(r1===r0&&j1>=j0?j1+1:j1,0,k)}}
-    else if(t&&t.row){var r2=+t.row.dataset.r;if(r2!==r0&&SHR[r2].length<SHPER){SHR[r0].splice(j0,1);SHR[r2].push(k)}else if(r2===r0){SHR[r0].splice(j0,1);SHR[r0].push(k)}}}
-   SHB=[].concat.apply([],SHR);shRender()}
-  el.addEventListener("pointerup",end);el.addEventListener("pointercancel",end);el.addEventListener("contextmenu",function(e){e.preventDefault()});
-  el.onclick=function(e){e.stopPropagation();if(el.dataset.nd){delete el.dataset.nd;return}if(moved)return;shInfo(+el.dataset.k)}})}
+/* 고정된 찜한 책장: 최대 8권, 펼치기·끌기 없이 책 정보로 이동해요. */
+function shHome(){
+ var hd=app.querySelector('.hd.hg3');if(!hd)return;
+ var ids=LB.map(function(_,k){return k}).filter(function(k){return HB[k]}).slice(0,8),heights=[146,115,128,146,115,128,146,128],colors=['#FFF3A0','var(--pri)','var(--soft)','#FFFEF5','var(--pri)','#FEF7BB','var(--soft)','var(--pri)'];
+ hd.insertAdjacentHTML('beforeend','<div class="fixed-shelf" role="group" aria-label="찜한 책 '+ids.length+'권"><div class="liked-spines">'+ids.map(function(k,i){return '<button class="liked-spine" data-k="'+k+'" style="--spine-h:'+heights[i]+'px;--spine-c:'+colors[i]+'" aria-label="'+esc(LB[k][0])+' 책 정보 보기"><span>'+esc(LB[k][0])+'</span></button>'}).join('')+'</div><i class="fixed-bar" aria-hidden="true"></i></div><button class="fixed-bell" id="hbl" aria-label="알림'+(unread()?' (읽지 않은 알림 '+unread()+'개)':'')+'"><img src="'+FIGMA_ASSETS.home_imgRiNotification2Line+'" alt="">'+(unread()?'<i class="nbd" aria-hidden="true"></i>':'')+'</button>');
+ hd.querySelectorAll('.liked-spine').forEach(function(b){b.onclick=function(){bookDt(+b.dataset.k,home)}});
+ document.getElementById('hbl').onclick=function(){inbox('all')};
+}
 
 /* 마이페이지 짧은 안내 */
 function pTip(t){var e=document.getElementById("ptip");if(e)e.remove();e=document.createElement("div");e.id="ptip";e.setAttribute("role","status");e.textContent=t;app.appendChild(e);requestAnimationFrame(function(){e.classList.add("on")});setTimeout(function(){e.classList.remove("on");setTimeout(function(){e.remove()},300)},2000)}
