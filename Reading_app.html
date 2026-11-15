@@ -2526,7 +2526,6 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.signup-account .sh2 h2{font-size:18px!important;font-weight:700}
 #app.signup-account .sc>h1{font-size:24px;line-height:1.3;font-weight:700;text-align:center}
 .account-intro{text-align:center;font-size:14px;line-height:21px;color:var(--sub);margin-top:10px;word-break:keep-all}
-.signup-preview-note{font-size:12px;line-height:18px;color:var(--sub);background:var(--card);border:1px solid var(--divider);border-radius:10px;padding:12px;margin:20px 0 24px;word-break:keep-all}
 .account-form{display:flex;flex-direction:column;gap:8px}
 #app.signup-account .account-form{flex:none}
 #app.signup-account .account-field>input{flex:none;min-height:51px}
@@ -3948,7 +3947,6 @@ function signupAccount(){
  restoreLoginState();app.onclick=null;app.className='app signup-account';window.scrollTo(0,0);
  app.innerHTML='<header class="sh2"><button class="ib" id="account-back" aria-label="뒤로">'+ic('back')+'</button><h2>회원가입</h2><span class="sp3"></span></header>'
  +'<h1>이메일로 시작해 볼까요?</h1><p class="account-intro">이메일을 확인한 뒤 비밀번호를 정해 주세요.</p>'
- +'<p class="signup-preview-note">화면 확인용이에요. 실제 인증 메일을 보내거나 SNS 계정에 연결하지 않아요. 입력한 이메일과 비밀번호도 저장하거나 전송하지 않아요.</p>'
  +'<form id="account-form" class="account-form" novalidate><label class="account-field" for="account-email">이메일</label><div class="account-input-row"><input id="account-email" type="email" inputmode="email" autocomplete="off" placeholder="이메일을 입력해 주세요" aria-describedby="email-status" required><button class="btn ghost account-small" type="button" id="email-request" disabled>인증번호 받기</button></div>'
  +'<section id="email-code-section" class="account-code" hidden><p class="preview-code">미리보기 인증번호 <output id="preview-code"></output></p><label class="account-field" for="account-code">인증번호</label><div class="account-input-row"><input id="account-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="인증번호 6자리를 입력해 주세요" aria-describedby="email-status"><button class="btn ghost account-small" type="button" id="email-confirm" disabled>인증번호 확인</button></div></section>'
  +'<p id="email-status" class="account-status" role="status" aria-live="polite">이메일을 입력하고 인증번호를 받아 주세요.</p>'
