@@ -2547,6 +2547,12 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.signup-account .account-footer{margin-top:auto;padding-top:12px}
 #app.signup-account .account-footer .btn{height:56px;min-height:56px;width:100%;font-size:20px;font-weight:700}
 
+
+/* 책 표지 공통: 작은 썸네일·팝업·공유·추천도 동일한 곡률을 사용해요. */
+#app .book-cover{position:relative;overflow:hidden}
+#app .book-cover::before{display:none!important}
+#app .bshv.book-cover{box-shadow:none}
+
 </style>
 </head>
 <body>
@@ -4145,7 +4151,9 @@ function coverByTitle(t){var c=coverKey(t);return coverSVG(c[0],c[1])}
 /* 책등: 표지와 같은 색, 위아래 띠, 아래쪽에 표지 그림을 작게 */
 function spineDeco(e){var c=coverKey(e.getAttribute("data-st")),P=cpal(c[0]);e.setAttribute("data-sp","1");e.style.setProperty("--sb",P[0]);e.style.setProperty("--sc",cIsDark(P[0])?"#F6F1EC":"#241C26");e.style.setProperty("--sa",P[1]);e.insertAdjacentHTML("beforeend",'<i class="spm" aria-hidden="true"><svg viewBox="14 22 92 92">'+cmotif(c[1],P[1],P[2],P[0])+'</svg></i>');var sp=e.querySelector("span");e.style.fontSize="";e.style.whiteSpace="";e.classList.remove("sp2");if(sp){sp.style.lineHeight="";sp.textContent=sp.textContent;var t=sp.textContent,CH=13.6,PAD=50,MAXH=150,h0=e.getBoundingClientRect().height||110,need=PAD+t.length*CH;
   if(need>h0)e.style.height=Math.ceil(Math.min(need,Math.max(h0,MAXH)))+"px";var hh=Math.max(h0,Math.min(need,MAXH));if(need>hh){var f=12*(hh-PAD)/(t.length*CH);e.style.setProperty("font-size",Math.max(8,f).toFixed(1)+"px","important")}}}
-function coverSVG(k,mo,rect){var P=cpal(k),m=mo||CMOT[k]||"book";return'<svg class="cva" viewBox="0 0 120 160" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="120" height="160" fill="'+P[0]+'"/><path d="'+(rect?'M8 8H112V152H8Z':'M8 152V60A52 52 0 0 1 112 60V152Z')+'" fill="none" stroke="'+P[2]+'" stroke-opacity=".35" stroke-width="1.4"/><g transform="translate(0,16)">'+cmotif(m,P[1],P[2],P[0])+'</g></svg>'}
+function coverSVG(k,mo,rect,width,height){var P=cpal(k),m=mo||CMOT[k]||'book',w=width||120,h=height||160,p=w/15,rad=w/2-p;
+ var edge=rect?'M'+p+' '+p+'H'+(w-p)+'V'+(h-p)+'H'+p+'Z':'M'+p+' '+(h-p)+'V'+w/2+'A'+rad+' '+rad+' 0 0 1 '+(w-p)+' '+w/2+'V'+(h-p)+'Z';
+ return '<svg class="cva" viewBox="0 0 '+w+' '+h+'" aria-hidden="true"><rect width="'+w+'" height="'+h+'" fill="'+P[0]+'"/><path class="cover-inner-edge" d="'+edge+'" fill="none" stroke="'+P[2]+'" stroke-opacity=".35" stroke-width="'+(w*1.4/120)+'"/><g transform="translate(0,'+(h/2-w/2-w/30)+') scale('+(w/120)+')">'+cmotif(m,P[1],P[2],P[0])+'</g></svg>'}
 function cIsDark(hex){var c=parseInt(hex.slice(1),16),r=c>>16&255,g=c>>8&255,b=c&255;return(0.299*r+0.587*g+0.114*b)<150}
 (function(){var q=0;function run(){q=0;
  document.querySelectorAll("[data-st]:not([data-sp])").forEach(spineDeco);document.querySelectorAll("[data-bt]:not([data-art])").forEach(function(e){e.setAttribute("data-art","1");e.insertAdjacentHTML("afterbegin",coverByTitle(e.getAttribute("data-bt")))});
@@ -4265,9 +4273,21 @@ function pTip(t){var e=document.getElementById("ptip");if(e)e.remove();e=documen
 (function(){function fit(){if(app.classList.contains("signup-quiz")||!app.querySelector(".ost,.qhn"))return;app.querySelectorAll(".sc>h1,.sc .center>h1").forEach(function(h){h.style.fontSize="";var f=parseFloat(getComputedStyle(h).fontSize);while(f>15&&h.scrollWidth>h.clientWidth+1){f-=.5;h.style.fontSize=f+"px"}})}
  new MutationObserver(function(){requestAnimationFrame(fit)}).observe(app,{childList:true});window.addEventListener("resize",fit)})();
 
-/* 책 표지 문 모양: 위쪽 아치를 표지 폭의 절반(반원)으로 맞춤 */
-(function(){var q=0,S=".cv,.bcv,.sc.hm .hrc .rck i,.sc.hm .hcv,.rbw>i,[data-bt]";function run(){q=0;app.querySelectorAll(S).forEach(function(e){var w=e.offsetWidth;if(!w)return;var r=Math.round(w/2)+"px";var v=r+" "+r+" var(--r-md) var(--r-md)";if(e.dataset.door!==v){e.dataset.door=v;e.style.setProperty("border-radius",v,"important")}})}
- new MutationObserver(function(){if(!q){q=1;requestAnimationFrame(run)}}).observe(app,{childList:true,subtree:true});window.addEventListener("resize",function(){app.querySelectorAll("[data-door]").forEach(function(e){delete e.dataset.door});run()});run()})();
+/* 책 표지의 유일한 곡률 기준: 일반 표지 위쪽 = 폭/2, 아래쪽 = Radius/md.
+   장르 전시는 기존 확정대로 직사각형을 유지해요. */
+var COVER_SELECTOR='.cv,.bcv,.hcv,.rck>i,.rbw>i,.rbk>i,.ser>i,.mpi>i,.bc,.bc2,.bkm>.c,.bshv,[data-bt],.exhibit-book';
+function syncBookCover(e){
+ var cs=getComputedStyle(e),w=parseFloat(cs.width)||e.offsetWidth,h=parseFloat(cs.height)||e.offsetHeight;if(!w||!h)return;
+ var rect=e.classList.contains('exhibit-book'),v=rect?'var(--r-md) var(--r-md) 0 0':w/2+'px '+w/2+'px var(--r-md) var(--r-md)';
+ e.classList.add('book-cover');if(e.style.getPropertyValue('border-radius')!==v)e.style.setProperty('border-radius',v,'important');
+ var svg=Array.from(e.children).find(function(c){return c.matches('svg.cva')});if(!svg)return;
+ var key,mo;if(e.hasAttribute('data-bt')){var c=coverKey(e.getAttribute('data-bt'));key=c[0];mo=c[1]}else{var host=e.closest('[data-k]');if(!host)return;key=+host.dataset.k;if(!LB[key])return}
+ var signature=[w,h,rect,key,mo||''].join(':');if(e.dataset.coverGeometry===signature)return;e.dataset.coverGeometry=signature;svg.outerHTML=coverSVG(key,mo,rect,w,h);
+}
+(function(){var queued=false,seen=new Set(),ro=new ResizeObserver(function(entries){entries.forEach(function(entry){if(entry.target.isConnected)syncBookCover(entry.target)})});
+ function run(){queued=false;seen.forEach(function(e){if(!e.isConnected){ro.unobserve(e);seen.delete(e)}});app.querySelectorAll(COVER_SELECTOR).forEach(function(e){if(!seen.has(e)){seen.add(e);ro.observe(e)}syncBookCover(e)})}
+ new MutationObserver(function(){if(!queued){queued=true;requestAnimationFrame(run)}}).observe(app,{childList:true,subtree:true});window.addEventListener('resize',run);run();
+})();
 
 /* 나이 입력칸: 닉네임처럼 칸 + 오른쪽 위아래 화살표, 휠·끌기로 숫자만 바뀌어요 */
 var AGMIN=7,AGMAX=100;
