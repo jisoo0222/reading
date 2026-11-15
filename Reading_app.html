@@ -2513,6 +2513,40 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.pf .profile-archives{padding-bottom:20px;border-bottom:1px solid var(--bd)}
 #app.pf .archive-action:focus-visible{outline:2px solid var(--pri);outline-offset:4px;border-radius:10px}
 
+
+/* 계정 가입 입구: 기존 디자인 토큰·입력칸·SNS 원본·중요 버튼을 사용해요. */
+#app.signup-account{background:var(--bg)}
+#app.signup-account:not(.rd):not(.hm):not(.onb):not(.spl) .sc{padding-top:0!important;padding-bottom:24px!important}
+#app.signup-account .sc>.sh2:first-child{height:60px!important;min-height:60px!important;margin-bottom:30px!important}
+#app.signup-account .sh2 h2{font-size:18px!important;font-weight:700}
+#app.signup-account .sc>h1{font-size:24px;line-height:1.3;font-weight:700;text-align:center}
+.account-intro{text-align:center;font-size:14px;line-height:21px;color:var(--sub);margin-top:10px;word-break:keep-all}
+.signup-preview-note{font-size:12px;line-height:18px;color:var(--sub);background:var(--card);border:1px solid var(--divider);border-radius:10px;padding:12px;margin:20px 0 24px;word-break:keep-all}
+.account-form{display:flex;flex-direction:column;gap:8px}
+#app.signup-account .account-form{flex:none}
+#app.signup-account .account-field>input{flex:none;min-height:51px}
+.account-field{display:flex;flex-direction:column;gap:8px;font-size:16px;font-weight:600;color:var(--ink)}
+.account-input-row{display:flex;align-items:stretch;gap:8px}
+#app.signup-account input{display:block;width:100%;min-width:0;flex:1;height:51px;margin:0;padding:0 12px;font:400 14px Pretendard,sans-serif;color:var(--ink);border:1px solid var(--bd);border-radius:10px;background:var(--card)}
+#app.signup-account input:disabled{opacity:.55;background:var(--bg)}
+#app.signup-account .account-small{flex:0 0 108px;height:51px;min-height:51px;padding:0 6px;font-size:12px;font-weight:600}
+.account-code{margin-top:8px}
+.account-code .account-field{margin-bottom:8px}
+.preview-code{font-size:12px;line-height:18px;color:var(--sub);margin-bottom:10px}
+.preview-code output{display:inline-block;margin-left:8px;color:var(--strong);font-size:16px;font-weight:700;letter-spacing:2px}
+.account-status{font-size:12px;line-height:18px;min-height:18px;color:var(--strong);word-break:keep-all;margin:0 0 10px}
+.account-help{font-size:12px;line-height:18px;color:var(--sub);word-break:keep-all}
+.account-status.account-error{color:#E4195B}
+#app.signup-account .account-field:has(#account-password-confirm){margin-top:12px}
+#app.signup-account [hidden]{display:none!important}
+#app.signup-account .auth-social{margin:12px 0 24px;padding:0}
+#app.signup-account .auth-social h2{font-size:14px;margin-bottom:16px}
+#app.signup-account .auth-providers{display:flex;justify-content:center;gap:56px}
+#app.signup-account .auth-provider{width:68px;height:69px;padding:0;border:0;background:none}
+#app.signup-account .auth-provider img{display:block;width:100%;height:100%}
+#app.signup-account .account-footer{margin-top:auto;padding-top:12px}
+#app.signup-account .account-footer .btn{height:56px;min-height:56px;width:100%;font-size:20px;font-weight:700}
+
 </style>
 </head>
 <body>
@@ -2620,14 +2654,14 @@ function result(){
  document.getElementById("re").onclick=function(){step=0;ans=[null,null,null,null];ask()};
 }
 var AGE=null,GOAL=null,AGES=["10대","20대","30대","40대","50대 이상"],GO=[[10,""],[30,""],[50,""]],RDY={d:"",p:{}};
-function signupHeader(back){return '<div class="sh2 signup-heading">'+(back?'<button class="ib" id="signup-back" aria-label="로그인으로 돌아가기">'+ic("back")+'</button>':'<span class="sp3"></span>')+'<h2>회원가입</h2><span class="sp3"></span></div>'}
+function signupHeader(back){return '<div class="sh2 signup-heading">'+(back?'<button class="ib" id="signup-back" aria-label="뒤로" title="계정 정보로 돌아가기">'+ic("back")+'</button>':'<span class="sp3"></span>')+'<h2>회원가입</h2><span class="sp3"></span></div>'}
 function ost(n){return'<ol class="ost" aria-label="가입 단계 '+n+'/3">'+["기본 정보","독서 목표","독서 성향"].map(function(t,i){return'<li class="'+(i+1<n?"dn":i+1===n?"on":"")+'"'+(i+1===n?' aria-current="step"':'')+'><b>'+(i+1)+'</b><span>'+t+'</span></li>'}).join("")+'</ol>'}
 function info(){
  app.className="app signup signup-nickname";
  app.innerHTML=signupHeader(true)+ost(1)+'<h1>반가워요! 나를 알려 주세요</h1><p class="hint">프로필에 쓸 닉네임을 알려 주세요.</p>'
  +'<label class="fld">닉네임<input id="inm" maxlength="10" placeholder="10자 이내로 입력해 주세요" autocomplete="off"></label>'
  +'<div class="foot"><button class="btn" id="nx1">다음</button></div>';
- document.getElementById("signup-back").onclick=loginPage;
+ document.getElementById("signup-back").onclick=signupAccount;
  var nm=document.getElementById("inm"),nx=document.getElementById("nx1");nm.value=ME;
  function ck(){nx.disabled=!nm.value.trim()}ck();
  nm.oninput=ck;
@@ -3867,7 +3901,7 @@ function splash(){app.className="app spl";
 /* SNS 안내·동의 흐름의 시제품. 제공자 인증이나 법적 동의 기록으로 사용하지 않아요.
    참고: https://developers.kakao.com/docs/ko/kakaologin/common
    https://developers.google.com/identity/openid-connect/openid-connect */
-function snsConsent(provider){
+function snsConsent(provider,onContinue){
  var name=provider==="kakao"?"카카오":"구글";
  var dialog=document.createElement("dialog"),trigger=document.activeElement;
  dialog.className="consent-popup";dialog.setAttribute("aria-labelledby","consent-title");
@@ -3889,11 +3923,41 @@ function snsConsent(provider){
  all.onchange=function(){terms.checked=privacy.checked=all.checked;update()};terms.onchange=privacy.onchange=update;
  app.querySelectorAll(".consent-more").forEach(function(button){button.onclick=function(){var panel=document.getElementById(button.dataset.panel),open=button.getAttribute("aria-expanded")==="true";button.setAttribute("aria-expanded",String(!open));panel.hidden=open}});
  document.getElementById("consent-back").onclick=closeConsent;
- next.onclick=function(){update();if(next.disabled)return;dialog.close();dialog.remove();home()};
+ next.onclick=function(){update();if(next.disabled)return;dialog.close();dialog.remove();(onContinue||home)()};
 }
 
 
 var NEW_ACCOUNT=false,SIGNUP_DAY="",LOGIN_STATE=null;
+/* 실제 메일·SNS 연결 없이 가입 순서를 확인하는 시제품이에요. 입력한 계정 정보는 저장하지 않아요. */
+function signupAccount(){
+ restoreLoginState();app.onclick=null;app.className='app signup-account';window.scrollTo(0,0);
+ app.innerHTML='<header class="sh2"><button class="ib" id="account-back" aria-label="뒤로">'+ic('back')+'</button><h2>회원가입</h2><span class="sp3"></span></header>'
+ +'<h1>이메일로 시작해 볼까요?</h1><p class="account-intro">이메일을 확인한 뒤 비밀번호를 정해 주세요.</p>'
+ +'<p class="signup-preview-note">화면 확인용이에요. 실제 인증 메일을 보내거나 SNS 계정에 연결하지 않아요. 입력한 이메일과 비밀번호도 저장하거나 전송하지 않아요.</p>'
+ +'<form id="account-form" class="account-form" novalidate><label class="account-field" for="account-email">이메일</label><div class="account-input-row"><input id="account-email" type="email" inputmode="email" autocomplete="off" placeholder="이메일을 입력해 주세요" aria-describedby="email-status" required><button class="btn ghost account-small" type="button" id="email-request" disabled>인증번호 받기</button></div>'
+ +'<section id="email-code-section" class="account-code" hidden><p class="preview-code">미리보기 인증번호 <output id="preview-code"></output></p><label class="account-field" for="account-code">인증번호</label><div class="account-input-row"><input id="account-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" placeholder="인증번호 6자리를 입력해 주세요" aria-describedby="email-status"><button class="btn ghost account-small" type="button" id="email-confirm" disabled>인증번호 확인</button></div></section>'
+ +'<p id="email-status" class="account-status" role="status" aria-live="polite">이메일을 입력하고 인증번호를 받아 주세요.</p>'
+ +'<label class="account-field" for="account-password">비밀번호<input id="account-password" type="password" autocomplete="new-password" placeholder="비밀번호를 입력해 주세요" aria-describedby="password-help" required disabled></label>'
+ +'<label class="account-field" for="account-password-confirm">비밀번호 확인<input id="account-password-confirm" type="password" autocomplete="new-password" placeholder="비밀번호를 한 번 더 입력해 주세요" aria-describedby="password-status" required disabled></label>'
+ +'<p id="password-help" class="account-help">이메일을 확인하면 비밀번호를 입력할 수 있어요.</p><p id="password-status" class="account-status" role="status" aria-live="polite"></p></form>'
+ +'<section class="auth-social" aria-labelledby="signup-social-title"><h2 id="signup-social-title">SNS로 회원가입</h2><div class="auth-providers"><button class="auth-provider" id="signup-kakao" type="button" aria-label="카카오로 회원가입"><img src="'+FIGMA_ASSETS.login_img+'" alt=""></button><button class="auth-provider" id="signup-google" type="button" aria-label="구글로 회원가입"><img src="'+FIGMA_ASSETS.login_img1+'" alt=""></button></div></section>'
+ +'<div class="foot account-footer"><button class="btn" type="submit" form="account-form" id="account-next" disabled>다음</button></div>';
+ var email=document.getElementById('account-email'),request=document.getElementById('email-request'),code=document.getElementById('account-code'),confirm=document.getElementById('email-confirm'),section=document.getElementById('email-code-section'),status=document.getElementById('email-status'),pw=document.getElementById('account-password'),again=document.getElementById('account-password-confirm'),pwStatus=document.getElementById('password-status'),next=document.getElementById('account-next');
+ var expected='',issuedEmail='',verified=false;
+ function emailOK(){return email.validity.valid&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())}
+ function valid(){return verified&&emailOK()&&email.value.trim()===issuedEmail&&pw.value.trim().length>0&&pw.value===again.value}
+ function update(){request.disabled=!emailOK();confirm.disabled=verified||!/^\d{6}$/.test(code.value);next.disabled=!valid();var mismatch=again.value.length>0&&pw.value!==again.value;pwStatus.textContent=mismatch?'비밀번호가 서로 달라요. 다시 확인해 주세요.':'';pwStatus.classList.toggle('account-error',mismatch);again.setAttribute('aria-invalid',String(mismatch))}
+ email.oninput=function(){expected='';issuedEmail='';verified=false;section.hidden=true;code.value='';pw.value=again.value='';pw.disabled=again.disabled=true;status.textContent='이메일을 입력하고 인증번호를 받아 주세요.';status.classList.remove('account-error');document.getElementById('password-help').textContent='이메일을 확인하면 비밀번호를 입력할 수 있어요.';confirm.textContent='인증번호 확인';request.textContent='인증번호 받기';update()};
+ request.onclick=function(){if(!emailOK())return;var n=new Uint32Array(1);crypto.getRandomValues(n);expected=String(100000+n[0]%900000);issuedEmail=email.value.trim();verified=false;code.value='';pw.value=again.value='';pw.disabled=again.disabled=true;section.hidden=false;document.getElementById('preview-code').textContent=expected;status.textContent='메일 대신 화면에 표시된 인증번호를 입력해 주세요.';status.classList.remove('account-error');confirm.textContent='인증번호 확인';request.textContent='다시 받기';document.getElementById('password-help').textContent='이메일을 확인하면 비밀번호를 입력할 수 있어요.';update();code.focus()};
+ code.oninput=function(){code.value=code.value.replace(/[^0-9]/g,'');update()};
+ confirm.onclick=function(){if(!expected||issuedEmail!==email.value.trim()||code.value!==expected){status.textContent='인증번호가 맞지 않아요. 화면에 표시된 번호를 다시 확인해 주세요.';status.classList.add('account-error');return}verified=true;status.textContent='미리보기 이메일 확인을 마쳤어요.';status.classList.remove('account-error');confirm.textContent='확인 완료';pw.disabled=again.disabled=false;document.getElementById('password-help').textContent='같은 비밀번호를 두 번 입력해 주세요.';update();pw.focus()};
+ pw.oninput=again.oninput=update;
+ document.getElementById('account-form').onsubmit=function(e){e.preventDefault();update();if(!valid())return;pw.value=again.value='';expected='';beginSignup()};
+ document.getElementById('account-back').onclick=loginPage;
+ document.getElementById('signup-kakao').onclick=function(){snsConsent('kakao',beginSignup)};
+ document.getElementById('signup-google').onclick=function(){snsConsent('google',beginSignup)};
+ update();
+}
 function beginSignup(){
  if(!NEW_ACCOUNT)LOGIN_STATE=JSON.stringify({ME,MEP,AGE,GOAL,ans,step,SKT,RKEY,PICKED,FR,FRIEND_REQ,REQ,INV,ARCH,PT,PS,DONEPAID,STRK,RDAYS,WK,RDY,RLOG,RDB,SHB,OWN,CS,OP,MY,SLOT,HB,AP,THI,MYT,MYX,OPN,DEF,BK,ST,SDT,DNB,BMT,MP,und,my,BM,MMO,cur,pg,PAGES,PGN,TOT,BT,S,CMTS,CH,NTF,LKD,VT,PO,BGO,SHR:typeof SHR==="undefined"?null:SHR});
  ARCH={quotes:[],points:[]};NEW_ACCOUNT=true;SIGNUP_DAY=todayStr();ME="";MEP="";AGE=null;GOAL=null;ans=[null,null,null,null];step=0;SKT=0;RKEY="";PICKED=0;
@@ -3919,7 +3983,7 @@ function loginPage(){
  +'<div class="auth-join"><span>똑독이 처음이신가요?</span><button class="auth-link" id="auth-signup" type="button">회원가입</button></div>'
  +'<section class="auth-social" aria-labelledby="auth-social-title"><h2 id="auth-social-title">SNS 로그인</h2><div class="auth-providers"><button class="auth-provider kakao" id="auth-kakao" type="button" aria-label="카카오로 로그인" title="카카오로 로그인"><img src="'+FIGMA_ASSETS.login_img+'" alt=""></button>'
  +'<button class="auth-provider google" id="auth-google" type="button" aria-label="구글로 로그인" title="구글로 로그인"><img src="'+FIGMA_ASSETS.login_img1+'" alt=""></button></div></section>';
- document.getElementById("auth-signup").onclick=beginSignup;
+ document.getElementById("auth-signup").onclick=signupAccount;
  var form=document.getElementById("login-form"),email=document.getElementById("login-email"),password=document.getElementById("login-password"),submit=document.getElementById("login-submit");
  function valid(){return email.validity.valid&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)&&password.value.trim().length>0}
  function update(){submit.disabled=!valid()}
