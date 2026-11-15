@@ -1922,8 +1922,8 @@ body:has(.app.hso) #pawf{display:none!important}
 #app:has(.ost) .hint{word-break:keep-all}
 #app .sc.hm>.blk.hdu{margin-top:16px!important}
 
-/* ===== 책 표지 = 문 모양 (위 반원 아치 + 아래 모서리 10) — 홈 표지와 같게 ===== */
-#app .cv,#app .bcv,#app .bdt .bdh .bcv,#app .sc.hm .hrc .rck i,#app .rbw>i{border-radius:50% 50% var(--r-md) var(--r-md)/37.5% 37.5% var(--r-md) var(--r-md)!important;overflow:hidden}
+/* ===== 책 표지 = 직사각형·모서리 10 ===== */
+#app .cv,#app .bcv,#app .bdt .bdh .bcv,#app .sc.hm .hrc .rck i,#app .rbw>i{border-radius:var(--r-md)!important;overflow:hidden}
 #app .ppx .pps{grid-auto-columns:124px!important}
 
 /* 연령대 슬라이더 (한 줄) */
@@ -2098,9 +2098,9 @@ body:has(.app.hso) #pawf{display:none!important}
 #hsv .htb .nbl{position:relative!important;left:auto!important;right:auto!important;top:auto!important}
 #hsv .nbl.nun::after{top:5px!important;left:auto!important;right:5px!important;width:8px!important;height:8px!important;border-width:1.5px!important}
 
-/* ===== 모든 책 표지 = 문 모양 (표지 그림이 붙는 모든 요소) ===== */
+/* ===== 모든 책 표지 = 직사각형·모서리 10 ===== */
 #app [data-bt],#dlg [data-bt],#sheet [data-bt]{overflow:hidden}
-#app.pf .rbk>i,#app .rbk>i,#app .ser>i,#app .mpi>i,#app .bc,#app .bc2,#dlg .bc,#dlg .bc2{border-radius:50% 50% var(--r-md) var(--r-md)/37.5% 37.5% var(--r-md) var(--r-md)!important}
+#app.pf .rbk>i,#app .rbk>i,#app .ser>i,#app .mpi>i,#app .bc,#app .bc2,#dlg .bc,#dlg .bc2{border-radius:var(--r-md)!important}
 
 /* 책 넘기는 면: 화면 전체 폭 (글자 위치는 그대로) */
 #app .sc.rdc>.bkw#tx,#app .bkw#tx{margin-left:calc(-1*var(--px))!important;margin-right:calc(-1*var(--px))!important;width:auto!important}
@@ -2552,6 +2552,11 @@ body:has(.app.hso) #pawf{display:none!important}
 #app .book-cover{position:relative;overflow:hidden}
 #app .book-cover::before{display:none!important}
 #app .bshv.book-cover{box-shadow:none}
+
+
+/* 사용자 확정: 반원 표지를 없애고 모든 표지에 기본 모서리10을 사용해요. */
+:root{--r-cover:10px;--r-arch:10px}
+#app :is(.sc,#dlg,#sheet) :is(.cv,.bcv,.hcv,.rck>i,.rbw>i,.rbk>i,.ser>i,.mpi>i,.bc,.bc2,.bkm>.c,.bshv,[data-bt],.exhibit-book){border-radius:var(--r-md)!important;overflow:hidden}
 
 </style>
 </head>
@@ -4151,9 +4156,8 @@ function coverByTitle(t){var c=coverKey(t);return coverSVG(c[0],c[1])}
 /* 책등: 표지와 같은 색, 위아래 띠, 아래쪽에 표지 그림을 작게 */
 function spineDeco(e){var c=coverKey(e.getAttribute("data-st")),P=cpal(c[0]);e.setAttribute("data-sp","1");e.style.setProperty("--sb",P[0]);e.style.setProperty("--sc",cIsDark(P[0])?"#F6F1EC":"#241C26");e.style.setProperty("--sa",P[1]);e.insertAdjacentHTML("beforeend",'<i class="spm" aria-hidden="true"><svg viewBox="14 22 92 92">'+cmotif(c[1],P[1],P[2],P[0])+'</svg></i>');var sp=e.querySelector("span");e.style.fontSize="";e.style.whiteSpace="";e.classList.remove("sp2");if(sp){sp.style.lineHeight="";sp.textContent=sp.textContent;var t=sp.textContent,CH=13.6,PAD=50,MAXH=150,h0=e.getBoundingClientRect().height||110,need=PAD+t.length*CH;
   if(need>h0)e.style.height=Math.ceil(Math.min(need,Math.max(h0,MAXH)))+"px";var hh=Math.max(h0,Math.min(need,MAXH));if(need>hh){var f=12*(hh-PAD)/(t.length*CH);e.style.setProperty("font-size",Math.max(8,f).toFixed(1)+"px","important")}}}
-function coverSVG(k,mo,rect,width,height){var P=cpal(k),m=mo||CMOT[k]||'book',w=width||120,h=height||160,p=w/15,rad=w/2-p;
- var edge=rect?'M'+p+' '+p+'H'+(w-p)+'V'+(h-p)+'H'+p+'Z':'M'+p+' '+(h-p)+'V'+w/2+'A'+rad+' '+rad+' 0 0 1 '+(w-p)+' '+w/2+'V'+(h-p)+'Z';
- return '<svg class="cva" viewBox="0 0 '+w+' '+h+'" aria-hidden="true"><rect width="'+w+'" height="'+h+'" fill="'+P[0]+'"/><path class="cover-inner-edge" d="'+edge+'" fill="none" stroke="'+P[2]+'" stroke-opacity=".35" stroke-width="'+(w*1.4/120)+'"/><g transform="translate(0,'+(h/2-w/2-w/30)+') scale('+(w/120)+')">'+cmotif(m,P[1],P[2],P[0])+'</g></svg>'}
+function coverSVG(k,mo,rect,width,height){var P=cpal(k),m=mo||CMOT[k]||'book',w=width||120,h=height||160,p=w/15;
+ return '<svg class="cva" viewBox="0 0 '+w+' '+h+'" aria-hidden="true"><rect width="'+w+'" height="'+h+'" fill="'+P[0]+'"/><rect class="cover-inner-edge" x="'+p+'" y="'+p+'" width="'+Math.max(0,w-2*p)+'" height="'+Math.max(0,h-2*p)+'" rx="'+Math.max(0,10-p)+'" fill="none" stroke="'+P[2]+'" stroke-opacity=".35" stroke-width="'+(w*1.4/120)+'"/><g transform="translate(0,'+(h/2-w/2-w/30)+') scale('+(w/120)+')">'+cmotif(m,P[1],P[2],P[0])+'</g></svg>'}
 function cIsDark(hex){var c=parseInt(hex.slice(1),16),r=c>>16&255,g=c>>8&255,b=c&255;return(0.299*r+0.587*g+0.114*b)<150}
 (function(){var q=0;function run(){q=0;
  document.querySelectorAll("[data-st]:not([data-sp])").forEach(spineDeco);document.querySelectorAll("[data-bt]:not([data-art])").forEach(function(e){e.setAttribute("data-art","1");e.insertAdjacentHTML("afterbegin",coverByTitle(e.getAttribute("data-bt")))});
@@ -4273,12 +4277,11 @@ function pTip(t){var e=document.getElementById("ptip");if(e)e.remove();e=documen
 (function(){function fit(){if(app.classList.contains("signup-quiz")||!app.querySelector(".ost,.qhn"))return;app.querySelectorAll(".sc>h1,.sc .center>h1").forEach(function(h){h.style.fontSize="";var f=parseFloat(getComputedStyle(h).fontSize);while(f>15&&h.scrollWidth>h.clientWidth+1){f-=.5;h.style.fontSize=f+"px"}})}
  new MutationObserver(function(){requestAnimationFrame(fit)}).observe(app,{childList:true});window.addEventListener("resize",fit)})();
 
-/* 책 표지의 유일한 곡률 기준: 일반 표지 위쪽 = 폭/2, 아래쪽 = Radius/md.
-   장르 전시는 기존 확정대로 직사각형을 유지해요. */
+/* 모든 책 표지: 화면과 크기에 관계없이 네 모서리 Radius/md 10px. */
 var COVER_SELECTOR='.cv,.bcv,.hcv,.rck>i,.rbw>i,.rbk>i,.ser>i,.mpi>i,.bc,.bc2,.bkm>.c,.bshv,[data-bt],.exhibit-book';
 function syncBookCover(e){
  var cs=getComputedStyle(e),w=parseFloat(cs.width)||e.offsetWidth,h=parseFloat(cs.height)||e.offsetHeight;if(!w||!h)return;
- var rect=e.classList.contains('exhibit-book'),v=rect?'var(--r-md) var(--r-md) 0 0':w/2+'px '+w/2+'px var(--r-md) var(--r-md)';
+ var rect=true,v='var(--r-md)';
  e.classList.add('book-cover');if(e.style.getPropertyValue('border-radius')!==v)e.style.setProperty('border-radius',v,'important');
  var svg=Array.from(e.children).find(function(c){return c.matches('svg.cva')});if(!svg)return;
  var key,mo;if(e.hasAttribute('data-bt')){var c=coverKey(e.getAttribute('data-bt'));key=c[0];mo=c[1]}else{var host=e.closest('[data-k]');if(!host)return;key=+host.dataset.k;if(!LB[key])return}
