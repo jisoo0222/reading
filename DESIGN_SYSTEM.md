@@ -277,3 +277,10 @@
 | `--r-xs` · `--r-md`(=`--r-btn`) · `--r-lg`(=`--r-sheet`·`--r-popup`) · `--r-xl`(=`--r-nav`·`--r-arch`) · `--r-full` | `Radius/xs` · `md` · `lg` · `xl` · `full` |
 | `--h-btn` · `--h-input` · `--h-ibtn` · `--h-chip` · `--h-chip-sm` · `--h-prog` · `--h-shelf` | `Size/button` · `input` · `circle-sm` · `chip` · `chip-sm` · `progress` · `shelf` |
 | `--sh1` | Effect `primary` |
+
+## 8. 새 로그인 화면 (`1258:708`, 적용 완료)
+- 409×925 시안, 회색 `surface/muted` 바탕. 로고는 새 Figma 원본, 이름48 Bold, 소개14예요.
+- 로고 y88, 이름 y200, 소개 y266, 이메일 라벨 y352·입력56, 비밀번호 y445·입력56, 로그인 버튼 y553·높이56·글자20이에요.
+- 가입 링크 y663, SNS 구분선 y730, 제공자 버튼은 y782·약68×69·사이56이에요. 작은 화면에서는 세로로 스크롤해요.
+- 로그인·가입·SNS 동의 흐름은 기존 시제품 동작을 유지해요. 새 서버 인증을 추가하지 않아요.
+- Pretendard는 저장소의 기존 글꼴 파일을 HTML에 포함해 웹과 Android에서 같은 글꼴을 사용해요. 원본의 OFL 라이선스는 `android/app/src/main/webfont/fonts/Pretendard-LICENSE.txt`에 있어요.
