@@ -2356,6 +2356,44 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.signup-quiz .opt{min-height:56px;font-size:16px;color:var(--tx3)}
 #app.signup-quiz .opt:not(:first-child){min-height:79px}
 
+
+/* 커뮤니티 1262:2346 */
+#app.community,#app.community .sc{background:var(--card)}
+#app.community .sc>.sh2:first-child{height:60px!important;min-height:60px!important;margin-bottom:20px!important}
+#app.community .sh2 h2{font-size:18px!important;font-weight:700}
+#app.community .lsrow.cwrow{padding-bottom:11px!important;margin-top:0!important}
+#app.community .csr{height:51px!important}
+#app.community .csr input::placeholder{font-size:14px;color:var(--tx3)}
+#app.community .ctf.ctf2{display:flex;gap:6px;margin:10px 0 12px!important;padding:0!important}
+#app.community .ctf.ctf2 button{flex:1;justify-content:center;padding:0 6px!important;height:39px;font-size:12px;white-space:nowrap;background:var(--card)}
+#app.community .po{padding:13px 16px 16px!important;margin:0 0 12px;background:var(--card)!important}
+#app.community .ph2{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+#app.community .ph2 .pav2{width:40px;height:40px;flex:none}
+#app.community .ph2 .pn{flex:1;min-width:0}
+#app.community .ph2 .pn b{font-size:14px;font-weight:600}
+#app.community .ph2 .pn small{font-size:12px;white-space:nowrap;color:var(--tx3)}
+#app.community .vis{display:flex;align-items:center;gap:3px;font-size:10px;color:var(--bd);margin-left:auto;white-space:nowrap}
+#app.community .vis .ic{width:14px;height:14px}
+#app.community .fp2{height:26px;min-width:66px;padding:0 10px;border-radius:999px;border:1px solid #444141;color:var(--ink);background:var(--card);font-size:10px;display:inline-flex;justify-content:center;align-items:center;white-space:nowrap}
+#app.community .fp2.on{background:#444141;color:white;border-color:#444141}
+#app.community .po>.tg2{display:none!important}
+#app.community .pt2{font-size:16px!important;line-height:24px!important;margin:0 0 16px!important;word-break:keep-all}
+#app.community .bkl{height:74px;min-height:74px;margin:0;padding:10px 12px;gap:7px;border:.5px solid var(--sub);border-radius:10px;background:var(--bg);box-shadow:none}
+#app.community .bkl .bc2{width:35px;height:50px;flex:none}
+#app.community .bkl .bt b{font-size:14px;font-weight:600}
+#app.community .bkl .bt small{font-size:12px;color:var(--tx3);margin-top:3px}
+#app.community .bkl>.ic{width:24px;height:24px;color:var(--tx3);margin-left:auto}
+#app.community .tc{border-top:1px solid var(--bd);margin-top:12px;padding-top:12px;font-size:10px;background:none}
+#app.community .tc>small{display:none}
+#app.community .tc .pav2{width:20px;height:20px;flex:none}
+#app.community .tc .tx{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#app.community .tc em{font-size:10px;color:var(--tx3);white-space:nowrap}
+#app.community .pa{margin-top:13px;padding-top:0;border:0;gap:14px}
+#app.community .pa button{font-size:14px;color:var(--tx3);gap:4px}
+#app.community .pa .ic{width:20px;height:20px}
+#app.community .pa button[aria-pressed="true"]{color:#FF4C86}
+#app.community .wfab{width:54px;height:54px;background:var(--pri);box-shadow:none}
+
 </style>
 </head>
 <body>
@@ -3220,7 +3258,7 @@ VIS=[["globe","전체공개"],["users","친구공개"],["lock","나만보기"]],
 function vic(v){return v===2?lk(0):ic(VIS[v][0])}
 function colOf(n){for(var i=0;i<M.length;i++)if(M[i][0]===n)return M[i][2];return"#4CAE85"}
 function community(){
- app.className="app";
+ app.className="app community";
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="chat"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
  app.innerHTML=(CU||CMN?"":'<header class="sh2 community-heading"><span class="sp3"></span><h2>커뮤니티</h2><span class="sp3"></span></header>')+'<div class="lsrow cwrow">'
  +'<div class="csr" id="csr"><input id="cq" type="search" placeholder="책 제목, 작가, 글 내용으로 찾기" aria-label="커뮤니티 글 검색" autocomplete="off"><button class="csb2" id="csb" aria-label="검색">'+ic("search")+'</button></div></div>'
@@ -3236,7 +3274,7 @@ function community(){
   var bal="";
   if(p.o){var v=VT[p.id],n0=p.n[0]+(v===0?1:0),n1=p.n[1]+(v===1?1:0),t=n0+n1,pc0=Math.round(n0/t*100);
    bal=v===undefined?'<div class="bal">'+p.o.map(function(o,k){return'<button data-v="'+k+'">'+esc(o)+'</button>'}).join('<span>VS</span>')+'</div>':'<div class="bal res">'+[n0,n1].map(function(n,k){var pp=k?100-pc0:pc0;return'<div class="br'+(v===k?" me":"")+'"><i style="width:'+pp+'%"></i><span>'+esc(p.o[k])+'</span><em>'+pp+'%</em></div>'}).join("")+'</div>'}
-  return'<article class="po" data-id="'+p.id+'"><div class="ph2"><button class="pav2" data-u="'+esc(un)+'" style="'+avBg(un)+'" aria-label="'+esc(un)+' 프로필">'+avTx(un)+'</button><div class="pn"><b>'+esc(un)+'</b><small>'+p.tm+(p.ed?' · <em class="edt">수정됨</em>':'')+'</small></div><span class="vis">'+vic(p.v)+VIS[p.v][1]+'</span>'+(me?'':fr?'<span class="fp2 on">친구</span>':'<button class="fp2'+(FRIEND_REQ[p.u]?" rq":"")+'" data-f="'+p.u+'">'+(FRIEND_REQ[p.u]?"신청 중":"친구 추가")+'</button>')+(me&&!full?'<button class="pmn" data-menu="'+p.id+'" aria-label="글 메뉴">'+ic("more")+'</button>':'')+'</div>'
+  return'<article class="po" data-id="'+p.id+'"><div class="ph2"><button class="pav2" data-u="'+esc(un)+'" style="'+avBg(un)+'" aria-label="'+esc(un)+' 프로필">'+avTx(un)+'</button><div class="pn"><b>'+esc(un)+'</b><small>'+p.tm+' · '+TN[p.t]+(p.ed?' · <em class="edt">수정됨</em>':'')+'</small></div><span class="vis">'+vic(p.v)+VIS[p.v][1]+'</span>'+(me?'':fr?'<span class="fp2 on">친구</span>':'<button class="fp2'+(FRIEND_REQ[p.u]?" rq":"")+'" data-f="'+p.u+'">'+(FRIEND_REQ[p.u]?"신청 중":"친구 추가")+'</button>')+(me&&!full?'<button class="pmn" data-menu="'+p.id+'" aria-label="글 메뉴">'+ic("more")+'</button>':'')+'</div>'
    +'<span class="tg2">'+TN[p.t]+'</span><p class="pt2'+(full?" open":"")+'">'+esc(p.x)+'</p>'+(!full&&p.x.length>70?'<button class="mre">더보기</button>':'')+bk+(p.img?'<img class="pim" src="'+p.img+'" alt="공유한 모음집 항목">':'')+bal
    +(tc&&!full?'<div class="tc"><small>인기 댓글</small><span class="pav2 s" style="'+avBg(tc[3]?ME:tc[0])+'">'+avTx(tc[3]?ME:tc[0])+'</span><span class="tx"><b>'+esc(tc[3]?ME:tc[0])+'</b> '+esc(tc[1])+'</span><em>'+ic("heart")+tc[2]+'</em></div>':'')
    +'<div class="pa"><button data-l="'+p.id+'" aria-pressed="'+lk2+'">'+ic("heart")+(p.l+(lk2?1:0))+'</button><button data-cm="'+p.id+'" aria-label="댓글 '+p.c.length+'개">'+ic("chat")+p.c.length+'</button></div></article>'}
