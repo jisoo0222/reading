@@ -3136,7 +3136,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;width:100%!important;height:54px!important;min-height:54px!important;min-width:0!important;margin:0!important;padding:4px 0!important;align-self:end!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;transform:none!important;color:#89978F!important;font:500 9px/1.2 Pretendard,sans-serif!important;letter-spacing:normal!important;opacity:1;pointer-events:auto}
 #app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button[aria-current=page]{color:#FFFFFF!important;font-weight:750!important}
 #app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button .ic{display:block!important;width:22px!important;height:22px!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:inherit!important;stroke-width:1.5!important}
-#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button:nth-child(3) .ic{width:24px!important;height:24px!important}
+#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button:nth-child(3) .ic{width:22px!important;height:22px!important}
 #app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button[aria-current=page] .ic{stroke-width:2.5!important}
 #app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button .ic path{stroke-width:inherit!important}
 @container (max-height:760px){#app.app nav.concept-nav.concept-nav:is(.tab,.fx){height:64px!important;min-height:64px!important;padding-top:5px!important;padding-bottom:5px!important}}
@@ -3504,12 +3504,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.hm .cx-picker-book>b{font-size:12px;line-height:1.5;font-weight:700;margin-top:16px;word-break:keep-all;overflow-wrap:anywhere}
 #app.hm .cx-picker-book>small{font-size:12px;line-height:1.5;color:#34483B;margin-top:6px}
 #app.hm .cx-book-picker button:focus-visible{outline:3px solid #174D37;outline-offset:4px}
-/* 홈 화면에서 홈 아이콘 뒤에만 원을 넣어요. */
+/* 홈 아이콘도 다른 주요 메뉴와 같은 크기와 선택 표시를 사용해요. */
 
 @container(max-height:860px){#app.hm .cx-stack-layer{transform:rotate(-11deg) scale(.85)}#app.hm .cx-stack-layer:nth-child(2){transform:translate(7px,-5px) rotate(6deg) scale(.85)}#app.hm .cx-stack-layer:nth-child(3){transform:translate(12px,-10px) rotate(16deg) scale(.82)}}
-
-#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button:nth-child(3){position:relative;isolation:isolate;color:#FFFFFF!important}
-#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button:nth-child(3):before{content:'';position:absolute;width:60px;height:60px;inset:0;margin:auto;background:#3E9370;border-radius:50%;z-index:-1;pointer-events:none}
 
 #app.onb .obs{touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab}
 #app.onb .obs.is-dragging{cursor:grabbing;scroll-behavior:auto;scroll-snap-type:none!important}
@@ -5432,7 +5429,24 @@ async function completeSignupHome(){
  }catch(e){loginPage();authNotice('연결을 확인하고 다시 로그인해 주세요.')}
 })();
 </script>
-<script>function genreIconSource(i){var source=FIGMA_ASSETS[GENRE_ASSETS[i]];if(!source||!source.startsWith('data:image/svg+xml;base64,'))return source;var svg=atob(source.split(',')[1]);svg=svg.replace(/#[0-9a-f]{6}/gi,'#174D37');return 'data:image/svg+xml;base64,'+btoa(svg)}</script>
+<script>
+var GENRE_ICON_CACHE=[];
+// 원본 SVG의 선 중심 경계를 기준으로 긴 변 20px, 선 1.5px로 맞춰요.
+var GENRE_ICON_BOUNDS=[[1,1,24.6667,21.3333],[4,5.33333,24,21.33337],[2.66667,2.66667,26.66663,26.66663],[1,1,24,24],[2.66667,2.66667,26.66663,26.66663],[1.00001,1.00002,21.68399,21.68268],[1,1.00001,24,23.99999],[2.66667,4.22,24.79863,25.1133]];
+function genreIconSource(i){
+ if(GENRE_ICON_CACHE[i])return GENRE_ICON_CACHE[i];
+ var source=FIGMA_ASSETS[GENRE_ASSETS[i]],bounds=GENRE_ICON_BOUNDS[i];
+ if(!source||!bounds||!source.startsWith('data:image/svg+xml;base64,'))return source;
+ var doc=new DOMParser().parseFromString(atob(source.split(',')[1]),'image/svg+xml'),svg=doc.documentElement;
+ var scale=20/Math.max(bounds[2],bounds[3]),x=12-(bounds[0]+bounds[2]/2)*scale,y=12-(bounds[1]+bounds[3]/2)*scale;
+ svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('width','24');svg.setAttribute('height','24');svg.setAttribute('preserveAspectRatio','xMidYMid meet');
+ var group=doc.createElementNS('http://www.w3.org/2000/svg','g');
+ while(svg.firstChild)group.appendChild(svg.firstChild);
+ group.setAttribute('transform','translate('+x+' '+y+') scale('+scale+')');svg.appendChild(group);
+ svg.querySelectorAll('[stroke]').forEach(function(path){path.setAttribute('stroke','#174D37');path.setAttribute('stroke-width',String(1.5/scale));path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round')});
+ return GENRE_ICON_CACHE[i]='data:image/svg+xml;base64,'+btoa(new XMLSerializer().serializeToString(svg));
+}
+</script>
 <script>
 function entryScene(n){
  if(n===0)return '<div class="entry-books"><div class="entry-cover entry-cover-back">'+coverSVG(4,null,true,112,160)+'</div><div class="entry-cover entry-cover-front">'+coverSVG(0,null,true,125,180)+'</div><span class="entry-badge">'+ic('heart')+'</span></div>';
