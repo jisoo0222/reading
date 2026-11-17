@@ -3605,6 +3605,15 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.notification-page .ntd{width:6px;height:6px;background:var(--strong)!important}
 #app.notification-page .emp{padding:32px 20px;border-radius:15px;background:var(--card);font-size:14px;line-height:1.6;color:var(--sub);word-break:keep-all}
 @media(max-width:360px){#app.notification-page .ntm,#app.notification-page .ntr{padding:16px!important}}
+.cx-motion-book-scene{position:absolute;inset:0;perspective:1000px;perspective-origin:0% 50%}
+.cx-motion-book{position:absolute;inset:0;transform-style:preserve-3d}
+.cx-motion-paper{position:absolute;inset:0;overflow:hidden;box-sizing:border-box;padding:14% 12%;background:#FBFCFB;color:#34483B;border:1px solid #D0DAD3;border-radius:2px 10px 10px 2px;font:400 8px/1.85 Batang,serif;box-shadow:0 8px 18px #174D371C}
+.cx-motion-right{transform:translateZ(-2px);background:linear-gradient(90deg,#E5E9E4 0%,#FBFCFB 13%,#FBFCFB 100%)}
+.cx-motion-cover-flap{position:absolute;inset:0;transform-origin:0% 50%;transform-style:preserve-3d;will-change:transform}
+.cx-motion-cover-front{position:absolute;inset:0;overflow:hidden;border-radius:10px;backface-visibility:hidden;transform:translateZ(.5px);box-shadow:0 10px 24px #174D3726}
+.cx-motion-cover-back{backface-visibility:hidden;transform:rotateY(180deg) translateZ(.5px);background:linear-gradient(270deg,#E5E9E4 0%,#FBFCFB 13%,#FBFCFB 100%)}
+.cx-motion-turning-leaf{position:absolute;inset:1px 2px 1px 0;border-radius:2px 9px 9px 2px;background:#F2F4EE;border:1px solid #D0DAD3;transform-origin:0% 50%;transform-style:preserve-3d;box-shadow:0 2px 8px #174D3715}
+.cx-motion-spine{position:absolute;top:0;bottom:0;left:0;width:2px;background:#A8B9AD;transform:translateZ(2px);opacity:0;pointer-events:none}
 </style>
 </head>
 <body>
@@ -5379,6 +5388,63 @@ archiveLoad();
 <script>/* 별도 디자인 시안: 기존 책·기록·동작을 사용하고 새 예시 데이터는 만들지 않아요. */
 (function(){
 
+var CX_READING_ENTERING=false;
+async function cxEnterReading(k,button){
+ if(CX_READING_ENTERING)return;
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches||!Element.prototype.animate){reader(k);return}
+ var source=app.querySelector('[data-stack-book="'+k+'"]'),art=source&&source.querySelector('svg');if(!art){reader(k);return}
+ CX_READING_ENTERING=true;var layer=null,animations=[],opened=false;
+ function animate(el,frames,options){var animation=el.animate(frames,options);animations.push(animation);return animation}
+ try{
+  button.disabled=true;button.setAttribute('aria-busy','true');
+  var a=app.getBoundingClientRect(),r=source.getBoundingClientRect(),matrix=new DOMMatrixReadOnly(getComputedStyle(source).transform),zoom=a.width/app.offsetWidth,originalW=source.offsetWidth*zoom*Math.hypot(matrix.a,matrix.b),originalH=source.offsetHeight*zoom*Math.hypot(matrix.c,matrix.d),angle=Math.atan2(matrix.b,matrix.a)*180/Math.PI;
+  var width=Math.min(164,a.width*.4),height=width*source.offsetHeight/source.offsetWidth,left=(a.width-width)/2,top=(a.height-height)/2-12;
+  layer=document.createElement('div');layer.className='cx-reading-transition';layer.dataset.phase='travel';layer.setAttribute('aria-hidden','true');layer.style.cssText='position:fixed;left:'+a.left+'px;top:'+a.top+'px;width:'+a.width+'px;height:'+a.height+'px;overflow:hidden;z-index:2147483000;pointer-events:auto;isolation:isolate;';
+  var veil=document.createElement('div');veil.style.cssText='position:absolute;inset:0;opacity:0;background:'+(S&&S.n===1?'#202824':'#EFF1F0')+';';
+  var cover=document.createElement('div');cover.className='cx-reading-transition-cover';cover.style.cssText='position:absolute;left:'+left+'px;top:'+top+'px;width:'+width+'px;height:'+height+'px;transform-origin:center;will-change:transform,opacity;';
+  var scene=document.createElement('div');scene.className='cx-motion-book-scene';
+  var book=document.createElement('div');book.className='cx-motion-book';
+  function paper(){var page=document.createElement('div');page.className='cx-motion-paper';return page}
+  var right=paper();right.classList.add('cx-motion-right');
+  var leaf=document.createElement('div');leaf.className='cx-motion-turning-leaf';
+  var flap=document.createElement('div');flap.className='cx-motion-cover-flap';
+  var front=document.createElement('div');front.className='cx-motion-cover-front';var clone=art.cloneNode(true);clone.style.cssText='display:block;width:100%;height:100%;';front.appendChild(clone);
+  var back=paper();back.classList.add('cx-motion-cover-back');flap.append(front,back);
+  var spine=document.createElement('div');spine.className='cx-motion-spine';book.append(right,leaf,flap,spine);scene.appendChild(book);cover.appendChild(scene);layer.append(veil,cover);document.body.appendChild(layer);
+  var dx=r.left+r.width/2-a.left-left-width/2,dy=r.top+r.height/2-a.top-top-height/2;
+  var start='translate('+dx+'px,'+dy+'px) rotate('+angle+'deg) scale('+(originalW/width)+','+(originalH/height)+')';
+  layer.dataset.phase='travel-opening';
+  animate(button,[{transform:'scale(1)'},{transform:'scale(.97)',offset:.65},{transform:'scale(1)'}],{duration:80,easing:'ease-out'});
+  var fly=animate(cover,[{transform:start},{transform:'translate('+(width/2)+'px,0px) rotate(0deg) scale(1)'}],{delay:80,duration:600,easing:'cubic-bezier(.2,.65,.25,1)',fill:'both'});
+  animate(veil,[{opacity:0},{opacity:1}],{delay:80,duration:600,easing:'ease-out',fill:'forwards'});
+  var homeContent=app.querySelector('.sc');if(homeContent)animate(homeContent,[{opacity:1},{opacity:0}],{delay:80,duration:600,easing:'ease-out',fill:'forwards'});
+  var opening=animate(flap,[{transform:'rotateY(0deg)'},{transform:'rotateY(-165deg)'}],{delay:80,duration:600,easing:'cubic-bezier(.2,.55,.3,1)',fill:'both'});
+  animate(leaf,[{transform:'rotateY(0deg)'},{transform:'rotateY(-153deg)'}],{delay:110,duration:570,easing:'cubic-bezier(.2,.55,.3,1)',fill:'both'});
+  animate(spine,[{opacity:0},{opacity:.7}],{delay:80,duration:600,easing:'ease-in',fill:'forwards'});
+  await Promise.all([fly.finished,opening.finished]);if(!app.classList.contains('hm'))return;
+  layer.dataset.phase='approaching';cover.classList.add('cx-motion-whole-approach');
+  // 오른쪽 면을 바라보는 위치로 이동하면서 책 전체를 같은 비율로 키워요.
+  var pr=right.getBoundingClientRect(),factor=Math.max(a.width/pr.width,a.height/pr.height)*1.06;
+  var pageX=pr.left-a.left-left-width/2,pageY=pr.top-a.top-top;
+  var targetX=a.width/2-left-(pageX+pr.width/2)*factor,targetY=a.height/2-top-(pageY+pr.height/2)*factor;
+  cover.style.transformOrigin='0 0';
+  var approach=animate(cover,[{transform:'translate('+(width/2)+'px,0px) scale(1)'},{transform:'translate('+targetX+'px,'+targetY+'px) scale('+factor+')'}],{duration:700,easing:'cubic-bezier(.35,.05,.2,1)',fill:'forwards'});
+  // 오른쪽 페이지가 화면을 채우는 순간 본문을 보여 줘요.
+  await new Promise(function(resolve){
+   var settled=false;function finish(){if(settled)return;settled=true;resolve()}
+   function check(){if(settled)return;if(!layer.isConnected||!app.classList.contains('hm')){finish();return}var page=right.getBoundingClientRect(),bounds=app.getBoundingClientRect();if(page.left<=bounds.left+.5&&page.top<=bounds.top+.5&&page.right>=bounds.right-.5&&page.bottom>=bounds.bottom-.5){finish();return}requestAnimationFrame(check)}
+   approach.finished.then(finish,finish);requestAnimationFrame(check);
+  });if(!app.classList.contains('hm'))return;
+  reader(k);opened=true;layer.dataset.phase='reading';
+  var fade=animate(cover,[{opacity:1},{opacity:0}],{duration:60,easing:'ease-out',fill:'forwards'});
+  animate(veil,[{opacity:1},{opacity:0}],{duration:60,easing:'ease-out',fill:'forwards'});
+  var readingContent=app.querySelector('.sc.rdc');if(readingContent)animate(readingContent,[{opacity:0},{opacity:1}],{duration:60,easing:'ease-out'});
+  await fade.finished;var title=app.querySelector('.rh h2');if(title){title.tabIndex=-1;title.focus({preventScroll:true})}
+ }catch(e){if(!opened&&app.classList.contains('hm'))reader(k)}
+ finally{animations.forEach(function(animation){animation.cancel()});if(layer)layer.remove();if(button.isConnected){button.disabled=false;button.removeAttribute('aria-busy')}CX_READING_ENTERING=false}
+}
+
+
 function cxReadingBooks(){return [DEF].concat(RLs()).filter(function(k,i,L){return L.indexOf(k)===i&&LB[k]&&!isDone(k)&&bprog(k).c<100}).slice(0,3)}
 function cxOpenReadingBooks(books){
  if(document.getElementById('cx-book-picker'))return;
@@ -5409,7 +5475,7 @@ home=function(){
  +'<section class="cx-community"><div class="cx-sectionhead"><h2>커뮤니티 인기글</h2><button class="cx-link" id="cx-community">전체 보기'+ic('next')+'</button></div>'+(post?'<div id="cx-post">'+communityPost(post,false,true)+'</div>':'<p class="cx-weeknote">아직 올라온 이야기가 없어요.</p>')+'</section>'
  +'<section class="cx-popular" aria-labelledby="cx-popular-title"><div class="cx-sectionhead"><h2 id="cx-popular-title">인기 급상승 오늘의 책</h2><button class="cx-link" id="cx-rank">전체 보기'+ic('next')+'</button></div><div class="shs pps">'+popRank().slice(0,10).map(function(book,i){return bcard(book,i+1)}).join('')+'</div></section>'
  +'<nav class="fx concept-nav" aria-label="주요 메뉴">'+nav+'</nav>';
- document.getElementById('cx-notice').onclick=inbox;document.getElementById('cx-read').onclick=function(){reader(k)};document.getElementById('cx-detail').onclick=function(){cxOpenReadingBooks(stackBooks.length?stackBooks:[k])};document.getElementById('cx-calendar').onclick=function(){calendar()};document.getElementById('cx-missions').onclick=hMis;document.getElementById('cx-community').onclick=function(){OPENP=0;community()};document.getElementById('cx-rank').onclick=rankPg;lbWire(home);
+ document.getElementById('cx-notice').onclick=inbox;document.getElementById('cx-read').onclick=function(){cxEnterReading(k,this)};document.getElementById('cx-detail').onclick=function(){cxOpenReadingBooks(stackBooks.length?stackBooks:[k])};document.getElementById('cx-calendar').onclick=function(){calendar()};document.getElementById('cx-missions').onclick=hMis;document.getElementById('cx-community').onclick=function(){OPENP=0;community()};document.getElementById('cx-rank').onclick=rankPg;lbWire(home);
  var p=document.getElementById('cx-post');if(p)p.onclick=function(e){
   var button=e.target.closest('button');
   if(button&&button.dataset.f){FRIEND_REQ[button.dataset.f]=!FRIEND_REQ[button.dataset.f];p.innerHTML=communityPost(post,false,true);return}
