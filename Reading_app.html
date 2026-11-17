@@ -3554,6 +3554,32 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app:is(.community,.home-feed) .post-author .fp2 .ic{width:12px;height:12px;flex:none}
 #app:is(.community,.home-feed) .ph2 .vis{flex:none;margin-left:auto;min-height:28px;justify-content:flex-end}
 #app:is(.community,.home-feed) .ph2 .pmn{flex:none;margin:0}
+/* 독서 달력과 기록: 카드 안 여백과 날짜·기록 사이의 간격을 확보해요. */
+#app.calendar-page .cbx,#app.calendar-page .lgw{padding:24px 20px!important;border-radius:15px!important;background:var(--card)!important}
+#app.calendar-page .cbx{margin-top:0}
+#app.calendar-page .cbx .cmn{gap:16px;margin:0 0 24px}
+#app.calendar-page .cmo{width:40px;height:40px;flex:none}
+#app.calendar-page .cgd{grid-template-columns:repeat(7,minmax(0,1fr));gap:12px 4px}
+#app.calendar-page .cwk{margin-bottom:12px}
+#app.calendar-page .cwk span{margin:0;line-height:20px}
+#app.calendar-page .cd{width:100%;max-width:36px;height:36px;min-width:0}
+#app.calendar-page .clg{flex-wrap:wrap;gap:8px 16px;margin-top:24px;padding-top:16px;border-top:1px solid var(--line);line-height:20px}
+#app.calendar-page .clg>span{white-space:nowrap}
+#app.calendar-page .lgw{margin-top:20px}
+#app.calendar-page .lgt-h{align-items:flex-start;flex-wrap:wrap;gap:12px;margin-bottom:24px}
+#app.calendar-page .lgt-h h3{margin:0;line-height:1.5}
+#app.calendar-page .lgp{padding:6px 10px;line-height:18px}
+#app.calendar-page .lgt li{gap:12px;padding-bottom:24px}
+#app.calendar-page .lgt li:last-child{padding-bottom:0}
+#app.calendar-page .lgt li>time{width:34px}
+#app.calendar-page .lgt li:not(:last-child)::before{left:60px;top:32px;bottom:4px}
+#app.calendar-page .lgt li>div{padding-top:3px;line-height:1.6;word-break:keep-all;overflow-wrap:anywhere}
+#app.calendar-page .lgt li>div>p,#app.calendar-page .lgt li>div>small{margin-top:8px}
+#app.calendar-page .lgb{gap:12px;padding:12px;margin-top:12px}
+#app.calendar-page .lgb p{margin:0;line-height:1.5}
+#app.calendar-page .lgb small{display:block;margin-top:4px}
+#app.calendar-page .lgq{padding:12px;margin-top:12px!important}
+#app.calendar-page .lge{margin:0;padding:0;line-height:1.7}
 /* 알림: 최신 디자인 시스템의 카드·간격·색상을 화면 안에서 적용해요. */
 #app.notification-page .sc>.sh2.concept-heading{margin-bottom:24px!important;display:grid;grid-template-columns:80px minmax(0,1fr) 80px;gap:0}
 #app.notification-page .sh2>.ib{justify-self:start}
@@ -4344,7 +4370,7 @@ function setPg(){
 function calendar(y,m,sd){
  var now=new Date();if(y===undefined){y=now.getFullYear();m=now.getMonth()}
  var dt=new Date(y,m,1);y=dt.getFullYear();m=dt.getMonth();
- app.className="app";
+ app.className="app calendar-page";
  var first=dt.getDay(),dim=new Date(y,m+1,0).getDate(),past=y<now.getFullYear()||(y===now.getFullYear()&&m<now.getMonth()),cur=y===now.getFullYear()&&m===now.getMonth(),td=now.getDate(),cells="",tdp=RDY.d===todayStr()?Object.keys(RDY.p).length:0,G=GOAL||10;
  function ok(d){return past||(cur&&d<=td)}
  var z=function(n){return(n<10?"0":"")+n},dk=function(d){return y+"."+z(m+1)+"."+z(d)},ev={};RDB.forEach(function(b){ev[b[3]]=1});CMTS.forEach(function(c){ev[c.d]=1});
