@@ -4239,7 +4239,7 @@ I.bellOn="M6 16v-5a6 6 0 0 1 9-5.2M18 11v5l1.5 2h-15M10 20a2 2 0 0 0 4 0";
 var NTF=[{k:"rq",q:1,t:"하린님이 『메밀꽃 필 무렵』 함께 읽기를 신청했어요.",tm:"방금 전",rd:0},{k:"fr",u:2,t:"하린님이 친구 신청을 보냈어요.",tm:"방금 전",rd:0},{k:"rm",t:"",tm:"10분 전",rd:0},{k:"pp",u:0,t:"지민님이 같은 책에 코멘트를 남겼어요.",tm:"1시간 전",rd:0},{k:"pt",t:"출석 포인트 10P가 쌓였어요.",tm:"어제",rd:1}],NIC={fr:"users",rm:"book",pp:"chat",pt:"gift",rq:"mail"};
 function ntfT(n){return n.k==="rm"?(GOAL?"오늘 목표 "+GOAL+"쪽, 아직 읽을 시간이 남았어요. 이어 읽어 볼까요?":"오늘도 한 쪽만 가볍게 읽어 볼까요?"):n.t}
 function unread(){return NTF.filter(function(n){return!n.rd}).length+REQ.filter(function(r){return r.st===0}).length}
-var NFC="all",NCAT=[["all","전체"],["rq","우편"],["fr","친구"],["rm","독서"],["pp","커뮤니티"],["pt","포인트"]];
+var NFC="all",NCAT=[["all","전체"],["fr","친구"],["rm","독서"],["pp","커뮤니티"],["pt","포인트"]];
 function inbox(c){if(typeof c==="string")NFC=c;
  app.className="app";var VIS=NTF.map(function(n,i){return i}).filter(function(i){return NFC==="all"||NTF[i].k===NFC});
  app.innerHTML='<div class="sh2"><button class="ib" id="nb0" aria-label="뒤로">'+ic("back")+'</button><h2>알림</h2><button class="nall" id="nall"'+(NTF.some(function(n){return !n.rd})?'':' disabled')+'>모두 읽음</button></div>'
