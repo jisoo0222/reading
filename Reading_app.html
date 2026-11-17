@@ -3550,6 +3550,31 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.onb .obp>.obi{width:100%;max-width:none;max-height:none;height:auto;min-height:210px;flex:1;margin:32px 0}
 #app.onb .obgo[hidden]{display:block!important;visibility:hidden;pointer-events:none}
 @container(max-height:760px){#app.onb .obp>.obi{margin:24px 0;min-height:180px}}
+/* 알림: 최신 디자인 시스템의 카드·간격·색상을 화면 안에서 적용해요. */
+#app.notification-page .sc>.sh2.concept-heading{margin-bottom:24px!important;display:grid;grid-template-columns:80px minmax(0,1fr) 80px;gap:0}
+#app.notification-page .sh2>.ib{justify-self:start}
+#app.notification-page .sh2 h2{margin:0}
+#app.notification-page .nall{justify-self:end;min-height:48px;padding:0;font-size:12px;font-weight:600;color:var(--strong)}
+#app.notification-page .nall:disabled{color:var(--tx3);opacity:.5}
+#app.notification-page .ntm{gap:12px;padding:20px;margin:0 0 16px;background:var(--card);border:1px solid var(--line);border-radius:15px;box-shadow:none}
+#app.notification-page .nti{width:40px!important;height:40px!important;border-radius:12px;background:var(--soft);color:var(--strong)}
+#app.notification-page .nti .ic{width:30px!important;height:30px!important}
+#app.notification-page .ntm>.ic{width:16px!important;height:16px!important;color:var(--tx3);flex:none}
+#app.notification-page .ntx b{font-size:14px!important;font-weight:500;line-height:1.6;word-break:keep-all}
+#app.notification-page .ntm .ntx b{font-size:16px!important;font-weight:600}
+#app.notification-page .ntx small{display:block;margin-top:4px;font-size:12px!important;line-height:1.5;color:var(--tx3)}
+#app.notification-page .ctf.ntc{gap:8px;margin:0 0 16px;padding:0 0 4px;border:0;scroll-padding-inline:0}
+#app.notification-page .ctf.ntc>button{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;gap:4px;min-height:36px;padding:8px 10px!important;margin:0;border-radius:10px;opacity:1;font-size:12px!important;font-weight:500;letter-spacing:0;line-height:20px;background:#E5EAE7;color:var(--sub)}
+#app.notification-page .ctf.ntc>button[aria-selected=true]{font-weight:600}
+#app.notification-page .ntu{display:inline-grid;place-items:center;min-width:16px;height:16px;padding:0 4px;margin:0;border-radius:8px;background:var(--strong);color:#fff;font-size:11px;line-height:16px;box-sizing:border-box}
+#app.notification-page [aria-selected=true] .ntu{background:var(--card);color:var(--strong)}
+#app.notification-page .ntl{gap:16px}
+#app.notification-page .ntr{gap:12px;padding:20px!important;margin:0;min-height:88px;border:1px solid var(--line)!important;border-radius:15px!important;background:var(--card)!important;box-shadow:none}
+#app.notification-page .ntr.new{background:var(--soft)!important;border-color:var(--soft)!important}
+#app.notification-page .ntr.new .nti{background:var(--card)}
+#app.notification-page .ntd{width:6px;height:6px;background:var(--strong)!important}
+#app.notification-page .emp{padding:32px 20px;border-radius:15px;background:var(--card);font-size:14px;line-height:1.6;color:var(--sub);word-break:keep-all}
+@media(max-width:360px){#app.notification-page .ntm,#app.notification-page .ntr{padding:16px!important}}
 </style>
 </head>
 <body>
@@ -4243,7 +4268,7 @@ function ntfT(n){return n.k==="rm"?(GOAL?"오늘 목표 "+GOAL+"쪽, 아직 읽�
 function unread(){return NTF.filter(function(n){return!n.rd}).length+REQ.filter(function(r){return r.st===0}).length}
 var NFC="all",NCAT=[["all","전체"],["fr","친구"],["rm","독서"],["pp","커뮤니티"],["pt","포인트"]];
 function inbox(c){if(typeof c==="string")NFC=c;
- app.className="app";var VIS=NTF.map(function(n,i){return i}).filter(function(i){return NFC==="all"||NTF[i].k===NFC});
+ app.className="app notification-page";var VIS=NTF.map(function(n,i){return i}).filter(function(i){return NFC==="all"||NTF[i].k===NFC});
  app.innerHTML='<div class="sh2"><button class="ib" id="nb0" aria-label="뒤로">'+ic("back")+'</button><h2>알림</h2><button class="nall" id="nall"'+(NTF.some(function(n){return !n.rd})?'':' disabled')+'>모두 읽음</button></div>'
  +(REQ.length?(function(){var nw=REQ.filter(function(r){return r.st===0}).length;return'<button class="ntm" id="ntm"><span class="nti">'+envSvg(0)+'</span><span class="ntx"><b>우체통</b><small>함께 읽자는 편지 '+REQ.length+'통'+(nw?' · 새 편지 '+nw+'통':'')+'</small></span>'+(nw?'<i class="ntd" aria-label="새 편지"></i>':'')+ic("next")+'</button>'})():'')
  +'<div class="ctf ntc" role="tablist" aria-label="알림 분류" id="ntc">'+NCAT.map(function(t){var u=NTF.filter(function(n){return !n.rd&&(t[0]==="all"||n.k===t[0])}).length;return'<button role="tab" data-c="'+t[0]+'" aria-selected="'+(NFC===t[0])+'">'+t[1]+(u?'<i class="ntu" aria-label="읽지 않음 '+u+'개">'+u+'</i>':'')+'</button>'}).join("")+'</div>'
