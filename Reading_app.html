@@ -2875,7 +2875,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 :root{--bg:#EFF1F0;--card:#FFFFFF;--ink:#17241C;--sub:#34483B;--tx2:#34483B;--tx3:#4C6152;--pri:#3E9370;--strong:#174D37;--soft:#DAEAE1;--bd:#AFBDB3;--bd-card:#DCE4DE;--divider:#DCE4DE;--line:#DCE4DE;--r-home-card:20px}
 #app:not(.hm):not(.rd),#app:not(.hm):not(.rd) .sc{background:#EFF1F0!important;color:#17241C}
 #app:not(.hm):not(.rd) .sc{padding-left:20px!important;padding-right:20px!important;word-break:keep-all}
-#app:not(.hm):not(.rd) .sc>.sh2:first-child{background:transparent!important;border:0;box-shadow:none}
+#app:not(.hm):not(.rd) .sc>.sh2:first-child{background:var(--bg)!important;border:0;box-shadow:none}
 #app:not(.hm):not(.rd) :is(.sh2 h2,.fs h3,.fsh h3){font-weight:750!important;color:#17241C}
 #app:not(.hm):not(.rd) :is(.box,.po,.quote-entry,.ax,.bkm,.drow,.cr,.alr){background:#FFFFFF!important;border:0!important;border-radius:20px!important;box-shadow:none!important}
 #app:not(.hm):not(.rd) .btn:not(.ghost){background:#174D37!important;color:#FFFFFF!important;border-color:#174D37!important;box-shadow:none!important;border-radius:12px!important;min-height:48px}
@@ -3038,7 +3038,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 /* 책의 원래 색을 유지해요. */
 #app .book-cover,#app.hm .cx-read-cover,#app .cx-book>span{filter:none!important}
 /* 홈·마이페이지 외 화면은 제목과 구분선을 유지해요. */
-#app:not(.hm):not(.pf):not(.rd) .sc>.sh2.concept-heading{height:60px!important;min-height:60px!important;width:calc(100% + 40px);margin-left:-20px!important;margin-right:-20px!important;padding:0 20px!important;background:transparent!important;border-bottom:1px solid #B8C5BC!important;border-radius:0!important;box-shadow:none!important;flex:none}
+#app:not(.hm):not(.pf):not(.rd) .sc>.sh2.concept-heading{position:sticky;top:0!important;z-index:10;isolation:isolate;height:60px!important;min-height:60px!important;width:calc(100% + 40px);margin-left:-20px!important;margin-right:-20px!important;padding:0 20px!important;background:var(--bg)!important;border-bottom:1px solid #B8C5BC!important;border-radius:0!important;box-shadow:none!important;flex:none}
 #app:not(.hm):not(.pf):not(.rd) .concept-heading h2{font-size:18px!important;line-height:1.3;font-weight:750!important;color:#17241C;text-align:center}
 #app.auth .concept-heading{margin-bottom:0!important}
 #app.auth .auth-brand{padding-top:26px;height:220px}
