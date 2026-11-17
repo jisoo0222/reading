@@ -2664,6 +2664,890 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 */
 @font-face{font-family:DdokdokWordmark;src:url(data:font/ttf;base64,AAEAAAAQAQAABAAAR1BPU0R2THUAAAt0AAAAIEdTVUIAGQAMAAALlAAAABBPUy8y4/cG4AAAB+QAAABgY21hcLhvsdYAAAhEAAAAPGN2dCABCASdAAAJ/AAAABpmcGdtBlmcNwAACIAAAAFzZ2FzcAAAABAAAAtsAAAACGdseWbOgyZFAAABDAAABkhoZWFkFA1/2gAAB3wAAAA2aGhlYQd2Av8AAAfAAAAAJGhtdHgF6ABaAAAHtAAAAApsb2NhAU0DJAAAB3QAAAAIbWF4cAIVBagAAAdUAAAAIG5hbWUVhi+jAAAKGAAAATJwb3N0/7gAMgAAC0wAAAAgcHJlcGgGjIUAAAn0AAAABwACABT/0ALxAvIAbgCWAP64AAArALoAOABGAAMrugBvAIkAAyu6AFIAHwADK7oAAAANAAMruAAAELgAGdC4AAAQuAAe0LgAHxC4ACLQuAAiL7gARhC4AEPQuABDL7gAUhC4AFfQuAAfELgAYtC4AGIvuAAfELgAZ9C4AAAQuABq0LgAiRC4AIfQuACHLwG6AE8ALAADK7oAagAeAAMrugB3AIIAAyu4AHcQuAA+0LgAPi+4AGoQuABn0LgAZy+4AHcQuABy0EEFANoAggDqAIIAAl1BGwAJAIIAGQCCACkAggA5AIIASQCCAFkAggBpAIIAeQCCAIkAggCZAIIAqQCCALkAggDJAIIADV0wMQEeARcWFRQGBw4CIiMFBiYnJjU0Njc2Fjc2OgEWMzUuASciLgInLgM9ARQmPgE3PgMzIToBFx4BBw4BBwYrASInISYGBw4BFBYXHgE3OgM7ATIWFxYXFgcOAQciDgEiIx4BFTI2OgEHMhYVFBYcAQcOASMiJicuAzU0LgIvASUiLgInJjY3PgMxAqERIw4OBwYIGRgRAf3rFzERFxMQFSwXGCYkJhksUhQMIB0XBAMDAwEBAgcGBhsbFgMBuBUtFBEMAQIVERAoFgUE/p4FEwUDAgEBBBoLDCZCZktKGSkRFAcFDxAlFggpMzcWAQEcPjw4JiktAQECHRcFEQUODwcDAQEBAY/+4A4dGBACAwYJBhEQDAGCAQgLCxQKFgUIBwMBAQIOERQOHQUHAQEBAUMBAQECCBAOCwwKDAxhARAXGwoKDAYBCAcgEhEYBQQBAQEDARIXEwMHAQEBCAkZGRQUAgEBAREmDAGgHCYeNisdBhUaAQIEEBQXCwQZGxcEAQEEChIOExELBwgDAQACABT/2gLxAvoAkwC+AaC4AAArALoAGAAjAAMrugCUAJgAAyu6ACkAAAADK7oAcQB+AAMruAAYELgAEtC4ABIvuAAYELgAFdC4ABUvuAAYELgAGtC4ABovuAApELgALNC4ACwvuAAYELgAPdC4AD0vuAAYELgAQtC4AEIvuAAYELgARdC4AEUvuAAjELgATtC4AE4vuAApELgAVNC4AFQvuAAAELgAZ9C4AGcvuABV3LgAKRC4AFfQuABXL7gAABC4AGXQuABlL7gAABC4AGvQuABrL7gAcRC4AG7QuABxELgAitC4AHEQuACN0LgAABC4AJHQuACRL7gAmBC4AK/QuACvL7gAmBC4ALLQuACYELgAtNABugAkAAoAAyu6AE8ANwADK7oAnQCnAAMruAAKELgABtC4AAYvuAA3ELgANNC6AG4ANwBPERI5uABuL7gAa9C4AGsvuABuELgAjdy4AJ0QuACX0EEFANoApwDqAKcAAl1BGwAJAKcAGQCnACkApwA5AKcASQCnAFkApwBpAKcAeQCnAIkApwCZAKcAqQCnALkApwDJAKcADV0wMRMuAScuAScuATc1ND4CNz4BNzYyNzI3MzYXHgEXFgYHDgErATQcAjczMhceARcWFz4BFyY3NTQ2Nz4BNz4CMjUzMhceARcWBgcOASsBFAYUFjsBMhceARceAQcOAwcOAQcGByMqAScWFBUyNhceARcWFRQGBw4CIiMFBiYnJjU0Njc2Fjc2FjM1DgEHBiMFMhYdARQWHAEHDgEjIicuAzU0LgInLgEjIgYrASEiLgInJjc+ATOUFDEREAYCAgEBAQMEBAUQEAYTCgsMbhYTER8ICwEMCyEReQFlDg0LGQoKCAoXDAICBQgEERAGMTcsDRYTESAICwEMDCAReQEBAWUODQsYChQMAgEECA4LBRsOERNmCxoNAThqKxEjDg4HBggZGBEB/esXMREXExAVLBcxVDIIGgwODwFrKS0BAQIdFwsKDg8HAwEBAQEDGyURGgsW/rIBDRAOAQYSDBwBAb8BAgoKIQ4MGA11Aw4QEQUGDAIBAQEBAwIKCw8lDg4GASAnIAEBAQQDBAgEAgEPD3YFJgsGDAIBAQEBAwIKCw8lDg4FASAlHwEBBAQIHwkICwcHBAIDAQEBAhEiCQICAQgLCxQKGAUIBwMBAQIOERYOHQUHAQEBAUMCAgEB2hoXRAUdIR4GFRoDBBAUFwsEFRYUBAECAQQIDgslFw4FAAABAAAAAwH9AAcAAAAAAAEAAAAAAAoAAAIAA6oAAAAAAAAAAAFNAyQAAQAAAAEAQsNYlJVfDzz1ABsD6AAAAADPtkNUAAAAAOHO+PD/9/8OA2IDYwAAAAYAAgAAAAAAAALPAEYDBQAUABQAAAABAAADIP84APoD6P/3/9wDYgABAAAAAAAAAAAAAAAAAAAAAgAEAyMBkAAFAAACigJYAAAASwKKAlgAAAFeADIAMgAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAABCTSAgAMCzxbYRAyD/OAD6A2oA7wAAAAEAAAAAAbACxwAAACAAAgAAAAIAAAADAAAAFAADAAEAAAAUAAQAKAAAAAYABAABAAKzxbYR//8AALPFthH//0w8SfEAAQAAAAAAALgAACxLuAAJUFixAQGOWbgB/4W4AEQduQAJAANfXi24AAEsICBFaUSwAWAtuAACLLgAASohLbgAAywgRrADJUZSWCNZIIogiklkiiBGIGhhZLAEJUYgaGFkUlgjZYpZLyCwAFNYaSCwAFRYIbBAWRtpILAAVFghsEBlWVk6LbgABCwgRrAEJUZSWCOKWSBGIGphZLAEJUYgamFkUlgjilkv/S24AAUsSyCwAyZQWFFYsIBEG7BARFkbISEgRbDAUFiwwEQbIVlZLbgABiwgIEVpRLABYCAgRX1pGESwAWAtuAAHLLgABiotuAAILEsgsAMmU1iwQBuwAFmKiiCwAyZTWCMhsICKihuKI1kgsAMmU1gjIbgAwIqKG4ojWSCwAyZTWCMhuAEAioobiiNZILADJlNYIyG4AUCKihuKI1kguAADJlNYsAMlRbgBgFBYIyG4AYAjIRuwAyVFIyEjIVkbIVlELbgACSxLU1hFRBshIVktALgB/4WwBI0AABQAcwBrAHAAeAAAAA7/EwAAAd0AAgLKAAAAAAAAAAcAWgADAAEECQAAAFIAAAADAAEECQABAAYAUgADAAEECQACAA4AWAADAAEECQADACwAZgADAAEECQAEABYAkgADAAEECQAFABoAqAADAAEECQAGABYAwgBDAG8AcAB5AHIAaQBnAGgAdAAgADIAMAAxADgAIABUAGgAZQAgAEIATQAgAEoAVQBBACAAUAByAG8AagBlAGMAdAAgAEEAdQB0AGgAbwByAHMASgB1AGEAUgBlAGcAdQBsAGEAcgAxAC4AMAAwADEAOwBVAEsAVwBOADsASgB1AGEALQBSAGUAZwB1AGwAYQByAEoAdQBhACAAUgBlAGcAdQBsAGEAcgBWAGUAcgBzAGkAbwBuACAAMQAuADAAMAAxAEoAdQBhAC0AUgBlAGcAdQBsAGEAcgAAAAMAAAAAAAD/tQAyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAB//8ADwABAAAACgAcAB4AAURGTFQACAAEAAAAAP//AAAAAAAAAAEAAAAKAAwADgAAAAAAAA==) format("truetype");font-weight:400;font-style:normal;font-display:swap;unicode-range:U+B611,U+B3C5}
 #app.auth .auth-brand h1,#app.spl .spw h1{font-family:DdokdokWordmark,Pretendard,sans-serif;font-weight:400;letter-spacing:.04em;font-synthesis:none}
+/* 독립 디자인 실험본. 원본 저장소에는 반영하지 않아요. */
+#app.hm{background:#F7F6F0!important;color:#253B30;--pri:#3E9370;--strong:#26674E;--concept-ink:#253B30}
+#app.hm .sc.hm{padding:24px 24px 120px!important;background:#F7F6F0!important;display:block!important;overflow-x:hidden}
+#app.hm .sc.hm>*{box-sizing:border-box}
+#app.hm .cx-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:29px}
+#app.hm .cx-brand{display:flex;align-items:center;gap:8px;font:400 25px DdokdokWordmark,Pretendard,sans-serif;color:#3E9370;letter-spacing:.02em}
+#app.hm .cx-brand .brand-logo{display:block;width:26px;height:30px;transform:none}
+#app.hm .cx-notice{width:48px;height:48px;border:0;border-radius:50%;background:#ECEEE5;color:#253B30;display:grid;place-items:center;position:relative;padding:0}
+#app.hm .cx-notice .ic{width:22px;height:22px;stroke-width:1.5}
+#app.hm .cx-dot{width:5px;height:5px;border-radius:50%;background:#3E9370;position:absolute;right:13px;top:11px}
+#app.hm .cx-intro{position:relative;margin-bottom:25px}
+#app.hm .cx-overline{font-size:12px;color:#54675B;letter-spacing:.02em;margin:0 0 10px}
+#app.hm .cx-intro h1{font-size:31px;line-height:1.34;letter-spacing:-1.2px;font-weight:650;margin:0;color:#253B30}
+#app.hm .cx-intro h1 em{font-style:normal;color:#3E9370}
+#app.hm .cx-sprout{position:absolute;right:4px;top:17px;width:56px;height:56px;color:#3E9370;transform:rotate(12deg)}
+#app.hm .cx-sprout .ic{width:56px;height:56px;stroke-width:1.15}
+#app.hm .cx-reading{position:relative;isolation:isolate;padding:25px 23px 22px;border:0;border-radius:23px;background:#3E9370;overflow:hidden;color:white;box-shadow:0 12px 26px -16px #19543880}
+#app.hm .cx-reading:before{content:'';position:absolute;z-index:-1;width:270px;height:270px;border:1px solid #ffffff20;border-radius:50%;right:-126px;top:-138px}
+#app.hm .cx-reading:after{content:'';position:absolute;z-index:-1;width:330px;height:330px;border:1px solid #ffffff16;border-radius:50%;right:-155px;top:-164px}
+#app.hm .cx-readhead{display:flex;align-items:center;gap:7px;margin-bottom:25px;font-size:11px;letter-spacing:.04em;color:#F5F5DB}
+#app.hm .cx-readhead i{width:5px;height:5px;background:#FFF3A0;border-radius:50%}
+#app.hm .cx-readbody{display:grid;grid-template-columns:minmax(0,1fr) 107px;gap:16px;align-items:center}
+#app.hm .cx-readbody h2{font-size:27px;line-height:1.2;letter-spacing:-.8px;font-weight:650;margin:0 0 8px;color:#FFFDF1;word-break:keep-all}
+#app.hm .cx-author{font-size:12px;color:#EDF5ED;margin:0 0 20px}
+#app.hm .cx-progress-copy{font-size:11px;color:#E4F1E5;line-height:1.6;margin:0}
+#app.hm .cx-progress-copy strong{font-size:20px;font-weight:500;color:white;letter-spacing:-.5px}
+#app.hm .cx-read-cover{position:relative;aspect-ratio:109/157;width:107px;background:var(--soft);border:0;border-radius:10px!important;overflow:hidden;transform:rotate(7deg);box-shadow:7px 10px 0 #205C4438,0 12px 16px #174D3726;justify-self:end;padding:0}
+#app.hm .cx-read-cover:after{content:'';position:absolute;inset:0;border:1px solid #ffffff35;border-radius:10px;pointer-events:none}
+#app.hm .cx-read-cover .cva{width:100%;height:100%}
+#app.hm .cx-meter{height:3px;border-radius:3px;margin:25px 0 19px;background:#ffffff3b;overflow:hidden}
+#app.hm .cx-meter i{display:block;height:100%;background:#FFF3A0;border-radius:3px;min-width:3px}
+#app.hm .cx-readfoot{display:flex;justify-content:space-between;align-items:center;gap:8px}
+#app.hm .cx-readfoot>span{font-size:11px;line-height:1.6;color:#F1F5E5}
+#app.hm .cx-readfoot>span b{display:block;font-size:12px;font-weight:500;color:#FFFDF2}
+#app.hm .cx-continue{display:flex;align-items:center;gap:13px;border:0;border-radius:999px;background:#FCF8E8;color:#285B43;font-size:12px;font-weight:700;min-height:49px;padding:0 17px;white-space:nowrap}
+#app.hm .cx-continue .ic{width:17px;height:17px}
+#app.hm .cx-week{margin-top:30px}
+#app.hm .cx-sectionhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:17px}
+#app.hm .cx-sectionhead h2{font-size:16px;letter-spacing:-.3px;font-weight:650;line-height:1.4;color:#253B30;margin:0}
+#app.hm .cx-link{padding:0;min-height:48px;background:none;border:0;display:flex;align-items:center;gap:4px;color:#56675C;font:500 11px Pretendard,sans-serif;white-space:nowrap}
+#app.hm .cx-link .ic{width:13px;height:13px}
+#app.hm .cx-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}
+#app.hm .cx-day{text-align:center;min-width:0}
+#app.hm .cx-day small{font-size:10px;color:#657164;display:block;margin-bottom:9px}
+#app.hm .cx-day span{display:grid;place-items:center;aspect-ratio:1;border-radius:50%;background:#EAECE3;color:#64705F;font-size:12px}
+#app.hm .cx-day.is-read span{background:#DFEADA;color:#286448;font-weight:600}
+#app.hm .cx-day.is-today span{background:#3E9370;color:white;box-shadow:0 0 0 3px #F7F6F0,0 0 0 4px #3E937050}
+#app.hm .cx-day .ic{width:18px;height:18px}
+#app.hm .cx-weeknote{font-size:11px;color:#586858;margin:14px 0 0;line-height:1.65}
+#app.hm .cx-points{display:flex;align-items:center;gap:11px;margin:23px 0 30px;padding:15px 0;border:0;border-top:1px solid #DDE2D4;border-bottom:1px solid #DDE2D4;width:100%;background:none;text-align:left;color:#253B30;min-height:58px}
+#app.hm .cx-pointmark{width:31px;height:31px;display:grid;place-items:center;flex:none;border-radius:50%;background:#EFE6BE;color:#6A5C2D;font:600 13px Pretendard,sans-serif}
+#app.hm .cx-points b{font-size:12px;font-weight:500;flex:1}.cx-points strong{color:#28674B}
+#app.hm .cx-points>.ic{width:16px;height:16px;color:#63735F}
+#app.hm .cx-books{margin:0 -24px;padding:0 0 25px}
+#app.hm .cx-books .cx-sectionhead{padding:0 24px;margin-bottom:13px}
+#app.hm .cx-booklist{display:flex;gap:17px;overflow-x:auto;padding:0 24px 15px;scroll-snap-type:x mandatory;scrollbar-width:none}
+#app.hm .cx-booklist::-webkit-scrollbar{display:none}
+#app.hm .cx-book{flex:0 0 94px;padding:0;background:none;border:0;text-align:left;color:#253B30;scroll-snap-align:start;min-width:0}
+#app.hm .cx-book>span{display:block;position:relative;width:94px;height:133px;border-radius:10px;overflow:hidden;box-shadow:0 5px 9px -6px #253B3050;margin-bottom:12px}
+#app.hm .cx-book b{font-size:12px;font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:5px}
+#app.hm .cx-book small{font-size:10px;color:#5B695D}
+#app.hm .cx-community{padding-top:9px}
+#app.hm .cx-post{position:relative;background:#EEEDE2;padding:21px 21px 17px;border:0;border-radius:3px 18px 18px 18px;width:100%;text-align:left;color:#253B30}
+#app.hm .cx-post>span{font:italic 38px Georgia,serif;color:#3E9370;height:24px;display:block}
+#app.hm .cx-post p{font-size:14px;line-height:1.8;font-weight:500;margin:9px 0 18px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;word-break:keep-all}
+#app.hm .cx-post footer{display:flex;align-items:center;gap:5px;font-size:10px;color:#546459}
+#app.hm .cx-post footer b{font-weight:500;flex:1}.cx-post footer .ic{width:13px;height:13px}
+#app.hm nav.concept-nav{position:absolute;bottom:16px;left:20px;right:20px;width:auto;height:73px!important;min-height:73px!important;border:0!important;border-radius:23px!important;background:#FFFEF9!important;padding:7px 8px!important;box-shadow:0 6px 30px #1E392518;display:grid;grid-template-columns:repeat(5,1fr);gap:0;z-index:50}
+#app.hm nav.concept-nav button{min-height:49px;border:0;background:transparent;color:#667366;padding:4px 0;gap:4px;font-size:9px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1.2}
+#app.hm nav.concept-nav button .ic{width:21px;height:21px;stroke-width:1.5}
+#app.hm nav.concept-nav button:nth-child(3){color:#3E9370}
+#app.hm nav.concept-nav button:nth-child(3) .ic{width:26px;height:26px;stroke-width:1.8}
+#app.hm :is(button,[tabindex]):focus-visible{outline:2px solid #174D37;outline-offset:4px}
+@media(prefers-reduced-motion:no-preference){#app.hm .cx-reading{animation:cx-enter .6s ease both}@keyframes cx-enter{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}}
+
+/* 참고 이미지의 절제된 색·단순한 카드·충분한 그래픽을 반영한 시안 */
+#app.hm,#app.hm .sc.hm{background:#F2F4F3!important;color:#252A28}
+#app.hm .sc.hm{padding:24px 22px 110px!important}
+#app.hm .cx-top{margin-bottom:22px}
+#app.hm .cx-brand{color:#252A28;font-size:25px}
+#app.hm .cx-notice{background:#E6EAE7;color:#4E5852}
+#app.hm .cx-intro{margin:0 0 14px}
+#app.hm .cx-intro h1{font-size:15px;line-height:1.4;letter-spacing:-.2px;font-weight:600;color:#333A36}
+#app.hm .cx-reading{padding:22px;border-radius:20px;background:#DAEAE1!important;box-shadow:none;color:#203B2B;min-height:258px}
+#app.hm .cx-reading:before{inset:0;width:auto;height:auto;transform:none;border:0;border-radius:0;background-image:linear-gradient(#3E937017 1px,transparent 1px),linear-gradient(90deg,#3E937017 1px,transparent 1px);background-size:25px 25px}
+#app.hm .cx-reading:after{display:none}
+#app.hm .cx-readhead{color:#315742;font-size:10px;font-weight:600;margin-bottom:17px;letter-spacing:0}
+#app.hm .cx-readhead i{background:#3E9370}
+#app.hm .cx-readbody{display:block;height:122px;position:relative}
+#app.hm .cx-readbody>div{position:relative;z-index:3;width:52%}
+#app.hm .cx-readbody h2{font-size:25px;color:#203B2B;font-weight:650;letter-spacing:-.6px;margin-bottom:7px}
+#app.hm .cx-author{color:#4C6355;font-size:11px;margin-bottom:19px}
+#app.hm .cx-progress-copy{color:#3F5848;font-size:10px}
+#app.hm .cx-progress-copy strong{color:#254C35;font-size:19px}
+#app.hm .cx-read-cover{position:absolute;right:4px;top:-35px;width:112px;height:161px;transform:rotate(-11deg);filter:grayscale(1);box-shadow:6px 8px 0 #263B2C18,0 10px 10px #20332718}
+#app.hm .cx-readbody:before{content:'';position:absolute;right:12px;top:-40px;width:107px;height:155px;border-radius:6px;background:#F9FCF8;transform:rotate(8deg)}
+#app.hm .cx-pen{position:absolute;right:-8px;top:57px;width:55px;height:55px;z-index:4;transform:rotate(6deg);color:#35483B;pointer-events:none}
+#app.hm .cx-pen .ic{width:55px;height:55px;stroke-width:1.8;fill:#E7EFE8}
+#app.hm .cx-meter{display:none}
+#app.hm .cx-readfoot{position:relative;z-index:5;margin-top:12px}
+#app.hm .cx-readfoot>span,#app.hm .cx-readfoot>span b{color:#355340;font-size:10px;font-weight:500}
+#app.hm .cx-readfoot>span b{margin-top:3px;font-size:12px}
+#app.hm .cx-continue{background:#28674E;color:#FFFFFF;border-radius:13px;min-height:49px;padding:0 16px;font-size:12px}
+#app.hm .cx-continue .ic{width:15px;height:15px}
+#app.hm .cx-points{margin:12px 0 27px;padding:15px 18px;border:0;border-radius:17px;background:#E5EAE7;position:relative;overflow:hidden}
+#app.hm .cx-pointmark{width:40px;height:40px;background:none;border:2px solid #8A9C90;color:#4E6A57;font-size:19px;font-weight:500;position:relative}
+#app.hm .cx-pointmark:after{content:'';position:absolute;inset:4px;border:1px solid #A7B6AC;border-radius:50%}
+#app.hm .cx-points b{font-size:12px;font-weight:600;color:#344439}
+#app.hm .cx-points strong{display:block;margin-top:4px;font-size:11px;font-weight:500;color:#52685A}
+#app.hm .cx-week{margin:26px 0 0;padding:19px 16px 17px;border-radius:17px;background:#FBFCFB}
+#app.hm .cx-sectionhead{margin-bottom:14px}
+#app.hm .cx-sectionhead h2{font-size:15px;font-weight:600;color:#303B33}
+#app.hm .cx-link{font-size:10px;color:#58675D;min-height:36px}
+#app.hm .cx-days{gap:8px}
+#app.hm .cx-day span{background:#F0F3F0;color:#647267;font-size:11px}
+#app.hm .cx-day.is-read span{background:#E2EBE4;color:#3E674B}
+#app.hm .cx-day.is-today span{background:#28674E;color:white;box-shadow:none}
+#app.hm .cx-day small{font-size:9px;color:#66716B;margin-bottom:8px}
+#app.hm .cx-books{padding-top:25px;padding-bottom:17px}
+#app.hm .cx-booklist{gap:17px}
+#app.hm .cx-book>span{filter:grayscale(1);box-shadow:0 5px 10px -6px #253B3050}
+#app.hm .cx-book b{font-size:12px;color:#303B33}
+#app.hm .cx-book small{font-size:10px;color:#5B695F}
+#app.hm .cx-post{border-radius:17px;background:#FBFCFB;padding:18px}
+#app.hm .cx-post>span{display:none}
+#app.hm .cx-post p{font-size:13px;font-weight:400;line-height:1.75;margin:0 0 17px;-webkit-line-clamp:2}
+#app.hm nav.concept-nav{bottom:0;left:0;right:0;height:78px!important;min-height:78px!important;border-radius:23px 23px 0 0!important;background:#25292B!important;box-shadow:none;padding:8px 14px!important}
+#app.hm nav.concept-nav button{color:#BFC9C2;font-size:9px;min-height:54px}
+#app.hm nav.concept-nav button[aria-current=page]{color:#FFFFFF}
+#app.hm nav.concept-nav button:nth-child(3){color:#FFFFFF}
+#app.hm nav.concept-nav button .ic{width:22px;height:22px;stroke-width:1.5}
+#app.hm nav.concept-nav button:nth-child(3) .ic{width:24px;height:24px}
+
+
+#app.hm .cx-books{margin-left:-22px;margin-right:-22px}
+#app.hm .cx-books .cx-sectionhead{padding-left:22px;padding-right:22px}
+#app.hm .cx-booklist{padding-left:22px;padding-right:22px;scroll-padding-left:22px}
+#app.hm .cx-community{padding-top:0}
+#app.hm .cx-inline-meter{height:4px;background:#B8CEC0;border-radius:4px;overflow:hidden;margin-top:9px;width:88%;max-width:125px}#app.hm .cx-inline-meter i{display:block;height:100%;background:#28674E;border-radius:4px}
+
+/* 본문·보조 글자와 조작 요소는 장식 배경보다 명확한 대비로 구분해요. */
+#app.hm{--contrast-ink:#17241C;--contrast-sub:#34483B}
+#app.hm .cx-readbody h2,#app.hm .cx-intro h1,#app.hm .cx-brand,#app.hm .cx-sectionhead h2,#app.hm .cx-post p{color:#17241C}
+#app.hm .cx-author,#app.hm .cx-progress-copy,#app.hm .cx-progress-copy strong,#app.hm .cx-readfoot>span,#app.hm .cx-readfoot>span b{color:#213C2B}
+#app.hm .cx-inline-meter{background:#ADBFAD;height:5px}
+#app.hm .cx-inline-meter i{background:#174D37}
+#app.hm .cx-continue{background:#174D37;color:#FFFFFF}
+#app.hm .cx-readfoot{margin-top:22px}
+#app.hm .cx-link,#app.hm .cx-day small,#app.hm .cx-day span,#app.hm .cx-post footer,#app.hm .cx-points strong{color:#34483B}
+#app.hm .cx-day.is-read span{color:#213C2B}
+#app.hm .cx-day.is-today span{background:#174D37;color:#FFFFFF}
+#app.hm .cx-points b{color:#17241C}
+#app.hm .cx-pointmark{border-color:#4B6655;color:#253F2E}
+#app.hm .cx-points>.ic,#app.hm .cx-notice{color:#34483B}
+
+#app.hm .cx-readbody h2{font-size:30px;font-weight:750;letter-spacing:-.8px}
+#app.hm .cx-read-cover{top:-27px}
+#app.hm .cx-readbody:before{top:-32px}
+#app.hm .cx-readfoot{margin-top:32px}
+#app.hm .cx-inline-meter{height:6px;background:#FFFFFF;border:1px solid #456A54}
+
+#app.hm .cx-read-cover{top:-17px}
+#app.hm .cx-readbody:before{top:-22px}
+#app.hm .cx-readfoot{margin-top:42px}
+
+/* 메인 구역 공통: 모서리20 · 안쪽20 · 구역 사이16 */
+#app.hm .cx-reading,#app.hm .cx-week,#app.hm .cx-points,#app.hm .cx-community{border-radius:20px;padding:20px;border:0;box-shadow:none;width:100%;box-sizing:border-box}
+#app.hm .cx-reading{margin:0}
+#app.hm .cx-week,#app.hm .cx-points,#app.hm .cx-community{margin:16px 0 0;background:#FBFCFB}
+#app.hm .cx-sectionhead{margin:0 0 16px;min-height:36px;align-items:center}
+#app.hm .cx-sectionhead h2{font-size:14px;line-height:1.4;font-weight:600}
+#app.hm .cx-link{min-height:36px;padding:0}
+#app.hm .cx-week .cx-days{gap:8px}
+#app.hm .cx-points{gap:12px;text-align:left}
+#app.hm .cx-points b{font-size:14px;line-height:1.4;font-weight:600}
+#app.hm .cx-points strong{margin-top:5px;font-size:12px;line-height:1.5;font-weight:500}
+#app.hm .cx-post{padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+#app.hm .cx-post p{margin:0 0 16px}
+#app.hm .cx-post footer{margin:0;line-height:1.5}
+
+#app.hm .cx-sectionhead h2{font-size:16px;font-weight:750;color:#17241C;letter-spacing:-.3px}
+
+/* 디자인 시스템: 좌우20, 상단30, 마지막 내용과 하단 메뉴 사이30 */
+#app.hm .sc.hm{padding:30px 20px 108px!important}
+#app.hm .cx-top{margin-bottom:10px}
+
+#app.hm .cx-top{transform:translateY(-10px)}
+
+#app.hm .cx-read-cover{transform:rotate(-11deg) scale(.95);transform-origin:center}
+#app.hm .cx-readbody:before{transform:rotate(8deg) scale(.95);transform-origin:center}
+
+/* 메인은 한 화면에 맞추고, 작은 화면에서는 세로 밀도만 조절해요. */
+#app.hm{container-type:size}
+#app.hm .sc.hm{overflow:hidden!important;overscroll-behavior:none}
+#app.hm .cx-sectionhead,#app.hm .cx-link{min-height:32px}
+@container (max-height:860px){
+ #app.hm .sc.hm{padding-top:20px!important;padding-bottom:98px!important}
+ #app.hm .cx-reading,#app.hm .cx-week,#app.hm .cx-points,#app.hm .cx-community{padding:16px}
+ #app.hm .cx-reading{min-height:0}
+ #app.hm .cx-week,#app.hm .cx-points,#app.hm .cx-community{margin-top:12px}
+ #app.hm .cx-readbody{height:110px}
+ #app.hm .cx-readfoot{margin-top:26px}
+ #app.hm .cx-sectionhead{margin-bottom:12px}
+ #app.hm .cx-read-cover{transform:rotate(-11deg) scale(.88)}
+ #app.hm .cx-readbody:before{transform:rotate(8deg) scale(.88)}
+}
+@container (max-height:760px){
+ #app.hm .sc.hm{padding-top:16px!important;padding-bottom:84px!important}
+ #app.hm .cx-reading,#app.hm .cx-week,#app.hm .cx-points,#app.hm .cx-community{padding:12px}
+ #app.hm .cx-week,#app.hm .cx-points,#app.hm .cx-community{margin-top:10px}
+ #app.hm .cx-readbody{height:100px}
+ #app.hm .cx-readfoot{margin-top:22px}
+ #app.hm .cx-post p{-webkit-line-clamp:1;margin-bottom:10px}
+ #app.hm .cx-sectionhead{margin-bottom:8px;min-height:28px}
+ #app.hm .cx-link{min-height:28px}
+ #app.hm nav.concept-nav{height:64px!important;min-height:64px!important;padding-top:5px!important;padding-bottom:5px!important}
+}
+
+#app.hm .cx-read-cover{top:-14px;transform:rotate(-11deg) scale(.92)}
+#app.hm .cx-readbody:before{top:-19px;transform:rotate(8deg) scale(.92)}
+@container (max-height:860px){
+ #app.hm .cx-read-cover{transform:rotate(-11deg) scale(.85)}
+ #app.hm .cx-readbody:before{transform:rotate(8deg) scale(.85)}
+}
+
+#app.hm .cx-reading:before{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20380%20290%22%20fill%3D%22none%22%3E%3Cg%20stroke%3D%22%233E9370%22%20stroke-width%3D%221.3%22%20opacity%3D%22.16%22%3E%3Cpath%20d%3D%22M95-30C200%2030%2068%20108%20154%20168S293%20192%20409%20285%22%2F%3E%3Cpath%20d%3D%22M114-30C219%2030%2087%20108%20173%20168S312%20192%20428%20285%22%2F%3E%3Cpath%20d%3D%22M133-30C238%2030%20106%20108%20192%20168S331%20192%20447%20285%22%2F%3E%3Cpath%20d%3D%22M152-30C257%2030%20125%20108%20211%20168S350%20192%20466%20285%22%2F%3E%3Cpath%20d%3D%22M171-30C276%2030%20144%20108%20230%20168S369%20192%20485%20285%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");background-size:cover;background-position:center;background-repeat:no-repeat}
+
+#app.hm .cx-reading:before{
+ background-image:radial-gradient(circle,#3E9370 1.15px,transparent 1.35px);
+ background-size:15px 15px;background-position:7px 7px;background-repeat:repeat;opacity:.46;
+ -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 12%,rgba(0,0,0,.5) 38%,transparent 76%);
+ mask-image:linear-gradient(to bottom,#000 0%,#000 12%,rgba(0,0,0,.5) 38%,transparent 76%);
+}
+/* 다른 화면도 같은 시안 언어로 맞춰요. 기존 데이터·이동·입력 동작은 유지해요. */
+:root{--bg:#F2F4F3;--card:#FBFCFB;--ink:#17241C;--sub:#34483B;--tx2:#34483B;--tx3:#4C6152;--pri:#3E9370;--strong:#174D37;--soft:#DAEAE1;--bd:#AFBDB3;--bd-card:#DCE4DE;--divider:#DCE4DE;--line:#DCE4DE;--r-home-card:20px}
+#app:not(.hm):not(.rd),#app:not(.hm):not(.rd) .sc{background:#F2F4F3!important;color:#17241C}
+#app:not(.hm):not(.rd) .sc{padding-left:20px!important;padding-right:20px!important;word-break:keep-all}
+#app:not(.hm):not(.rd) .sc>.sh2:first-child{background:transparent!important;border:0;box-shadow:none}
+#app:not(.hm):not(.rd) :is(.sh2 h2,.fs h3,.fsh h3){font-weight:750!important;color:#17241C}
+#app:not(.hm):not(.rd) :is(.box,.po,.quote-entry,.ax,.bkm,.drow,.cr,.alr){background:#FBFCFB!important;border:0!important;border-radius:20px!important;box-shadow:none!important}
+#app:not(.hm):not(.rd) .btn:not(.ghost){background:#174D37!important;color:#FFFFFF!important;border-color:#174D37!important;box-shadow:none!important;border-radius:12px!important;min-height:48px}
+#app:not(.hm):not(.rd) .btn.ghost{color:#174D37!important;background:#FBFCFB!important;border-color:#AABDB0!important;border-radius:12px!important;min-height:48px}
+#app:not(.hm):not(.rd) :is(.auth-field input,.fld input,#account-form input){background:#FBFCFB;border-color:#AFBDB3;border-radius:12px!important;color:#17241C}
+#app:not(.hm):not(.rd) :is(input,textarea)::placeholder{color:#566B5D;opacity:1}
+#app:not(.hm):not(.rd) .ib{background:transparent;color:#34483B;border:0;min-width:48px;min-height:48px}
+#app:not(.hm):not(.rd) .book-cover{filter:grayscale(1)}
+#app:not(.hm):not(.rd) :is(.spc,.sm,.hint,.dnote){color:#34483B}
+#app:not(.hm):not(.rd) :is(.hlk,.fadd){color:#34483B;font-weight:600}
+#app:not(.hm) nav.tab.nvb{bottom:0;left:0;width:100%;right:0;height:78px!important;min-height:78px!important;border:0!important;border-radius:23px 23px 0 0!important;background:#25292B!important;box-shadow:none!important;padding:9px 12px!important}
+#app:not(.hm) nav.tab.nvb button{color:#BFC9C2!important;font-size:9px!important;min-height:52px;background:transparent!important}
+#app:not(.hm) nav.tab.nvb button[aria-current=page]{color:#FFFFFF!important;font-weight:700}
+#app:not(.hm) nav.tab.nvb button[aria-current=page] .nvi{position:relative}
+#app:not(.hm) nav.tab.nvb button[aria-current=page] .nvi:after{content:'';position:absolute;bottom:-4px;left:50%;width:4px;height:4px;border-radius:50%;background:#FFFFFF;transform:translateX(-50%)}
+#app:not(.hm) :is(.ctf,.ctf2,.sg)>button,#app:not(.hm) .och button{border:0!important;background:#E5EAE7;color:#34483B;border-radius:12px}
+#app:not(.hm) :is(.ctf,.ctf2,.sg)>button[aria-selected=true],#app:not(.hm) .och button[aria-pressed=true]{background:#174D37!important;color:#FFFFFF!important}
+#app:not(.hm) :is(button,[tabindex],input,textarea):focus-visible{outline:2px solid #174D37!important;outline-offset:3px}
+/* 도서관: 흰색 묶음 카드와 책 그래픽 */
+#app.lib .csr,#app.lib .lsi{background:#FBFCFB!important;border:0!important;border-radius:14px!important;box-shadow:none!important}
+#app.lib #lmain>.fs{padding:20px!important;background:#FBFCFB!important;border-radius:20px!important;border:0!important;margin:16px 0 0!important}
+#app.lib #lmain .fsh{margin-bottom:16px!important}
+#app.lib .ppx .pps{margin:0 -20px;padding:0 20px 8px;scroll-padding-left:20px}
+#app.lib .bk .t{font-weight:700;color:#17241C}
+#app.lib .bk .a,#app.lib .rdr{color:#34483B!important}
+#app.lib .gnt>span{background:#E8EEEA!important;border:0!important;color:#174D37!important}
+#app.lib .gnt>span img{filter:grayscale(1);opacity:.85}
+#app.lib .gnt{color:#17241C;font-weight:600}
+#app.exhibit .exhibit-row::after{background:#5D7162;height:9px;border-radius:2px}
+#app.exhibit .exhibit-item .hb{background:#FBFCFB;color:#174D37}
+/* 문구점: 내용의 실제 색은 유지하고 바탕과 카드만 정리해요. */
+#app.shp .mpt3{position:relative;isolation:isolate;height:auto!important;min-height:104px!important;padding:20px!important;border-radius:20px!important;background:#DAEAE1!important;overflow:hidden}
+#app.shp .mpt3::before,#app.pf .ptc2::before{content:'';position:absolute;inset:0;z-index:-1;background-image:radial-gradient(circle,#3E9370 1px,transparent 1.2px);background-size:15px 15px;opacity:.35;mask-image:linear-gradient(#000,transparent 90%);pointer-events:none}
+#app.shp .mpl3>small{font-size:13px!important;font-weight:600;color:#213C2B}
+#app.shp .pt3 b{font-size:28px!important;font-weight:750;color:#17241C}
+#app.shp .vl3{background:#FBFCFB!important;color:#174D37;border-radius:12px;min-height:48px;padding:0 12px;font-size:11px}
+#app.shp .cats{height:54px!important;gap:8px!important;margin:16px 0!important;padding:0!important}
+#app.shp .cat{border:0!important;background:#E5EAE7!important;border-radius:12px!important;padding:0 10px!important;min-height:48px!important;height:48px!important;color:#34483B!important}
+#app.shp .cat small{font-size:12px!important;font-weight:600}
+#app.shp .cat:not([aria-selected=true]){color:#34483B!important}
+#app.shp .cat[aria-selected=true]{background:#174D37!important;color:#FFFFFF!important}
+#app.shp .cat[aria-selected=true]::after{display:none}
+#app.shp .gd{padding:0 0 20px!important;background:transparent!important;gap:16px 12px!important}
+#app.shp .gd.g3 .cd2{background:#FBFCFB!important;border-radius:20px!important;padding:12px 10px 16px!important;overflow:hidden}
+#app.shp .gd.g3 .cd2 .pvw{background:#EFF2EF!important;border:0!important;border-radius:12px!important;margin-bottom:12px}
+#app.shp .gd.g3 .cd2>b{font-size:13px!important;font-weight:700!important;color:#17241C}
+#app.shp .gd.g3 .cd2>span{font-size:11px!important;color:#34483B}
+/* 커뮤니티: 제목·글·연결된 책을 하나의 카드에 담아요. */
+#app.community .lsi,#app.community .csr{background:#FBFCFB!important;border:0!important;border-radius:14px!important}
+#app.community .ctf2{gap:7px;flex-wrap:nowrap}
+#app.community .ctf2 button{min-height:42px;border-radius:12px;padding:0 11px!important;font-size:12px!important;color:#34483B;background:#E5EAE7}
+#app.community .ctf2 button[aria-selected=true]{background:#174D37!important;color:white!important;font-weight:700}
+#app.community .po{padding:20px!important;margin-bottom:16px!important}
+#app.community .ph2{margin-bottom:16px}
+#app.community .ph2 .pn b{font-weight:750;color:#17241C}
+#app.community .ph2 .pn small,#app.community .vis{color:#34483B!important}
+#app.community .fp2{background:#E7EDE8;border:0!important;border-radius:10px;min-height:36px;color:#34483B}
+#app.community .fp2.on{background:#174D37;color:white}
+#app.community .pt2{font-size:15px!important;line-height:1.75!important;color:#17241C}
+#app.community .bkl{background:#EFF3EF!important;border:0!important;border-radius:12px!important}
+#app.community .tc{border-color:#DCE4DE;font-size:11px}
+#app.community .tc .tx,#app.community .tc em{color:#34483B;font-size:11px}
+#app.community .pa button{color:#34483B!important}
+#app.community .pa button[aria-pressed=true]{color:#174D37!important}
+#app.community .wfab{background:#174D37!important;color:white;box-shadow:0 5px 15px #17241C20}
+/* 마이페이지: 메인과 같은 묶음·여백·색 */
+#app.pf .pfb{background:transparent!important;padding-top:24px}
+#app.pf .pbt{padding:0 0 4px}
+#app.pf .pnm h2{font-size:23px!important;font-weight:750!important;color:#17241C}
+#app.pf .pnm small{color:#34483B!important}
+#app.pf .ptc2{position:relative;isolation:isolate;overflow:hidden;background:#DAEAE1!important;border:0!important;border-radius:20px!important;padding:20px!important;min-height:100px}
+#app.pf .ptl small{color:#34483B!important}
+#app.pf .ptr>b{font-size:16px!important;font-weight:750!important;color:#17241C}
+#app.pf .ptk{background:#174D37}
+#app.pf .fs{background:#FBFCFB!important;border:0!important;border-radius:20px;margin:16px 0 0!important;padding:20px!important}
+#app.pf .fsh h3{font-size:16px!important;font-weight:750!important}
+#app.pf .pfl{gap:24px!important;margin-top:16px!important}
+#app.pf #rbl{margin-top:16px!important}
+#app.pf #rbl .rbk{gap:12px!important}
+#app.pf #rbl .rbt b{color:#17241C}
+#app.pf #rbl .rbt small{color:#34483B!important}
+#app.pf .rbs{border-color:#BACCBF!important;color:#174D37!important}
+#app.pf #rbl .rbs.dn{background:#174D37!important;color:white!important}
+#app.pf .archive-action>span{border:0;background:#E7EDE8;color:#174D37;border-radius:17px}
+#app.pf .archive-action>b{color:#34483B;font-size:11px}
+#app.pf .pset2{background:#FBFCFB;border-radius:16px;padding:16px!important;margin-top:16px;color:#34483B!important}
+/* 로그인·가입: 입력과 선택 상태를 명확하게 */
+#app.auth .sc{background:#F2F4F3!important}
+#app.auth .auth-brand h1{color:#174D37}
+#app.auth .auth-field{color:#17241C;font-weight:650}
+#app.auth .auth-field input{border-color:#AFBDB3;font-size:16px}
+#app.auth .auth-link{color:#174D37}
+#app.auth .auth-join>span,#app.auth .auth-social h2{color:#34483B}
+#app.signup .signup-heading{background:transparent!important;border:0}
+#app.signup .sc>.hint{color:#34483B!important}
+#app.signup .ost li{color:#4C6152}
+#app.signup .ost li.on{color:#17241C;font-weight:700}
+#app.signup .ost li.on b{background:#174D37;border-color:#174D37;color:white}
+#app.signup .opt{border:0!important;border-radius:16px!important;background:#FBFCFB!important;color:#34483B;box-shadow:none!important}
+#app.signup .opt[aria-pressed=true],#app.signup .gcu.on{background:#DAEAE1!important;box-shadow:inset 0 0 0 2px #174D37!important}
+#app.signup .opt .mk{border-color:#789480}
+#app.signup .opt[aria-pressed=true] .mk{background:#174D37;border-color:#174D37}
+#app.signup-goal .opt small{color:#34483B!important;font-size:14px!important}
+#app.signup-account .account-small{border-radius:12px!important;min-height:51px}
+#app.signup-account :is(.account-help,.account-status){color:#34483B}
+.consent-popup{border-radius:20px;background:#FBFCFB;color:#17241C}
+.consent-all{background:#EFF3EF;border-color:#B4C6B9}
+.consent-row em{color:#174D37}.consent-note,.consent-intro p,.consent-detail{color:#34483B}
+.consent-popup .btn{background:#174D37;color:white;border:0}
+/* 결과·보관함·설정과 나머지 목록 */
+#app.type-result .ax{padding:20px;border-radius:20px;margin-top:16px}
+#app.type-result .type-analysis>h3{font-size:16px;font-weight:750;color:#17241C;text-align:left}
+#app.type-result .ax .lb,#app.type-result .ax p{color:#34483B}
+#app.type-result .ax .lb b{color:#174D37}
+#app.type-result .ax .trk i{background:#174D37;outline-color:#174D37}
+#app.type-result .tci{background:#FBFCFB;border:0;color:#174D37}
+#app.archive-page .quote-entry{padding:20px;border:0;margin-bottom:0}
+#app.archive-page .quote-source,#app.archive-page .quote-entry>small{color:#34483B}
+#app:not(.hm) .stpg .drow{padding:20px;margin-bottom:12px;color:#17241C;min-height:58px}
+#app:not(.hm) .stpg h4{font-size:16px;font-weight:750;color:#17241C;margin:20px 0 12px}
+#app:not(.hm) :is(#dlg,#sheet){background:#FBFCFB;border:0;border-radius:20px;color:#17241C}
+#app:not(.hm) :is(#dlg,#sheet) h3{font-weight:750;color:#17241C}
+#app:not(.hm) .alr{padding:16px;margin-bottom:12px}
+#app:not(.hm) .bkm{padding:16px}
+#app:not(.hm) .rkr{border:0;background:#FBFCFB;border-radius:16px;padding:16px;margin-bottom:12px}
+#app:not(.hm) .nts,#app:not(.hm) .ntr{border:0;border-radius:16px;background:#FBFCFB;margin-bottom:12px}
+/* 독서 본문의 쪽 계산·글꼴·낮/밤 설정은 그대로 두고 도구 영역만 맞춰요. */
+#app.rd .cpt{border-radius:12px}
+#app.rd #sheet{border-radius:20px 20px 0 0;background:#FBFCFB}
+@media(prefers-reduced-motion:reduce){#app *{scroll-behavior:auto!important}}
+
+
+#app.shp .gd{margin:0!important;width:100%;box-sizing:border-box}
+#app.lib #lmain>.fs{overflow:hidden}
+#app.community #tyb button[aria-selected=true],#app.community #cwb button[aria-selected=true]{background:#174D37!important;color:white!important;font-weight:700}
+#app.community #tyb button[aria-selected=false],#app.community #cwb button[aria-selected=false]{background:#E5EAE7!important;color:#34483B!important}
+
+#app:not(.hm) .rbg b{color:#174D37!important}
+#app.shp .vl3{color:#174D37!important}
+#app.community .bal button{color:#174D37!important;border-color:#9CB3A3!important}
+#app.community .pav2:not([style*="url("]),#app.pf .pfc>span:not([style*="url("]){background:#50675A!important;color:#FFFFFF!important}
+#app.signup .ost li.dn b{color:#174D37!important;border-color:#174D37!important}
+
+#app.hm .cx-reading:before{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22180%22%20height%3D%22180%22%20viewBox%3D%220%200%20180%20180%22%3E%3Cfilter%20id%3D%22paper%22%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%25%22%20height%3D%22100%25%22%3E%3CfeTurbulence%20type%3D%22fractalNoise%22%20baseFrequency%3D%22.72%20.18%22%20numOctaves%3D%223%22%20stitchTiles%3D%22stitch%22%2F%3E%3CfeColorMatrix%20type%3D%22saturate%22%20values%3D%220%22%2F%3E%3C%2Ffilter%3E%3Crect%20width%3D%22180%22%20height%3D%22180%22%20fill%3D%22%23fff%22%20filter%3D%22url(%23paper)%22%20opacity%3D%22.8%22%2F%3E%3C%2Fsvg%3E");background-size:180px 180px;background-repeat:repeat;background-position:center;opacity:.16;mix-blend-mode:multiply;-webkit-mask-image:none;mask-image:none}
+
+/* 선택은 흰색·굵은 선·굵은 라벨로, 나머지는 차분한 회색으로 표시해요. */
+#app.hm nav.concept-nav button,#app:not(.hm) nav.tab.nvb button{color:#89978F!important;font-weight:500}
+#app.hm nav.concept-nav button .ic{stroke-width:1.5}
+#app.hm nav.concept-nav button[aria-current=page],#app:not(.hm) nav.tab.nvb button[aria-current=page]{color:#FFFFFF!important;font-weight:750}
+#app.hm nav.concept-nav button[aria-current=page] .ic{stroke-width:2.5}
+#app:not(.hm) nav.tab.nvb button[aria-current=page] svg path{stroke-width:2.6}
+#app:not(.hm) nav.tab.nvb button[aria-current=page] .nvi:after{display:none}
+#app.hm nav.concept-nav button:nth-child(3):not([aria-current=page]){color:#89978F!important}
+
+/* 책의 원래 색을 유지해요. */
+#app .book-cover,#app.hm .cx-read-cover,#app .cx-book>span{filter:none!important}
+/* 홈·마이페이지 외 화면은 제목과 구분선을 유지해요. */
+#app:not(.hm):not(.pf):not(.rd) .sc>.sh2.concept-heading{height:60px!important;min-height:60px!important;width:calc(100% + 40px);margin-left:-20px!important;margin-right:-20px!important;padding:0 20px!important;background:transparent!important;border-bottom:1px solid #B8C5BC!important;border-radius:0!important;box-shadow:none!important;flex:none}
+#app:not(.hm):not(.pf):not(.rd) .concept-heading h2{font-size:18px!important;line-height:1.3;font-weight:750!important;color:#17241C;text-align:center}
+#app.auth .concept-heading{margin-bottom:0!important}
+#app.auth .auth-brand{padding-top:26px;height:220px}
+#app.rd .rh{border-bottom:1px solid #B8C5BC}
+#app:not(.hm) #dlg>h3,.consent-heading{border-bottom:1px solid #D0DAD3;padding-bottom:16px}
+/* 다른 화면에서도 메인의 아이콘·크기·선택 상태를 그대로 사용해요. */
+#app:not(.hm) nav.concept-nav{position:absolute;bottom:0;left:0;right:0;width:100%;height:78px!important;min-height:78px!important;padding:8px 14px!important;border:0!important;border-radius:23px 23px 0 0!important;background:#25292B!important;box-shadow:none!important;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;z-index:50}
+#app:not(.hm) nav.concept-nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:0;padding:4px 0!important;min-height:54px;background:transparent!important;color:#89978F!important;font:500 9px/1.2 Pretendard,sans-serif}
+#app:not(.hm) nav.concept-nav button .ic{width:22px;height:22px;stroke-width:1.5}
+#app:not(.hm) nav.concept-nav button[aria-current=page]{color:#FFFFFF!important;font-weight:750}
+#app:not(.hm) nav.concept-nav button[aria-current=page] .ic{stroke-width:2.5}
+#app:not(.hm) nav.concept-nav button:nth-child(3) .ic{width:24px;height:24px}
+#app:not(.hm):not(.rd).has-concept-nav .sc{padding-bottom:108px!important}
+
+#app:not(.hm) nav.concept-nav button{font-size:9px!important;line-height:1.2!important;font-weight:500!important;border-radius:0!important;box-shadow:none!important;transform:none!important}
+#app:not(.hm) nav.concept-nav button[aria-current=page]{font-weight:750!important}
+#app:not(.hm) nav.concept-nav button:nth-child(3){padding:4px 0!important;font-size:9px!important;line-height:1.2!important}
+
+/* 인기 목록을 약25% 줄이고 조작 영역은 유지해요. */
+#app.lib .ppx .pps{grid-auto-columns:106px!important;gap:12px!important;padding-top:8px!important;margin-top:0!important}
+#app.lib .ppx .pps .bk{width:106px!important}
+#app.lib .ppx .pps .cv{width:106px!important;height:151px!important}
+#app.lib .ppx .bk .t{font-size:12px!important;line-height:1.4!important;margin-top:9px!important;font-weight:700}
+#app.lib .ppx .bk .a{font-size:10px!important;line-height:1.5!important;margin-top:3px!important}
+#app.lib .ppx .rdr{font-size:10px!important;line-height:1.5!important;margin-top:6px!important}
+#app.lib .ppx .rbg{width:35px!important;height:39px!important;left:-4px!important;top:-4px!important}
+#app.lib .ppx .rbg .rib{width:35px!important;height:35px!important}
+#app.lib .ppx .rbg b{font-size:13px!important}
+#app.lib .ppx .hb{width:48px!important;height:48px!important;right:-3px!important;bottom:-3px!important;background:transparent!important;isolation:isolate}
+#app.lib .ppx .hb::before{content:'';position:absolute;inset:12px;background:#FBFCFB;border-radius:50%;z-index:-1}
+#app.lib .ppx .hb .ic{width:16px!important;height:16px!important}
+/* 홈 아이콘에 남아 있던 이전 원형 버튼 장식을 제거해요. */
+#app:not(.hm) nav.concept-nav button:nth-child(3) .ic{width:24px!important;height:24px!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:inherit!important}
+
+#app.lib .ppx .rbg b{top:5.5px!important;line-height:18px!important}
+
+#app.hm .cx-reading:before{display:none;background-image:none}
+
+/* 배경은 단색, UI 카드 모서리는 최대15로 맞춰요. */
+:root{--r-home-card:15px;--r-card:15px;--r-lg:15px;--r-xl:15px;--r-popup:15px;--r-sheet:15px;--r-nav:15px}
+#app,#app .sc{background-image:none!important}
+#app .cx-reading::before,#app .cx-reading::after,#app.shp .mpt3::before,#app.pf .ptc2::before{display:none!important;content:none!important;background-image:none!important;mask-image:none!important;-webkit-mask-image:none!important}
+#app :is(.cx-reading,.cx-week,.cx-points,.cx-community,.box,.po,.quote-entry,.ax,.bkm,.drow,.cr,.alr,.fs,.mpt3,.cd2,.ptc2,.pset2,.opt,.rkr,.nts,.ntr,#dlg,.consent-popup){border-radius:15px!important}
+#app .pvw,#app .archive-action>span{border-radius:15px!important}
+#app nav.concept-nav{border-radius:15px 15px 0 0!important}
+#app #sheet{border-radius:15px 15px 0 0!important}
+/* 제목과 카드 위쪽 사이를 메인과 같은20px로 맞춰요. */
+#app.lib #lmain>section.fs{padding-top:20px!important}
+#app.lib #lmain>section.fs>.fsh{position:static!important;transform:none!important;height:auto!important;min-height:32px!important;padding:0!important;margin:0 0 16px!important}
+#app.lib #lmain>section.fs>.fsh h3{font-size:16px!important;line-height:1.4;font-weight:750}
+/* 장르 버튼:52 원 ·24 아이콘 · 메인 초록색 */
+#app.lib .gnt>span{width:52px!important;height:52px!important;background:#3E9370!important;border:0!important;color:#FFFFFF!important;margin-bottom:9px!important}
+#app.lib .gnt>span img{width:24px!important;height:24px!important;filter:brightness(0) invert(1)!important;opacity:1}
+#app.lib .gnt{font-size:11px!important;line-height:1.4;color:#17241C!important;font-weight:600}
+#app.lib .gnc{row-gap:18px!important;column-gap:12px!important;padding:0!important}
+
+#app.hm .cx-author{margin-bottom:10px}
+#app.hm .cx-inline-meter{margin-top:0}
+#app.hm .cx-progress-copy{margin-top:6px}
+#app.lib #lmain>.fs:first-child{padding-top:20px!important}
+#app.lib #lmain>.fs{border-radius:15px!important}
+#app.lib #lmain>.fs>.fsh{position:static!important;transform:none!important;height:auto!important;min-height:32px!important;padding:0!important;margin:0 0 16px!important}
+#app.pf .archive-action>span{border-radius:15px!important}
+#app.hm nav.concept-nav,#app:not(.hm) nav.concept-nav{border-radius:15px 15px 0 0!important}
+
+/* 모든 화면의 하단 메뉴 간격을 홈 화면과 맞춰요. */
+#app:not(.hm) nav.tab.nvb.concept-nav{gap:0!important;padding:8px 14px!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;align-items:end!important;justify-content:stretch!important}
+#app:not(.hm) nav.tab.nvb.concept-nav button{min-height:54px!important;width:100%;margin:0!important;gap:4px!important;align-self:end;height:54px!important}
+
+/* 모든 주요 메뉴는 메인 화면과 하나의 모양을 사용해요. */
+#app.app nav.concept-nav.concept-nav:is(.tab,.fx){position:absolute!important;inset:auto 0 0!important;transform:none!important;width:100%!important;max-width:none!important;height:78px!important;min-height:78px!important;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:0!important;align-items:end!important;justify-content:stretch!important;padding:8px 14px!important;border:0!important;border-radius:15px 15px 0 0!important;background:#25292B!important;box-shadow:none!important;z-index:50;pointer-events:auto}
+#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;width:100%!important;height:54px!important;min-height:54px!important;min-width:0!important;margin:0!important;padding:4px 0!important;align-self:end!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;transform:none!important;color:#89978F!important;font:500 9px/1.2 Pretendard,sans-serif!important;letter-spacing:normal!important;opacity:1;pointer-events:auto}
+#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button[aria-current=page]{color:#FFFFFF!important;font-weight:750!important}
+#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button .ic{display:block!important;width:22px!important;height:22px!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:inherit!important;stroke-width:1.5!important}
+#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button:nth-child(3) .ic{width:24px!important;height:24px!important}
+#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button[aria-current=page] .ic{stroke-width:2.5!important}
+#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button .ic path{stroke-width:inherit!important}
+@container (max-height:760px){#app.app nav.concept-nav.concept-nav:is(.tab,.fx){height:64px!important;min-height:64px!important;padding-top:5px!important;padding-bottom:5px!important}}
+
+/* 장르 버튼은 옅은 바탕과 짙은 초록색 선을 사용해요. */
+#app.lib .gnt>span{background:#E8EEEA!important;color:#174D37!important}
+#app.lib .gnt>span img{filter:none!important;opacity:1!important}
+
+/* 프로필 · 하루 목표 · 독서 성향을 하나의 카드 안에서 구분해요. */
+#app.pf .pbx2.profile-card{padding:20px!important;margin:0!important;border:0!important;border-radius:15px!important;background:#FBFCFB!important;color:#17241C}
+#app.pf .profile-identity{display:flex;align-items:center;gap:14px;min-height:64px}
+#app.pf .profile-identity .av3{width:64px;height:64px;flex:none;margin:0;border:0;font-size:24px;background-color:#DAEAE1;color:#174D37}
+#app.pf .profile-name{min-width:0;flex:1}
+#app.pf .profile-name h2{font-size:24px;font-weight:750;line-height:1.35;word-break:break-all;margin:0;letter-spacing:-.03em}
+#app.pf .profile-name small{display:block;margin-top:4px;font-size:12px;color:#34483B}
+#app.pf .profile-edit{flex:none;display:grid;place-items:center;width:48px;height:48px;padding:0;border:1px solid #D0DAD3;border-radius:15px;background:transparent;color:#174D37;cursor:pointer}
+#app.pf .profile-edit .ic{width:20px;height:20px}
+#app.pf .profile-daily{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:20px;padding:16px 0;border-top:1px solid #D0DAD3}
+#app.pf .profile-daily>span{display:flex;align-items:center;gap:9px;font-size:12px;color:#34483B}
+#app.pf .profile-daily .ic{width:18px;height:18px;color:#174D37}
+#app.pf .profile-daily strong{font-size:26px;font-weight:750;line-height:1.2;color:#174D37}
+#app.pf .profile-daily strong small{font-size:12px;font-weight:600;margin-left:5px}
+#app.pf .profile-type{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:94px;padding:16px;border:0;border-radius:12px;background:#DAEAE1;color:#174D37;font:inherit;text-align:left;cursor:pointer}
+#app.pf .profile-type-copy{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0}
+#app.pf .profile-type-copy>small{font-size:11px;line-height:1.4;color:#34483B}
+#app.pf .profile-type-copy>strong{font-size:16px;line-height:1.5;font-weight:750;word-break:keep-all}
+#app.pf .profile-type-copy>em{font-size:11px;line-height:1.4;font-style:normal;font-weight:650;letter-spacing:.08em}
+#app.pf .profile-type-arrow{width:32px;height:32px;display:grid;place-items:center;flex:none;border:1px solid #91AE9E;border-radius:50%}
+#app.pf .profile-type-arrow .ic{width:16px;height:16px}
+#app.pf .profile-card button:focus-visible{outline:3px solid #174D37;outline-offset:3px}
+
+#app.pf .profile-identity .av3>.ic{width:28px;height:28px}
+
+/* 시작 화면: 메인과 같은 단색 바탕, 카드, 초록색 강조를 사용해요. */
+#app.spl .spw{background:#F2F4F3;padding:0 20px 20px}
+#app.spl .spw>.brand-logo{width:120px}
+#app.spl .spw h1{color:#174D37;font-size:44px;margin-top:20px}
+#app.spl .spw .dke{color:#34483B;font-size:11px;letter-spacing:.3em;margin-top:8px!important}
+#app.onb .obw{background:#F2F4F3}
+#app.onb .obs{min-height:0;align-items:stretch}
+#app.onb .obp{padding:60px 20px 0!important;gap:0;min-height:0}
+#app.onb .obp h1{font-size:30px;line-height:1.35;font-weight:750;letter-spacing:-.04em;color:#17241C;flex:none;text-align:left;width:100%}
+#app.onb .obp p{font-size:14px;line-height:1.65;color:#34483B;text-align:left;width:100%;margin:16px 0 0;flex:none}
+#app.onb .obi{width:100%;max-width:none;height:330px;max-height:44vh;min-height:210px;flex:1;margin:32px 0 20px;background:#DAEAE1;border-radius:15px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;isolation:isolate}
+#app.onb .obf{padding:0 20px 30px!important;min-height:128px;gap:16px;justify-content:flex-end}
+#app.onb .obdt{gap:0;min-height:48px;align-items:center}
+#app.onb .obdt button{width:48px;height:48px;border:0;background:transparent;position:relative;transition:none}
+#app.onb .obdt button:after{content:'';position:absolute;width:7px;height:7px;border-radius:999px;inset:0;margin:auto;background:#789480}
+#app.onb .obdt button[aria-current=true]:after{width:24px;background:#174D37}
+#app.onb .obgo{width:100%;height:56px;min-height:56px;border-radius:12px;background:#174D37;color:#FFFFFF;font-size:16px;font-weight:700;border:0}
+#app.onb .entry-books{width:250px;height:235px;position:relative}
+#app.onb .entry-cover{position:absolute;filter:drop-shadow(0 10px 8px #174D3715)}
+#app.onb .entry-cover svg{display:block;width:100%;height:auto}
+#app.onb .entry-cover-back{width:112px;left:24px;top:25px;transform:rotate(-13deg)}
+#app.onb .entry-cover-front{width:125px;right:25px;top:42px;transform:rotate(10deg)}
+#app.onb .entry-badge{position:absolute;width:48px;height:48px;display:grid;place-items:center;background:#FBFCFB;border-radius:15px;color:#174D37;right:0;top:16px;transform:rotate(8deg)}
+#app.onb .entry-badge .ic{width:24px;height:24px}
+#app.onb .entry-goal-art{width:250px;padding:24px;background:#FBFCFB;border-radius:15px;transform:rotate(-5deg);box-shadow:10px 12px 0 #B6CFC0;display:flex;flex-wrap:wrap;gap:20px}
+#app.onb .entry-art-book{display:grid;place-items:center;width:56px;height:56px;background:#174D37;color:white;border-radius:12px}
+#app.onb .entry-art-book .ic{width:30px;height:30px}
+#app.onb .entry-art-lines{flex:1;padding-top:7px}
+#app.onb .entry-art-lines i{display:block;height:5px;border-radius:3px;background:#B6CFC0;margin:7px 0}
+#app.onb .entry-art-lines i:last-child{width:65%}
+#app.onb .entry-art-days{width:100%;display:flex;gap:8px}
+#app.onb .entry-art-days span{flex:1;height:34px;display:grid;place-items:center;background:#EFF3EF;border-radius:8px;color:#789480}
+#app.onb .entry-art-days .done{background:#DAEAE1;color:#174D37}
+#app.onb .entry-art-days .ic{width:20px;height:20px}
+#app.onb .entry-message{position:absolute;width:210px;height:126px;border-radius:15px;padding:20px;background:#FBFCFB;color:#174D37}
+#app.onb .entry-message>.ic{width:24px;height:24px;margin-bottom:12px}
+#app.onb .entry-message i{display:block;height:5px;border-radius:3px;background:currentColor;opacity:.25;margin:8px 0;width:90%}
+#app.onb .entry-message i:last-of-type{width:65%}
+#app.onb .entry-message-back{transform:translate(-24px,-40px) rotate(-8deg)}
+#app.onb .entry-message-front{transform:translate(24px,48px) rotate(6deg);background:#174D37;color:#FFFFFF}
+#app.onb .entry-message-front>span{position:absolute;right:-10px;top:-15px;background:#FBFCFB;border-radius:12px;color:#174D37;padding:10px;display:grid;place-items:center}
+#app.onb .entry-message-front>span .ic{width:22px;height:22px}
+#app.onb button:focus-visible{outline:3px solid #174D37;outline-offset:3px}
+@container(max-height:760px){#app.onb .obp{padding-top:30px!important}#app.onb .obp h1{font-size:26px}#app.onb .obi{margin-top:24px;min-height:200px}#app.onb .obf{padding-bottom:24px!important}}
+
+/* 로그인: 브랜드와 입력 카드, SNS 가입 입구를 나눠요. */
+#app.auth,#app.auth .sc{background:#F2F4F3!important}
+#app.auth .sc{padding-bottom:30px!important}
+#app.auth .auth-brand{display:flex;align-items:center;justify-content:center;gap:16px;padding:30px 0!important;height:auto!important;margin:0}
+#app.auth .auth-logo{width:72px;height:82px;margin:0}
+#app.auth .auth-logo>.brand-logo{width:72px;height:82px;transform:none}
+#app.auth .auth-brand h1{font-size:40px!important;line-height:1.2;margin:0!important;color:#174D37}
+#app.auth .auth-form{margin-top:0!important;padding:20px;background:#FBFCFB;border-radius:15px;gap:20px}
+#app.auth .auth-field{font-size:14px;font-weight:650;line-height:1.5;gap:8px;color:#17241C}
+#app.auth .auth-field input{height:56px!important;border:1px solid #91A599!important;border-radius:10px!important;background:#FFFFFF!important;color:#17241C;font-size:16px!important;padding:0 14px}
+#app.auth .auth-form .btn{margin:4px 0 0!important;height:56px;font-size:16px!important;font-weight:700;background:#174D37;color:#FFFFFF;border:0;border-radius:12px!important}
+#app.auth .auth-form .btn:disabled{opacity:1;background:#DCE3DE;color:#4C6152}
+#app.auth .auth-join{margin-top:12px!important;min-height:48px;font-size:13px;gap:8px;flex-wrap:wrap;color:#34483B}
+#app.auth .auth-link{min-height:48px;padding:10px 8px;color:#174D37;font-size:13px}
+#app.auth .auth-social{background:#FBFCFB;border-radius:15px;padding:20px!important;margin:16px 0 0!important}
+#app.auth .auth-social h2{font-size:12px;line-height:1.5;gap:12px;margin-bottom:20px;color:#34483B}
+#app.auth .auth-providers{gap:24px;padding:0!important}
+#app.auth .auth-provider{width:60px;height:60px;min-width:48px;min-height:48px}
+#app.auth input::placeholder{color:#526A5B;opacity:1}
+@container(max-height:760px){#app.auth .auth-brand{padding:24px 0!important}#app.auth .auth-logo,#app.auth .auth-logo>.brand-logo{width:56px;height:64px}#app.auth .auth-brand h1{font-size:36px!important}}
+
+/* 계정 가입: 인증·비밀번호 입력은 같은 흰 카드로 묶어요. */
+#app.signup-account,#app.signup-account .sc{background:#F2F4F3!important}
+#app.signup-account .sc{padding-bottom:30px!important}
+#app.signup-account .sc>.sh2:first-child{margin-bottom:30px!important}
+#app.signup-account .sc>h1{font-size:26px!important;font-weight:750;line-height:1.35;text-align:left;letter-spacing:-.035em;margin:0!important;word-break:keep-all}
+#app.signup-account .account-intro{margin:12px 0 24px;font-size:14px;line-height:1.65;color:#34483B;text-align:left}
+#app.signup-account .account-form{padding:20px;background:#FBFCFB;border-radius:15px}
+#app.signup-account .account-field{font-size:14px;line-height:1.5;font-weight:650;color:#17241C;margin-bottom:8px;display:block}
+#app.signup-account .account-input-row{gap:8px}
+#app.signup-account #account-form input{height:56px!important;min-height:56px;border:1px solid #91A599!important;border-radius:10px!important;background:#FFFFFF!important;font-size:16px;padding:0 12px}
+#app.signup-account #account-form input:disabled{opacity:1!important;background:#EFF3EF!important;color:#526A5B}
+#app.signup-account #account-form input::placeholder{color:#526A5B;opacity:1}
+#app.signup-account .account-small{height:56px;min-height:56px;flex:0 0 96px;border:1px solid #174D37!important;color:#174D37!important;font-size:12px;border-radius:10px!important}
+#app.signup-account .account-small:disabled{opacity:1!important;border-color:#B4C6B9!important;color:#526A5B!important;background:#EFF3EF!important}
+#app.signup-account .account-field>input{margin-top:8px!important}
+#app.signup-account .account-field:has(#account-password-confirm){margin-top:20px}
+#app.signup-account .account-status,#app.signup-account .account-help{font-size:12px;line-height:1.65;color:#34483B;margin-top:8px}
+#app.signup-account .account-status{margin-bottom:20px}
+#app.signup-account .account-status:empty{display:none}
+#app.signup-account .account-error{color:#A02B3C!important}
+#app.signup-account .preview-code{padding:12px;margin:0 0 12px;border-radius:10px;background:#DAEAE1;color:#174D37;font-size:12px}
+#app.signup-account .account-code{margin-top:16px}
+#app.signup-account .auth-social{padding:20px!important;margin:16px 0 0!important;border-radius:15px;background:#FBFCFB}
+#app.signup-account .auth-social h2{font-size:12px;line-height:1.5;color:#34483B;gap:12px;margin-bottom:20px}
+#app.signup-account .auth-providers{gap:24px}
+#app.signup-account .auth-provider{width:60px;height:60px}
+#app.signup-account .account-footer{padding-top:24px;margin-top:auto}
+#app.signup-account .account-footer .btn{font-size:16px!important;border-radius:12px!important}
+#app.auth .auth-form .btn:disabled,#app.signup-account .account-footer .btn:disabled{opacity:1!important;background:#DCE3DE!important;color:#4C6152!important;border:0!important}
+#app.signup-account :is(input,button):focus-visible{outline:3px solid #174D37;outline-offset:3px}
+
+/* 가입 단계의 공통 표시와 닉네임 입력 */
+#app.signup,#app.signup .sc{background:#F2F4F3!important}
+#app.signup .sc{padding-bottom:30px!important}
+#app.signup .sc>.signup-heading:first-child{margin-bottom:24px!important;border-bottom:1px solid #B8C5BC!important;background:transparent!important}
+#app.signup .ost{width:100%;height:auto;min-height:32px;margin:0 0 32px;padding:0;justify-content:space-between;gap:6px;flex:none}
+#app.signup .ost li{font-size:11px;gap:6px;min-width:0;flex:1;justify-content:center;color:#4C6152}
+#app.signup .ost b{width:26px;height:26px;font-size:11px;border:1px solid #91A599;background:#FBFCFB;color:#34483B}
+#app.signup .ost li:not(:last-child)::after{display:none}
+#app.signup .ost li.on b{color:#FFFFFF;background:#174D37;border-color:#174D37}
+#app.signup .ost li.dn b{background:#DAEAE1;color:#174D37!important;border-color:#174D37!important}
+#app.signup .sc>h1{font-size:24px!important;line-height:1.4!important;letter-spacing:-.035em;font-weight:750!important;white-space:normal!important;overflow:visible!important}
+#app.signup .sc>.hint{font-size:14px;line-height:1.65;color:#34483B!important;margin-top:12px}
+#app.signup .foot{margin-top:auto;gap:12px;padding-top:30px;background:transparent;flex:none}
+#app.signup .foot .btn{height:56px!important;min-height:56px;font-size:16px!important;font-weight:700;border-radius:12px!important;background:#174D37!important;color:#FFFFFF!important;border:1px solid #174D37!important}
+#app.signup .foot .btn.ghost{flex:0 0 82px;background:#FBFCFB!important;color:#174D37!important;border-color:#91A599!important}
+#app.signup .foot .btn:disabled{opacity:1!important;background:#DCE3DE!important;color:#4C6152!important;border-color:#DCE3DE!important}
+#app.signup :is(button,input,[role=button]):focus-visible{outline:3px solid #174D37;outline-offset:3px}
+#app.signup-nickname .fld{display:block;margin-top:32px!important;padding:20px!important;background:#FBFCFB;border-radius:15px;font-size:14px;font-weight:650;line-height:1.5;color:#17241C}
+#app.signup-nickname .fld input{width:100%;height:56px;margin-top:12px!important;border:1px solid #91A599!important;background:#FFFFFF!important;border-radius:10px!important;font-size:16px;color:#17241C;font-weight:400}
+#app.signup-nickname input::placeholder{color:#526A5B;opacity:1}
+
+/* 독서 목표: 같은 높이의 선택 카드와 체크 표시 */
+#app.signup-goal .opts{margin-top:28px;gap:12px}
+#app.signup-goal .opt{min-height:86px;padding:18px 20px!important;border-radius:15px!important;border:1px solid transparent!important;background:#FBFCFB!important;box-shadow:none!important;color:#17241C}
+#app.signup-goal .opt>span:first-child{font-size:16px;font-weight:700;color:#17241C}
+#app.signup-goal .opt small{font-size:12px!important;font-weight:400;line-height:1.65;color:#34483B!important;margin-top:5px}
+#app.signup-goal .opt .mk{width:24px;height:24px;min-width:24px;border:1px solid #789480}
+#app.signup-goal .opt[aria-pressed=true],#app.signup-goal .gcu.on{background:#DAEAE1!important;border-color:#174D37!important;box-shadow:inset 0 0 0 1px #174D37!important}
+#app.signup-goal .opt[aria-pressed=true] .mk{background:#174D37;border-color:#174D37}
+#app.signup-goal .opt[aria-pressed=true] .mk:after{left:8px;top:4px}
+#app.signup-goal .gcu{min-height:64px;padding-top:18px!important;padding-bottom:18px!important}
+#app.signup-goal .gcu .gsl{margin-top:16px;padding-top:16px;border-top:1px solid #A9C2B2}
+#app.signup-goal #gsr{background:transparent;color:#174D37}
+
+/* 독서 성향 소개: 한 장의 연초록 안내 카드 */
+#app.signup-intro .tin{margin:0 0 24px;padding:28px 20px 12px;background:#DAEAE1;border-radius:15px;flex:none;min-height:320px;justify-content:center}
+#app.signup-intro .tin>svg{width:136px;height:auto;margin:0 0 24px;color:#174D37;--pri:#174D37;--bg:#DAEAE1;--card:#FBFCFB}
+#app.signup-intro .tin h1{font-size:24px;font-weight:750;line-height:1.4;letter-spacing:-.035em;color:#17241C}
+#app.signup-intro .tin .hint{margin-top:12px;color:#34483B;font-size:14px;line-height:1.65}
+#app.signup-intro .tsk{min-height:48px;font-size:12px;color:#174D37;margin-top:16px;text-decoration:underline;text-underline-offset:4px}
+
+/* 성향 질문: 진행 막대와 선택 상태를 분명하게 표시해요. */
+#app.signup-quiz .ost{margin-bottom:24px}
+#app.signup-quiz .bar{height:6px;gap:6px;margin:0 0 24px;flex:none}
+#app.signup-quiz .bar i{height:6px;background:#CFDCD3;border-radius:4px}
+#app.signup-quiz .bar i.on{background:#174D37}
+#app.signup-quiz .sc>.qhn{font-size:12px!important;line-height:1.65;color:#34483B!important;margin:0 0 12px!important}
+#app.signup-quiz .sc>h1{font-size:24px!important;line-height:1.4!important;min-height:68px;white-space:normal!important}
+#app.signup-quiz .opts{margin-top:28px;gap:12px}
+#app.signup-quiz .opt,#app.signup-quiz .opt:not(:first-child){min-height:76px;padding:18px 20px!important;border:1px solid transparent!important;border-radius:15px!important;background:#FBFCFB!important;color:#17241C!important;font-size:14px;line-height:1.65;box-shadow:none!important}
+#app.signup-quiz .opt[aria-pressed=true]{background:#DAEAE1!important;border-color:#174D37!important;box-shadow:inset 0 0 0 1px #174D37!important}
+#app.signup-quiz .opt .mk{width:24px;height:24px;min-width:24px;border-color:#789480}
+#app.signup-quiz .opt[aria-pressed=true] .mk{background:#174D37;border-color:#174D37}
+#app.signup-quiz .opt[aria-pressed=true] .mk:after{left:8px;top:4px}
+#app.signup-loading .center{margin:30px 0;padding:40px 20px;background:#FBFCFB;border-radius:15px;min-height:280px;justify-content:center}
+#app.signup-loading .center h1{font-size:24px;line-height:1.4;white-space:normal!important;color:#17241C}
+#app.signup-loading .center .hint{font-size:14px;line-height:1.65;color:#34483B}
+#app.signup-loading .ring{border-color:#DAEAE1;border-top-color:#174D37}
+@container(max-height:760px){#app.signup-quiz .ost{margin-bottom:16px}#app.signup-quiz .bar{margin-bottom:16px}#app.signup-quiz .opts{margin-top:20px;gap:10px}#app.signup-quiz .opt,#app.signup-quiz .opt:not(:first-child){min-height:68px;padding:14px 16px!important}}
+
+/* 가입 결과: 기존 유형 그림과 계산은 유지하고 주변 UI를 맞춰요. */
+#app.entry-result,#app.entry-result .sc{background:#F2F4F3!important}
+#app.entry-result .sc{padding-bottom:30px!important}
+#app.entry-result .sc>.signup-heading{border-bottom:1px solid #B8C5BC!important;margin-bottom:24px!important}
+#app.entry-result .ost{margin:0 0 28px;gap:6px;justify-content:space-between;min-height:32px}
+#app.entry-result .ost li{flex:1;justify-content:center;font-size:11px;gap:6px;color:#34483B}
+#app.entry-result .ost li:after{display:none}
+#app.entry-result .ost b{width:26px;height:26px;border:1px solid #174D37;background:#DAEAE1;color:#174D37}
+#app.entry-result .ost .on b{background:#174D37;color:#FFFFFF}
+#app.entry-result .sc>h1{white-space:normal!important;font-size:24px!important;font-weight:750;line-height:1.4;letter-spacing:-.035em;margin:0 0 24px!important;text-align:center;color:#17241C}
+#app.type-result.entry-result .tcard{border-radius:15px;overflow:hidden;background:#FBFCFB;padding:0;margin:0!important}
+#app.entry-result .tbt{gap:12px;margin-top:16px}
+#app.entry-result .tci{flex:1;min-height:48px;justify-content:center;display:flex;align-items:center;gap:8px;background:#FBFCFB;border:1px solid #91A599;border-radius:12px;padding:12px;font:600 12px/1.5 Pretendard,sans-serif;color:#174D37}
+#app.entry-result .tci .ic{width:18px;height:18px}
+#app.entry-result .sec{margin-top:30px}
+#app.entry-result .sec>h3{font-size:16px;font-weight:750;line-height:1.5;color:#17241C;text-align:left;margin-bottom:16px}
+#app.entry-result .ax{background:#FBFCFB;border:0!important;border-radius:15px!important;padding:20px;margin-bottom:12px;color:#17241C}
+#app.entry-result .ax p{color:#34483B;line-height:1.7;font-size:14px}
+#app.entry-result .box.rbx{background:#FBFCFB;border:0!important;border-radius:15px!important;padding:20px}
+#app.entry-result .foot{padding-top:30px;gap:12px}
+#app.entry-result .foot .btn{min-height:56px;font-size:16px;border-radius:12px!important;background:#174D37!important;color:#FFFFFF!important;border:1px solid #174D37!important;font-weight:700}
+#app.entry-result .foot .btn.ghost{background:#FBFCFB!important;color:#174D37!important;border-color:#91A599!important;flex:0 0 100px}
+#app.entry-result button:focus-visible{outline:3px solid #174D37;outline-offset:3px}
+/* 가입 약관도 같은 카드와 버튼 규칙을 사용해요. */
+.consent-popup{background:#FBFCFB;border-radius:15px!important;padding:24px;color:#17241C}
+.consent-popup .consent-heading{padding-bottom:16px;border-bottom:1px solid #B8C5BC}
+.consent-popup .consent-heading .ib,.consent-popup .consent-more{width:48px;height:48px;min-width:48px;min-height:48px}
+.consent-popup .consent-all{border-radius:12px;background:#EFF3EF;border-color:#91A599}
+.consent-popup .consent-all:has(input:checked){background:#DAEAE1;border-color:#174D37}
+.consent-popup .consent-detail,.consent-popup .consent-note,.consent-popup .consent-intro p{color:#34483B;font-size:12px;line-height:1.7}
+.consent-popup .consent-row label{min-height:60px;padding-left:0;font-size:14px}
+.consent-popup .consent-footer .btn{min-height:56px;background:#174D37!important;color:#FFFFFF!important;border-radius:12px!important;font-size:16px}
+.consent-popup .consent-footer .btn:disabled{opacity:1!important;background:#DCE3DE!important;color:#4C6152!important}
+
+#app.entry-result .sc>*{flex-shrink:0}
+#app.entry-result .foot.rsf{background:#F2F4F3;box-shadow:none;border-top:1px solid #D0DAD3}
+
+#app.onb .obp:nth-of-type(3)>.obi{width:calc(100% + 24px);max-width:none;margin-left:-12px;margin-right:-12px}
+#app:is(.auth,.signup-account,.signup,.entry-result) .sh2 .ib{min-width:48px;min-height:48px;width:48px;height:48px}
+
+/* 독서 코치마크는 실제 도구 위치에 맞춰 배치해요. */
+#app.rd #tut{overflow:hidden;isolation:isolate}
+#app.rd #tut.t1{background:transparent}
+#app.rd #tut .tsp{z-index:0;border-radius:12px;box-shadow:0 0 0 2px #3E9370,0 0 0 9999px #17241CB8;transition:none}
+#app.rd #tut .tbx{z-index:1;left:20px;right:20px;bottom:auto;padding:20px;background:#FBFCFB;color:#17241C;border:0;border-radius:15px;text-align:left;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y}
+#app.rd #tut .tbx>small{display:block;font-size:12px;line-height:1.5;font-weight:650;color:#174D37;margin-bottom:8px}
+#app.rd #tut .tbx>b{font-size:16px;line-height:1.5;font-weight:750;margin-bottom:8px}
+#app.rd #tut .tbx>p{font-size:14px;line-height:1.65;color:#34483B;word-break:keep-all}
+#app.rd #tut .tbt2{margin-top:16px;gap:12px;align-items:center}
+#app.rd #tut .tsk{min-height:48px;padding:10px 0;margin:0;font-size:12px;line-height:1.5;color:#34483B}
+#app.rd #tut .tnx{min-width:96px;min-height:48px;padding:12px 20px;border:0;border-radius:12px;font:700 14px/1.5 Pretendard,sans-serif;background:#174D37;color:#FFFFFF}
+#app.rd #tut button:focus-visible{outline:3px solid #174D37;outline-offset:3px}
+
+/* 결과 화면의 고정 버튼 영역을 아래로 내리고 여백을 줄여요. */
+#app.entry-result .foot.rsf{bottom:-30px;margin-bottom:-30px;padding:10px 20px 12px;gap:12px}
+
+/* 독서 화면도 메인의 단색 바탕과 짙은 초록 도구를 사용해요. */
+#app.rd{--reader-canvas:#F2F4F3;--reader-surface:#FBFCFB;--reader-ink:#17241C;--reader-muted:#34483B;--reader-accent:#174D37;--reader-soft:#DAEAE1;--reader-line:#B8C5BC;background:var(--reader-canvas);color:var(--reader-ink)}
+#app.rd.night{--reader-canvas:#202824;--reader-surface:#2B3730;--reader-ink:#F2F4F3;--reader-muted:#CAD8CF;--reader-accent:#A8D5BB;--reader-soft:#3A5042;--reader-line:#688373}
+#app.rd .sc.rdc{padding-top:0!important;padding-bottom:0!important;background:var(--reader-canvas)}
+/* 상단 제목은 높이와 제목 폭을 함께 늘려요. */
+#app.rd .rh{display:grid;grid-template-columns:64px minmax(0,1fr) 64px;align-items:center;gap:4px;min-height:84px;padding:12px 20px;margin:0 calc(-1*var(--px));background:var(--reader-surface);border-bottom:1px solid var(--reader-line);color:var(--reader-ink)}
+#app.rd .rh>h2{font:750 18px/1.45 Pretendard,sans-serif;white-space:normal;overflow:hidden;text-overflow:clip;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;text-align:center;margin:0;min-width:0;color:var(--reader-ink)}
+#app.rd .rh>#bk2{width:48px;height:48px;min-width:48px;min-height:48px;padding:0;display:grid;place-items:center;justify-self:start;background:transparent;color:var(--reader-accent);border:0;border-radius:12px}
+#app.rd .rh>#bk2 .ic{width:24px;height:24px}
+#app.rd .rh>#mt{width:64px;height:48px;min-width:48px;min-height:48px;padding:0;display:flex;align-items:center;justify-content:flex-end;justify-self:end}
+#app.rd .rh .stk i{width:28px;height:28px;font-size:11px;border-color:var(--reader-surface)}
+#app.rd .rh .stk i.add{background:var(--reader-soft);color:var(--reader-accent);border:1px solid var(--reader-accent)}
+#app.rd #hn{top:96px;color:var(--reader-accent);background:var(--reader-surface);border-radius:12px}
+#app.rd .pgl{background:var(--reader-canvas);color:var(--reader-ink);padding-top:32px;padding-bottom:100px}
+#app.rd .pgl ::selection{background:#3E93704D}
+#app.rd .fol{bottom:76px;color:var(--reader-muted);font:500 12px/1.5 Pretendard,sans-serif}
+#app.rd #grb{bottom:12px;width:112px;height:48px;min-height:48px;padding:0;background:var(--reader-surface);border:1px solid var(--reader-line);border-radius:15px}
+#app.rd #grb i{width:40px;height:4px;background:var(--reader-accent);opacity:1}
+/* 도구 패널과 사전·설정 시트 */
+#app.rd #cp{padding:0 20px 20px;background:var(--reader-surface);color:var(--reader-ink);border:1px solid var(--reader-line);border-bottom:0;border-radius:15px 15px 0 0}
+#app.rd .cph{height:48px;min-height:48px}
+#app.rd .cph i{width:40px;height:4px;background:var(--reader-line)}
+#app.rd .cpg{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding-bottom:20px;border-bottom:1px solid var(--reader-line)}
+#app.rd .cpt{min-height:80px;padding:8px 4px;gap:8px;border-radius:12px;background:transparent;color:var(--reader-ink);font:600 12px/1.5 Pretendard,sans-serif}
+#app.rd .cpt>span{width:44px;height:44px;background:var(--reader-soft);color:var(--reader-accent);border:0;border-radius:12px}
+#app.rd .cpt>span .ic{width:24px;height:24px;stroke-width:1.8}
+#app.rd .cpt:active{background:var(--reader-soft)}
+#app.rd #cp .prg{padding:26px 0 0;background:transparent;color:var(--reader-muted)}
+#app.rd #cp .pr{color:var(--reader-muted);font:500 12px/1.5 Pretendard,sans-serif}
+#app.rd #cp .tk{height:6px;background:var(--reader-soft);border-radius:4px}
+#app.rd #cp .tk>i{background:var(--reader-accent);border-radius:4px}
+#app.rd #cp .th{background:var(--reader-accent);border:2px solid var(--reader-surface);width:18px;height:18px;top:-6px}
+#app.rd #cp .pc{font:500 12px/1.5 Pretendard,sans-serif;color:var(--reader-muted);margin-top:12px}
+#app.rd #sheet{border:1px solid var(--reader-line);border-bottom:0;border-radius:15px 15px 0 0!important;background:var(--reader-surface);color:var(--reader-ink);padding:24px 20px 20px;max-height:calc(100% - 100px);overflow-y:auto}
+#app.rd #sheet :is(h3,.sg b){color:var(--reader-ink);font-weight:700}
+#app.rd #sheet .sg{margin-bottom:20px}
+#app.rd #sheet .sg>div{gap:8px}
+#app.rd #sheet .sg button{min-height:48px;padding:10px 8px;border:1px solid var(--reader-line);background:var(--reader-surface);border-radius:10px;color:var(--reader-ink);font:500 14px/1.5 Pretendard,sans-serif}
+#app.rd #sheet .sg button[aria-pressed=true]{background:var(--reader-soft);border-color:var(--reader-accent);box-shadow:inset 0 0 0 1px var(--reader-accent);color:var(--reader-accent);font-weight:700}
+#app.rd #sheet .cl{min-height:56px;background:var(--reader-surface)!important;color:var(--reader-accent)!important;border:1px solid var(--reader-accent)!important;border-radius:12px!important;font-size:16px}
+#app.rd #sheet :is(input,textarea){border:1px solid var(--reader-line);border-radius:10px;background:var(--reader-canvas);color:var(--reader-ink)}
+#app.rd #selb{background:#174D37;border:1px solid #174D37;border-radius:12px;padding:4px;gap:0}
+#app.rd #selb button{min-height:48px;gap:6px;padding:10px 12px;color:#FFFFFF;font-size:12px;border-radius:8px}
+#app.rd #selb .ic{width:18px;height:18px}
+#app.rd :is(.rh button,#grb,.cpt,#sheet button):focus-visible{outline:3px solid var(--reader-accent);outline-offset:3px}
+#app.rd.zen .rh{display:none}
+@container(max-height:760px){#app.rd .rh{min-height:80px;padding-top:10px;padding-bottom:10px}#app.rd .pgl{padding-top:24px}#app.rd .cpg{gap:8px;padding-bottom:16px}#app.rd .cpt{min-height:72px}}
+
+#app.rd #grb{background:transparent;border:0;box-shadow:none}
+
+#app.rd .rh{height:60px;min-height:60px;padding-top:6px;padding-bottom:6px}
+#app.rd .rh>h2{font-size:18px;line-height:1.3}
+#app.rd #hn{top:72px}
+
+/* 문장을 고를 때는 연초록으로 또렷하게 표시해요. */
+::selection{background:#C6EED0;color:#174D37}
+#app::selection,#app *::selection,#app.rd .pgl::selection,#app.rd .pgl ::selection{background:#C6EED0;color:#174D37;text-shadow:none}
+#app.rd.night .pgl::selection,#app.rd.night .pgl ::selection{background:#3A6248;color:#FFFFFF}
+/* 원본 로고의 문짝과 빛을 순서대로 보여 줘요. */
+#app.spl .spw>.entry-logo-motion{display:block;width:120px;height:auto;margin:0 auto;overflow:visible;transform:translateX(5px);animation:entry-logo-arrive .55s ease-out both}
+#app.spl .entry-logo-door{transform-box:view-box;transform-origin:205px 81px;animation:entry-door-open 1s cubic-bezier(.2,.7,.25,1) .15s both}
+#app.spl .entry-logo-ray{transform-box:fill-box;transform-origin:center;animation:entry-ray-in .45s ease-out both}
+#app.spl .entry-logo-ray-one{animation-delay:.8s}
+#app.spl .entry-logo-ray-two{animation-delay:.95s}
+#app.spl .spw h1{animation:entry-wordmark-in .5s ease-out .3s both}
+#app.spl .spw .dke{animation:entry-wordmark-in .5s ease-out .45s both}
+@keyframes entry-logo-arrive{from{opacity:0;transform:translate(5px,8px)}to{opacity:1;transform:translate(5px,0)}}
+@keyframes entry-door-open{from{transform:scaleX(.15);opacity:.5}to{transform:scaleX(1);opacity:1}}
+@keyframes entry-ray-in{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+@keyframes entry-wordmark-in{from{opacity:0;translate:0 5px}to{opacity:1;translate:0 0}}
+@media(prefers-reduced-motion:reduce){#app.spl .entry-logo-motion,#app.spl .entry-logo-motion *,#app.spl .spw h1,#app.spl .spw .dke{animation:none!important;opacity:1!important}#app.spl .entry-logo-door,#app.spl .entry-logo-ray{transform:none!important}}
+
+/* 가입 제목 줄은 스크롤 내용이 비치지 않도록 채워요. */
+#app.app:is(.signup,.signup-account,.entry-result,.auth,.compose-page):not(.rd) .sc>.sh2.concept-heading{background:#F2F4F3!important;top:0!important;z-index:10}
+/* 글쓰기는 커뮤니티에서 여는 독립된 화면이에요. */
+#app.compose-page,#app.compose-page .sc{background:#F2F4F3!important}
+#app.compose-page .compose-form{padding:20px;background:#FBFCFB;border-radius:15px;flex:none}
+#app.compose-page .compose-form .sg{margin-bottom:20px}
+#app.compose-page .compose-form .sg>b,#app.compose-page .compose-label,#app.compose-page .bsr>b{display:block;font-size:14px;font-weight:700;line-height:1.5;color:#17241C;margin-bottom:12px}
+#app.compose-page .compose-form .sg>div{display:grid;gap:8px;grid-template-columns:repeat(3,minmax(0,1fr))}
+#app.compose-page .compose-form>.sg:first-child>div{grid-template-columns:repeat(2,minmax(0,1fr))}
+#app.compose-page .compose-form .sg button{min-height:48px;padding:10px 6px;border:1px solid #B8C5BC!important;border-radius:10px;background:#EFF3EF!important;color:#34483B!important;font:600 13px/1.5 Pretendard,sans-serif;word-break:keep-all}
+#app.compose-page .compose-form .sg button[aria-pressed=true]{background:#DAEAE1!important;color:#174D37!important;border-color:#174D37!important;box-shadow:inset 0 0 0 1px #174D37;font-weight:750}
+#app.compose-page .tyd{font-size:12px;line-height:1.65;margin:-4px 0 24px;color:#34483B}
+#app.compose-page .compose-form :is(input,textarea){display:block;width:100%;min-width:0;padding:14px;border:1px solid #91A599;border-radius:10px;background:#FFFFFF;color:#17241C;font:400 16px/1.7 Pretendard,sans-serif}
+#app.compose-page .compose-form input{min-height:56px}
+#app.compose-page #ct{min-height:200px;margin-bottom:24px;resize:vertical;word-break:keep-all}
+#app.compose-page :is(input,textarea)::placeholder{color:#526A5B;opacity:1}
+#app.compose-page .bsr{margin-bottom:24px}
+#app.compose-page .bls{margin-top:8px}
+#app.compose-page .bsi{min-height:64px;width:100%;padding:12px 0;border-top:1px solid #D0DAD3}
+#app.compose-page #o1{margin-bottom:24px}
+#app.compose-page #ce{color:#A02D40!important;font-size:12px!important;line-height:1.65}
+#app.compose-page .compose-actions{display:flex;gap:12px;padding-top:20px;margin-top:0}
+#app.compose-page .compose-actions .btn{min-height:56px;font-size:16px;border-radius:12px!important;background:#174D37!important;color:#FFFFFF!important;border:1px solid #174D37!important}
+#app.compose-page .compose-actions .btn.ghost{flex:0 0 82px;background:#FBFCFB!important;color:#174D37!important;border-color:#91A599!important}
+#app.compose-page .sh2 .ib{width:48px;height:48px;min-width:48px;min-height:48px}
+#app.compose-page :is(button,input,textarea):focus-visible{outline:3px solid #174D37;outline-offset:3px}
+
+/* 실제로 읽는 중인 책만 세 권까지 겹쳐 보여 줘요. */
+#app.hm .cx-readbody:before{display:none!important;content:none!important}
+#app.hm .cx-read-cover.cx-stack{background:transparent!important;overflow:visible;box-shadow:none;transform:none!important;isolation:isolate}
+#app.hm .cx-read-cover.cx-stack:after{display:none}
+#app.hm .cx-stack-layer{position:absolute;inset:0;display:block;border-radius:10px;overflow:hidden;background:transparent;transform:rotate(-11deg) scale(.92);box-shadow:0 8px 12px #174D3720}
+#app.hm .cx-stack-layer:nth-child(2){transform:translate(7px,-5px) rotate(6deg) scale(.92)}
+#app.hm .cx-stack-layer:nth-child(3){transform:translate(12px,-10px) rotate(16deg) scale(.88)}
+#app.hm .cx-stack-layer .cva{display:block;width:100%;height:100%}
+#app.hm .cx-book-picker{position:absolute;inset:0;z-index:70;background:#17241C70;display:flex;align-items:center;justify-content:center;padding:20px}
+#app.hm .cx-picker-panel{width:100%;max-width:372px;padding:20px;background:#FBFCFB;border-radius:15px;box-shadow:0 12px 40px #17241C25}
+#app.hm .cx-picker-panel>header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px}
+#app.hm .cx-picker-panel h2{font:750 16px/1.5 Pretendard,sans-serif;color:#17241C;margin:0}
+#app.hm .cx-picker-close{width:48px;height:48px;display:grid;place-items:center;padding:0;border:0;border-radius:12px;background:transparent;color:#174D37;flex:none}
+#app.hm .cx-picker-close .ic{width:22px;height:22px}
+#app.hm .cx-picker-books{display:grid;grid-template-columns:repeat(var(--book-count),minmax(0,1fr));gap:12px;max-width:320px;margin:0 auto}
+#app.hm .cx-picker-book{min-width:0;display:flex;flex-direction:column;align-items:stretch;padding:0;border:0;background:transparent;color:#17241C;font:inherit;text-align:left;cursor:pointer}
+#app.hm .cx-picker-book>span{display:block;aspect-ratio:109/157;width:100%;max-width:120px;align-self:center;border-radius:10px;transform-origin:center}
+#app.hm .cx-picker-book>span .cva{display:block;width:100%;height:100%}
+#app.hm .cx-picker-book[aria-pressed=true]>span{outline:2px solid #174D37;outline-offset:3px}
+#app.hm .cx-picker-book>b{font-size:12px;line-height:1.5;font-weight:700;margin-top:16px;word-break:keep-all;overflow-wrap:anywhere}
+#app.hm .cx-picker-book>small{font-size:12px;line-height:1.5;color:#34483B;margin-top:6px}
+#app.hm .cx-book-picker button:focus-visible{outline:3px solid #174D37;outline-offset:4px}
+/* 홈 화면에서 홈 아이콘 뒤에만 원을 넣어요. */
+
+@container(max-height:860px){#app.hm .cx-stack-layer{transform:rotate(-11deg) scale(.85)}#app.hm .cx-stack-layer:nth-child(2){transform:translate(7px,-5px) rotate(6deg) scale(.85)}#app.hm .cx-stack-layer:nth-child(3){transform:translate(12px,-10px) rotate(16deg) scale(.82)}}
+
+#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button:nth-child(3){position:relative;isolation:isolate;color:#FFFFFF!important}
+#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button:nth-child(3):before{content:'';position:absolute;width:60px;height:60px;inset:0;margin:auto;background:#3E9370;border-radius:50%;z-index:-1;pointer-events:none}
+
+#app.onb .obs{touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab}
+#app.onb .obs.is-dragging{cursor:grabbing;scroll-behavior:auto;scroll-snap-type:none!important}
+#app.onb .obs img,#app.onb .obs svg{-webkit-user-drag:none;pointer-events:none}
+#app.onb .obs:focus-visible{outline:2px solid #174D37;outline-offset:-4px}
+
+#app.onb .obp:nth-of-type(3)>.obi{width:100%;max-width:none;max-height:none;height:auto;min-height:210px;flex:1;margin:32px 0}
+@container(max-height:760px){#app.onb .obp:nth-of-type(3)>.obi{margin:24px 0;min-height:180px}}
+
+/* 글쓰기는 본문 입력과 상단 등록 버튼에 집중해요. */
+#app.compose-page,#app.compose-page .sc{background:#FBFCFB!important}
+#app.app.compose-page:not(.rd) .sc>.sh2.concept-heading{background:#FBFCFB!important}
+#app.compose-page .compose-form{padding:0;background:transparent;border-radius:0}
+#app.compose-page .compose-submit{flex:none;min-width:64px;min-height:48px;border:0;border-radius:12px;background:#174D37;color:#FFFFFF;font:700 14px/1.5 Pretendard,sans-serif;padding:10px 14px}
+#app.compose-page .compose-author{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+#app.compose-page .compose-avatar{width:44px;height:44px;display:grid;place-items:center;background-color:#DAEAE1;color:#174D37;border-radius:50%;font-size:16px;font-weight:700;flex:none}
+#app.compose-page .compose-author>div{display:flex;align-items:flex-start;flex-direction:column;gap:2px;min-width:0}
+#app.compose-page .compose-author b{font-size:14px;line-height:1.5;color:#17241C;font-weight:700}
+#app.compose-page .compose-form select{font:500 13px/1.5 Pretendard,sans-serif;color:#34483B;min-height:48px;border:0;border-radius:10px;background:transparent;padding:8px 24px 8px 0;max-width:100%;cursor:pointer}
+#app.compose-page .compose-author select{margin-top:-8px;margin-bottom:-8px}
+#app.compose-page .compose-category{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:4px 0;border-top:1px solid #D0DAD3;border-bottom:1px solid #D0DAD3;margin-bottom:16px}
+#app.compose-page .compose-category>label{font-size:13px;font-weight:600;color:#34483B}
+#app.compose-page .compose-category select{font-weight:650;color:#174D37}
+#app.compose-page .compose-form #ct{width:100%;height:380px;min-height:280px;padding:16px 0;border:0!important;border-radius:0;background:transparent;color:#17241C;font-size:16px;line-height:1.8;margin-bottom:16px;resize:vertical}
+#app.compose-page .compose-form #ct:focus-visible{outline:0}
+#app.compose-page .compose-form #ct:focus{box-shadow:inset 0 -2px #174D37}
+#app.compose-page .bsr{background:#EFF3EF;padding:16px;border-radius:12px;margin:20px 0 0}
+#app.compose-page .bsr>label,#app.compose-page .compose-poll>label{display:block;font-size:12px;font-weight:650;line-height:1.5;color:#34483B;margin-bottom:8px}
+#app.compose-page .bsr #bq{background:#FBFCFB;font-size:14px;min-height:48px;padding:10px 12px}
+#app.compose-page .compose-poll{padding:16px;background:#EFF3EF;border-radius:12px;margin:0 0 16px}
+#app.compose-page .compose-poll input{margin-bottom:16px;font-size:14px}
+#app.compose-page .compose-poll #o1{margin-bottom:0}
+#app.compose-page #ce{font-size:12px;line-height:1.65;color:#A02D40;margin:0 0 16px}
+#app.compose-page #ce:empty{display:none}
+#app.compose-page select:focus-visible{outline:3px solid #174D37;outline-offset:3px}
+@container(max-height:760px){#app.compose-page .compose-form #ct{height:300px;min-height:240px}}
+
+#app.onb .obp>.obi{width:100%;max-width:none;max-height:none;height:auto;min-height:210px;flex:1;margin:32px 0}
+#app.onb .obgo[hidden]{display:block!important;visibility:hidden;pointer-events:none}
+@container(max-height:760px){#app.onb .obp>.obi{margin:24px 0;min-height:180px}}
 </style>
 </head>
 <body>
@@ -2716,7 +3600,7 @@ function ask(){
  document.getElementById("bk").onclick=function(){if(step){step--;ask()}else tiIntro()};
 }
 function load(){
- app.innerHTML=signupHeader()+ost(3)+bar(Q.length)+'<div class="center" role="status"><div class="ring"></div><h1>독서 성향을 분석하고 있어요</h1><p class="hint">답변을 바탕으로 프로필을 만드는 중이에요.</p></div>';
+ app.className="app signup signup-loading";app.innerHTML=signupHeader()+ost(3)+bar(Q.length)+'<div class="center" role="status"><div class="ring"></div><h1>독서 성향을 분석하고 있어요</h1><p class="hint">답변을 바탕으로 프로필을 만드는 중이에요.</p></div>';
  setTimeout(result,1600);
 }
 function calcType(){
@@ -2761,12 +3645,12 @@ function testRes(){
  document.getElementById("go").onclick=home;cardWire(c.key,c.t,c.names);
  document.getElementById("re").onclick=function(){testPg()}}
 function result(){
- app.className="app type-result";
+ app.className="app type-result entry-result";
  var c=calcType(),key=c.key,t=c.t,names=c.names,rows=c.rows;RKEY=key;
  app.innerHTML=signupHeader()+bar(Q.length)+'<h1>독서 성향을 알아봤어요</h1><div class="tcard" id="tcd">'+typeSVG(key,t,names)+'</div><div class="tbt tbc"><button class="tci" id="tsv">'+ic("dl")+'이미지 저장</button><button class="tci" id="tsh">'+ic("share")+'공유하기</button></div>'
  +'<div class="sec type-analysis"><h3>성향 자세히 보기</h3>'+rows+'</div>'+recBox(key)
  +'<div class="foot rsf"><button class="btn ghost" id="re">다시 하기</button><button class="btn" id="go">홈으로 가기</button></div>';
- document.getElementById("go").onclick=home;
+ document.getElementById("go").onclick=completeSignupHome;
  cardWire(key,t,names);
  document.getElementById("re").onclick=function(){step=0;ans=[null,null,null,null];ask()};
 }
@@ -2812,12 +3696,12 @@ function goal(){
  document.getElementById("bk1").onclick=info;
  nx.onclick=tiIntro}
 function tiIntro(){
- app.className="app";
+ app.className="app signup signup-intro";
  app.innerHTML=signupHeader()+ost(3)+'<div class="tin"><svg viewBox="0 0 200 160" width="168" height="134" aria-hidden="true"><circle cx="100" cy="82" r="70" fill="var(--card)"/><path d="M100 58c-14-7-32-7-44-2v54c12-5 30-5 44 2z" fill="var(--bg)" stroke="var(--pri)" stroke-width="3" stroke-linejoin="round"/><path d="M100 58c14-7 32-7 44-2v54c-12-5-30-5-44 2z" fill="var(--bg)" stroke="var(--pri)" stroke-width="3" stroke-linejoin="round"/><path d="M100 58v54" stroke="var(--pri)" stroke-width="3"/></svg>'
- +'<h1>독서TI 검사</h1><p class="hint tis"><span>4개의 질문으로 나의 독서 성향을 알아보고,</span><span>나에게 꼭 맞는 책과 독서 메이트를 추천받아 보세요!</span></p><button class="tsk" id="tsk">검사 건너뛰기</button></div>'
+ +'<h1>나의 독서 성향 알아보기</h1><p class="hint tis"><span>네 가지 질문에 답하면</span><span>취향에 맞는 책을 추천해요.</span></p><button class="tsk" id="tsk">검사 건너뛰기</button></div>'
  +'<div class="foot"><button class="btn ghost" id="tib">이전</button><button class="btn" id="tig">시작하기</button></div>';
  document.getElementById("tib").onclick=goal;document.getElementById("tig").onclick=function(){step=0;ask()};
- document.getElementById("tsk").onclick=function(){var x=pop('<h3>정말 건너뛸까요?</h3><p style="word-break:keep-all">검사를 건너뛰면 나에게 맞는 첫 책을 추천받을 수 없어요. 홈에서 언제든 다시 검사할 수 있어요.</p><div class="dbt"><button class="btn ghost" id="skn">취소</button><button class="btn" id="sky">건너뛰기</button></div>');document.getElementById("skn").onclick=x;document.getElementById("sky").onclick=function(){x();SKT=1;home()}}}
+ document.getElementById("tsk").onclick=function(){var x=pop('<h3>정말 건너뛸까요?</h3><p style="word-break:keep-all">지금 건너뛰어도 괜찮아요. 홈에서 언제든 검사할 수 있어요.</p><div class="dbt"><button class="btn ghost" id="skn">취소</button><button class="btn" id="sky">건너뛰기</button></div>');document.getElementById("skn").onclick=x;document.getElementById("sky").onclick=function(){x();SKT=1;completeSignupHome()}}}
 var SKT=0,RK={4:"FEDJ",5:"SEWJ",6:"FADJ",7:"FADI",8:"FADI",9:"FEDJ",10:"SAWJ"},RKEY="",PICKED=0;
 function tWrap(t,n){var w=t.split(" "),L=[],c="";w.forEach(function(x){if((c+" "+x).trim().length>n&&c){L.push(c);c=x}else c=(c+" "+x).trim()});if(c)L.push(c);return L}
 /* 결과 1275:1827의 16개 카드 원본 SVG 조각을 HTML 안에 보관해요. */
@@ -3037,8 +3921,9 @@ function profile(){
  var hm=[["stamp","독서우표"],["chat","커뮤니티"],["basket","문구점"]];
  var hh=hm.map(function(h,i){return'<button class="hc" data-k="'+i+'"><span>'+ic(h[0])+'</span>'+h[1]+'</button>'}).join("");
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="person"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="pfb"><section class="box pbx2"><div class="pbt"><div class="av3" style="'+avS()+'">'+(MEP?'':esc(ME).charAt(0))+'</div><div class="pnm"><h2>'+esc(ME)+'</h2><small>'+(ageOk(AGE)?ageTxt(AGE)+' · ':'')+'하루 '+(GOAL||10)+'쪽 목표</small></div><button class="pme pmb" id="pme" aria-label="프로필 편집">'+ic("pen")+'</button></div>'
- +(function(){var k=RKEY||(ans.indexOf(null)<0?calcType().key:""),t=k&&T[k];return'<button class="ptc2" id="rp"><span class="ptl"><small>AI 독서 성향</small><span class="ptr">'+(t?'<em class="ptk">'+k+'</em><b>'+t[0]+'</b>':'<b>나의 독서 유형 알아보기</b>')+'</span></span>'+ic("next")+'</button>'})()
+ app.innerHTML='<div class="pfb"><section class="box pbx2 profile-card" aria-label="내 프로필"><div class="profile-identity"><div class="av3" style="'+avS()+'" role="img" aria-label="프로필 사진">'+(MEP?'':ME?esc(ME).charAt(0):ic('person'))+'</div><div class="profile-name"><h2>'+esc(ME||'? ???')+'</h2>'+(ageOk(AGE)?'<small>'+ageTxt(AGE)+'</small>':'')+'</div><button class="profile-edit" id="pme" aria-label="프로필 편집">'+ic("pen")+'</button></div>'
+ +'<div class="profile-daily"><span>'+ic("book")+'<span>하루 독서 목표</span></span><strong>'+(GOAL||10)+'<small>쪽</small></strong></div>'
+ +(function(){var k=RKEY||(ans.indexOf(null)<0?calcType().key:""),t=k&&T[k];return'<button class="profile-type" id="rp"><span class="profile-type-copy"><small>AI 독서 성향</small><strong>'+(t?esc(t[0]):'나의 독서 유형 알아보기')+'</strong>'+(t?'<em>'+k+'</em>':'')+'</span><span class="profile-type-arrow" aria-hidden="true">'+ic("next")+'</span></button>'})()
  +'</section>'
  +'<section class="fs"><div class="fsh"><h3>독서 메이트 '+fc+'</h3><button class="pme" id="pfr">전체 보기'+ic("next")+'</button></div><div class="box pfl">'+(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):'<p class="pfe">아직 친구가 없어요.</p><button class="pfc pfa" id="pfa"><span>'+ic("plus")+'</span><b>친구 찾기</b></button>')+'</div></section>'
  +(function(){var L=readList();return'<section class="fs"><div class="fsh"><h3>읽은 책 '+L.length+'권</h3><button class="pme" id="rbm">전체 보기'+ic("next")+'</button></div><div class="rbl" id="rbl">'+L.map(function(b,i){return'<div class="rbk'+(i>2?" xtra":"")+'"><i data-bt="'+esc(b.t)+'" style="background:'+b.c+'"></i><span class="rbt"><b>'+esc(b.t)+'</b><small>'+esc(b.a)+'</small></span><em class="rbs'+(b.done?" dn":"")+'">'+b.s+'</em></div>'}).join("")+(L.length?'':'<p class="pfe">아직 읽은 책이 없어요.</p>')+'</div>'+'</section>'})()
@@ -3279,7 +4164,7 @@ function library(){
  app.innerHTML='<div class="sh2"><span class="sp3"></span><h2>도서관</h2><span class="sp3"></span></div><div class="lsrow"><div class="csr lsr"><input id="lq" type="search" placeholder="책 제목, 저자로 찾기" aria-label="책 제목이나 저자로 찾기" autocomplete="off"><button class="csb2" id="lsb" aria-label="검색">'+ic("search")+'</button></div></div><div id="lres" hidden></div><div id="lmain">'
  
  +'<section class="fs"><div class="fsh"><h3>인기 급상승 오늘의 책</h3><button class="pme" id="rkm">전체 보기'+ic("next")+'</button></div><div class="box ppx"><div class="shs pps">'+popRank().slice(0,10).map(function(k,i){return bcard(k,i+1)}).join("")+'</div></div></section>'
- +'<section class="fs"><div class="fsh"><h3>장르</h3></div><div class="box gnc" role="group" aria-label="장르별로 보기">'+GEN.map(function(g,i){return'<button class="gnt" data-g="'+i+'"><span><img src="'+FIGMA_ASSETS[GENRE_ASSETS[i]]+'" alt=""></span>'+g+'</button>'}).join("")+'</div></section>'
+ +'<section class="fs"><div class="fsh"><h3>장르</h3></div><div class="box gnc" role="group" aria-label="장르별로 보기">'+GEN.map(function(g,i){return'<button class="gnt" data-g="'+i+'"><span><img src="'+genreIconSource(i)+'" alt=""></span>'+g+'</button>'}).join("")+'</div></section>'
  +'</div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.firstChild.style.paddingBottom="76px";
  (function(){var q=document.getElementById("lq"),res=document.getElementById("lres"),mn=document.getElementById("lmain");q.value=LQ;
@@ -3634,26 +4519,27 @@ function community(){
   function sv(){var a=document.getElementById("ct");if(a)tx=a.value;var p0=document.getElementById("o0");if(p0){o[0]=p0.value;o[1]=document.getElementById("o1").value}}
   function seg(l,k,arr,cur){return'<div class="sg"><b>'+l+'</b><div>'+arr.map(function(t,i){return'<button data-k="'+k+'" data-i="'+i+'" aria-pressed="'+(cur===i)+'">'+t+'</button>'}).join("")+'</div></div>'}
   var keys=["자유","같이","코멘트","밸런스"];
-  function r(){d.innerHTML='<h3>글쓰기</h3>'+seg("글 종류","t",["자유글","같이 읽어요","코멘트 공유","밸런스 게임"],keys.indexOf(ty))+'<p class="tyd">'+TD[ty]+'</p>'
-   +(ty!=="자유"?'<div class="bsr"><b>책 선택</b><input id="bq" type="search" placeholder="책 제목이나 저자를 검색해 보세요" aria-label="책 검색" autocomplete="off" value="'+esc(bk?bk[0]:bq)+'"><div id="bl" class="bls"></div></div>':"")
-   +'<textarea id="ct" rows="3" placeholder="'+(ty==="같이"?"같이 읽을 사람을 구해 보세요":ty==="코멘트"?"코멘트가 궁금해지게 소개해 주세요":ty==="밸런스"?"질문을 적어 주세요":"생각을 자유롭게 나눠 보세요")+'">'+esc(tx)+'</textarea>'
-   +(ty==="밸런스"?'<input id="o0" placeholder="선택지 A" aria-label="선택지 A" value="'+esc(o[0])+'" style="margin-top:8px"><input id="o1" placeholder="선택지 B" aria-label="선택지 B" value="'+esc(o[1])+'" style="margin-top:8px">':"")
-   +seg("공개 범위","v",["전체공개","친구공개","나만보기"],vs)+'<p id="ce" style="color:var(--sub);font-size:13px;min-height:18px;margin:0">'+msg+'</p><div class="dbt"><button class="btn ghost" id="n">취소</button><button class="btn" id="y">등록</button></div>';
-   document.getElementById("n").onclick=function(){d.remove();document.getElementById("ov2").remove()};
+  function r(){d.innerHTML='<div class="compose-author"><span class="compose-avatar" style="'+avS()+'" aria-hidden="true">'+(MEP?'':esc(ME||'나').charAt(0))+'</span><div><b>'+esc(ME||'내 프로필')+'</b><label class="sr" for="compose-visibility">공개 범위</label><select id="compose-visibility">'+["전체공개","친구공개","나만보기"].map(function(label,i){return '<option value="'+i+'"'+(i===vs?' selected':'')+'>'+label+'</option>'}).join('')+'</select></div></div>'
+   +'<div class="compose-category"><label for="compose-type">글 종류</label><select id="compose-type">'+["자유글","같이 읽어요","코멘트 공유","밸런스 게임"].map(function(label,i){return '<option value="'+i+'"'+(keys[i]===ty?' selected':'')+'>'+label+'</option>'}).join('')+'</select></div>'
+   +(ty!=="자유"?'<div class="bsr"><label for="bq">책 고르기</label><input id="bq" type="search" placeholder="책 제목이나 저자를 검색해 보세요" autocomplete="off" value="'+esc(bk?bk[0]:bq)+'"><div id="bl" class="bls"></div></div>':"")
+   +'<label class="sr" for="ct">내용</label><textarea id="ct" rows="10" placeholder="'+(ty==="같이"?"어떤 책을 함께 읽고 싶으신가요?":ty==="코멘트"?"책을 읽으며 어떤 생각이 들었나요?":ty==="밸런스"?"함께 고를 질문을 적어 주세요":"오늘 나누고 싶은 이야기를 적어 주세요")+'">'+esc(tx)+'</textarea>'
+   +(ty==="밸런스"?'<div class="compose-poll"><label for="o0">선택지 A</label><input id="o0" placeholder="첫 번째 선택지를 적어 주세요" value="'+esc(o[0])+'"><label for="o1">선택지 B</label><input id="o1" placeholder="두 번째 선택지를 적어 주세요" value="'+esc(o[1])+'"></div>':"")
+   +'<p id="ce" role="status" aria-live="polite">'+msg+'</p>';
    document.getElementById("y").onclick=function(){sv();var t=tx.trim();
     if(!t){msg="내용을 입력해 주세요.";r();return}
     if(ty!=="자유"&&!bk){msg="책을 골라 주세요.";r();return}
     if(ty==="밸런스"&&(!o[0].trim()||!o[1].trim())){msg="선택지를 두 개 입력해 주세요.";r();return}
     var np={id:Date.now(),t:ty,u:ME,mine:1,tm:"방금 전",v:vs,x:t,l:0,c:[]};if(ty!=="자유"){np.bt=bk;if(bk[3]>-1)np.b=bk[3]}if(ty==="밸런스"){np.o=[o[0].trim(),o[1].trim()];np.n=[0,0]}
-    PO.unshift(np);d.remove();document.getElementById("ov2").remove();feed()};
-   d.querySelectorAll(".sg button").forEach(function(b){b.onclick=function(){sv();msg="";var i=+b.dataset.i;if(b.dataset.k==="t")ty=keys[i];if(b.dataset.k==="v")vs=i;r()}});
+    PO.unshift(np);community()};
+   document.getElementById("compose-type").onchange=function(){sv();msg="";ty=keys[+this.value];r()};
+   document.getElementById("compose-visibility").onchange=function(){sv();vs=+this.value;msg="";r()};
    var bqi=document.getElementById("bq");
    if(bqi){bqi.onfocus=function(){bf=true;bsetl()};bqi.onblur=function(){bf=false;bsetl()};
     bqi.oninput=function(){bk=null;bq=bqi.value;bf=true;bsetl()};
     var bl=document.getElementById("bl");
     bl.onpointerdown=function(e){e.preventDefault()};
     bl.onclick=function(e){var b=e.target.closest(".bsi");if(!b)return;sv();bk=CATB[+b.dataset.c];bq="";bf=false;msg="";r()}}}
-  pop("");d=document.getElementById("dlg");r()}
+  app.className="app community compose-page";app.innerHTML='<header class="sh2"><button class="ib" id="compose-back" aria-label="뒤로">'+ic("back")+'</button><h2>글쓰기</h2><button class="compose-submit" id="y">등록</button></header><div class="compose-form" id="compose-form"></div>';d=document.getElementById("compose-form");document.getElementById("compose-back").onclick=community;r()}
  function act(){
   var x=pop('<h3>내 활동</h3><div class="sg"><div><button data-a="1" aria-pressed="true">내가 쓴 댓글</button><button data-a="2" aria-pressed="false">좋아요 누른 글</button></div></div><div id="al"></div><button class="btn ghost" id="n" style="width:100%;margin-top:12px;flex:none">닫기</button>');
   function show(k){var L=[];
@@ -3964,21 +4850,40 @@ function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':(typeof
  function selHide(){selb.classList.remove("on")}
  function selShow(){var r=selRange();if(!r||app.classList.contains("cpo")){selHide();return}var a=app.getBoundingClientRect(),q=r.getBoundingClientRect();selb.classList.add("on");var w=selb.offsetWidth,h=selb.offsetHeight,l=Math.min(Math.max(8,q.left-a.left+q.width/2-w/2),a.width-w-8),t=q.top-a.top-h-10;if(t<8)t=q.bottom-a.top+10;selb.style.left=l+"px";selb.style.top=t+"px"}
  if(!window.TUTD)setTimeout(tut,400);
- function tut(){if(!document.getElementById("lf"))return;
+ function tut(){
+  if(document.getElementById("lf")!==lf||document.getElementById("tut"))return;
   var ov=document.createElement("div");ov.id="tut";app.appendChild(ov);
-  var C=[["hl","형광펜","문구점에서 산 펜 중 어떤 형광펜으로 칠할지 골라요. 칠하기는 글을 길게 눌러 고른 뒤 말풍선에서 해요."],["memo","스티커","스티커를 골라 글을 적고, 원하는 자리에 붙여요. 직접 만든 스티커도 쓸 수 있어요."],["wd","단어 사전","모르는 단어의 뜻을 바로 찾아봐요."],["ch","인물 사전","나만 보는 인물 메모예요. 추가한 이름은 본문에서 색으로 표시돼요."],["sh","책 공유","지금 읽는 책을 링크로 친구에게 공유해요. 문장 카드는 글을 길게 눌러 고른 뒤 말풍선에서 만들어요."],["set","읽기 설정","낮·밤 모드, 넘김·스크롤, 글자 크기, 글씨체, 스포 방지를 바꿔요."],["pg","쪽 이동","슬라이더를 끌어 원하는 쪽으로 가요. 메이트가 어디쯤 읽는지도 보여요."]],i=0;
-  function done(){ov.remove();window.TUTD=1;cpClose();toast("이제 편하게 읽어 보세요")}
-  function s1(){ov.className="t1";ov.innerHTML='<div class="tbx tb1"><b>읽기 도구 열기</b><p>화면 아래에서 위로 밀어 보세요.<br>형광펜, 코멘트, 쪽 이동 같은 도구가 나와요.</p><button class="tsk">건너뛰기</button></div><div class="tar" aria-hidden="true"><i></i>'+ic("back")+'</div>';
-   var y0=null;function st(y){y0=y}function en(y){if(y0!==null&&y0-y>40){cpOpen();setTimeout(step,340)}y0=null}
-   ov.onpointerdown=function(e){if(e.target.closest(".tsk"))return;st(e.clientY)};ov.onpointerup=function(e){en(e.clientY)};
-   ov.addEventListener("touchstart",function(e){st(e.touches[0].clientY)},{passive:true});ov.addEventListener("touchend",function(e){en(e.changedTouches[0].clientY)});
-   ov.querySelector(".tsk").onclick=done}
-  function step(){if(i>=C.length){done();return}var c=C[i],t=c[0]==="pg"?document.getElementById("pg"):document.querySelector('.cpt[data-a="'+c[0]+'"]');
-   ov.onpointerdown=ov.onpointerup=null;ov.className="t2";var a=app.getBoundingClientRect(),r=t.getBoundingClientRect(),p=6;
-   ov.innerHTML='<i class="tsp" style="left:'+(r.left-a.left-p)+'px;top:'+(r.top-a.top-p)+'px;width:'+(r.width+p*2)+'px;height:'+(r.height+p*2)+'px"></i><div class="tbx tb2"><small>'+(i+1)+' / '+C.length+'</small><b>'+c[1]+'</b><p>'+c[2]+'</p><div class="tbt2"><button class="tsk">건너뛰기</button><button class="tnx">'+(i===C.length-1?"시작하기":"다음")+'</button></div></div>';
-   var bx=ov.querySelector(".tb2"),bh=bx.offsetHeight,top=r.top-a.top-p-bh-14;if(top<10)top=10;bx.style.top=top+"px";
-   ov.querySelector(".tsk").onclick=done;ov.querySelector(".tnx").onclick=function(){i++;step()}}
-  s1()}
+  var C=[["hl","형광펜","형광펜을 고를 수 있어요. 글을 길게 눌러 문장을 고른 뒤 칠해 주세요."],["memo","스티커","스티커에 글을 적고 원하는 자리에 붙여요. 직접 만든 스티커도 쓸 수 있어요."],["wd","단어 사전","모르는 단어의 뜻을 찾아봐요."],["ch","인물 사전","등장인물에 대한 메모를 남겨요. 추가한 이름은 본문에 색으로 표시돼요."],["sh","책 공유","읽는 책을 친구에게 공유해요. 문장 공유는 글을 길게 눌러 문장을 고른 뒤 할 수 있어요."],["set","읽기 설정","화면 밝기, 책 넘김, 글자 크기와 글씨체를 바꿔요."],["pg","쪽 이동","막대를 밀어 원하는 쪽으로 가요. 독서 메이트가 읽는 위치도 볼 수 있어요."]],i=-1,opening=false,timer=null,frame=null,closed=false;
+  var previousFocus=document.activeElement;
+  function active(){return !closed&&ov.isConnected&&document.getElementById("lf")===lf}
+  function target(){return i<0?grb:C[i][0]==="pg"?document.getElementById("pg"):cp.querySelector('.cpt[data-a="'+C[i][0]+'"]')}
+  function position(){
+   if(!active()||opening)return;var t=target(),bx=ov.querySelector(".tbx"),spot=ov.querySelector(".tsp");if(!t||!bx||!spot)return;
+   var a=ov.getBoundingClientRect(),r=t.getBoundingClientRect(),sx=a.width/ov.offsetWidth||1,sy=a.height/ov.offsetHeight||1,W=ov.offsetWidth,H=ov.offsetHeight,pad=6,gap=14,edge=16;
+   var left=Math.max(4,(r.left-a.left)/sx-pad),top=Math.max(4,(r.top-a.top)/sy-pad),right=Math.min(W-4,(r.right-a.left)/sx+pad),bottom=Math.min(H-4,(r.bottom-a.top)/sy+pad);
+   spot.style.left=left+"px";spot.style.top=top+"px";spot.style.width=Math.max(0,right-left)+"px";spot.style.height=Math.max(0,bottom-top)+"px";
+   bx.style.maxHeight="";var h=bx.offsetHeight,above=top-gap-edge,below=H-bottom-gap-edge,under=above<h&&below>above,space=under?below:above;
+   bx.style.maxHeight=Math.max(80,Math.min(H-edge*2,space))+"px";h=bx.offsetHeight;
+   bx.style.top=Math.max(edge,Math.min(H-edge-h,under?bottom+gap:top-gap-h))+"px";
+   ov.dataset.target=i<0?"grb":C[i][0];
+  }
+  function schedule(){if(frame!==null||!active())return;frame=requestAnimationFrame(function(){frame=null;position()})}
+  var ro=new ResizeObserver(schedule);ro.observe(app);ro.observe(cp);
+  var observer=new MutationObserver(function(){if(!active())cleanup()});observer.observe(app,{childList:true});
+  window.addEventListener("resize",schedule);if(window.visualViewport)visualViewport.addEventListener("resize",schedule);
+  function cleanup(){if(closed)return;closed=true;clearTimeout(timer);if(frame!==null)cancelAnimationFrame(frame);ro.disconnect();observer.disconnect();window.removeEventListener("resize",schedule);if(window.visualViewport)visualViewport.removeEventListener("resize",schedule);ov.remove()}
+  function done(){if(!active())return;cleanup();window.TUTD=1;cpClose();(grb.isConnected?grb:previousFocus).focus();toast("이제 편하게 읽어 보세요")}
+  function openTools(){if(!active()||opening||i>=0)return;opening=true;ov.onpointerdown=ov.onpointerup=ov.onpointercancel=null;ov.querySelector(".tnx").disabled=true;cpOpen();timer=setTimeout(function(){if(!active())return;opening=false;i=0;render()},320)}
+  function render(){
+   if(!active())return;if(i>=C.length){done();return}var c=i<0?["grb","읽기 도구 열기","아래 손잡이를 누르거나 위로 밀면 읽기 도구가 열려요."]:C[i];
+   ov.className=i<0?"t1":"t2";ov.innerHTML='<i class="tsp" aria-hidden="true"></i><div class="tbx" role="dialog" aria-modal="true" aria-labelledby="tut-title" aria-describedby="tut-copy"><small>'+(i<0?'읽기 도구 안내':(i+1)+' / '+C.length)+'</small><b id="tut-title">'+c[1]+'</b><p id="tut-copy">'+c[2]+'</p><div class="tbt2"><button class="tsk" type="button">건너뛰기</button><button class="tnx" type="button">'+(i<0?'도구 열기':i===C.length-1?'시작하기':'다음')+'</button></div></div>';
+   ov.querySelector(".tsk").onclick=done;ov.querySelector(".tnx").onclick=i<0?openTools:function(){i++;render()};
+   if(i<0){var y=null;ov.onpointerdown=function(e){if(e.target.closest("button"))return;y=e.clientY;ov.setPointerCapture(e.pointerId)};ov.onpointerup=function(e){if(y!==null&&y-e.clientY>40)openTools();y=null};ov.onpointercancel=function(){y=null}}
+   position();schedule();ov.querySelector(".tnx").focus({preventScroll:true});
+  }
+  ov.onkeydown=function(e){if(e.key==="Escape"){e.preventDefault();done();return}if(e.key!=="Tab")return;var buttons=Array.from(ov.querySelectorAll("button:not(:disabled)")),first=buttons[0],last=buttons[buttons.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}};
+  render();
+ }
  if(window.SELH)document.removeEventListener("selectionchange",window.SELH);
  window.SELH=function(){if(document.getElementById("lf")!==lf){document.removeEventListener("selectionchange",window.SELH);return}clearTimeout(window.SELT);window.SELT=setTimeout(selShow,120)};
  document.addEventListener("selectionchange",window.SELH);
@@ -3994,8 +4899,8 @@ function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':(typeof
 }
 useBk(DEF);
 function splash(){app.className="app spl";
- app.innerHTML='<div class="spw" role="img" aria-label="똑독, 똑똑, 같이 읽을래?">'+logoSVG()+'<h1>똑독</h1><p class="dke">DDOKDOK</p><p class="dks">똑똑, 같이 읽을래?</p></div>';
- var t=setTimeout(go,2200);function go(){clearTimeout(t);app.onclick=null;onb()}app.onclick=go}
+ app.innerHTML='<div class="spw" role="img" aria-label="똑독">'+animatedEntryLogo()+'<h1>똑독</h1><p class="dke">DDOKDOK</p></div>';
+ var t=setTimeout(go,2200);function go(){clearTimeout(t);if(!app.classList.contains("spl"))return;app.onclick=null;onb()}app.onclick=go}
 /* 계정 인증은 서버 연동 전이에요. 입력 정보는 저장하거나 전송하지 않아요. */
 function snsConsent(provider,onContinue){
  var name=provider==="kakao"?"카카오":"구글";
@@ -4007,7 +4912,7 @@ function snsConsent(provider,onContinue){
  +'<div class="consent-list"><section class="consent-item"><div class="consent-row"><label><input id="sns-terms" type="checkbox"><span><em>[필수]</em>이용약관 동의</span></label><button class="consent-more" data-panel="sns-terms-detail" aria-label="이용약관 내용 보기" aria-expanded="false" aria-controls="sns-terms-detail">'+ic("next")+'</button></div>'
  +'<div class="consent-detail" id="sns-terms-detail" hidden><p><b>서비스 이용</b>똑독에서 독서 목표를 정하고, 책을 읽고, 기록과 감상을 나눌 수 있어요.</p><p><b>함께 지킬 약속</b>다른 사람의 개인정보나 저작물을 허락 없이 게시하지 않고, 서로의 생각과 취향을 존중해 주세요.</p><p><b>동의하지 않는 경우</b>동의하지 않고 회원가입 화면으로 돌아갈 수 있어요.</p></div></section>'
  +'<section class="consent-item"><div class="consent-row"><label><input id="sns-privacy" type="checkbox"><span><em>[필수]</em>개인정보 안내 확인</span></label><button class="consent-more" data-panel="sns-privacy-detail" aria-label="개인정보 안내 내용 보기" aria-expanded="false" aria-controls="sns-privacy-detail">'+ic("next")+'</button></div>'
- +'<div class="consent-detail" id="sns-privacy-detail" hidden><p><b>현재 이용 화면</b>이 화면에서는 SNS 계정에 연결하거나 계정 정보·동의 기록을 저장 또는 전송하지 않아요.</p><p><b>계정 연결 시</b>실제 SNS 연결은 '+name+'의 공식 인증 화면에서 진행해요. 제공할 정보와 요청 권한을 확인하고 직접 허용할 수 있어요. SNS 비밀번호는 똑독에 입력하지 않아요.</p><p><b>정보 제공에 동의하기 전</b>연결 시 표시되는 수집 항목, 이용 목적, 보유 기간과 거부 시 영향을 확인해 주세요. 동의하지 않으면 계정 연결을 취소할 수 있어요.</p></div></section></div>'
+ +'<div class="consent-detail" id="sns-privacy-detail" hidden><p><b>현재 이용 화면</b>'+(provider==='kakao'?'카카오에서 동의한 프로필 정보를 가져와요. 가입을 마치면 카카오 계정 식별 정보, 닉네임, 독서 목표와 성향 답변을 이 PC의 개발 서버에 저장해요. 다음 로그인 때 가입 여부를 확인하는 데 사용해요.':'구글 계정 연결은 아직 지원하지 않아요.')+'</p><p><b>계정 연결 시</b>실제 SNS 연결은 '+name+'의 공식 인증 화면에서 진행해요. 제공할 정보와 요청 권한을 확인하고 직접 허용할 수 있어요. SNS 비밀번호는 똑독에 입력하지 않아요.</p><p><b>정보 제공에 동의하기 전</b>연결 시 표시되는 수집 항목, 이용 목적, 보유 기간과 거부 시 영향을 확인해 주세요. 동의하지 않으면 계정 연결을 취소할 수 있어요.</p></div></section></div>'
  +'<p class="consent-note">각 항목의 내용을 확인한 뒤 동의해 주세요.<br>필수 항목을 모두 선택하면 계속할 수 있어요.</p>'
  +'<div class="foot consent-footer"><button class="btn" id="sns-continue" disabled>동의하고 계속하기</button></div>';
  app.appendChild(dialog);dialog.showModal();
@@ -4048,7 +4953,7 @@ function signupAccount(){
  pw.oninput=again.oninput=update;
  document.getElementById('account-form').onsubmit=function(e){e.preventDefault();update();if(!valid())return;pw.value=again.value='';expected='';beginSignup()};
  document.getElementById('account-back').onclick=loginPage;
- document.getElementById('signup-kakao').onclick=function(){snsConsent('kakao',beginSignup)};
+ document.getElementById('signup-kakao').onclick=function(){snsConsent('kakao',kakaoStart)};
  document.getElementById('signup-google').onclick=function(){snsConsent('google',beginSignup)};
  update();
 }
@@ -4085,7 +4990,7 @@ function loginPage(){
  function enterHome(e){if(e)e.preventDefault();update();if(submit.disabled)return;home()}
  submit.onclick=enterHome;form.onsubmit=enterHome;
  password.onkeydown=email.onkeydown=function(e){if(e.key==="Enter")enterHome(e)};
- document.getElementById("auth-kakao").onclick=home;
+ document.getElementById("auth-kakao").onclick=kakaoStart;
  document.getElementById("auth-google").onclick=home;
 }
 
@@ -4299,17 +5204,27 @@ function obScene(n){
  return h+'</svg>'}
 function onb(){
  app.className="app onb";
- var T=[["똑똑,<br>함께 읽을래요?","한 권의 책이<br>새로운 이야기로 이어지는 곳,<br>똑독이에요."],
-  ["책장을 넘기는 순간,<br>새로운 세계가 열려요.","좋은 이야기는<br>언제나 또 다른 이야기를 불러오니까요."],
-  ["친구와 함께,<br>더 멀리, 더 깊이.","같이 읽고, 나누고, 발견하는<br>나만의 독서 여정을 시작해 보세요."]];
- app.innerHTML='<div class="obw" role="region" aria-label="똑독 소개"><div class="obs" id="obs">'+T.map(function(t,i){return'<section class="obp" aria-label="'+(i+1)+' / 3"><h1>'+t[0]+'</h1><p>'+t[1]+'</p><div class="obi">'+obScene(i)+'</div></section>'}).join("")+'</div>'
+ var T=[["내 취향에 맞는 책을<br>만나요","독서 성향에 맞는 책을 찾아봐요."],["하루 몇 쪽부터<br>시작해요","내가 정한 목표만큼 가볍게 읽어요."],["읽은 문장을<br>함께 나눠요","좋아하는 문장과 생각을 주고받아요."]];
+ app.innerHTML='<div class="obw" role="region" aria-label="똑독 소개"><div class="obs" id="obs">'+T.map(function(t,i){return'<section class="obp" aria-label="'+(i+1)+' / 3"><h1>'+t[0]+'</h1><p>'+t[1]+'</p><div class="obi">'+entryScene(i)+'</div></section>'}).join("")+'</div>'
   +'<div class="obf"><div class="obdt" id="obdt">'+[0,1,2].map(function(i){return'<button aria-label="'+(i+1)+'번째 소개 보기" aria-current="'+(i===0)+'"></button>'}).join("")+'</div><button class="btn obgo" id="obgo" hidden>똑독 시작하기</button></div></div>';
- var sc=document.getElementById("obs"),dt=document.querySelectorAll("#obdt button"),go=document.getElementById("obgo"),cur=0;
- function to(i){sc.scrollTo({left:i*sc.clientWidth,behavior:"smooth"})}
- function upd(){var i=Math.round(sc.scrollLeft/sc.clientWidth);if(i===cur&&go.hidden!==(i<2))return;cur=i;dt.forEach(function(d,k){d.setAttribute("aria-current",k===i)});go.hidden=i<2}
+ var sc=document.getElementById("obs"),dt=document.querySelectorAll("#obdt button"),go=document.getElementById("obgo"),cur=0,drag=null,ignoreClickUntil=0,settling=false,settleTimer=null;
+ sc.tabIndex=0;sc.setAttribute("aria-label","똑독 소개. 왼쪽과 오른쪽 방향키로 넘길 수 있어요.");
+ function clamp(i){return Math.max(0,Math.min(dt.length-1,i))}
+ function sync(n){dt.forEach(function(d,k){d.setAttribute("aria-current",String(k===n))});go.hidden=n<dt.length-1}
+ function to(i,instant){cur=clamp(i);settling=!instant;clearTimeout(settleTimer);sync(cur);sc.scrollTo({left:cur*sc.clientWidth,behavior:instant||matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth"});if(settling)settleTimer=setTimeout(function(){settling=false;cur=clamp(Math.round(sc.scrollLeft/sc.clientWidth));sync(cur)},450)}
+ function upd(){if(!drag&&!settling){cur=clamp(Math.round(sc.scrollLeft/sc.clientWidth));sync(cur)}else if(drag&&drag.moved)sync(clamp(Math.round(sc.scrollLeft/sc.clientWidth)))}
  sc.addEventListener("scroll",upd);
  dt.forEach(function(d,k){d.onclick=function(){to(k)}});
- sc.onclick=function(){if(cur<2)to(cur+1)};
+ sc.addEventListener("click",function(e){if(performance.now()<ignoreClickUntil){e.preventDefault();return}var r=sc.getBoundingClientRect();to(cur+(e.clientX<r.left+r.width/2?-1:1))});
+ sc.addEventListener("pointerdown",function(e){if(e.button!==0||e.isPrimary===false)return;drag={x:e.clientX,y:e.clientY,left:sc.scrollLeft,index:clamp(Math.round(sc.scrollLeft/sc.clientWidth)),moved:false,id:e.pointerId};});
+ sc.addEventListener("pointermove",function(e){if(!drag||drag.id!==e.pointerId)return;var dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(!drag.moved){if(Math.abs(dx)<8||Math.abs(dx)<=Math.abs(dy))return;drag.moved=true;settling=false;clearTimeout(settleTimer);sc.style.scrollSnapType="none";try{sc.setPointerCapture(e.pointerId)}catch(_){}sc.classList.add("is-dragging")}
+  e.preventDefault();var scale=sc.getBoundingClientRect().width/sc.clientWidth;sc.scrollLeft=Math.max(0,Math.min((dt.length-1)*sc.clientWidth,drag.left-dx/scale));
+ });
+ function end(e,cancel){if(!drag||drag.id!==e.pointerId)return;var d=drag;drag=null;sc.style.scrollSnapType="";sc.classList.remove("is-dragging");if(!d.moved)return;ignoreClickUntil=performance.now()+450;var dx=e.clientX-d.x,threshold=Math.min(56,sc.getBoundingClientRect().width*.16);to(d.index+(!cancel&&Math.abs(dx)>=threshold?(dx<0?1:-1):0));}
+ sc.addEventListener("pointerup",function(e){end(e,false)});sc.addEventListener("pointercancel",function(e){end(e,true)});
+ sc.addEventListener("keydown",function(e){if(e.key==="ArrowLeft"||e.key==="ArrowRight"){e.preventDefault();to(cur+(e.key==="ArrowLeft"?-1:1))}});
+ var resize=new ResizeObserver(function(){if(!sc.isConnected){resize.disconnect();return}to(cur,true)});resize.observe(sc);
+ sync(0);
  go.onclick=loginPage}
 
 /* ===== 하단 내비게이션: 피그마 navigation_bar 컴포넌트 (기본 #C5C5C5 · 선택 #4CAE85) ===== */
@@ -4402,7 +5317,104 @@ I.gStar="M15.5 3.5l1.3 2.7 2.9.4-2.1 2 .5 2.9-2.6-1.4-2.6 1.4.5-2.9-2.1-2 2.9-.4
 
 /* 기기에 보관한 기록을 불러온 뒤 소개 화면을 열어요. */
 archiveLoad();
-onb();
 </script>
+<script>/* 별도 디자인 시안: 기존 책·기록·동작을 사용하고 새 예시 데이터는 만들지 않아요. */
+(function(){
+
+function cxReadingBooks(){return [DEF].concat(RLs()).filter(function(k,i,L){return L.indexOf(k)===i&&LB[k]&&!isDone(k)&&bprog(k).c<100}).slice(0,3)}
+function cxOpenReadingBooks(books){
+ if(document.getElementById('cx-book-picker'))return;
+ var trigger=document.getElementById('cx-detail'),source={};books.forEach(function(k){var layer=app.querySelector('[data-stack-book="'+k+'"]');if(layer)source[k]=layer.getBoundingClientRect()});
+ var overlay=document.createElement('div');overlay.id='cx-book-picker';overlay.className='cx-book-picker';overlay.innerHTML='<section class="cx-picker-panel" role="dialog" aria-modal="true" aria-labelledby="cx-picker-title"><header><h2 id="cx-picker-title">읽는 중인 책</h2><button class="cx-picker-close" aria-label="닫기">'+ic('close')+'</button></header><div class="cx-picker-books" style="--book-count:'+books.length+'">'+books.map(function(k){var q=bprog(k);return '<button class="cx-picker-book" data-reading-book="'+k+'" aria-pressed="'+(k===DEF)+'" aria-label="'+esc(LB[k][0])+', '+q.c+'% 읽음, 카드에 표시하기"><span>'+coverSVG(k,null,true,107,154.12)+'</span><b>'+esc(LB[k][0])+'</b><small>'+q.c+'%</small></button>'}).join('')+'</div></section>';
+ app.appendChild(overlay);trigger.setAttribute('aria-expanded','true');var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ function close(){overlay.remove();if(trigger.isConnected){trigger.setAttribute('aria-expanded','false');trigger.focus({preventScroll:true})}}
+ overlay.querySelector('.cx-picker-close').innerHTML='<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+ overlay.querySelector('.cx-picker-close').onclick=close;overlay.onclick=function(e){if(e.target===overlay)close()};
+ overlay.querySelectorAll('[data-reading-book]').forEach(function(button){var key=+button.dataset.readingBook,cover=button.querySelector('span');button.onclick=function(){DEF=key;useBk(key);overlay.remove();home();var target=document.getElementById('cx-detail');target.focus({preventScroll:true});if(!reduce)app.querySelector('.cx-reading').animate([{opacity:.6},{opacity:1}],{duration:240,easing:'ease-out'})};
+  if(!reduce&&source[key]){var to=cover.getBoundingClientRect(),from=source[key],ar=app.getBoundingClientRect(),scale=ar.width/app.offsetWidth;cover.animate([{transform:'translate('+((from.left+from.width/2-to.left-to.width/2)/scale)+'px,'+((from.top+from.height/2-to.top-to.height/2)/scale)+'px) scale('+(from.width/to.width)+','+(from.height/to.height)+')',opacity:.7},{transform:'none',opacity:1}],{duration:420,easing:'cubic-bezier(.2,.75,.25,1)',fill:'backwards'})}
+ });
+ overlay.onkeydown=function(e){if(e.key==='Escape'){e.preventDefault();close();return}if(e.key==='Tab'){var list=Array.from(overlay.querySelectorAll('button')),first=list[0],last=list[list.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}};
+ overlay.querySelector('[aria-pressed="true"]').focus({preventScroll:true});
+}
+
+home=function(){
+ app.onclick=null;app.className='app hm';window.scrollTo(0,0);var stackBooks=cxReadingBooks();if(stackBooks.length&&stackBooks.indexOf(DEF)<0)DEF=stackBooks[0];if(BK!==DEF)useBk(DEF);
+ var k=DEF,B=LB[k],q=bprog(k),today=new Date().getDay(),G=GOAL||10,pages=RDY.d===todayStr()?Object.keys(RDY.p).length:0;
+ var days='일월화수목금토'.split('').map(function(d,i){var n=i===today?pages:(i<today?WK[i]:null);return '<div class="cx-day'+(n?' is-read':'')+(i===today?' is-today':'')+'"><small>'+d+'</small><span aria-label="'+d+'요일 '+(n?n+'쪽 읽음':'읽은 기록 없음')+'">'+(n?ic('bkck'):(i===today?'<b>오늘</b>':'·'))+'</span></div>'}).join('');
+ var post=PO.filter(function(p){return p.v===0}).sort(function(a,b){return(b.l+b.c.length)-(a.l+a.c.length)})[0];
+ var nav=[['book','도서관'],['basket','문구점'],['home','홈'],['chat','커뮤니티'],['person','마이페이지']].map(function(x,i){return '<button data-nav="'+i+'"'+(i===2?' aria-current="page"':'')+'>'+ic(x[0])+'<span>'+x[1]+'</span></button>'}).join('');
+ app.innerHTML='<header class="cx-top"><div class="cx-brand">'+logoSVG()+'<span>똑독</span></div><button class="cx-notice" id="cx-notice" aria-label="알림">'+ic('bell')+(unread()?'<i class="cx-dot"></i>':'')+'</button></header>'
+ +''
+ +'<section class="cx-reading" aria-labelledby="cx-title"><div class="cx-readhead" aria-hidden="true"></div><div class="cx-readbody"><div><h2 id="cx-title">'+esc(B[0])+'</h2><p class="cx-author">'+esc(B[1])+'</p><div class="cx-inline-meter" role="progressbar" aria-label="독서 진도" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div><p class="cx-progress-copy"><strong>'+q.c+'<small>%</small></strong></p></div><button class="cx-read-cover cx-stack" id="cx-detail" data-k="'+k+'" aria-label="읽는 중인 책 '+Math.max(1,stackBooks.length)+'권 고르기" aria-haspopup="dialog" aria-expanded="false">'+(stackBooks.length?stackBooks:[k]).map(function(book,index){return '<span class="cx-stack-layer" data-stack-book="'+book+'" style="--stack-index:'+index+';z-index:'+(3-index)+'" aria-hidden="true">'+coverSVG(book,null,true,107,154.12)+'</span>'}).join('')+'</button></div><div class="cx-readfoot"><span>오늘 목표<b>'+pages+' / '+G+'쪽</b></span><button class="cx-continue" id="cx-read">이어서 읽기'+ic('next')+'</button></div></section>'
+ +'<section class="cx-week"><div class="cx-sectionhead"><h2>이번 주 독서</h2><button class="cx-link" id="cx-calendar">전체 보기'+ic('next')+'</button></div><div class="cx-days">'+days+'</div></section>'
+ +'<button class="cx-points" id="cx-missions"><span class="cx-pointmark">P</span><b>오늘의 포인트<strong>'+psDay().act+' / '+PCFG.DAILY_CAP+'P</strong></b>'+ic('next')+'</button>'
+ +'<section class="cx-community"><div class="cx-sectionhead"><h2>커뮤니티 인기글</h2><button class="cx-link" id="cx-community">전체 보기'+ic('next')+'</button></div>'+(post?'<button class="cx-post" id="cx-post"><span aria-hidden="true">“</span><p>'+esc(post.x)+'</p><footer><b>'+esc(post.u)+'님 · '+TN[post.t]+'</b>'+ic('heart')+post.l+ic('chat')+post.c.length+'</footer></button>':'<p class="cx-weeknote">아직 올라온 이야기가 없어요.</p>')+'</section>'
+ +'<nav class="fx concept-nav" aria-label="주요 메뉴">'+nav+'</nav>';
+ document.getElementById('cx-notice').onclick=inbox;document.getElementById('cx-read').onclick=function(){reader(k)};document.getElementById('cx-detail').onclick=function(){cxOpenReadingBooks(stackBooks.length?stackBooks:[k])};document.getElementById('cx-calendar').onclick=function(){calendar()};document.getElementById('cx-missions').onclick=hMis;document.getElementById('cx-community').onclick=function(){OPENP=0;community()};var p=document.getElementById('cx-post');if(p)p.onclick=function(){OPENP=post.id;community()};
+ app.querySelectorAll('[data-book]').forEach(function(b){b.onclick=function(){bookDt(+b.dataset.book,home)}});
+ app.querySelectorAll('[data-nav]').forEach(function(b){b.onclick=[library,shop,home,community,profile][+b.dataset.nav]});
+ window.hpRef=function(){if(app.classList.contains('hm'))home()};
+ };
+ window.home=home;home();
+})();
+</script>
+<script>/* 메뉴 구성은 유지하고 홈 아이콘도 같은 선 스타일로 맞춰요. */NVI[2]='<span class="nvi">'+ic('home')+'</span><span class="nvl">홈</span>';</script>
+<script>(function(){
+ var route={title:'',group:2},queued=false;
+ var routes={library:['도서관',0],genrePg:['장르별 책',0],rankPg:['인기 급상승 오늘의 책',0],bookDt:['책 정보',0],lsearch:['책 검색',0],catPg:['분류별 책',0],themeList:['테마 독서',0],shop:['디지털 문구점',1],profile:['마이페이지',4],readPg:['읽은 책',4],shelfPg:['내 책장',4],likedPg:['찜한 책',4],quoteArchive:['문장 보관함',4],setPg:['설정',4],frList:['독서 메이트',4],inbox:['알림',4],community:['커뮤니티',3],loginPage:['로그인',null],signupAccount:['회원가입',null],info:['회원가입',null],goal:['회원가입',null],ask:['회원가입',null],tiIntro:['독서 성향',null],testPg:['독서 성향 테스트',null],typePg:['AI 독서 성향 분석',4],testRes:['테스트 결과',null],result:['독서 성향 결과',null]};
+ function schedule(){if(queued)return;queued=true;requestAnimationFrame(function(){queued=false;adapt()})}
+ Object.keys(routes).forEach(function(name){var fn=window[name];if(typeof fn!=='function')return;window[name]=function(){route={title:routes[name][0],group:routes[name][1]};var out=fn.apply(this,arguments);schedule();return out}});
+ function adapt(){
+  if(app.classList.contains('hm')||app.classList.contains('onb')||app.classList.contains('spl')||app.classList.contains('rd'))return;
+  var sc=app.querySelector('.sc');if(!sc)return;
+  if(!app.classList.contains('pf')){
+   var bar=sc.querySelector(':scope>.sh2,:scope>header.sh2');
+   if(!bar){bar=document.createElement('header');bar.className='sh2 concept-heading';bar.innerHTML='<span class="sp3" aria-hidden="true"></span><h2></h2><span class="sp3" aria-hidden="true"></span>';sc.prepend(bar)}
+   bar.classList.add('concept-heading');sc.style.setProperty('padding-top','0px','important');var h=bar.querySelector('h2');if(!h){h=document.createElement('h2');bar.insertBefore(h,bar.children[1]||null)}if(!h.textContent.trim())h.textContent=route.title||'똑독';
+  }
+  var nav=app.querySelector(':scope>nav.tab,:scope>nav.concept-nav');
+  if(!nav&&route.group!==null){nav=document.createElement('nav');nav.className='tab nvb concept-nav';nav.setAttribute('data-sk','1');nav.setAttribute('aria-label','주요 메뉴');[['book','도서관'],['basket','문구점'],['home','홈'],['chat','커뮤니티'],['person','마이페이지']].forEach(function(item,i){var b=document.createElement('button');b.innerHTML=ic(item[0])+'<span>'+item[1]+'</span>';if(i===route.group)b.setAttribute('aria-current','page');b.onclick=function(){[library,shop,home,community,profile][i]()};nav.appendChild(b)});app.appendChild(nav)}
+  if(nav){app.classList.add('has-concept-nav');nav.classList.add('concept-nav');if(!nav.hasAttribute('data-concept-nav')){nav.setAttribute('data-concept-nav','1');var icons=['book','basket','home','chat','person'],labels=['도서관','문구점','홈','커뮤니티','마이페이지'];nav.querySelectorAll('button').forEach(function(b,i){if(i>4)return;b.innerHTML=ic(icons[i])+'<span>'+labels[i]+'</span>';b.setAttribute('aria-label',labels[i]);if(route.group!==null){if(i===route.group)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')}})}}
+ }
+ new MutationObserver(schedule).observe(app,{childList:true,subtree:true});schedule();
+})();
+</script>
+
+<script>
+var KAKAO_PENDING=false,KAKAO_COMPLETING=false;
+async function kakaoStart(){
+ if(window.KAKAO_STARTING)return;window.KAKAO_STARTING=true;
+ try{const r=await fetch('/auth/kakao/session',{credentials:'same-origin',cache:'no-store'});if(!r.ok||!(r.headers.get('content-type')||'').includes('application/json'))throw Error();location.assign('/auth/kakao/start')}
+ catch(e){authNotice('카카오 로그인 연결을 준비하고 있어요.')}
+ finally{window.KAKAO_STARTING=false}
+}
+function authNotice(message){var close=pop('<h3>'+esc(message)+'</h3><button class="btn" id="auth-notice-close" style="width:100%;margin-top:16px">확인</button>');document.getElementById('auth-notice-close').onclick=close}
+async function completeSignupHome(){
+ if(!KAKAO_PENDING){home();return}if(KAKAO_COMPLETING)return;KAKAO_COMPLETING=true;
+ try{const r=await fetch('/auth/kakao/complete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nickname:ME,goal:GOAL,answers:ans}),credentials:'same-origin'});const d=await r.json();if(!r.ok)throw Error(d.error||'가입 정보를 저장하지 못했어요. 다시 시도해 주세요.');KAKAO_PENDING=false;NEW_ACCOUNT=false;LOGIN_STATE=null;home()}
+ catch(e){authNotice(e.message||'연결을 확인하고 다시 시도해 주세요.')}
+ finally{KAKAO_COMPLETING=false}
+}
+(async function(){
+ const u=new URL(location.href),status=u.searchParams.get('kakao');if(!status)return;window.DDOK_KAKAO_CALLBACK=true;
+ u.searchParams.delete('kakao');history.replaceState(null,'',u.pathname+u.search+u.hash);
+ if(status!=='success'){loginPage();authNotice(status==='cancelled'?'카카오 연결을 취소했어요.':status==='expired'?'연결 시간이 지났어요. 다시 로그인해 주세요.':'카카오 연결을 마치지 못했어요. 연결 설정을 확인해 주세요.');return}
+ try{const r=await fetch('/auth/kakao/session',{credentials:'same-origin',cache:'no-store'});if(!r.ok)throw Error();const d=await r.json();if(!d.authenticated)throw Error();
+ if(d.onboarded){NEW_ACCOUNT=false;LOGIN_STATE=null;ME=d.profile.nickname;GOAL=d.profile.goal;ans=d.profile.answers;home()}
+ else{KAKAO_PENDING=true;beginSignup();ME=(d.profile.nickname||'').slice(0,10);const input=document.getElementById('inm');if(input){input.value=ME;input.dispatchEvent(new Event('input'))}}
+ }catch(e){loginPage();authNotice('연결을 확인하고 다시 로그인해 주세요.')}
+})();
+</script>
+<script>function genreIconSource(i){var source=FIGMA_ASSETS[GENRE_ASSETS[i]];if(!source||!source.startsWith('data:image/svg+xml;base64,'))return source;var svg=atob(source.split(',')[1]);svg=svg.replace(/#[0-9a-f]{6}/gi,'#174D37');return 'data:image/svg+xml;base64,'+btoa(svg)}</script>
+<script>
+function entryScene(n){
+ if(n===0)return '<div class="entry-books"><div class="entry-cover entry-cover-back">'+coverSVG(4,null,true,112,160)+'</div><div class="entry-cover entry-cover-front">'+coverSVG(0,null,true,125,180)+'</div><span class="entry-badge">'+ic('heart')+'</span></div>';
+ if(n===1)return '<div class="entry-goal-art"><span class="entry-art-book">'+ic('book')+'</span><div class="entry-art-lines"><i></i><i></i><i></i></div><div class="entry-art-days">'+[1,1,1,0,0].map(function(v){return '<span'+(v?' class="done"':'')+'>'+ic(v?'bkck':'book')+'</span>'}).join('')+'</div></div>';
+ return '<div class="entry-message entry-message-back">'+ic('quote')+'<i></i><i></i></div><div class="entry-message entry-message-front">'+ic('chat')+'<i></i><i></i><span>'+ic('heart')+'</span></div>';
+}
+</script>
+
+<script>function animatedEntryLogo(){return "<svg class=\"entry-logo-motion\" viewBox=\"0 0 504.6 574\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\" focusable=\"false\"><path id=\"&#235;&#172;&#184;&#237;&#139;&#128;\" d=\"M14 518V222C14 107.12 107.12 14 222 14C336.88 14 430 107.12 430 222V518H263\" stroke-width=\"28\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke=\"#3E9370\"/><g class=\"entry-logo-door\"><path id=\"&#235;&#172;&#184;\" d=\"M205 81C105.5 81 61.0989 140.303 61.0989 237.345V493.372C61.0989 505.813 58.7242 525.457 77.2462 530.259L189.328 572.931C198.826 576.75 205 570.202 205 555.469V81Z\" fill=\"#C6EED0\"/><path id=\"&#236;&#134;&#144;&#236;&#158;&#161;&#236;&#157;&#180;\" d=\"M193 329C193 322.925 188.075 318 182 318C175.925 318 171 322.925 171 329V354C171 360.075 175.925 365 182 365C188.075 365 193 360.075 193 354V329Z\" fill=\"#FFF3A0\"/></g><g class=\"entry-logo-ray entry-logo-ray-one\"><path id=\"&#235;&#133;&#184;&#237;&#129;&#172; &#237;&#145;&#156;&#236;&#139;&#156; &#194;&#183; &#235;&#140;&#128;&#234;&#176;&#129;&#236;&#132;&#160;\" d=\"M435.143 71.1425L469.657 38.9999\" stroke-width=\"24\" stroke-linecap=\"round\" stroke=\"#FFF29D\"/></g><g class=\"entry-logo-ray entry-logo-ray-two\"><path id=\"&#235;&#133;&#184;&#237;&#129;&#172; &#237;&#145;&#156;&#236;&#139;&#156; &#194;&#183; &#234;&#176;&#128;&#235;&#161;&#156;&#236;&#132;&#160;\" d=\"M452 110H492.6\" stroke-width=\"24\" stroke-linecap=\"round\" stroke=\"#FFF29D\"/></g></svg>"}</script>
+<script>if(!window.DDOK_KAKAO_CALLBACK)splash();</script>
 </body>
 </html>
