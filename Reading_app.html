@@ -3547,6 +3547,15 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.onb .obp>.obi{width:100%;max-width:none;max-height:none;height:auto;min-height:210px;flex:1;margin:32px 0}
 #app.onb .obgo[hidden]{display:block!important;visibility:hidden;pointer-events:none}
 @container(max-height:760px){#app.onb .obp>.obi{margin:24px 0;min-height:180px}}
+/* 커뮤니티: 카드와 바탕을 구분하고 작성자 옆에 친구 추가를 배치해요. */
+#app.app.community,#app.app.community .sc{background:#E1E5E3!important}
+#app.community .ph2{align-items:flex-start}
+#app.community .post-author{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;min-height:28px}
+#app.community .post-author>b{min-width:0;overflow-wrap:anywhere}
+#app.community .post-author .fp2{flex:none;gap:3px;min-width:0;min-height:28px;height:28px;padding:0 6px;font-size:11px;line-height:1.3}
+#app.community .post-author .fp2 .ic{width:12px;height:12px;flex:none}
+#app.community .ph2 .vis{flex:none;margin-left:auto;min-height:28px;justify-content:flex-end}
+#app.community .ph2 .pmn{flex:none;margin:0}
 /* 알림: 최신 디자인 시스템의 카드·간격·색상을 화면 안에서 적용해요. */
 #app.notification-page .sc>.sh2.concept-heading{margin-bottom:24px!important;display:grid;grid-template-columns:80px minmax(0,1fr) 80px;gap:0}
 #app.notification-page .sh2>.ib{justify-self:start}
@@ -4459,7 +4468,7 @@ function community(){
   var bal="";
   if(p.o){var v=VT[p.id],n0=p.n[0]+(v===0?1:0),n1=p.n[1]+(v===1?1:0),t=n0+n1,pc0=Math.round(n0/t*100);
    bal=v===undefined?'<div class="bal">'+p.o.map(function(o,k){return'<button data-v="'+k+'">'+esc(o)+'</button>'}).join('<span>VS</span>')+'</div>':'<div class="bal res">'+[n0,n1].map(function(n,k){var pp=k?100-pc0:pc0;return'<div class="br'+(v===k?" me":"")+'"><i style="width:'+pp+'%"></i><span>'+esc(p.o[k])+'</span><em>'+pp+'%</em></div>'}).join("")+'</div>'}
-  return'<article class="po" data-id="'+p.id+'"><div class="ph2"><button class="pav2" data-u="'+esc(un)+'" style="'+avBg(un)+'" aria-label="'+esc(un)+' 프로필">'+avTx(un)+'</button><div class="pn"><b>'+esc(un)+'</b><small>'+p.tm+' · '+TN[p.t]+(p.ed?' · <em class="edt">수정됨</em>':'')+'</small></div><span class="vis">'+vic(p.v)+VIS[p.v][1]+'</span>'+(me?'':fr?'<span class="fp2 on">친구</span>':'<button class="fp2'+(FRIEND_REQ[p.u]?" rq":"")+'" data-f="'+p.u+'">'+(FRIEND_REQ[p.u]?"신청 중":"친구 추가")+'</button>')+(me&&!full?'<button class="pmn" data-menu="'+p.id+'" aria-label="글 메뉴">'+ic("more")+'</button>':'')+'</div>'
+  return'<article class="po" data-id="'+p.id+'"><div class="ph2"><button class="pav2" data-u="'+esc(un)+'" style="'+avBg(un)+'" aria-label="'+esc(un)+' 프로필">'+avTx(un)+'</button><div class="pn"><div class="post-author"><b>'+esc(un)+'</b>'+(me?'':fr?'<span class="fp2 on">친구</span>':'<button class="fp2'+(FRIEND_REQ[p.u]?" rq":"")+'" data-f="'+esc(p.u)+'">'+(FRIEND_REQ[p.u]?"신청 중":ic("plus")+'친구 추가')+'</button>')+'</div><small>'+p.tm+' · '+TN[p.t]+(p.ed?' · <em class="edt">수정됨</em>':'')+'</small></div>'+(me&&!full?'<button class="pmn" data-menu="'+p.id+'" aria-label="글 메뉴">'+ic("more")+'</button>':'')+'<span class="vis">'+vic(p.v)+VIS[p.v][1]+'</span></div>'
    +'<span class="tg2">'+TN[p.t]+'</span><p class="pt2'+(full?" open":"")+'">'+esc(p.x)+'</p>'+(!full&&p.x.length>70?'<button class="mre">더보기</button>':'')+bk+(p.img?'<img class="pim" src="'+p.img+'" alt="공유한 모음집 항목">':'')+bal
    +(tc&&!full?'<div class="tc"><small>인기 댓글</small><span class="pav2 s" style="'+avBg(tc[3]?ME:tc[0])+'">'+avTx(tc[3]?ME:tc[0])+'</span><span class="tx"><b>'+esc(tc[3]?ME:tc[0])+'</b> '+esc(tc[1])+'</span><em>'+ic("heart")+tc[2]+'</em></div>':'')
    +'<div class="pa"><button data-l="'+p.id+'" aria-pressed="'+lk2+'">'+ic("heart")+(p.l+(lk2?1:0))+'</button><button data-cm="'+p.id+'" aria-label="댓글 '+p.c.length+'개">'+ic("chat")+p.c.length+'</button></div></article>'}
