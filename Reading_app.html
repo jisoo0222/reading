@@ -3698,6 +3698,23 @@ body{font-size:var(--font-body)}
 #app.shp .vl3{max-width:100%;height:auto;white-space:normal;overflow-wrap:anywhere;line-height:1.5;padding:10px 12px}
 #app.pf #rbl .rbt{flex:1 1 6em;min-width:min(6em,100%)}
 
+/* Equal-level content cards use one edge-to-edge spacing token. */
+:root{--space-card-gap:16px}
+#app.hm .cx-reading{transform:none!important}
+#app.hm :is(.cx-week,.cx-points,.cx-community,.cx-popular){margin-top:var(--space-card-gap)!important;margin-bottom:0!important}
+#app.lib #lmain>.fs,#app.lib #lmain>.fs:first-child,#app.lib #lmain>.fs+.fs{margin-top:var(--space-card-gap)!important;margin-bottom:0!important}
+#app.pf .pfb>section.fs,#app.pf .pfb>.pset2{margin-top:var(--space-card-gap)!important;margin-bottom:0!important}
+#app.community #feed>.po{margin:0!important}
+#app.community #feed>.po+.po{margin-top:var(--space-card-gap)!important}
+#app.shp .gd{gap:var(--space-card-gap)!important}
+#app .quote-archive-list{gap:var(--space-card-gap)}
+#app .quote-archive-list>.quote-entry{margin:0!important}
+#app.calendar-page .lgw{margin-top:var(--space-card-gap)}
+#app.type-result .ax+.ax{margin-top:var(--space-card-gap)}
+#app .rkr{margin:0!important}
+#app .rkr+.rkr{margin-top:var(--space-card-gap)!important}
+#app.lib .lsrow{border-bottom:0!important;box-shadow:none}
+
 </style>
 </head>
 <body>
