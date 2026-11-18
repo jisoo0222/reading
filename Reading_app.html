@@ -3635,7 +3635,7 @@ body{font-size:var(--font-body)}
 #app :is(button,input,select,textarea){min-width:0}
 #app :is(p,button,label,small){word-break:keep-all;overflow-wrap:break-word}
 #app.app nav.concept-nav.concept-nav:is(.tab,.fx){font-size:14px;height:calc(4em + 32px)!important;min-height:calc(4em + 32px)!important;padding:8px 10px!important;align-items:center!important}
-#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button{height:calc(4em + 14px)!important;min-height:calc(4em + 14px)!important;padding:4px 0!important;justify-content:flex-start!important;font-size:14px!important;white-space:normal!important}
+#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button{height:calc(4em + 14px)!important;min-height:calc(4em + 14px)!important;padding:8px 0 0!important;justify-content:flex-start!important;font-size:14px!important;white-space:normal!important}
 #app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button span{display:flex;align-items:center;justify-content:center;min-height:2.4em;max-width:100%;font-size:14px;line-height:1.2;word-break:keep-all;overflow-wrap:anywhere}
 #app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button .nvi{width:22px;height:22px;min-height:22px;flex:none}
 #app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button .nvi svg:not(.ic){display:block;width:22px;height:22px}
@@ -3722,6 +3722,7 @@ body{font-size:var(--font-body)}
 #app.lib{container-type:size}
 #app.app.lib.has-concept-nav .sc{padding-bottom:104px!important}
 #app.lib #lmain{display:flex;flex-direction:column;flex:1 0 auto!important}
+#app.lib #lmain[hidden]{display:none!important}
 #app.lib #lmain>.fs:has(>.gnc){display:flex;flex-direction:column;flex:1 0 auto}
 #app.lib #lmain>.fs>.gnc{flex:1 0 auto;align-content:space-around}
 #app.lib #lmain>.fs,#app.lib #lmain>.fs:first-child,#app.lib #lmain>.fs+.fs,#app.lib #lmain>.fs:has(>.gnc){padding:16px!important}
@@ -4404,12 +4405,29 @@ function library(){
  app.querySelectorAll(".gnc .gnt").forEach(function(b){b.onclick=function(){genrePg(+b.dataset.g)}});
 
  lbWire(library);
- autoSl(app.querySelector(".pps"));
+ autoSl(app.querySelector("#lmain .ppx .pps"));
  app.querySelectorAll(".sv").forEach(function(b){b.onclick=function(){catPg(+b.dataset.k)}});
  var tb=app.querySelectorAll(".tab button");tb[1].onclick=shop;tb[2].onclick=home;tb[3].onclick=community;tb[4].onclick=profile;
 }
-function autoSl(el){if(!el)return;var t;function go(){if(!el.isConnected)return;var c=el.children[0];if(!c)return;var st=3*c.offsetWidth+3*(parseFloat(getComputedStyle(el).columnGap)||0),mx=el.scrollWidth-el.clientWidth;el.scrollTo({left:el.scrollLeft>=mx-2?0:Math.min(mx,(Math.round(el.scrollLeft/(st/3))+3)*st/3),behavior:"smooth"});t=setTimeout(go,10000)}
- el.addEventListener("pointerdown",function(){clearTimeout(t);t=setTimeout(go,10000)});el.addEventListener("touchstart",function(){clearTimeout(t);t=setTimeout(go,10000)},{passive:true});t=setTimeout(go,10000)}
+function autoSl(el){
+ if(!el||el.dataset.flowing)return;var motion=matchMedia("(prefers-reduced-motion: reduce)");if(motion.matches)return;
+ el.dataset.flowing="1";var oldSnap=el.style.scrollSnapType,oldBehavior=el.style.scrollBehavior,last=0,position=el.scrollLeft,wait=performance.now()+800,held=false,hover=false;
+ el.style.scrollSnapType="none";el.style.scrollBehavior="auto";el.style.overflowAnchor="none";
+ function pause(){wait=performance.now()+1800}
+ function release(){if(held){held=false;pause()}}
+ el.addEventListener("pointerenter",function(e){if(e.pointerType==="mouse")hover=true});el.addEventListener("pointerleave",function(){hover=false;pause()});
+ el.addEventListener("pointerdown",function(){held=true;pause()});el.addEventListener("focusin",pause);el.addEventListener("focusout",pause);el.addEventListener("wheel",pause,{passive:true});
+ window.addEventListener("pointerup",release);window.addEventListener("pointercancel",release);
+ function stop(){window.removeEventListener("pointerup",release);window.removeEventListener("pointercancel",release);el.style.scrollSnapType=oldSnap;el.style.scrollBehavior=oldBehavior;delete el.dataset.flowing}
+ function frame(now){
+  if(!el.isConnected||motion.matches){stop();return}var dt=last?Math.min(48,now-last):0;last=now;
+  if(document.hidden||el.closest("[hidden]")||!el.getClientRects().length||held||hover||el.contains(document.activeElement)||now<wait){position=el.scrollLeft;requestAnimationFrame(frame);return}
+  var first=el.firstElementChild,css=getComputedStyle(el),gap=parseFloat(css.columnGap)||0,stride=first?first.offsetWidth+gap:0,pad=parseFloat(css.paddingLeft)||0;
+  if(stride>0&&el.scrollWidth>el.clientWidth+stride){position+=24*dt/1000;if(position>=stride+pad){el.appendChild(first);position-=stride}el.scrollLeft=position}else position=el.scrollLeft;
+  requestAnimationFrame(frame);
+ }
+ requestAnimationFrame(frame);
+}
 KD.push(["","AI 소설"]);
 LB.push(["백치 아다다","계용묵","#6A4F6A",14],["동백꽃","김유정","#B2A5D6",23],["날개","김해경(이상)","#C9B3C9",9],["홍경래전","이명선","#6A4F6A",6],["죄와 벌","이무영","#B2A5D6",11],["메밀꽃 필 무렵","이효석","#C9B3C9",31],["운수 좋은 날","현진건","#6A4F6A",18]);
 /* 각 서가(번대)에 실제 책 제목 6권씩(본문은 아직 없음). AI 소설 2편은 똑독 AI가 쓴 예시 글이에요 */
