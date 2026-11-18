@@ -3151,11 +3151,11 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.spl .spw .dke{color:#34483B;font-size:14px;letter-spacing:.3em;margin-top:8px!important}
 #app.onb .obw{background:#EFF1F0}
 #app.onb .obs{min-height:0;align-items:stretch}
-#app.onb .obp{padding:72px 20px 0!important;gap:0;min-height:0}
+#app.onb .obp{padding:80px 20px 0!important;gap:0;min-height:0}
 #app.onb .obp h1{font-size:24px;line-height:1.35;font-weight:750;letter-spacing:-.04em;color:#17241C;flex:none;text-align:left;width:100%;white-space:normal}
-#app.onb .obskip{position:absolute;top:12px;right:20px;z-index:10;display:flex;align-items:center;gap:6px;min-width:48px;min-height:48px;padding:8px 0 8px 12px;border:0;background:transparent;color:#666161;font:600 14px/1.5 Pretendard,sans-serif;cursor:pointer}
+#app.onb .obskip{position:absolute;top:12px;right:20px;z-index:10;display:flex;align-items:center;gap:6px;min-width:48px;min-height:48px;padding:8px 0 8px 12px;border:0;background:transparent;color:#6D6D6D;font:600 14px/1.5 Pretendard,sans-serif;cursor:pointer}
 #app.onb .obskip:focus-visible{outline:3px solid #174D37;outline-offset:2px;border-radius:5px}
-#app.onb .obp p{font-size:14px;line-height:1.65;color:#34483B;text-align:left;width:100%;margin:16px 0 0;flex:none}
+#app.onb .obp p{font-size:14px;line-height:1.65;color:#34483B;text-align:left;width:100%;margin:8px 0 0;flex:none}
 #app.onb .obi{width:100%;max-width:none;height:330px;max-height:44vh;min-height:210px;flex:1;margin:32px 0 20px;background:#DAEAE1;border-radius:15px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;isolation:isolate}
 #app.onb .obf{padding:0 20px 30px!important;min-height:128px;gap:16px;justify-content:flex-end}
 #app.onb .obdt{gap:0;min-height:48px;align-items:center}
@@ -3189,7 +3189,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.onb .entry-message-front>span{position:absolute;right:-10px;top:-15px;background:#FFFFFF;border-radius:12px;color:#174D37;padding:10px;display:grid;place-items:center}
 #app.onb .entry-message-front>span .ic{width:22px;height:22px}
 #app.onb button:focus-visible{outline:3px solid #174D37;outline-offset:3px}
-@container(max-height:760px){#app.onb .obp{padding-top:72px!important}#app.onb .obp h1{font-size:24px}#app.onb .obi{margin-top:24px;min-height:200px}#app.onb .obf{padding-bottom:24px!important}}
+@container(max-height:760px){#app.onb .obp{padding-top:80px!important}#app.onb .obp h1{font-size:24px}#app.onb .obi{margin-top:24px;min-height:200px}#app.onb .obf{padding-bottom:24px!important}}
 
 /* 로그인: 브랜드와 입력 카드, SNS 가입 입구를 나눠요. */
 #app.auth,#app.auth .sc{background:#EFF1F0!important}
@@ -3637,8 +3637,8 @@ body{font-size:var(--font-body)}
 #app.app nav.concept-nav.concept-nav:is(.tab,.fx){font-size:14px;height:calc(4em + 32px)!important;min-height:calc(4em + 32px)!important;padding:8px 10px!important;align-items:center!important}
 #app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button{height:calc(4em + 14px)!important;min-height:calc(4em + 14px)!important;padding:4px 0!important;justify-content:flex-start!important;font-size:14px!important;white-space:normal!important}
 #app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button span{display:flex;align-items:center;justify-content:center;min-height:2.4em;max-width:100%;font-size:14px;line-height:1.2;word-break:keep-all;overflow-wrap:anywhere}
-#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button .nvi{height:20px;min-height:20px;flex:none}
-#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button .nvi svg:not(.ic){display:block;height:20px;width:auto}
+#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button .nvi{width:22px;height:22px;min-height:22px;flex:none}
+#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button .nvi svg:not(.ic){display:block;width:22px;height:22px}
 #app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button[aria-current=page] .nvi svg:not(.ic) path{stroke-width:2.5}
 #app:not(.rd).has-concept-nav .sc,#app.hm .sc.hm{padding-bottom:calc(4em + 54px)!important}
 #app.hm .cx-readbody{min-height:175px}
@@ -3658,6 +3658,45 @@ body{font-size:var(--font-body)}
 #app:is(.community,.home-feed) .ph2 .pn small{display:block;white-space:normal;overflow-wrap:anywhere}
 #app:is(.community,.home-feed) .post-author .fp2{height:auto;min-height:28px;padding:3px 6px}
 #app:is(.signup,.signup-account) .sc>h1,#app .hfin .hf1t{height:auto;white-space:normal!important;overflow-wrap:anywhere}
+
+/* Same-purpose icons share a frame; short labels stay centered within their shapes. */
+:root{--icon-control:30px;--icon-inline:16px;--icon-nav:22px;--icon-genre:24px}
+#app :is(.ib,.csb2,.wfab,.profile-edit,.pset2,.tlb,.cx-notice)>.ic{width:var(--icon-control)!important;height:var(--icon-control)!important;flex:none;display:block}
+#app :is(.btn,.fadd,.rbf,.cx-continue,.cx-link,.cx-points,.drow,.pme,.hn,.hp,.bkl,.pa button,.vis,.tc em,.profile-daily,.profile-type-arrow,.fp2,.hb)>.ic{width:var(--icon-inline)!important;height:var(--icon-inline)!important;flex:none;display:block}
+#app .pset2>.ic:last-child,#app .profile-daily>span>.ic{width:var(--icon-inline)!important;height:var(--icon-inline)!important;flex:none}
+#app.pf .archive-action>span>.ic{width:var(--icon-control)!important;height:var(--icon-control)!important}
+#app :is(.btn,.fadd,.tg2,.ctf>button,.ctf2>button,.och>button,.sg>button,.fp2){display:inline-flex;align-items:center;justify-content:center;text-align:center;line-height:1.5}
+#app .btn{gap:8px}
+#app :is(.ib,.hb,.wfab){display:grid;place-items:center;padding:0}
+#app :is(.ost b,.cx-pointmark,.rkb,.dstp,.pav2,.av3){display:inline-flex;align-items:center;justify-content:center;text-align:center;line-height:1.2;padding:0}
+#app .cx-day span{text-align:center;line-height:1.2}
+
+/* Text may grow within a box; labels never force their container wider. */
+#app :is(h1,h2,h3,h4,p,label,small,blockquote){min-width:0;max-width:100%;word-break:keep-all;overflow-wrap:anywhere}
+#app :is(.profile-name,.profile-type-copy,.archive-action,.pfc,.rbt,.pn,.bkl>span,.opt>span:first-child){min-width:0;max-width:100%}
+#app :is(.btn,.fadd,.archive-action>b,.pfc>b,.profile-name h2){white-space:normal;word-break:keep-all;overflow-wrap:anywhere}
+#app :is(.btn,.fadd){height:auto!important;min-height:48px}
+#app.pf .archive-action>b{line-height:1.5;max-width:100%}
+#app.pf .profile-daily{flex-wrap:wrap}
+#app.pf #rbl .rbk{flex-wrap:wrap}
+#app.pf #rbl .rbs{display:inline-flex;align-items:center;justify-content:center;height:auto!important;min-height:27px;max-width:100%;white-space:normal;text-align:center;line-height:1.5}
+#app.app nav.concept-nav .nvl{white-space:normal!important;overflow-wrap:anywhere;min-width:0;line-height:1.2}
+#app.hm .cx-sectionhead{flex-wrap:wrap;gap:8px}
+#app.hm .cx-link{white-space:normal;max-width:100%;min-width:0;justify-content:center;overflow-wrap:anywhere}
+#app.lib .gnt-label{display:block;width:100%;min-width:0;max-width:100%;font:inherit;text-align:center;white-space:normal;overflow-wrap:anywhere}
+#app.app.shp .cats{flex-wrap:wrap}
+#app.app.shp .cat{flex:1 1 4.5em;height:auto!important;padding:8px!important;min-width:0}
+#app.app.shp .cat small{display:block;width:100%;white-space:normal;overflow-wrap:anywhere;line-height:1.5}
+#app.shp .hn{width:auto;min-width:0;flex:1;flex-wrap:wrap;white-space:normal;overflow-wrap:anywhere}
+#app.app:is(.community,.home-feed) .ctf2{flex-wrap:wrap}
+#app.app:is(.community,.home-feed) .ctf2>button{flex:1 1 6em;height:auto!important;min-height:42px!important;padding:8px!important;white-space:normal;overflow-wrap:anywhere}
+#app.pf #rbl .rbt small{white-space:normal!important;overflow-wrap:anywhere}
+#app.app.pf .pset2>.ic{width:var(--icon-inline)!important;height:var(--icon-inline)!important}
+#app.app .hb>.ic,#app .cx-day span>.ic{width:var(--icon-inline)!important;height:var(--icon-inline)!important}
+#app.shp .mpt3{flex-wrap:wrap;gap:16px}
+#app.shp .mpl3{min-width:0;max-width:100%}
+#app.shp .vl3{max-width:100%;height:auto;white-space:normal;overflow-wrap:anywhere;line-height:1.5;padding:10px 12px}
+#app.pf #rbl .rbt{flex:1 1 6em;min-width:min(6em,100%)}
 
 </style>
 </head>
@@ -4040,9 +4079,9 @@ function profile(){
  +'<div class="profile-daily"><span>'+ic("book")+'<span>하루 독서 목표</span></span><strong>'+(GOAL||10)+'<small>쪽</small></strong></div>'
  +(function(){var k=RKEY||(ans.indexOf(null)<0?calcType().key:""),t=k&&T[k];return'<button class="profile-type" id="rp"><span class="profile-type-copy"><small>AI 독서 성향</small><strong>'+(t?esc(t[0]):'나의 독서 유형 알아보기')+'</strong>'+(t?'<em>'+k+'</em>':'')+'</span><span class="profile-type-arrow" aria-hidden="true">'+ic("next")+'</span></button>'})()
  +'</section>'
+ +'<section class="fs profile-archives"><div class="fsh"><h3>아카이빙</h3></div><div class="archive-actions">'+[['plm','찜한 책','heart'],['p-vault','포인트 보관함','basket'],['p-quotes','문장 보관함','quote'],['mym','내 글 보관함','pen']].map(function(a){return '<button class="archive-action" id="'+a[0]+'"><span aria-hidden="true">'+ic(a[2])+'</span><b>'+a[1]+'</b></button>'}).join('')+'</div></section>'
  +'<section class="fs"><div class="fsh"><h3>독서 메이트 '+fc+'</h3><button class="pme" id="pfr">전체 보기'+ic("next")+'</button></div><div class="box pfl">'+(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):'<p class="pfe">아직 친구가 없어요.</p><button class="pfc pfa" id="pfa"><span>'+ic("plus")+'</span><b>친구 찾기</b></button>')+'</div></section>'
  +(function(){var L=readList();return'<section class="fs"><div class="fsh"><h3>읽은 책 '+L.length+'권</h3><button class="pme" id="rbm">전체 보기'+ic("next")+'</button></div><div class="rbl" id="rbl">'+L.map(function(b,i){return'<div class="rbk'+(i>2?" xtra":"")+'"><i data-bt="'+esc(b.t)+'" style="background:'+b.c+'"></i><span class="rbt"><b>'+esc(b.t)+'</b><small>'+esc(b.a)+'</small></span><em class="rbs'+(b.done?" dn":"")+'">'+b.s+'</em></div>'}).join("")+(L.length?'':'<p class="pfe">아직 읽은 책이 없어요.</p>')+'</div>'+'</section>'})()
- +'<section class="fs profile-archives"><div class="fsh"><h3>아카이빙</h3></div><div class="archive-actions">'+[['plm','찜한 책','heart'],['p-vault','포인트 보관함','basket'],['p-quotes','문장 보관함','quote'],['mym','내 글 보관함','pen']].map(function(a){return '<button class="archive-action" id="'+a[0]+'"><span aria-hidden="true">'+ic(a[2])+'</span><b>'+a[1]+'</b></button>'}).join('')+'</div></section>'
  +'<button class="pset2" id="pset">'+ic("cog")+'<span>설정</span>'+ic("next")+'</button>'
  +'</div>'
  +'<nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
@@ -4279,7 +4318,7 @@ function library(){
  app.innerHTML='<div class="sh2"><span class="sp3"></span><h2>도서관</h2><span class="sp3"></span></div><div class="lsrow"><div class="csr lsr"><input id="lq" type="search" placeholder="책 제목, 저자로 찾기" aria-label="책 제목이나 저자로 찾기" autocomplete="off"><button class="csb2" id="lsb" aria-label="검색">'+ic("search")+'</button></div></div><div id="lres" hidden></div><div id="lmain">'
  
  +'<section class="fs"><div class="fsh"><h3>인기 급상승 오늘의 책</h3><button class="pme" id="rkm">전체 보기'+ic("next")+'</button></div><div class="box ppx"><div class="shs pps">'+popRank().slice(0,10).map(function(k,i){return bcard(k,i+1)}).join("")+'</div></div></section>'
- +'<section class="fs"><div class="fsh"><h3>장르</h3></div><div class="box gnc" role="group" aria-label="장르별로 보기">'+GEN.map(function(g,i){return'<button class="gnt" data-g="'+i+'"><span><img src="'+genreIconSource(i)+'" alt=""></span>'+g+'</button>'}).join("")+'</div></section>'
+ +'<section class="fs"><div class="fsh"><h3>장르</h3></div><div class="box gnc" role="group" aria-label="장르별로 보기">'+GEN.map(function(g,i){return'<button class="gnt" data-g="'+i+'"><span><img src="'+genreIconSource(i)+'" alt=""></span><b class="gnt-label">'+g+'</b></button>'}).join("")+'</div></section>'
  +'</div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.firstChild.style.paddingBottom="76px";
  (function(){var q=document.getElementById("lq"),res=document.getElementById("lres"),mn=document.getElementById("lmain");q.value=LQ;
