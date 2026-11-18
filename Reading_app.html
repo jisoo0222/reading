@@ -3191,8 +3191,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 /* 로그인: 브랜드와 입력 카드, SNS 가입 입구를 나눠요. */
 #app.auth,#app.auth .sc{background:#EFF1F0!important}
-#app.auth .sc{padding-bottom:30px!important}
-#app.auth .auth-brand{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:30px 0!important;height:auto!important;margin:0}
+#app.auth:not(.rd):not(.hm):not(.onb):not(.spl) .sc{display:flex!important;flex-direction:column;gap:24px!important;padding:30px 20px!important}
+#app.auth .auth-brand{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:0!important;height:auto!important;margin:auto 0 0}
 #app.auth .auth-logo{width:72px;height:82px;margin:0}
 #app.auth .auth-logo>.brand-logo{width:72px;height:82px;transform:none}
 #app.auth .auth-brand h1{font-size:40px!important;line-height:1.2;margin:0!important;color:#174D37}
@@ -3203,12 +3203,12 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.auth .auth-form .btn:disabled{opacity:1;background:#DCE3DE;color:#4C6152}
 #app.auth .auth-join{margin-top:12px!important;min-height:48px;font-size:14px;gap:8px;flex-wrap:wrap;color:#34483B}
 #app.auth .auth-link{min-height:48px;padding:10px 8px;color:#174D37;font-size:14px}
-#app.auth .auth-social{background:transparent;border:0;border-radius:0;box-shadow:none;padding:0!important;margin:16px 0 0!important}
+#app.auth .auth-social{background:transparent;border:0;border-radius:0;box-shadow:none;padding:0!important;margin:16px 0 auto!important}
 #app.auth .auth-social h2{font-size:14px;line-height:1.5;gap:12px;margin-bottom:20px;color:#34483B}
 #app.auth .auth-providers{gap:24px;padding:0!important}
 #app.auth .auth-provider{width:60px;height:60px;min-width:48px;min-height:48px}
 #app.auth input::placeholder{color:#526A5B;opacity:1}
-@container(max-height:760px){#app.auth .auth-brand{padding:24px 0!important}#app.auth .auth-logo,#app.auth .auth-logo>.brand-logo{width:56px;height:64px}#app.auth .auth-brand h1{font-size:36px!important}}
+@container(max-height:760px){#app.auth .auth-logo,#app.auth .auth-logo>.brand-logo{width:56px;height:64px}#app.auth .auth-brand h1{font-size:36px!important}}
 
 /* 계정 가입: 인증·비밀번호 입력은 같은 흰 카드로 묶어요. */
 #app.signup-account,#app.signup-account .sc{background:#EFF1F0!important}
