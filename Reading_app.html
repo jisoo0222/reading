@@ -3547,6 +3547,16 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.hm .cx-community{padding:0;margin-top:24px;background:transparent}
 #app.hm .cx-community .po{padding:20px!important;margin:0;background:var(--card)!important;border:0;border-radius:15px!important}
 #app.hm .cx-community .pt2.open{display:block;overflow:visible;-webkit-line-clamp:unset}
+#app.hm .cx-community-list{list-style:none;margin:0;padding:0}
+#app.hm .cx-community-list>li+li{border-top:1px solid #D0DAD3}
+#app.hm .cx-community-row{display:block;width:100%;min-height:48px;padding:16px 0;border:0;border-radius:0;background:transparent;color:#17241C;text-align:left;font:inherit;cursor:pointer}
+#app.hm .cx-community-copy{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:16px;line-height:1.55;font-weight:600;word-break:keep-all;overflow-wrap:anywhere}
+#app.hm .cx-community-meta{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px 12px;margin-top:10px;font-size:14px;line-height:1.5;color:#34483B}
+#app.hm .cx-community-author{min-width:0;word-break:keep-all;overflow-wrap:anywhere}
+#app.hm .cx-community-counts{display:flex;align-items:center;gap:12px;flex:none}
+#app.hm .cx-community-counts>span{display:inline-flex;align-items:center;gap:4px}
+#app.hm .cx-community-counts .ic{width:16px;height:16px;flex:none}
+#app.hm .cx-community-row:focus-visible{outline:3px solid #174D37;outline-offset:3px;border-radius:5px}
 @media(max-width:360px){#app.hm .cx-readbody{grid-template-columns:minmax(0,1fr) 94px;gap:12px}#app.hm .cx-read-cover.cx-stack{width:94px;height:135px}}
 /* 커뮤니티: 카드와 바탕을 구분하고 작성자 옆에 친구 추가를 배치해요. */
 #app:is(.community,.home-feed) .ph2{align-items:flex-start}
@@ -5504,25 +5514,20 @@ home=function(){
  app.onclick=null;app.className='app hm home-feed';window.scrollTo(0,0);var stackBooks=cxReadingBooks();if(stackBooks.length&&stackBooks.indexOf(DEF)<0)DEF=stackBooks[0];if(BK!==DEF)useBk(DEF);
  var k=DEF,B=LB[k],q=AUTH_SESSION.signedIn?bprog(k):{c:0},today=new Date().getDay(),G=GOAL||10,pages=AUTH_SESSION.signedIn&&RDY.d===todayStr()?Object.keys(RDY.p).length:0;
  var days='일월화수목금토'.split('').map(function(d,i){var n=AUTH_SESSION.signedIn?(i===today?pages:(i<today?WK[i]:null)):null;return '<div class="cx-day'+(n?' is-read':'')+(i===today?' is-today':'')+'"><small>'+d+'</small><span aria-label="'+d+'요일 '+(n?n+'쪽 읽음':'읽은 기록 없음')+'">'+(n?ic('bkck'):(i===today?'<b>오늘</b>':'·'))+'</span></div>'}).join('');
- var post=PO.filter(function(p){return p.v===0}).sort(function(a,b){return(b.l+b.c.length)-(a.l+a.c.length)})[0];
+ var posts=PO.filter(function(p){return p.v===0}).sort(function(a,b){return(b.l+b.c.length)-(a.l+a.c.length)}).slice(0,4);
  var nav=[['book','도서관'],['basket','문구점'],['home','홈'],['chat','커뮤니티'],['person','마이페이지']].map(function(x,i){return '<button data-nav="'+i+'"'+(i===2?' aria-current="page"':'')+'>'+ic(x[0])+'<span>'+x[1]+'</span></button>'}).join('');
  app.innerHTML='<header class="cx-top"><div class="cx-brand">'+logoSVG()+'<span>똑독</span></div><button class="cx-notice" id="cx-notice" aria-label="알림">'+ic('bell')+(unread()?'<i class="cx-dot"></i>':'')+'</button></header>'
  +''
  +'<section class="cx-reading" aria-labelledby="cx-title"><div class="cx-readhead" aria-hidden="true"></div><div class="cx-readbody"><div><h2 id="cx-title">'+esc(B[0])+'</h2><p class="cx-author">'+esc(B[1])+'</p><div class="cx-inline-meter" role="progressbar" aria-label="독서 진도" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div><p class="cx-progress-copy"><strong>'+q.c+'<small>%</small></strong></p></div><button class="cx-read-cover cx-stack" id="cx-detail" data-k="'+k+'" aria-label="읽는 중인 책 '+Math.max(1,stackBooks.length)+'권 고르기" aria-haspopup="dialog" aria-expanded="false">'+(stackBooks.length?stackBooks:[k]).map(function(book,index){return '<span class="cx-stack-layer" data-stack-book="'+book+'" style="--stack-index:'+index+';z-index:'+(3-index)+'" aria-hidden="true">'+coverSVG(book,null,true,107,154.12)+'</span>'}).join('')+'</button></div><div class="cx-readfoot"><span>오늘 목표<b>'+pages+' / '+G+'쪽</b></span><button class="cx-continue" id="cx-read">'+(AUTH_SESSION.signedIn?'이어서 읽기':'읽기 시작')+ic('next')+'</button></div></section>'
  +'<section class="cx-week"><div class="cx-sectionhead"><h2>이번 주 독서</h2><button class="cx-link" id="cx-calendar">전체 보기'+ic('next')+'</button></div><div class="cx-days">'+days+'</div></section>'
  +'<button class="cx-points" id="cx-missions"><span class="cx-pointmark">P</span><b>오늘의 포인트<strong>'+(AUTH_SESSION.signedIn?psDay().act:0)+' / '+PCFG.DAILY_CAP+'P</strong></b>'+ic('next')+'</button>'
- +'<section class="cx-community"><div class="cx-sectionhead"><h2>커뮤니티 인기글</h2><button class="cx-link" id="cx-community">전체 보기'+ic('next')+'</button></div>'+(post?'<div id="cx-post">'+communityPost(post,false,true)+'</div>':'<p class="cx-weeknote">아직 올라온 이야기가 없어요.</p>')+'</section>'
+ +'<section class="cx-community"><div class="cx-sectionhead"><h2>커뮤니티 인기글</h2><button class="cx-link" id="cx-community">전체 보기'+ic('next')+'</button></div>'+(posts.length?'<ul class="cx-community-list" id="cx-posts">'+posts.map(function(post){var likes=post.l+(AUTH_SESSION.signedIn&&LKD[post.id]?1:0),author=post.mine?ME:post.u;return '<li><button class="cx-community-row" type="button" data-post="'+post.id+'"><span class="cx-community-copy">'+esc(post.x)+'</span><span class="cx-community-meta"><span class="cx-community-author">'+esc((author?author+' · ':'')+(TN[post.t]||post.t))+'</span><span class="cx-community-counts"><span role="img" aria-label="좋아요 '+likes+'개">'+ic('heart')+likes+'</span><span role="img" aria-label="댓글 '+post.c.length+'개">'+ic('chat')+post.c.length+'</span></span></span></button></li>'}).join('')+'</ul>':'<p class="cx-weeknote">아직 올라온 이야기가 없어요.</p>')+'</section>'
  +'<section class="cx-popular" aria-labelledby="cx-popular-title"><div class="cx-sectionhead"><h2 id="cx-popular-title">인기 급상승 오늘의 책</h2><button class="cx-link" id="cx-rank">전체 보기'+ic('next')+'</button></div><div class="shs pps">'+popRank().slice(0,10).map(function(book,i){return bcard(book,i+1)}).join('')+'</div></section>'
  +'<nav class="fx concept-nav" aria-label="주요 메뉴">'+nav+'</nav>';
- document.getElementById('cx-notice').onclick=inbox;document.getElementById('cx-read').onclick=function(){cxEnterReading(k,this)};document.getElementById('cx-detail').onclick=function(){cxOpenReadingBooks(stackBooks.length?stackBooks:[k])};document.getElementById('cx-calendar').onclick=function(){calendar()};document.getElementById('cx-missions').onclick=hMis;document.getElementById('cx-community').onclick=function(){OPENP=0;community()};document.getElementById('cx-rank').onclick=rankPg;lbWire(home);
- var p=document.getElementById('cx-post');if(p)p.onclick=function(e){
-  var button=e.target.closest('button');
-  if(button&&button.dataset.f){FRIEND_REQ[button.dataset.f]=!FRIEND_REQ[button.dataset.f];p.innerHTML=communityPost(post,false,true);return}
-  if(button&&button.dataset.l){LKD[post.id]=!LKD[post.id];p.innerHTML=communityPost(post,false,true);return}
-  if(button&&button.dataset.v!==undefined){VT[post.id]=+button.dataset.v;p.innerHTML=communityPost(post,false,true);return}
-  if(button&&button.dataset.b!==undefined){warn(function(){bookDt(+button.dataset.b,home)});return}
-  if(button&&button.dataset.u){var index=mIdx(button.dataset.u);if(index>=0)friend(index,2);return}
-  OPENP=post.id;community();
+ document.getElementById('cx-notice').onclick=inbox;document.getElementById('cx-read').onclick=function(){cxEnterReading(k,this)};document.getElementById('cx-detail').onclick=function(){cxOpenReadingBooks(stackBooks.length?stackBooks:[k])};document.getElementById('cx-calendar').onclick=function(){calendar()};document.getElementById('cx-missions').onclick=hMis;document.getElementById('cx-community').onclick=function(){OPENP=0;CU='';CMN=0;CW='all';CF='all';community()};document.getElementById('cx-rank').onclick=rankPg;lbWire(home);
+ var p=document.getElementById('cx-posts');if(p)p.onclick=function(e){
+  var button=e.target.closest('[data-post]');if(!button)return;
+  OPENP=+button.dataset.post;CU='';CMN=0;CW='all';community();
  };
  app.querySelectorAll('[data-book]').forEach(function(b){b.onclick=function(){bookDt(+b.dataset.book,home)}});
  app.querySelectorAll('[data-nav]').forEach(function(b){b.onclick=[library,shop,home,community,profile][+b.dataset.nav]});
