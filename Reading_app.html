@@ -3192,18 +3192,18 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 /* 로그인: 브랜드와 입력 카드, SNS 가입 입구를 나눠요. */
 #app.auth,#app.auth .sc{background:#EFF1F0!important}
 #app.auth .sc{padding-bottom:30px!important}
-#app.auth .auth-brand{display:flex;align-items:center;justify-content:center;gap:16px;padding:30px 0!important;height:auto!important;margin:0}
+#app.auth .auth-brand{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:30px 0!important;height:auto!important;margin:0}
 #app.auth .auth-logo{width:72px;height:82px;margin:0}
 #app.auth .auth-logo>.brand-logo{width:72px;height:82px;transform:none}
 #app.auth .auth-brand h1{font-size:40px!important;line-height:1.2;margin:0!important;color:#174D37}
-#app.auth .auth-form{margin-top:0!important;padding:20px;background:#FFFFFF;border-radius:15px;gap:20px}
+#app.auth .auth-form{margin-top:0!important;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;gap:20px}
 #app.auth .auth-field{font-size:14px;font-weight:650;line-height:1.5;gap:8px;color:#17241C}
-#app.auth .auth-field input{height:56px!important;border:1px solid #91A599!important;border-radius:10px!important;background:#FFFFFF!important;color:#17241C;font-size:16px!important;padding:0 14px}
+#app.auth .auth-field input{height:56px!important;border:1px solid #91A599!important;border-radius:10px!important;background:transparent!important;color:#17241C;font-size:16px!important;padding:0 14px}
 #app.auth .auth-form .btn{margin:4px 0 0!important;height:56px;font-size:16px!important;font-weight:700;background:#174D37;color:#FFFFFF;border:0;border-radius:12px!important}
 #app.auth .auth-form .btn:disabled{opacity:1;background:#DCE3DE;color:#4C6152}
 #app.auth .auth-join{margin-top:12px!important;min-height:48px;font-size:14px;gap:8px;flex-wrap:wrap;color:#34483B}
 #app.auth .auth-link{min-height:48px;padding:10px 8px;color:#174D37;font-size:14px}
-#app.auth .auth-social{background:#FFFFFF;border-radius:15px;padding:20px!important;margin:16px 0 0!important}
+#app.auth .auth-social{background:transparent;border:0;border-radius:0;box-shadow:none;padding:0!important;margin:16px 0 0!important}
 #app.auth .auth-social h2{font-size:14px;line-height:1.5;gap:12px;margin-bottom:20px;color:#34483B}
 #app.auth .auth-providers{gap:24px;padding:0!important}
 #app.auth .auth-provider{width:60px;height:60px;min-width:48px;min-height:48px}
@@ -5525,7 +5525,7 @@ home=function(){
  function adapt(){
   if(app.classList.contains('hm')||app.classList.contains('onb')||app.classList.contains('spl')||app.classList.contains('rd'))return;
   var sc=app.querySelector('.sc');if(!sc)return;
-  if(!app.classList.contains('pf')){
+  if(!app.classList.contains('pf')&&!app.classList.contains('auth')){
    var bar=sc.querySelector(':scope>.sh2,:scope>header.sh2');
    if(!bar){bar=document.createElement('header');bar.className='sh2 concept-heading';bar.innerHTML='<span class="sp3" aria-hidden="true"></span><h2></h2><span class="sp3" aria-hidden="true"></span>';sc.prepend(bar)}
    bar.classList.add('concept-heading');sc.style.setProperty('padding-top','0px','important');var h=bar.querySelector('h2');if(!h){h=document.createElement('h2');bar.insertBefore(h,bar.children[1]||null)}if(!h.textContent.trim())h.textContent=route.title||'똑독';
