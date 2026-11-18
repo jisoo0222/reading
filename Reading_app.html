@@ -3716,6 +3716,49 @@ body{font-size:var(--font-body)}
 #app.lib .lsrow{border-bottom:0!important;box-shadow:none}
 #app.lib .lsrow .csr{height:60px!important}
 
+/* Library overview fits above the fixed menu while keeping text readable. */
+#app.lib{container-type:size}
+#app.app.lib.has-concept-nav .sc{padding-bottom:104px!important}
+#app.lib #lmain>.fs,#app.lib #lmain>.fs:first-child,#app.lib #lmain>.fs+.fs,#app.lib #lmain>.fs:has(>.gnc){padding:16px!important}
+#app.lib #lmain>section.fs>.fsh{min-height:24px!important;margin-bottom:12px!important}
+#app.lib .ppx .pps{grid-auto-columns:96px!important;gap:12px!important;padding-top:6px!important;padding-bottom:0!important}
+#app.lib .ppx .pps .bk{width:96px!important}
+#app.lib .ppx .pps .cv{width:96px!important;height:137px!important}
+#app.lib .ppx .pps .bk .t{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4!important;margin-top:6px!important}
+#app.lib .ppx .pps .bk .a,#app.lib .ppx .pps .rdr{line-height:1.4!important}
+#app.lib .ppx .pps .rdr{margin-top:4px!important;gap:4px}
+#app.lib .ppx .rbg,#app.lib .ppx .rbg .rib{width:36px!important;height:36px!important}
+#app.lib .ppx .rbg b{top:6px;font-size:14px;line-height:18px}
+#app.lib .gnc{margin-top:0!important;row-gap:12px!important;column-gap:8px!important}
+#app.lib .gnt{gap:4px!important}
+#app.lib .gnt>span{width:44px!important;height:44px!important;margin-bottom:0!important}
+#app.lib .gnt>span img{width:20px!important;height:20px!important}
+#app .mts.msl{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(7em,100%),7em));justify-content:center!important;width:100%;max-width:100%;min-width:0;gap:12px!important;align-items:stretch}
+#app .mts.msl .mtc{width:auto!important;min-width:0;flex:initial!important}
+#app .mtc{display:flex;flex-direction:column;align-items:center;height:auto;min-width:0;box-sizing:border-box;border-radius:10px!important}
+#app .mtc :is(b,small){display:block;width:100%;max-width:100%;min-width:0;white-space:normal;word-break:keep-all;overflow-wrap:anywhere;line-height:1.5;text-align:center}
+#app .mtc em{position:static;display:inline-flex;align-items:center;justify-content:center;align-self:center;max-width:100%;margin-top:4px;padding:2px 8px;white-space:normal;word-break:keep-all;overflow-wrap:anywhere;line-height:1.5;text-align:center}
+#app .mtc .mate-match-score{display:block;max-width:100%;white-space:normal}
+@container(max-height:760px){
+ #app.lib #lmain>.fs,#app.lib #lmain>.fs:first-child,#app.lib #lmain>.fs+.fs,#app.lib #lmain>.fs:has(>.gnc){padding:12px!important}
+ #app.lib #lmain>section.fs>.fsh{margin-bottom:8px!important}
+ #app.lib .ppx .pps{grid-auto-columns:72px!important}
+ #app.lib .ppx .pps .bk{width:72px!important}
+ #app.lib .ppx .pps .cv{width:72px!important;height:103px!important}
+ #app.lib .ppx .pps .rdr .av{display:none}
+ #app.lib .gnc{row-gap:8px!important}
+ #app.lib .gnt>span{width:32px!important;height:32px!important}
+ #app.lib .gnt>span img{width:16px!important;height:16px!important}
+}
+@container(max-height:680px){
+ #app.lib .ppx .pps{grid-auto-columns:232px!important}
+ #app.lib .ppx .pps .bk{display:grid;grid-template-columns:72px minmax(0,1fr);grid-template-rows:auto auto auto;column-gap:12px;row-gap:3px;width:232px!important;align-items:start}
+ #app.lib .ppx .pps .cv{grid-column:1;grid-row:1/4}
+ #app.lib .ppx .pps .bk .t{grid-column:2;grid-row:1;margin-top:0!important}
+ #app.lib .ppx .pps .bk .a{grid-column:2;grid-row:2;margin-top:0!important;white-space:normal}
+ #app.lib .ppx .pps .rdr{grid-column:2;grid-row:3;margin-top:0!important}
+}
+
 </style>
 </head>
 <body>
@@ -4311,7 +4354,7 @@ function cmOK(n){var L=BMT[BK];return (!NEW_ACCOUNT&&!L)||(!!L&&L.indexOf(n)>-1)
 function bkStart(k,go){go=go||function(){reader(k)};if(OPN.indexOf(k)>-1&&BMT[k]){go();return}mateSel(k,go)}
 function mateSel(k,go){var F=M.filter(function(m){return FR[m[0]]}),sel=[];
  var x=pop('<h3>함께 읽을 메이트를 골라 볼까요?</h3><p class="sm" style="font-size:14px;margin:-2px 0 10px">『'+esc(LB[k][0])+'』를 함께 읽을 메이트를 골라 주세요. 고른 메이트의 코멘트만 책에 보여요.</p>'
-  +(F.length?'<div class="mts msl">'+F.map(function(m){return'<button class="mtc" data-n="'+esc(m[0])+'" aria-pressed="false"><span class="mav" style="background:'+m[2]+'">'+esc(m[0]).charAt(0)+'</span><b>'+esc(m[0])+'</b><small>취향 일치도 '+m[1]+'%</small><em>친구</em></button>'}).join("")+'</div>'
+  +(F.length?'<div class="mts msl">'+F.map(function(m){return'<button class="mtc" data-n="'+esc(m[0])+'" aria-pressed="false"><span class="mav" style="background:'+m[2]+'">'+esc(m[0]).charAt(0)+'</span><b>'+esc(m[0])+'</b><small>취향 일치도 <span class="mate-match-score">'+m[1]+'%</span></small><em>친구</em></button>'}).join("")+'</div>'
    :'<div class="msn"><p>아직 친구가 없어요.</p><small>친구를 추가하면 함께 읽고 서로의 코멘트를 볼 수 있어요.</small><button class="btn ghost" id="msf" style="width:100%;margin-top:10px">친구 추가하러 가기</button></div>')
   +'<button class="btn" id="msg" style="width:100%;margin-top:12px">혼자 읽기 시작</button>');
  var g=document.getElementById("msg");
