@@ -3208,6 +3208,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.auth .auth-social{background:transparent;border:0;border-radius:0;box-shadow:none;padding:0!important;margin:16px 0 auto!important}
 #app.auth .auth-social h2{font-size:14px;line-height:1.5;gap:12px;margin-bottom:20px;color:#34483B}
 #app.auth .auth-providers{gap:24px;padding:0!important}
+#app.auth .auth-browse{display:block;margin:16px auto 0;min-height:48px}
 #app.auth .auth-provider{width:60px;height:60px;min-width:48px;min-height:48px}
 #app.auth input::placeholder{color:#526A5B;opacity:1}
 @container(max-height:760px){#app.auth .auth-logo,#app.auth .auth-logo>.brand-logo{width:56px;height:64px}#app.auth .auth-brand h1{font-size:36px!important}}
@@ -3524,7 +3525,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.onb .obgo[hidden]{display:block!important;visibility:hidden;pointer-events:none}
 @container(max-height:760px){#app.onb .obp>.obi{margin:24px 0;min-height:180px}}
 /* 홈에서는 카드 크기를 줄이지 않고 책과 글을 차례로 둘러봐요. */
-#app.hm .sc.hm{padding:30px 20px 108px!important}
+#app.hm .sc.hm{padding:18px 20px 108px!important}
 #app.hm .cx-top{transform:none;margin-bottom:20px}
 #app.hm .cx-reading{min-height:280px;padding:24px 20px}
 #app.hm .cx-readhead{display:none}
@@ -3634,6 +3635,10 @@ body{font-size:var(--font-body)}
 #app.hm .cx-continue{min-height:44px;white-space:nowrap}
 #app.lib .ppx .bk .t,#app .rkt .t{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere;height:auto}
 #app :is(.ds,.sm,.emp,.po .pbody,.quote-entry p){font-size:16px}
+.login-required h2{font-size:20px;line-height:1.5;margin:0 0 20px;word-break:keep-all;overflow-wrap:break-word}
+.login-required .btn{min-height:48px;font-size:16px}
+#app .login-required .btn{background:#174D37!important;border:1px solid #174D37!important;color:#FFFFFF!important}
+#app .login-required .btn.ghost{background:#FFFFFF!important;color:#174D37!important}
 #app.lib .gnc{grid-template-columns:repeat(4,minmax(0,1fr))!important}
 #app.lib .gnt{overflow-wrap:anywhere}
 #app:is(.community,.home-feed) .pt2{font-size:16px!important}
@@ -3829,8 +3834,11 @@ function quoteSVG(q,bt,au,th,serif){
  +'<text x="540" y="1740" text-anchor="middle" font-size="30" fill="'+T[4]+'" '+S+'>'+e(ME||"")+(ME?" 님이 읽고 있는 책 · ":"")+'AI 독서 습관</text>'
  +'</svg>'}
 /* 내보낸 문장과 포인트 기록은 현재 기기의 로컬 보관함에 저장해요. */
+var AUTH_SESSION={signedIn:false,provider:null},AUTH_NEXT=null;
+// 이메일·Google은 기존 미리보기 로그인 상태만 이 탭에서 유지해요. 실제 계정 인증은 카카오 서버 세션으로 확인해요.
+try{var previewAuth=sessionStorage.getItem('ddok_preview_auth');if(previewAuth==='email'||previewAuth==='google'){AUTH_SESSION.signedIn=true;AUTH_SESSION.provider=previewAuth}}catch(e){}
 var ARCH={quotes:[],points:[]};
-function archiveSave(){try{localStorage.setItem('ddok_archive_v1',JSON.stringify({version:1,quotes:ARCH.quotes,points:ARCH.points,balance:PT,day:PS,owned:OWN,colors:CS}))}catch(e){ptToast('이 기기에 기록을 저장하지 못했어요. 저장 공간을 확인해 주세요.')}}
+function archiveSave(){if(!AUTH_SESSION.signedIn)return;try{localStorage.setItem('ddok_archive_v1',JSON.stringify({version:1,quotes:ARCH.quotes,points:ARCH.points,balance:PT,day:PS,owned:OWN,colors:CS}))}catch(e){ptToast('이 기기에 기록을 저장하지 못했어요. 저장 공간을 확인해 주세요.')}}
 function archiveLoad(){try{var a=JSON.parse(localStorage.getItem('ddok_archive_v1')||'null');if(!a||a.version!==1)return;
  ARCH.quotes=Array.isArray(a.quotes)?a.quotes.filter(function(q){return q&&typeof q.q==='string'&&typeof q.bt==='string'&&typeof q.au==='string'&&typeof q.at==='string'&&Number.isInteger(q.th)&&q.th>=0&&q.th<QTH.length&&(q.sf===0||q.sf===1)}):[];
  ARCH.points=Array.isArray(a.points)?a.points.filter(function(p){return p&&typeof p.label==='string'&&typeof p.day==='string'&&typeof p.at==='string'&&Number.isFinite(p.amount)&&p.amount!==0}):[];
@@ -3914,18 +3922,18 @@ function dshift(t,n){var d=dparse(t);d.setDate(d.getDate()+n);return dstr(d)}
 function psDay(){var t=todayStr();if(!PS||PS.d!==t)PS={d:t,act:0,got:{}};return PS}
 function ptToast(m){var t=document.getElementById("ptt");if(!t){t=document.createElement("div");t.id="ptt";t.setAttribute("role","status");document.body.appendChild(t)}t.textContent=m;t.classList.add("on");clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove("on")},2600)}
 function msSync(){var s=psDay();MS.forEach(function(m,i){var k=MK[i];m[2]=PCFG.ACT[k].p;m[3]=k in s.got?1:0})}
-function recordPoints(amount,label){if(amount!==0)ARCH.points.unshift({amount:amount,label:label,day:todayStr(),at:new Date().toISOString()});archiveSave()}
+function recordPoints(amount,label){if(!AUTH_SESSION.signedIn)return;if(amount!==0)ARCH.points.unshift({amount:amount,label:label,day:todayStr(),at:new Date().toISOString()});archiveSave()}
 function pointHistory(){var day=todayStr(),items=ARCH.points.filter(function(p){return p.day===day}),earned=items.reduce(function(n,p){return n+Math.max(0,p.amount)},0),spent=items.reduce(function(n,p){return n+Math.max(0,-p.amount)},0);
  var close=pop('<h3 id="points-title">포인트 내역</h3><p class="archive-intro">오늘 받은 포인트와 쓴 포인트예요.</p><div class="point-summary"><div><span>오늘 받았어요</span><b>+'+earned+'P</b></div><div><span>오늘 썼어요</span><b>−'+spent+'P</b></div></div><p class="point-balance">지금 보유한 포인트 <b>'+PT+'P</b></p>'+(items.length?'<ul class="point-ledger">'+items.map(function(p){return '<li><div><b>'+esc(p.label)+'</b><small>'+esc(archiveTime(p.at))+'</small></div><strong class="'+(p.amount>0?'point-earned':'point-spent')+'">'+(p.amount>0?'+':'−')+Math.abs(p.amount)+'P</strong></li>'}).join('')+'</ul>':'<p class="emp">오늘은 아직 받은 포인트나 쓴 포인트가 없어요.</p>')+'<button class="btn ghost" id="points-close">닫기</button>');
  var d=document.getElementById('dlg');d.classList.add('point-history');d.setAttribute('aria-labelledby','points-title');document.getElementById('points-close').onclick=close;
 }
-function award(k,quiet){var s=psDay(),c=PCFG.ACT[k];if(!c||(k in s.got))return 0;
+function award(k,quiet){if(!AUTH_SESSION.signedIn)return 0;var s=psDay(),c=PCFG.ACT[k];if(!c||(k in s.got))return 0;
  var give=Math.max(0,Math.min(c.p,PCFG.DAILY_CAP-s.act));s.got[k]=give;s.act+=give;PT+=give;msSync();
  var mi=MK.indexOf(k),nm=mi>=0?MS[mi][0]:"포인트";recordPoints(give,nm+" 미션");
  if(quiet){}else if(give<c.p)ptToast("오늘 받을 수 있는 포인트를 다 채워서 "+give+"P만 받았어요.");else ptToast(nm+" 미션 달성 · +"+give+"P");
  if(typeof hpRef==="function")hpRef();return give}
-function bonusDone(bk){if(bk==null||DONEPAID[bk]||("done" in psDay().got))return 0;DONEPAID[bk]=1;return award("done")}
-function readToday(){var s=psDay(),t=s.d;RDAYS[t]=1;
+function bonusDone(bk){if(!AUTH_SESSION.signedIn)return 0;if(bk==null||DONEPAID[bk]||("done" in psDay().got))return 0;DONEPAID[bk]=1;return award("done")}
+function readToday(){if(!AUTH_SESSION.signedIn)return;var s=psDay(),t=s.d;RDAYS[t]=1;
  var n=0,d=t;while(RDAYS[d]){n++;d=dshift(d,-1)}
  var N=PCFG.ACT.streak.days,start=dshift(t,-(N-1));
  if(n>=N&&(!STRK.paidEnd||STRK.paidEnd<start)){STRK.paidEnd=t;award("streak")}
@@ -3948,6 +3956,7 @@ var B=[{t:"너는 지금도 충분해",a:"김수현",c:"#6A4F6A",n:38},{t:"지�
 var M=[["지민",89,"#666161"],["은우",84,"#898585"],["하린",78,"#444141"],["도윤",72,"#1F1E1E"]];
 var AC=["#4CAE85","#B1AFAE","#666161"];
 function warn(cb){
+ if(!AUTH_SESSION.signedIn){if(cb)cb();return}
  if(!OPN.length){if(cb)cb();return}
  if(BK!==DEF)useBk(DEF);var left=TOT-pg;if(left<=0){if(cb)cb();return}
  var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","alertdialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-labelledby","dt");
@@ -4147,7 +4156,7 @@ function shop(){
  var sheet=document.getElementById("sheet"),ov=document.getElementById("ov"),g=document.getElementById("gr");
  function cl(){sheet.classList.remove("on");ov.classList.remove("on")}
  function draw(){
-  document.getElementById("ptx").textContent=PT+'P';
+  document.getElementById("ptx").textContent=(AUTH_SESSION.signedIn?PT:0)+'P';
   document.querySelectorAll(".stb button").forEach(function(b){b.setAttribute("aria-selected",+b.dataset.t===STB)});
   if(STB===0){
    var p=Math.max(0,Math.min(1,(PT-500)/1500)),tk=[500,1000,1500,2000].map(function(v,k){return'<span class="tkm'+(PT>=v?" on":"")+'" style="left:'+k*100/3+'%"><i></i>'+v+'P</span>'}).join("");
@@ -4172,7 +4181,7 @@ function shop(){
  function detail(c,i){
   var t=ITM[c][i],id=c+i,p=pc(c,i),PAL=c==="PN"?SCOL:COL;if(!(id in CS))CS[id]=c==="PN"?0:i%5;
   var sw=c==="TH"?"":'<div class="sg"><b>색상</b><div>'+PAL.map(function(x,k){return'<button class="sw" data-k="'+k+'" aria-label="'+(c==="PN"&&k===0?'기본 회색':'색상 '+(k+1))+'" aria-pressed="'+(CS[id]===k)+'" style="background:'+x+'"></button>'}).join("")+'</div></div>';
-  var own=!!OWN[id],low=PT<p;
+  var own=AUTH_SESSION.signedIn&&!!OWN[id],low=AUTH_SESSION.signedIn&&PT<p;
   sheet.dataset.c=c;sheet.dataset.i=i;
   sheet.innerHTML='<h3 class="dh">'+t[0]+'</h3><div class="gp"><svg class="gpb" aria-hidden="true"><defs><pattern id="gpt" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="currentColor" stroke-width="1" opacity=".3"/></pattern></defs><rect width="100%" height="100%" fill="url(#gpt)"/></svg><div class="gpv">'+pv(c,i,PAL[CS[id]])+'</div></div>'+sw
    +'<p class="pr3">가격 <b>'+(p?p+"P":"무료")+'</b> · 내 포인트 '+PT+'P</p><button class="btn" id="buy" style="width:100%"'+(own||low?" disabled":"")+'>'+(own?"보유 중":low?"포인트가 부족해요":"구매")+'</button>'+(own?'<button class="btn" id="go" style="width:100%;margin-top:8px">포인트 보관함에서 적용하기</button>':'')+'<button class="btn ghost cl">닫기</button>';
@@ -4303,13 +4312,13 @@ function themeList(){
 var HDB={67:1,68:1,69:1},BGO={},DIF="11112132222112211212332132123221322233331213321221122311122223221112231111111";
 function bkMatch(k){if(!RKEY)return -1;var r=RK[k],P=["FS","EA","DW","JI"],m=0,h=k*7+3;if(!r){r="";for(var i=0;i<4;i++)r+=P[i].charAt((h>>i)&1)}for(i=0;i<4;i++)if(r.charAt(i)===RKEY.charAt(i))m++;return Math.min(98,52+m*10+(k*13)%9)}
 function bookDt(k,back,go){
- if(BGO[k]){bkStart(k,go);return}
+ if(BGO[k]&&AUTH_SESSION.signedIn){bkStart(k,go);return}
  var mt=bkMatch(k);
  var b=LB[k],c=-1,ci;app.className="app";for(ci in CB)if(CB[ci].indexOf(k)>-1){c=+ci;break}
  var cat=c>-1?(KD[c][0]?KD[c][0]+" ":"")+KD[c][1]:"문학",d=BD[k],pr=bprog(k),fs="";
  if(d)for(var a=0;a<d.length&&!fs;a++)for(var q=0;q<d[a].length;q++){var t=d[a][q].join(" ");if(t!==b[0]&&d[a][q][0].length>14&&/[.?!。”"」’]$/.test(d[a][q][d[a][q].length-1])){fs=d[a][q][0];break}}
  app.innerHTML='<div class="sh2"><button class="ib" id="bd0" aria-label="뒤로">'+ic("back")+'</button><span class="sp3" style="flex:1"></span></div><div class="bdt"><span class="bdm">'+(mt>-1?'내 성향과 <b>'+mt+'%</b> 일치':'성향 테스트를 하면 일치도를 알려 드려요')+'</span><div class="bdh" style="--bc:'+b[2]+'"><div class="bcv" data-k="'+k+'" style="background:'+b[2]+'"><b>'+b[0]+'</b></div></div><h2>'+b[0]+'</h2><p class="bda">'+b[1]+'</p><div class="bdi"><div><small>분류</small><b>'+cat+'</b></div><div><small>분량</small><b>'+(d?d.length+"쪽":"준비 중")+'</b></div><div><small>난이도</small><b>'+["쉬움","보통","어려움"][(+DIF.charAt(k)||2)-1]+'</b></div></div>'+'<div class="bdq"><small>첫 문장</small><p>'+(fs||'오래 기다린 이야기는 언제나 조용한 문장으로 시작된다.')+'</p></div>'+'</div><div class="bdf"><button class="btn" id="bgo">독서하기</button></div>';
- document.getElementById("bd0").onclick=back;document.getElementById("bgo").onclick=function(){BGO[k]=1;bkStart(k,go);return;if(BD[k]){reader(k);return}
+ document.getElementById("bd0").onclick=back;document.getElementById("bgo").onclick=function(){if(!requireLogin('책을 읽으려면',function(){bkStart(k,go)}))return;BGO[k]=1;bkStart(k,go);return;if(BD[k]){reader(k);return}
   var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","alertdialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-labelledby","dt");
   d.innerHTML='<h3 id="dt">본문이 아직 없어요</h3><p>\u2018'+esc(b[0])+'\u2019의 본문이 아직 등록되지 않았어요.</p><div class="dbt"><button class="btn" id="dn">확인</button></div>';
   function x(){o.remove();d.remove()}o.onclick=x;app.appendChild(o);app.appendChild(d);document.getElementById("dn").onclick=x;document.getElementById("dn").focus();d.onkeydown=function(e){if(e.key==="Escape")x()}};
@@ -4512,7 +4521,7 @@ VIS=[["globe","전체공개"],["users","친구공개"],["lock","나만보기"]],
 function vic(v){return v===2?lk(0):ic(VIS[v][0])}
 function colOf(n){for(var i=0;i<M.length;i++)if(M[i][0]===n)return M[i][2];return"#4CAE85"}
 function communityPost(p,full,expanded){
-  var me=!!p.mine,un=me?ME:p.u,fr=!!FR[p.u],tc=p.c.length?p.c.slice().sort(function(a,b){return b[2]-a[2]})[0]:null,lk2=!!LKD[p.id];
+  var me=AUTH_SESSION.signedIn&&!!p.mine,un=p.mine?ME:p.u,fr=AUTH_SESSION.signedIn&&!!FR[p.u],tc=p.c.length?p.c.slice().sort(function(a,b){return b[2]-a[2]})[0]:null,lk2=AUTH_SESSION.signedIn&&!!LKD[p.id];
   var bi2=p.bt||(p.b!==undefined?[LB[p.b][0],LB[p.b][1],LB[p.b][2],p.b]:null);
   var bk=bi2?'<button class="bkl" '+(bi2[3]>-1?'data-b="'+bi2[3]+'"':'data-nb="1"')+'><span class="bc2" data-bt="'+esc(bi2[0])+'" style="background:'+bi2[2]+'"></span><span class="bt"><b>'+esc(bi2[0])+'</b><small>'+esc(bi2[1])+'</small></span>'+(bi2[3]>-1?ic("next"):"")+'</button>':"";
   var bal="";
@@ -4543,7 +4552,7 @@ function community(){
   CW="all";tyb.setAttribute("aria-label","글 종류");tyb.innerHTML=TY.filter(function(c){return c[0]!=="all"}).map(function(c){return'<button role="tab" aria-pressed="'+(CF===c[0])+'" data-t="'+c[0]+'">'+c[1]+'</button>'}).join("")}
   if(CW==="mine"&&CA==="cmt"){var q=CQ.trim().toLowerCase(),R=[];PO.forEach(function(p){p.c.forEach(function(c){if(c[3]&&(!q||(c[1]+" "+p.x).toLowerCase().indexOf(q)>-1))R.push([p,c])})});
    document.getElementById("feed").innerHTML=R.length?'<div class="mcl">'+R.map(function(r){var p=r[0],c=r[1];return'<button class="mcr" data-pid="'+p.id+'"><span class="pav2 s" style="'+avBg(ME)+'">'+avTx(ME)+'</span><span class="mct"><b>'+esc(c[1])+'</b><small><em>'+TN[p.t]+'</em>'+esc(p.u===ME||p.mine?ME:p.u)+' 님의 글 · '+esc(p.x.length>24?p.x.slice(0,24)+"…":p.x)+'</small></span>'+ic("next")+'</button>'}).join("")+'</div>':'<div class="emp">'+(q?"‘"+esc(CQ.trim())+"’에 대한 댓글이 없어요.":"아직 단 댓글이 없어요.")+'</div>';return}
-  var h=PO.filter(function(p){if(CU)return p.u===CU&&!p.mine&&(p.v===0||(p.v===1&&FR[p.u]));return(CW==="mine"?(CA==="post"?p.mine:CA==="cmt"?p.c.some(function(c){return c[3]}):!!LKD[p.id]):(CW==="all"||!p.mine&&!!FR[p.u])&&(CF==="all"||p.t===CF))&&(p.v===0||p.mine||(p.v===1&&FR[p.u]))&&cqm(p)}).map(function(p){return post(p,false)}).join("");
+  var h=PO.filter(function(p){if(!AUTH_SESSION.signedIn&&p.v!==0)return false;if(CU)return p.u===CU&&!p.mine&&(p.v===0||(p.v===1&&FR[p.u]));return(CW==="mine"?(CA==="post"?p.mine:CA==="cmt"?p.c.some(function(c){return c[3]}):!!LKD[p.id]):(CW==="all"||!p.mine&&!!FR[p.u])&&(CF==="all"||p.t===CF))&&(p.v===0||p.mine||(p.v===1&&FR[p.u]))&&cqm(p)}).map(function(p){return post(p,false)}).join("");
   document.getElementById("feed").innerHTML=h||'<div class="emp">'+(CQ.trim()?"‘"+esc(CQ.trim())+"’에 대한 글이 없어요.":CW==="mine"?(CA==="post"?"아직 쓴 글이 없어요.":CA==="cmt"?"아직 댓글을 단 글이 없어요.":"아직 좋아요한 글이 없어요."):CW==="friend"?"아직 친구가 쓴 글이 없어요.":"아직 올라온 글이 없어요.")+'</div>'}
  function byId(id){return PO.filter(function(p){return p.id===id})[0]}
  var inD=false,FCB=null,CUR=null,ref=function(){feed()};
@@ -4567,16 +4576,16 @@ function community(){
   document.getElementById("dcn").onclick=x;
   document.getElementById("dok").onclick=function(){var i=PO.indexOf(byId(id));if(i>-1)PO.splice(i,1);x();if(fd)community();else ref()}}
  function detail(id,foc){
-  var p=byId(id);if(!p){community();return}
+  var p=byId(id);if(!p||(!AUTH_SESSION.signedIn&&p.v!==0)){community();return}
   inD=true;app.className="app";
-  app.innerHTML='<div class="sh2"><button class="ib" id="d0" aria-label="뒤로">'+ic("back")+'</button><h2>게시글</h2>'+(p.mine?'<button class="ib" id="dmn" aria-label="글 메뉴">'+ic("more")+'</button>':'<span class="sp3"></span>')+'</div><div id="dp"></div>';
+  app.innerHTML='<div class="sh2"><button class="ib" id="d0" aria-label="뒤로">'+ic("back")+'</button><h2>게시글</h2>'+(AUTH_SESSION.signedIn&&p.mine?'<button class="ib" id="dmn" aria-label="글 메뉴">'+ic("more")+'</button>':'<span class="sp3"></span>')+'</div><div id="dp"></div>';
   app.firstChild.style.paddingBottom="84px";
   var bar=document.createElement("form");bar.className="cmbar";bar.innerHTML='<input id="ci" placeholder="댓글을 입력하세요" aria-label="댓글 입력" autocomplete="off"><button class="btn" id="cy" type="button">등록</button>';app.appendChild(bar);
   var dp=document.getElementById("dp"),ci=document.getElementById("ci");
-  function rd(){dp.innerHTML=post(p,true)+'<h3 class="cmh">댓글 '+p.c.length+'</h3>'+(p.c.length?p.c.map(function(c,ci){var n=c[3]?ME:c[0];return'<div class="cmr">'+(c[3]?'<span class="pav2 s" style="'+avBg(n)+'">'+avTx(n)+'</span>':'<button class="pav2 s" data-u="'+esc(n)+'" aria-label="'+esc(n)+' 프로필 보기" style="background:'+colOf(n)+'">'+esc(n).charAt(0)+'</button>')+'<div><div class="cmn"><b>'+esc(n)+(c[4]?'<em class="edt"> · 수정됨</em>':'')+'</b>'+(c[3]?'<span class="cmx"><button data-ce="'+ci+'">수정</button><button data-cd="'+ci+'">삭제</button></span>':'')+'</div><p>'+esc(c[1])+'</p></div></div>'}).join(""):'<div class="emp">첫 댓글을 남겨 보세요.</div>')}
+  function rd(){dp.innerHTML=post(p,true)+'<h3 class="cmh">댓글 '+p.c.length+'</h3>'+(p.c.length?p.c.map(function(c,ci){var n=c[3]?ME:c[0];return'<div class="cmr">'+(c[3]?'<span class="pav2 s" style="'+avBg(n)+'">'+avTx(n)+'</span>':'<button class="pav2 s" data-u="'+esc(n)+'" aria-label="'+esc(n)+' 프로필 보기" style="background:'+colOf(n)+'">'+esc(n).charAt(0)+'</button>')+'<div><div class="cmn"><b>'+esc(n)+(c[4]?'<em class="edt"> · 수정됨</em>':'')+'</b>'+(AUTH_SESSION.signedIn&&c[3]?'<span class="cmx"><button data-ce="'+ci+'">수정</button><button data-cd="'+ci+'">삭제</button></span>':'')+'</div><p>'+esc(c[1])+'</p></div></div>'}).join(""):'<div class="emp">첫 댓글을 남겨 보세요.</div>')}
   ref=rd;CUR=p;rd();
   dp.onclick=pclk;
-  function submitComment(e){if(e)e.preventDefault();var v=ci.value.trim();if(!v)return;p.c.push([ME,v,0,1]);ci.value="";rd();award("talk");document.querySelector(".sc").scrollTop=1e6}
+  function submitComment(e){if(e)e.preventDefault();var v=ci.value.trim();if(!v)return;if(!requireLogin('댓글을 남기려면'))return;p.c.push([ME,v,0,1]);ci.value="";rd();award("talk");document.querySelector(".sc").scrollTop=1e6}
   document.getElementById("cy").onclick=submitComment;bar.onsubmit=submitComment;ci.onkeydown=function(e){if(e.key==="Enter"&&!e.isComposing)submitComment(e)};
   document.getElementById("d0").onclick=community;
   var dm=document.getElementById("dmn");if(dm)dm.onclick=function(){menu(id,true)};
@@ -4601,6 +4610,7 @@ function community(){
   else if(b.classList.contains("mre"))detail(+b.closest(".po").dataset.id);
   else if(b.dataset.u){for(var i=0;i<M.length;i++)if(M[i][0]===b.dataset.u){if(inD){FCB=function(){ref()};friend(i,3)}else friend(i,2)}}}
  function compose(){
+  if(!requireLogin('글을 쓰려면',function(){community();var b=app.querySelector('.wfab');if(b)b.click()}))return;
   var ty="자유",bk,vs=0,tx="",o=["",""],msg="",d,bq="",bf=false;
   var CATB=LB.map(function(b,i){return[b[0],b[1],b[2],i]});RDB.forEach(function(b,k){if(!CATB.some(function(c){return c[0]===b[0]}))CATB.push([b[0],b[1],BC[k%3],-1])});
   function recent(){return RDB.slice(0,3).map(function(b){return CATB.filter(function(c){return c[0]===b[0]})[0]})}
@@ -4992,9 +5002,9 @@ function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':(typeof
   else if(b.dataset.s==="sh")quoteShare(txt,BT,BK>=0?LB[BK][1]:"")};
 }
 useBk(DEF);
-function splash(){app.className="app spl";
+function splash(next){app.className="app spl";
  app.innerHTML='<div class="spw" role="img" aria-label="똑독">'+animatedEntryLogo()+'<h1>똑독</h1><p class="dke">DDOKDOK</p></div>';
- var t=setTimeout(go,2200);function go(){clearTimeout(t);if(!app.classList.contains("spl"))return;app.onclick=null;onb()}app.onclick=go}
+ var t=setTimeout(go,typeof next==='function'?(matchMedia('(prefers-reduced-motion: reduce)').matches?0:1250):2200);function go(){clearTimeout(t);if(!app.classList.contains("spl"))return;app.onclick=null;(typeof next==='function'?next:onb)()}app.onclick=go}
 /* 계정 인증은 서버 연동 전이에요. 입력 정보는 저장하거나 전송하지 않아요. */
 function snsConsent(provider,onContinue){
  var name=provider==="kakao"?"카카오":"구글";
@@ -5075,17 +5085,18 @@ function loginPage(){
  +'<form class="auth-form" id="login-form"><h2 class="sr">로그인</h2><label class="auth-field" for="login-email">이메일<input id="login-email" name="email" type="email" autocomplete="username" placeholder="이메일을 입력해 주세요" required></label><label class="auth-field" for="login-password">비밀번호<input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="비밀번호를 입력해 주세요" required></label><button class="btn" id="login-submit" type="button" disabled>로그인</button></form>'
  +'<div class="auth-join"><span>똑독이 처음이신가요?</span><button class="auth-link" id="auth-signup" type="button">회원가입</button></div>'
  +'<section class="auth-social" aria-labelledby="auth-social-title"><h2 id="auth-social-title">SNS 로그인</h2><div class="auth-providers"><button class="auth-provider kakao" id="auth-kakao" type="button" aria-label="카카오로 로그인" title="카카오로 로그인"><img src="'+FIGMA_ASSETS.login_img+'" alt=""></button>'
- +'<button class="auth-provider google" id="auth-google" type="button" aria-label="구글로 로그인" title="구글로 로그인"><img src="'+FIGMA_ASSETS.login_img1+'" alt=""></button></div></section>';
+ +'<button class="auth-provider google" id="auth-google" type="button" aria-label="구글로 로그인" title="구글로 로그인"><img src="'+FIGMA_ASSETS.login_img1+'" alt=""></button></div><button class="auth-link auth-browse" id="auth-browse" type="button">로그인 없이 둘러보기</button></section>';
  document.getElementById("auth-signup").onclick=signupAccount;
  var form=document.getElementById("login-form"),email=document.getElementById("login-email"),password=document.getElementById("login-password"),submit=document.getElementById("login-submit");
  function valid(){return email.validity.valid&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)&&password.value.trim().length>0}
  function update(){submit.disabled=!valid()}
  form.addEventListener("input",update);form.addEventListener("change",update);form.addEventListener("focusin",update);update();
- function enterHome(e){if(e)e.preventDefault();update();if(submit.disabled)return;home()}
+ function enterHome(e){if(e)e.preventDefault();update();if(submit.disabled)return;loginComplete('email')}
  submit.onclick=enterHome;form.onsubmit=enterHome;
  password.onkeydown=email.onkeydown=function(e){if(e.key==="Enter")enterHome(e)};
  document.getElementById("auth-kakao").onclick=kakaoStart;
- document.getElementById("auth-google").onclick=home;
+ document.getElementById("auth-google").onclick=function(){loginComplete('google')};
+ document.getElementById('auth-browse').onclick=function(){AUTH_NEXT=null;home()};
 }
 
 (function(){var D=null;
@@ -5319,8 +5330,8 @@ function onb(){
  sc.addEventListener("keydown",function(e){if(e.key==="ArrowLeft"||e.key==="ArrowRight"){e.preventDefault();to(cur+(e.key==="ArrowLeft"?-1:1))}});
  var resize=new ResizeObserver(function(){if(!sc.isConnected){resize.disconnect();return}to(cur,true)});resize.observe(sc);
  sync(0);
- function finish(){clearTimeout(settleTimer);resize.disconnect();loginPage()}
- go.onclick=finish;document.getElementById('obskip').onclick=finish}
+ function finish(animated){if(!app.classList.contains('onb'))return;clearTimeout(settleTimer);resize.disconnect();if(animated)splash(home);else home()}
+ go.onclick=function(){finish(true)};document.getElementById('obskip').onclick=function(){finish(false)}}
 
 /* ===== 하단 내비게이션: 피그마 navigation_bar 컴포넌트 (기본 #C5C5C5 · 선택 #4CAE85) ===== */
 var NVI=[
@@ -5417,6 +5428,7 @@ archiveLoad();
 
 var CX_READING_ENTERING=false;
 async function cxEnterReading(k,button){
+ if(!requireLogin('책을 읽으려면',function(){home();cxEnterReading(k,document.getElementById('cx-read'))}))return;
  if(CX_READING_ENTERING)return;
  if(matchMedia('(prefers-reduced-motion: reduce)').matches||!Element.prototype.animate){reader(k);return}
  var source=app.querySelector('[data-stack-book="'+k+'"]'),art=source&&source.querySelector('svg');if(!art){reader(k);return}
@@ -5490,15 +5502,15 @@ function cxOpenReadingBooks(books){
 
 home=function(){
  app.onclick=null;app.className='app hm home-feed';window.scrollTo(0,0);var stackBooks=cxReadingBooks();if(stackBooks.length&&stackBooks.indexOf(DEF)<0)DEF=stackBooks[0];if(BK!==DEF)useBk(DEF);
- var k=DEF,B=LB[k],q=bprog(k),today=new Date().getDay(),G=GOAL||10,pages=RDY.d===todayStr()?Object.keys(RDY.p).length:0;
- var days='일월화수목금토'.split('').map(function(d,i){var n=i===today?pages:(i<today?WK[i]:null);return '<div class="cx-day'+(n?' is-read':'')+(i===today?' is-today':'')+'"><small>'+d+'</small><span aria-label="'+d+'요일 '+(n?n+'쪽 읽음':'읽은 기록 없음')+'">'+(n?ic('bkck'):(i===today?'<b>오늘</b>':'·'))+'</span></div>'}).join('');
+ var k=DEF,B=LB[k],q=AUTH_SESSION.signedIn?bprog(k):{c:0},today=new Date().getDay(),G=GOAL||10,pages=AUTH_SESSION.signedIn&&RDY.d===todayStr()?Object.keys(RDY.p).length:0;
+ var days='일월화수목금토'.split('').map(function(d,i){var n=AUTH_SESSION.signedIn?(i===today?pages:(i<today?WK[i]:null)):null;return '<div class="cx-day'+(n?' is-read':'')+(i===today?' is-today':'')+'"><small>'+d+'</small><span aria-label="'+d+'요일 '+(n?n+'쪽 읽음':'읽은 기록 없음')+'">'+(n?ic('bkck'):(i===today?'<b>오늘</b>':'·'))+'</span></div>'}).join('');
  var post=PO.filter(function(p){return p.v===0}).sort(function(a,b){return(b.l+b.c.length)-(a.l+a.c.length)})[0];
  var nav=[['book','도서관'],['basket','문구점'],['home','홈'],['chat','커뮤니티'],['person','마이페이지']].map(function(x,i){return '<button data-nav="'+i+'"'+(i===2?' aria-current="page"':'')+'>'+ic(x[0])+'<span>'+x[1]+'</span></button>'}).join('');
  app.innerHTML='<header class="cx-top"><div class="cx-brand">'+logoSVG()+'<span>똑독</span></div><button class="cx-notice" id="cx-notice" aria-label="알림">'+ic('bell')+(unread()?'<i class="cx-dot"></i>':'')+'</button></header>'
  +''
- +'<section class="cx-reading" aria-labelledby="cx-title"><div class="cx-readhead" aria-hidden="true"></div><div class="cx-readbody"><div><h2 id="cx-title">'+esc(B[0])+'</h2><p class="cx-author">'+esc(B[1])+'</p><div class="cx-inline-meter" role="progressbar" aria-label="독서 진도" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div><p class="cx-progress-copy"><strong>'+q.c+'<small>%</small></strong></p></div><button class="cx-read-cover cx-stack" id="cx-detail" data-k="'+k+'" aria-label="읽는 중인 책 '+Math.max(1,stackBooks.length)+'권 고르기" aria-haspopup="dialog" aria-expanded="false">'+(stackBooks.length?stackBooks:[k]).map(function(book,index){return '<span class="cx-stack-layer" data-stack-book="'+book+'" style="--stack-index:'+index+';z-index:'+(3-index)+'" aria-hidden="true">'+coverSVG(book,null,true,107,154.12)+'</span>'}).join('')+'</button></div><div class="cx-readfoot"><span>오늘 목표<b>'+pages+' / '+G+'쪽</b></span><button class="cx-continue" id="cx-read">이어서 읽기'+ic('next')+'</button></div></section>'
+ +'<section class="cx-reading" aria-labelledby="cx-title"><div class="cx-readhead" aria-hidden="true"></div><div class="cx-readbody"><div><h2 id="cx-title">'+esc(B[0])+'</h2><p class="cx-author">'+esc(B[1])+'</p><div class="cx-inline-meter" role="progressbar" aria-label="독서 진도" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div><p class="cx-progress-copy"><strong>'+q.c+'<small>%</small></strong></p></div><button class="cx-read-cover cx-stack" id="cx-detail" data-k="'+k+'" aria-label="읽는 중인 책 '+Math.max(1,stackBooks.length)+'권 고르기" aria-haspopup="dialog" aria-expanded="false">'+(stackBooks.length?stackBooks:[k]).map(function(book,index){return '<span class="cx-stack-layer" data-stack-book="'+book+'" style="--stack-index:'+index+';z-index:'+(3-index)+'" aria-hidden="true">'+coverSVG(book,null,true,107,154.12)+'</span>'}).join('')+'</button></div><div class="cx-readfoot"><span>오늘 목표<b>'+pages+' / '+G+'쪽</b></span><button class="cx-continue" id="cx-read">'+(AUTH_SESSION.signedIn?'이어서 읽기':'읽기 시작')+ic('next')+'</button></div></section>'
  +'<section class="cx-week"><div class="cx-sectionhead"><h2>이번 주 독서</h2><button class="cx-link" id="cx-calendar">전체 보기'+ic('next')+'</button></div><div class="cx-days">'+days+'</div></section>'
- +'<button class="cx-points" id="cx-missions"><span class="cx-pointmark">P</span><b>오늘의 포인트<strong>'+psDay().act+' / '+PCFG.DAILY_CAP+'P</strong></b>'+ic('next')+'</button>'
+ +'<button class="cx-points" id="cx-missions"><span class="cx-pointmark">P</span><b>오늘의 포인트<strong>'+(AUTH_SESSION.signedIn?psDay().act:0)+' / '+PCFG.DAILY_CAP+'P</strong></b>'+ic('next')+'</button>'
  +'<section class="cx-community"><div class="cx-sectionhead"><h2>커뮤니티 인기글</h2><button class="cx-link" id="cx-community">전체 보기'+ic('next')+'</button></div>'+(post?'<div id="cx-post">'+communityPost(post,false,true)+'</div>':'<p class="cx-weeknote">아직 올라온 이야기가 없어요.</p>')+'</section>'
  +'<section class="cx-popular" aria-labelledby="cx-popular-title"><div class="cx-sectionhead"><h2 id="cx-popular-title">인기 급상승 오늘의 책</h2><button class="cx-link" id="cx-rank">전체 보기'+ic('next')+'</button></div><div class="shs pps">'+popRank().slice(0,10).map(function(book,i){return bcard(book,i+1)}).join('')+'</div></section>'
  +'<nav class="fx concept-nav" aria-label="주요 메뉴">'+nav+'</nav>';
@@ -5551,8 +5563,8 @@ async function kakaoStart(){
 }
 function authNotice(message){var close=pop('<h3>'+esc(message)+'</h3><button class="btn" id="auth-notice-close" style="width:100%;margin-top:16px">확인</button>');document.getElementById('auth-notice-close').onclick=close}
 async function completeSignupHome(){
- if(!KAKAO_PENDING){home();return}if(KAKAO_COMPLETING)return;KAKAO_COMPLETING=true;
- try{const r=await fetch('/auth/kakao/complete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nickname:ME,goal:GOAL,answers:ans}),credentials:'same-origin'});const d=await r.json();if(!r.ok)throw Error(d.error||'가입 정보를 저장하지 못했어요. 다시 시도해 주세요.');KAKAO_PENDING=false;NEW_ACCOUNT=false;LOGIN_STATE=null;home()}
+ if(!KAKAO_PENDING){loginComplete('email');return}if(KAKAO_COMPLETING)return;KAKAO_COMPLETING=true;
+ try{const r=await fetch('/auth/kakao/complete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nickname:ME,goal:GOAL,answers:ans}),credentials:'same-origin'});const d=await r.json();if(!r.ok)throw Error(d.error||'가입 정보를 저장하지 못했어요. 다시 시도해 주세요.');KAKAO_PENDING=false;NEW_ACCOUNT=false;LOGIN_STATE=null;loginComplete('kakao')}
  catch(e){authNotice(e.message||'연결을 확인하고 다시 시도해 주세요.')}
  finally{KAKAO_COMPLETING=false}
 }
@@ -5561,7 +5573,7 @@ async function completeSignupHome(){
  u.searchParams.delete('kakao');history.replaceState(null,'',u.pathname+u.search+u.hash);
  if(status!=='success'){loginPage();authNotice(status==='cancelled'?'카카오 연결을 취소했어요.':status==='expired'?'연결 시간이 지났어요. 다시 로그인해 주세요.':'카카오 연결을 마치지 못했어요. 연결 설정을 확인해 주세요.');return}
  try{const r=await fetch('/auth/kakao/session',{credentials:'same-origin',cache:'no-store'});if(!r.ok)throw Error();const d=await r.json();if(!d.authenticated)throw Error();
- if(d.onboarded){NEW_ACCOUNT=false;LOGIN_STATE=null;ME=d.profile.nickname;GOAL=d.profile.goal;ans=d.profile.answers;home()}
+ if(d.onboarded){NEW_ACCOUNT=false;LOGIN_STATE=null;ME=d.profile.nickname;GOAL=d.profile.goal;ans=d.profile.answers;loginComplete('kakao')}
  else{KAKAO_PENDING=true;beginSignup();ME=(d.profile.nickname||'').slice(0,10);const input=document.getElementById('inm');if(input){input.value=ME;input.dispatchEvent(new Event('input'))}}
  }catch(e){loginPage();authNotice('연결을 확인하고 다시 로그인해 주세요.')}
 })();
@@ -5593,6 +5605,49 @@ function entryScene(n){
 </script>
 
 <script>function animatedEntryLogo(){return "<svg class=\"entry-logo-motion\" viewBox=\"0 0 504.6 574\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" aria-hidden=\"true\" focusable=\"false\"><path id=\"&#235;&#172;&#184;&#237;&#139;&#128;\" d=\"M14 518V222C14 107.12 107.12 14 222 14C336.88 14 430 107.12 430 222V518H263\" stroke-width=\"28\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke=\"#3E9370\"/><g class=\"entry-logo-door\"><path id=\"&#235;&#172;&#184;\" d=\"M205 81C105.5 81 61.0989 140.303 61.0989 237.345V493.372C61.0989 505.813 58.7242 525.457 77.2462 530.259L189.328 572.931C198.826 576.75 205 570.202 205 555.469V81Z\" fill=\"#C6EED0\"/><path id=\"&#236;&#134;&#144;&#236;&#158;&#161;&#236;&#157;&#180;\" d=\"M193 329C193 322.925 188.075 318 182 318C175.925 318 171 322.925 171 329V354C171 360.075 175.925 365 182 365C188.075 365 193 360.075 193 354V329Z\" fill=\"#FFF3A0\"/></g><g class=\"entry-logo-ray entry-logo-ray-one\"><path id=\"&#235;&#133;&#184;&#237;&#129;&#172; &#237;&#145;&#156;&#236;&#139;&#156; &#194;&#183; &#235;&#140;&#128;&#234;&#176;&#129;&#236;&#132;&#160;\" d=\"M435.143 71.1425L469.657 38.9999\" stroke-width=\"24\" stroke-linecap=\"round\" stroke=\"#FFF29D\"/></g><g class=\"entry-logo-ray entry-logo-ray-two\"><path id=\"&#235;&#133;&#184;&#237;&#129;&#172; &#237;&#145;&#156;&#236;&#139;&#156; &#194;&#183; &#234;&#176;&#128;&#235;&#161;&#156;&#236;&#132;&#160;\" d=\"M452 110H492.6\" stroke-width=\"24\" stroke-linecap=\"round\" stroke=\"#FFF29D\"/></g></svg>"}</script>
-<script>if(!window.DDOK_KAKAO_CALLBACK)splash();</script>
+<script>
+/* 둘러보기와 로그인 후 기록하기를 나눠요. 서버 권한 검증을 대신하지 않는 화면 흐름이에요. */
+function requireLogin(reason,after){
+ if(AUTH_SESSION.signedIn)return true;
+ var existing=app.querySelector('.login-required');if(existing){existing.querySelector('#login-required-go').focus();return false}
+ AUTH_NEXT=typeof after==='function'?after:null;
+ var trigger=document.activeElement,dialog=document.createElement('dialog'),closed=false;
+ dialog.className='consent-popup login-required';dialog.setAttribute('aria-labelledby','login-required-title');
+ dialog.innerHTML='<h2 id="login-required-title">'+esc(reason)+' 로그인이 필요해요</h2><div class="dbt"><button class="btn ghost" id="login-required-cancel" type="button">나중에</button><button class="btn" id="login-required-go" type="button">로그인하기</button></div>';
+ function close(proceed){if(closed)return;closed=true;dialog.close();dialog.remove();if(!proceed){AUTH_NEXT=null;if(trigger&&trigger.isConnected)trigger.focus({preventScroll:true})}}
+ dialog.addEventListener('cancel',function(e){e.preventDefault();close(false)});
+ dialog.addEventListener('click',function(e){if(e.target===dialog){var r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)close(false)}});
+ app.appendChild(dialog);dialog.querySelector('#login-required-cancel').onclick=function(){close(false)};
+ dialog.querySelector('#login-required-go').onclick=function(){close(true);loginPage()};
+ dialog.showModal();dialog.querySelector('#login-required-go').focus();return false;
+}
+function loginComplete(provider){
+ AUTH_SESSION.signedIn=true;AUTH_SESSION.provider=provider;
+ try{if(provider==='email'||provider==='google')sessionStorage.setItem('ddok_preview_auth',provider);else sessionStorage.removeItem('ddok_preview_auth')}catch(e){}
+ if(NEW_ACCOUNT)LOGIN_STATE=null;archiveSave();var next=AUTH_NEXT;AUTH_NEXT=null;if(next)next();else home();
+}
+(function(){
+ var guarded={reader:'책을 읽으려면',bkStart:'책을 읽으려면',mateSel:'책을 읽으려면',profile:'마이페이지를 보려면',readPg:'독서 기록을 보려면',shelfPg:'내 책장을 보려면',likedPg:'찜한 책을 보려면',quoteArchive:'문장 보관함을 보려면',quoteShare:'문장을 저장하려면',archiveQuote:'문장을 저장하려면',pointHistory:'포인트 내역을 보려면',hMis:'포인트를 받으려면',calendar:'독서 기록을 보려면',frList:'독서 메이트를 보려면',friend:'독서 메이트를 보려면',inbox:'알림을 보려면',vault:'보관함을 보려면',craft:'문구를 만들려면',invitePop:'메이트를 초대하려면',applyItem:'문구를 적용하려면',typePg:'내 독서 성향을 보려면'};
+ Object.keys(guarded).forEach(function(name){var fn=window[name];if(typeof fn!=='function')return;window[name]=function(){var args=arguments,context=this;if(!requireLogin(guarded[name],function(){fn.apply(context,args)}))return;return fn.apply(context,args)}});
+ app.addEventListener('click',function(e){
+  if(AUTH_SESSION.signedIn)return;var b=e.target.closest('button');if(!b||b.disabled||b.closest('.login-required'))return;var reason='';
+  if(b.matches('.hb'))reason='책을 찜하려면';
+  else if(b.id==='buy')reason='문구를 구매하려면';
+  else if(b.matches('.po button[data-f]'))reason='친구를 추가하려면';
+  else if(b.matches('.po button[data-l]'))reason='좋아요를 남기려면';
+  else if(b.matches('.po button[data-v]'))reason='투표하려면';
+  else if(b.id==='cy')reason='댓글을 남기려면';
+  else if(b.matches('[data-menu],[data-ce],[data-cd],#dmn'))reason='글을 수정하거나 삭제하려면';
+  else if(b.matches('.wfab'))reason='글을 쓰려면';
+  else if(b.matches('[data-w="mine"],[data-w="friend"],[data-w="friends"],[data-w="fr"]'))reason='내 커뮤니티 기록을 보려면';
+  else if(b.matches('#qsv,#qsh,#tsv,#tsh'))reason='기록을 저장하거나 공유하려면';
+  else if(b.id==='cx-detail')reason='읽는 책을 고르려면';
+  if(reason){e.preventDefault();e.stopImmediatePropagation();requireLogin(reason)}
+ },true);
+ // 카카오는 브라우저에 저장한 표시 대신 현재 개발 서버의 세션을 확인해요.
+ if(!window.DDOK_KAKAO_CALLBACK&&location.protocol!=='file:')fetch('/auth/kakao/session',{credentials:'same-origin',cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(d){if(d&&d.authenticated&&d.onboarded){AUTH_SESSION.signedIn=true;AUTH_SESSION.provider='kakao';ME=d.profile.nickname;GOAL=d.profile.goal;ans=d.profile.answers;try{sessionStorage.removeItem('ddok_preview_auth')}catch(e){}}}).catch(function(){});
+})();
+if(!window.DDOK_KAKAO_CALLBACK)splash();
+</script>
 </body>
 </html>
