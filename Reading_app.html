@@ -3151,8 +3151,10 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.spl .spw .dke{color:#34483B;font-size:14px;letter-spacing:.3em;margin-top:8px!important}
 #app.onb .obw{background:#EFF1F0}
 #app.onb .obs{min-height:0;align-items:stretch}
-#app.onb .obp{padding:60px 20px 0!important;gap:0;min-height:0}
-#app.onb .obp h1{font-size:30px;line-height:1.35;font-weight:750;letter-spacing:-.04em;color:#17241C;flex:none;text-align:left;width:100%}
+#app.onb .obp{padding:72px 20px 0!important;gap:0;min-height:0}
+#app.onb .obp h1{font-size:24px;line-height:1.35;font-weight:750;letter-spacing:-.04em;color:#17241C;flex:none;text-align:left;width:100%;white-space:normal}
+#app.onb .obskip{position:absolute;top:12px;right:20px;z-index:10;display:flex;align-items:center;gap:6px;min-width:48px;min-height:48px;padding:8px 0 8px 12px;border:0;background:transparent;color:#174D37;font:600 14px/1.5 Pretendard,sans-serif;cursor:pointer}
+#app.onb .obskip:focus-visible{outline:3px solid #174D37;outline-offset:2px;border-radius:5px}
 #app.onb .obp p{font-size:14px;line-height:1.65;color:#34483B;text-align:left;width:100%;margin:16px 0 0;flex:none}
 #app.onb .obi{width:100%;max-width:none;height:330px;max-height:44vh;min-height:210px;flex:1;margin:32px 0 20px;background:#DAEAE1;border-radius:15px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;isolation:isolate}
 #app.onb .obf{padding:0 20px 30px!important;min-height:128px;gap:16px;justify-content:flex-end}
@@ -3187,7 +3189,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.onb .entry-message-front>span{position:absolute;right:-10px;top:-15px;background:#FFFFFF;border-radius:12px;color:#174D37;padding:10px;display:grid;place-items:center}
 #app.onb .entry-message-front>span .ic{width:22px;height:22px}
 #app.onb button:focus-visible{outline:3px solid #174D37;outline-offset:3px}
-@container(max-height:760px){#app.onb .obp{padding-top:30px!important}#app.onb .obp h1{font-size:26px}#app.onb .obi{margin-top:24px;min-height:200px}#app.onb .obf{padding-bottom:24px!important}}
+@container(max-height:760px){#app.onb .obp{padding-top:72px!important}#app.onb .obp h1{font-size:24px}#app.onb .obi{margin-top:24px;min-height:200px}#app.onb .obf{padding-bottom:24px!important}}
 
 /* 로그인: 브랜드와 입력 카드, SNS 가입 입구를 나눠요. */
 #app.auth,#app.auth .sc{background:#EFF1F0!important}
@@ -5296,8 +5298,8 @@ function obScene(n){
  return h+'</svg>'}
 function onb(){
  app.className="app onb";
- var T=[["내 취향에 맞는 책을<br>만나요","독서 성향에 맞는 책을 찾아봐요."],["하루 몇 쪽부터<br>시작해요","내가 정한 목표만큼 가볍게 읽어요."],["읽은 문장을<br>함께 나눠요","좋아하는 문장과 생각을 주고받아요."]];
- app.innerHTML='<div class="obw" role="region" aria-label="똑독 소개"><div class="obs" id="obs">'+T.map(function(t,i){return'<section class="obp" aria-label="'+(i+1)+' / 3"><h1>'+t[0]+'</h1><p>'+t[1]+'</p><div class="obi">'+entryScene(i)+'</div></section>'}).join("")+'</div>'
+ var T=[["내 취향에 맞는 책을 만나요","독서 성향에 맞는 책을 찾아봐요."],["하루 몇 쪽부터 시작해요","내가 정한 목표만큼 가볍게 읽어요."],["읽은 문장을 함께 나눠요","좋아하는 문장과 생각을 주고받아요."]];
+ app.innerHTML='<div class="obw" role="region" aria-label="똑독 소개"><button class="obskip" id="obskip" type="button">건너뛰기<span aria-hidden="true">&gt;</span></button><div class="obs" id="obs">'+T.map(function(t,i){return'<section class="obp" aria-label="'+(i+1)+' / 3"><h1>'+t[0]+'</h1><p>'+t[1]+'</p><div class="obi">'+entryScene(i)+'</div></section>'}).join("")+'</div>'
   +'<div class="obf"><div class="obdt" id="obdt">'+[0,1,2].map(function(i){return'<button aria-label="'+(i+1)+'번째 소개 보기" aria-current="'+(i===0)+'"></button>'}).join("")+'</div><button class="btn obgo" id="obgo" hidden>똑독 시작하기</button></div></div>';
  var sc=document.getElementById("obs"),dt=document.querySelectorAll("#obdt button"),go=document.getElementById("obgo"),cur=0,drag=null,ignoreClickUntil=0,settling=false,settleTimer=null;
  sc.tabIndex=0;sc.setAttribute("aria-label","똑독 소개. 왼쪽과 오른쪽 방향키로 넘길 수 있어요.");
@@ -5317,7 +5319,8 @@ function onb(){
  sc.addEventListener("keydown",function(e){if(e.key==="ArrowLeft"||e.key==="ArrowRight"){e.preventDefault();to(cur+(e.key==="ArrowLeft"?-1:1))}});
  var resize=new ResizeObserver(function(){if(!sc.isConnected){resize.disconnect();return}to(cur,true)});resize.observe(sc);
  sync(0);
- go.onclick=loginPage}
+ function finish(){clearTimeout(settleTimer);resize.disconnect();loginPage()}
+ go.onclick=finish;document.getElementById('obskip').onclick=finish}
 
 /* ===== 하단 내비게이션: 피그마 navigation_bar 컴포넌트 (기본 #C5C5C5 · 선택 #4CAE85) ===== */
 var NVI=[
