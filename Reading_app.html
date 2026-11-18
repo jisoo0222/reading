@@ -3721,6 +3721,9 @@ body{font-size:var(--font-body)}
 /* Library overview fits above the fixed menu while keeping text readable. */
 #app.lib{container-type:size}
 #app.app.lib.has-concept-nav .sc{padding-bottom:104px!important}
+#app.lib #lmain{display:flex;flex-direction:column;flex:1 0 auto!important}
+#app.lib #lmain>.fs:has(>.gnc){display:flex;flex-direction:column;flex:1 0 auto}
+#app.lib #lmain>.fs>.gnc{flex:1 0 auto;align-content:space-around}
 #app.lib #lmain>.fs,#app.lib #lmain>.fs:first-child,#app.lib #lmain>.fs+.fs,#app.lib #lmain>.fs:has(>.gnc){padding:16px!important}
 #app.lib #lmain>section.fs>.fsh{min-height:24px!important;margin-bottom:12px!important}
 #app.lib .ppx .pps{grid-auto-columns:96px!important;gap:12px!important;padding-top:6px!important;padding-bottom:0!important}
