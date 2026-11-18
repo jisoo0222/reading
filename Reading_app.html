@@ -3544,7 +3544,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.hm .cx-popular .cv{aspect-ratio:109/157}
 #app.hm .cx-popular .t{font-size:14px;line-height:1.5;white-space:normal;word-break:keep-all}
 #app.hm .cx-popular .a,#app.hm .cx-popular .rdr{font-size:14px}
-#app.hm .cx-community{padding:0;margin-top:24px;background:transparent}
+#app.hm .cx-community{padding:20px;margin-top:24px;background:#FFFFFF;border-radius:15px}
 #app.hm .cx-community .po{padding:20px!important;margin:0;background:var(--card)!important;border:0;border-radius:15px!important}
 #app.hm .cx-community .pt2.open{display:block;overflow:visible;-webkit-line-clamp:unset}
 #app.hm .cx-community-list{list-style:none;margin:0;padding:0}
@@ -3637,6 +3637,9 @@ body{font-size:var(--font-body)}
 #app.app nav.concept-nav.concept-nav:is(.tab,.fx){font-size:14px;height:calc(4em + 32px)!important;min-height:calc(4em + 32px)!important;padding:8px 10px!important;align-items:center!important}
 #app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button{height:calc(4em + 14px)!important;min-height:calc(4em + 14px)!important;padding:4px 0!important;justify-content:flex-start!important;font-size:14px!important;white-space:normal!important}
 #app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button span{display:flex;align-items:center;justify-content:center;min-height:2.4em;max-width:100%;font-size:14px;line-height:1.2;word-break:keep-all;overflow-wrap:anywhere}
+#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button .nvi{height:20px;min-height:20px;flex:none}
+#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button .nvi svg:not(.ic){display:block;height:20px;width:auto}
+#app.app nav.concept-nav.concept-nav:is(.tab,.fx)>button[aria-current=page] .nvi svg:not(.ic) path{stroke-width:2.5}
 #app:not(.rd).has-concept-nav .sc,#app.hm .sc.hm{padding-bottom:calc(4em + 54px)!important}
 #app.hm .cx-readbody{min-height:175px}
 #app.hm .cx-author{font-size:14px;line-height:1.5}
@@ -5350,9 +5353,9 @@ var NVI=[
  '<svg class="nvh" width="50" height="50" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="25"/><path d="M35 33.6667V22.3333C35 22.1263 34.9548 21.9222 34.868 21.737C34.7812 21.5519 34.6552 21.3909 34.5 21.2667L25.75 14.2667C25.5336 14.0936 25.2705 14 25 14C24.7295 14 24.4664 14.0936 24.25 14.2667L15.5 21.2667C15.3448 21.3909 15.2188 21.5519 15.132 21.737C15.0452 21.9222 15 22.1263 15 22.3333V33.6667C15 34.0203 15.1317 34.3594 15.3661 34.6095C15.6005 34.8595 15.9185 35 16.25 35H21.25C21.5815 35 21.8995 34.8595 22.1339 34.6095C22.3683 34.3594 22.5 34.0203 22.5 33.6667V29.6667C22.5 29.313 22.6317 28.9739 22.8661 28.7239C23.1005 28.4738 23.4185 28.3333 23.75 28.3333H26.25C26.5815 28.3333 26.8995 28.4738 27.1339 28.7239C27.3683 28.9739 27.5 29.313 27.5 29.6667V33.6667C27.5 34.0203 27.6317 34.3594 27.8661 34.6095C28.1005 34.8595 28.4185 35 28.75 35H33.75C34.0815 35 34.3995 34.8595 34.6339 34.6095C34.8683 34.3594 35 34.0203 35 33.6667Z" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
  '<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M11.7819 4.37645C11.472 3.66604 11.0187 3.02733 10.4504 2.50037C9.88205 1.97341 9.21097 1.56958 8.47922 1.31419C7.74748 1.0588 6.97085 0.957372 6.19806 1.01627C5.42527 1.07516 4.67298 1.2931 3.98839 1.65643C3.30379 2.01975 2.70165 2.52062 2.21974 3.12762C1.73783 3.73461 1.38653 4.43464 1.1879 5.1838C0.989263 5.93295 0.947568 6.71507 1.06543 7.4811C1.18329 8.24713 1.45816 8.98054 1.87281 9.63533L1.00103 12.2507L3.61637 11.3789C3.85785 11.5319 4.11095 11.6665 4.37567 11.7828" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.3746 18.9999C12.1266 18.9998 10.9142 18.5845 9.92811 17.8197C8.94205 17.0548 8.23838 15.9836 7.92787 14.7749C7.61736 13.5662 7.71765 12.2886 8.21295 11.1431C8.70825 9.99768 9.57043 9.04948 10.6638 8.44782C11.7571 7.84616 13.0195 7.62521 14.2521 7.81974C15.4848 8.01428 16.6178 8.61326 17.4727 9.52239C18.3276 10.4315 18.8559 11.5991 18.9744 12.8415C19.0929 14.0838 18.7948 15.3302 18.1272 16.3846L18.999 18.9999L16.3836 18.1281C15.4834 18.6979 14.4399 19.0002 13.3746 18.9999Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
  '<svg width="18" height="20" viewBox="0 0 18 20" fill="none"><path d="M9 11C11.7614 11 14 8.76142 14 6C14 3.23858 11.7614 1 9 1C6.23858 1 4 3.23858 4 6C4 8.76142 6.23858 11 9 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 19C17 16.8783 16.1571 14.8434 14.6569 13.3431C13.1566 11.8429 11.1217 11 9 11C6.87827 11 4.84344 11.8429 3.34315 13.3431C1.84285 14.8434 1 16.8783 1 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'];
+function navItemHTML(i){var labels=['도서관','문구점','홈','커뮤니티','마이페이지'];return '<span class="nvi" aria-hidden="true">'+(i===2?ic('home'):NVI[i])+'</span><span class="nvl">'+labels[i]+'</span>'}
 function navSkin(){app.querySelectorAll("nav.tab:not([data-sk])").forEach(function(n){n.setAttribute("data-sk","1");n.classList.add("nvb");
- n.querySelectorAll("button").forEach(function(b,i){if(i>4)return;var lab=b.textContent.trim()||["도서관","디지털 문구점","홈","커뮤니티","마이페이지"][i];
-  b.innerHTML=i===2?NVI[2]:'<span class="nvi">'+NVI[i]+'</span><span class="nvl">'+lab+'</span>';if(i===2)b.setAttribute("aria-label","홈")})})}
+ n.querySelectorAll("button").forEach(function(b,i){if(i>4)return;b.innerHTML=navItemHTML(i);b.setAttribute('aria-label',['도서관','문구점','홈','커뮤니티','마이페이지'][i])})})}
 new MutationObserver(navSkin).observe(app,{childList:true,subtree:true});navSkin();
 
 /* 화면 비율 412×917 유지 */
@@ -5515,7 +5518,7 @@ home=function(){
  var k=DEF,B=LB[k],q=AUTH_SESSION.signedIn?bprog(k):{c:0},today=new Date().getDay(),G=GOAL||10,pages=AUTH_SESSION.signedIn&&RDY.d===todayStr()?Object.keys(RDY.p).length:0;
  var days='일월화수목금토'.split('').map(function(d,i){var n=AUTH_SESSION.signedIn?(i===today?pages:(i<today?WK[i]:null)):null;return '<div class="cx-day'+(n?' is-read':'')+(i===today?' is-today':'')+'"><small>'+d+'</small><span aria-label="'+d+'요일 '+(n?n+'쪽 읽음':'읽은 기록 없음')+'">'+(n?ic('bkck'):(i===today?'<b>오늘</b>':'·'))+'</span></div>'}).join('');
  var posts=PO.filter(function(p){return p.v===0}).sort(function(a,b){return(b.l+b.c.length)-(a.l+a.c.length)}).slice(0,4);
- var nav=[['book','도서관'],['basket','문구점'],['home','홈'],['chat','커뮤니티'],['person','마이페이지']].map(function(x,i){return '<button data-nav="'+i+'"'+(i===2?' aria-current="page"':'')+'>'+ic(x[0])+'<span>'+x[1]+'</span></button>'}).join('');
+ var nav=[0,1,2,3,4].map(function(i){return '<button data-nav="'+i+'"'+(i===2?' aria-current="page"':'')+'>'+navItemHTML(i)+'</button>'}).join('');
  app.innerHTML='<header class="cx-top"><div class="cx-brand">'+logoSVG()+'<span>똑독</span></div><button class="cx-notice" id="cx-notice" aria-label="알림">'+ic('bell')+(unread()?'<i class="cx-dot"></i>':'')+'</button></header>'
  +''
  +'<section class="cx-reading" aria-labelledby="cx-title"><div class="cx-readhead" aria-hidden="true"></div><div class="cx-readbody"><div><h2 id="cx-title">'+esc(B[0])+'</h2><p class="cx-author">'+esc(B[1])+'</p><div class="cx-inline-meter" role="progressbar" aria-label="독서 진도" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div><p class="cx-progress-copy"><strong>'+q.c+'<small>%</small></strong></p></div><button class="cx-read-cover cx-stack" id="cx-detail" data-k="'+k+'" aria-label="읽는 중인 책 '+Math.max(1,stackBooks.length)+'권 고르기" aria-haspopup="dialog" aria-expanded="false">'+(stackBooks.length?stackBooks:[k]).map(function(book,index){return '<span class="cx-stack-layer" data-stack-book="'+book+'" style="--stack-index:'+index+';z-index:'+(3-index)+'" aria-hidden="true">'+coverSVG(book,null,true,107,154.12)+'</span>'}).join('')+'</button></div><div class="cx-readfoot"><span>오늘 목표<b>'+pages+' / '+G+'쪽</b></span><button class="cx-continue" id="cx-read">'+(AUTH_SESSION.signedIn?'이어서 읽기':'읽기 시작')+ic('next')+'</button></div></section>'
@@ -5530,7 +5533,7 @@ home=function(){
   OPENP=+button.dataset.post;CU='';CMN=0;CW='all';community();
  };
  app.querySelectorAll('[data-book]').forEach(function(b){b.onclick=function(){bookDt(+b.dataset.book,home)}});
- app.querySelectorAll('[data-nav]').forEach(function(b){b.onclick=[library,shop,home,community,profile][+b.dataset.nav]});
+ app.querySelectorAll('[data-nav]').forEach(function(b){b.setAttribute('aria-label',b.textContent.trim());b.onclick=[library,shop,home,community,profile][+b.dataset.nav]});
  window.hpRef=function(){if(app.classList.contains('hm'))home()};
  };
  window.home=home;home();
@@ -5551,8 +5554,8 @@ home=function(){
    bar.classList.add('concept-heading');sc.style.setProperty('padding-top','0px','important');var h=bar.querySelector('h2');if(!h){h=document.createElement('h2');bar.insertBefore(h,bar.children[1]||null)}if(!h.textContent.trim())h.textContent=route.title||'똑독';
   }
   var nav=app.querySelector(':scope>nav.tab,:scope>nav.concept-nav');
-  if(!nav&&route.group!==null){nav=document.createElement('nav');nav.className='tab nvb concept-nav';nav.setAttribute('data-sk','1');nav.setAttribute('aria-label','주요 메뉴');[['book','도서관'],['basket','문구점'],['home','홈'],['chat','커뮤니티'],['person','마이페이지']].forEach(function(item,i){var b=document.createElement('button');b.innerHTML=ic(item[0])+'<span>'+item[1]+'</span>';if(i===route.group)b.setAttribute('aria-current','page');b.onclick=function(){[library,shop,home,community,profile][i]()};nav.appendChild(b)});app.appendChild(nav)}
-  if(nav){app.classList.add('has-concept-nav');nav.classList.add('concept-nav');if(!nav.hasAttribute('data-concept-nav')){nav.setAttribute('data-concept-nav','1');var icons=['book','basket','home','chat','person'],labels=['도서관','문구점','홈','커뮤니티','마이페이지'];nav.querySelectorAll('button').forEach(function(b,i){if(i>4)return;b.innerHTML=ic(icons[i])+'<span>'+labels[i]+'</span>';b.setAttribute('aria-label',labels[i]);if(route.group!==null){if(i===route.group)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')}})}}
+  if(!nav&&route.group!==null){nav=document.createElement('nav');nav.className='tab nvb concept-nav';nav.setAttribute('data-sk','1');nav.setAttribute('aria-label','주요 메뉴');[['book','도서관'],['basket','문구점'],['home','홈'],['chat','커뮤니티'],['person','마이페이지']].forEach(function(item,i){var b=document.createElement('button');b.innerHTML=navItemHTML(i);if(i===route.group)b.setAttribute('aria-current','page');b.onclick=function(){[library,shop,home,community,profile][i]()};nav.appendChild(b)});app.appendChild(nav)}
+  if(nav){app.classList.add('has-concept-nav');nav.classList.add('concept-nav');if(!nav.hasAttribute('data-concept-nav')){nav.setAttribute('data-concept-nav','1');var labels=['도서관','문구점','홈','커뮤니티','마이페이지'];nav.querySelectorAll('button').forEach(function(b,i){if(i>4)return;b.innerHTML=navItemHTML(i);b.setAttribute('aria-label',labels[i]);if(route.group!==null){if(i===route.group)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')}})}}
  }
  new MutationObserver(schedule).observe(app,{childList:true,subtree:true});schedule();
 })();
