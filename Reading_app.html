@@ -4119,7 +4119,7 @@ function friend(i,pf){
  var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.className="fdl";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label",n+" 프로필");
  function x(){o.remove();d.remove();if(typeof pf==="function"){pf();return}if(pf===4){matePop(BT);return}if(!!FR[n]!==fr0){if(pf===1)profile();else if(pf===2)community();else if(pf===3&&typeof FCB==="function")FCB()}}
  function main(){var fr=!!FR[n];
-  d.innerHTML='<section class="box pbx"><div class="pbt"><button class="av2" id="ph" aria-label="'+n+' 프로필 사진 크게 보기" style="background:'+m[2]+'">'+n.charAt(0)+'<i class="mb" aria-label="나와의 매칭률 '+m[1]+'%">'+m[1]+'%</i></button><div class="pnm"><h2>'+n+'</h2><small>취향 일치도 '+m[1]+'%</small></div><button class="fadd'+(!fr&&FRIEND_REQ[n]?" rq":"")+'" id="fa" aria-pressed="'+fr+'">'+(fr?"친구 추가됨":FRIEND_REQ[n]?"신청 중":"친구 추가 +")+'</button></div></section>'
+  d.innerHTML='<section class="box pbx"><div class="pbt"><button class="av2" id="ph" aria-label="'+n+' 프로필 사진 크게 보기" style="background:'+m[2]+'">'+n.charAt(0)+'</button><div class="pnm"><h2>'+n+'</h2><small>취향 일치도 '+m[1]+'%</small></div><button class="fadd'+(!fr&&FRIEND_REQ[n]?" rq":"")+'" id="fa" aria-pressed="'+fr+'">'+(fr?"친구 추가됨":FRIEND_REQ[n]?"신청 중":"친구 추가 +")+'</button></div></section>'
    +sec(n+" 님의 책장",P.sv,shelf)+sec(n+" 님의 글",P.pv,posts,FP.length?'<button class="pme" id="fpall">전체 보기'+ic("next")+'</button>':"")+'<button class="btn ghost" id="fcl" style="width:100%;margin-top:16px">닫기</button>';
   document.getElementById("fcl").onclick=x;
   function leave(){o.remove();d.remove();var pd=document.getElementById("dlg");if(pd)pd.remove();var po=document.getElementById("ov2");if(po)po.remove()}
