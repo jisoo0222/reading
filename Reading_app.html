@@ -4672,7 +4672,7 @@ VIS=[["globe","전체공개"],["users","친구공개"],["lock","나만보기"]],
 function vic(v){return v===2?lk(0):ic(VIS[v][0])}
 function colOf(n){for(var i=0;i<M.length;i++)if(M[i][0]===n)return M[i][2];return"#4CAE85"}
 function communityPost(p,full,expanded){
-  var me=AUTH_SESSION.signedIn&&!!p.mine,un=p.mine?ME:p.u,fr=AUTH_SESSION.signedIn&&!!FR[p.u],tc=p.c.length?p.c.slice().sort(function(a,b){return b[2]-a[2]})[0]:null,lk2=AUTH_SESSION.signedIn&&!!LKD[p.id];
+  var me=AUTH_SESSION.signedIn&&!!p.mine,un=p.mine?ME:p.u,fr=AUTH_SESSION.signedIn&&!!FR[p.u],tc=p.c.filter(function(c){return c[2]>=10}).sort(function(a,b){return b[2]-a[2]})[0]||null,lk2=AUTH_SESSION.signedIn&&!!LKD[p.id];
   var bi2=p.bt||(p.b!==undefined?[LB[p.b][0],LB[p.b][1],LB[p.b][2],p.b]:null);
   var bk=bi2?'<button class="bkl" '+(bi2[3]>-1?'data-b="'+bi2[3]+'"':'data-nb="1"')+'><span class="bc2" data-bt="'+esc(bi2[0])+'" style="background:'+bi2[2]+'"></span><span class="bt"><b>'+esc(bi2[0])+'</b><small>'+esc(bi2[1])+'</small></span>'+(bi2[3]>-1?ic("next"):"")+'</button>':"";
   var bal="";
