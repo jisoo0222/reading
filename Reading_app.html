@@ -3563,10 +3563,11 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.hm .cx-community-row:focus-visible{outline:3px solid #174D37;outline-offset:3px;border-radius:5px}
 @media(max-width:360px){#app.hm .cx-readbody{grid-template-columns:minmax(0,1fr) 94px;gap:12px}#app.hm .cx-read-cover.cx-stack{width:94px;height:135px}}
 /* 커뮤니티: 카드와 바탕을 구분하고 작성자 옆에 친구 추가를 배치해요. */
-#app:is(.community,.community-detail,.home-feed) .ph2{align-items:flex-start}
-#app:is(.community,.community-detail,.home-feed) .post-author{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;min-height:28px}
+#app:is(.community,.community-detail,.home-feed) .ph2{align-items:center}
+#app:is(.community,.community-detail,.home-feed) .ph2 .pn{display:flex;flex-direction:column;justify-content:center;gap:2px;min-height:40px}
+#app:is(.community,.community-detail,.home-feed) .post-author{display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;min-height:20px}
 #app:is(.community,.community-detail,.home-feed) .post-author>b{min-width:0;overflow-wrap:anywhere}
-#app:is(.community,.community-detail,.home-feed) .ph2 .pn .post-author>b{font-size:18px;line-height:28px}
+#app:is(.community,.community-detail,.home-feed) .ph2 .pn .post-author>b{font-size:18px;line-height:20px}
 #app:is(.community,.community-detail,.home-feed) .ph2 .vis{flex:none;margin-left:auto;min-height:28px;justify-content:flex-end}
 #app:is(.community,.community-detail,.home-feed) .ph2 .pmn{flex:none;margin:0}
 /* 독서 달력과 기록: 카드 안 여백과 날짜·기록 사이의 간격을 확보해요. */
@@ -3657,7 +3658,7 @@ body{font-size:var(--font-body)}
 #app.lib .gnc{grid-template-columns:repeat(4,minmax(0,1fr))!important}
 #app.lib .gnt{overflow-wrap:anywhere}
 #app:is(.community,.community-detail,.home-feed) .pt2{font-size:16px!important}
-#app:is(.community,.community-detail,.home-feed) .ph2 .pn small{display:block;white-space:normal;overflow-wrap:anywhere}
+#app:is(.community,.community-detail,.home-feed) .ph2 .pn small{display:block;line-height:18px;margin:0;white-space:normal;overflow-wrap:anywhere}
 #app:is(.signup,.signup-account) .sc>h1,#app .hfin .hf1t{height:auto;white-space:normal!important;overflow-wrap:anywhere}
 
 /* Same-purpose icons share a frame; short labels stay centered within their shapes. */
