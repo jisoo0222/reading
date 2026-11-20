@@ -3774,6 +3774,44 @@ body{font-size:var(--font-body)}
  #app.lib .ppx .pps .rdr{grid-column:2;grid-row:3;margin-top:0!important}
 }
 
+/* Home reading card: one shared frame for sign-in, recommendations and reading. */
+#app.hm .cx-reading.cx-state{display:flex;flex-direction:column;min-height:460px;height:auto;padding:0!important;background:#FFFFFF!important;color:#17241C;border:1px solid #DFE6DF!important;border-radius:15px!important;overflow:hidden;box-shadow:0 6px 16px #174D3705}
+#app.hm .cx-reading.cx-state::before,#app.hm .cx-reading.cx-state::after{content:none!important}
+#app.hm .cx-state-heading{padding:20px 20px 0;min-height:112px}
+#app.hm .cx-state-heading h2{margin:0;font-size:23px;line-height:1.4;font-weight:750;letter-spacing:-.7px;overflow-wrap:anywhere;color:#17241C}
+#app.hm .cx-state-heading p{margin:8px 0 0;font-size:14px;line-height:1.6;color:#34483B}
+#app.hm .cx-state-art{margin:18px 20px 0;flex:1;display:flex;align-items:center;justify-content:center;min-height:182px;min-width:0}
+#app.hm .cx-guest-art{position:relative;isolation:isolate;overflow:hidden;background:#EAF0E9;border-radius:10px}
+#app.hm .cx-guest-art::after{content:'';position:absolute;left:18%;right:18%;bottom:21px;height:9px;background:#174D3714;border-radius:50%;filter:blur(5px)}
+#app.hm .cx-blank-book{position:absolute;width:78px;height:115px;border-radius:6px 10px 10px 6px;box-shadow:3px 6px 0 #FFFFFF,4px 7px 0 #CCD8CE;bottom:37px;display:grid;place-items:center;border-left:5px solid #00000012;background:#174D37;color:#FFFFFF;z-index:1}
+#app.hm .cx-blank-book:first-child{background:#9DB8A7;transform:translateX(-61px) rotate(-13deg);color:#174D37;z-index:0}
+#app.hm .cx-blank-book:nth-child(2){background:#DAEAE1;transform:translateX(61px) rotate(13deg);color:#174D37;z-index:0}
+#app.hm .cx-blank-book svg{width:42px;height:42px}
+#app.hm .cx-state-foot{padding:20px;margin-top:auto}
+#app.hm .cx-state .cx-continue{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:50px;padding:12px 16px;border:0;border-radius:10px!important;background:#174D37!important;color:#FFFFFF!important;font-size:16px;font-weight:650;white-space:normal;line-height:1.5}
+#app.hm .cx-state .cx-continue .ic{width:20px;height:20px;flex:none}
+#app.hm .cx-rec-grid{display:grid;width:100%;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-self:start;align-items:start}
+#app.hm .cx-rec-book{display:flex;flex-direction:column;align-items:center;min-width:0;min-height:48px;border:0;padding:0 0 6px;background:none;color:#17241C;font:inherit;text-align:left;cursor:pointer}
+#app.hm .cx-rec-cover{display:block;width:100%;max-width:90px;aspect-ratio:107/154.12;position:relative;border-radius:10px;box-shadow:2px 3px 0 #DCE3DD}
+#app.hm .cx-rec-cover>svg{display:block;width:100%;height:100%;border-radius:10px;overflow:hidden}
+#app.hm .cx-rec-book[aria-pressed=true] .cx-rec-cover{outline:2px solid #174D37;outline-offset:4px}
+#app.hm .cx-rec-check{position:absolute;right:5px;bottom:5px;width:22px;height:22px;border-radius:50%;display:none;place-items:center;background:#174D37;color:#FFFFFF}
+#app.hm .cx-rec-check .ic{width:14px;height:14px}
+#app.hm .cx-rec-book[aria-pressed=true] .cx-rec-check{display:grid}
+#app.hm .cx-rec-book strong,#app.hm .cx-rec-book small{display:block;width:100%;font-size:14px;font-weight:650;line-height:1.5;word-break:keep-all;overflow-wrap:anywhere}
+#app.hm .cx-rec-book strong{margin-top:12px}
+#app.hm .cx-rec-book small{font-weight:400;color:#34483B;margin-top:2px}
+#app.hm .cx-state-reading .cx-state-art{justify-content:space-between;gap:16px;flex-wrap:wrap}
+#app.hm .cx-state-reading .cx-read-cover.cx-stack{position:relative;inset:auto;width:112px!important;height:auto!important;max-width:48%;aspect-ratio:107/154.12;flex:none;border:0;padding:0;background:transparent!important;border-radius:10px!important}
+#app.hm .cx-state-reading .cx-stack-layer:first-child{transform:rotate(-4deg);box-shadow:5px 6px 0 #E4EBE4,6px 7px 0 #C8D7CA}
+#app.hm .cx-state-progress{min-width:0;flex:1 1 6em;color:#174D37}
+#app.hm .cx-state-progress strong{font-size:42px;font-weight:750;letter-spacing:-2px;line-height:1.2}
+#app.hm .cx-state-progress strong small{font-size:16px;letter-spacing:0;margin-left:3px}
+#app.hm .cx-state-progress p{margin:4px 0 0;font-size:14px;color:#34483B}
+#app.hm .cx-state-progress .cx-inline-meter{width:100%;max-width:none;height:6px;margin-top:14px;border:0;background:#E4ECE5;border-radius:4px}
+#app.hm .cx-state-progress .cx-inline-meter i{background:#174D37}
+#app.hm .cx-state-goal{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;font-size:14px;color:#34483B;flex-wrap:wrap}
+#app.hm .cx-state-goal b{font-size:16px;color:#174D37}
 /* Service copy preserves the explicit boundary between complete sentences. */
 #app :is(.type-analysis p,.ax p,.account-status,.account-help,.consent-detail p,.hmr small,.ntx b,.tbx p,.mtp),#app #dlg>h3,#app #dlg .sm,#hn,#ptt{white-space:pre-line}
 </style>
@@ -5655,21 +5693,44 @@ function cxOpenReadingBooks(books){
  overlay.querySelector('[aria-pressed="true"]').focus({preventScroll:true});
 }
 
+function cxGuestArt(){return '<div class="cx-state-art cx-guest-art" aria-hidden="true">'+['<circle cx="24" cy="24" r="13"/><path d="M24 7v34M7 24h34"/>','<path d="M24 7c9 11 15 20 0 34C9 27 15 18 24 7Z"/>','<path d="M10 12c6-3 10-2 14 1 4-3 8-4 14-1v25c-6-3-10-2-14 1-4-3-8-4-14-1V12Zm14 1v25"/>'].map(function(p){return '<span class="cx-blank-book"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">'+p+'</svg></span>'}).join('')+'</div>'}
+function cxHomeCard(state,books,k,q,pages,goal,recs){
+ var title='',copy='',art='',footer='';
+ if(state==='guest'){title='취향에 맞는 책을 만나요.';copy='로그인하면 나에게 맞는 책을 추천해 드려요.';art=cxGuestArt();footer='<button class="cx-continue" id="cx-login">로그인하기'+ic('next')+'</button>'}
+ else if(state==='recommend'){
+  title='나에게 맞는 세 권';copy='마음이 가는 책을 골라 보세요.';
+  art='<div class="cx-state-art"><div class="cx-rec-grid">'+recs.map(function(r,i){var b=LB[r.k];return '<button class="cx-rec-book" data-rec-book="'+r.k+'" aria-pressed="'+(i===0)+'" aria-label="'+esc(b[0])+' 고르기"><span class="cx-rec-cover" data-stack-book="'+r.k+'">'+coverSVG(r.k,null,true,107,154.12)+'<span class="cx-rec-check" aria-hidden="true">'+ic('check')+'</span></span><strong>'+esc(b[0])+'</strong><small>'+esc(b[1])+'</small></button>'}).join('')+'</div></div>';
+  footer='<p class="sr" id="cx-rec-status" role="status" aria-live="polite"></p><button class="cx-continue" id="cx-read">읽기 시작'+ic('next')+'</button>';
+ }else if(state==='assessment'){title='나에게 맞는 세 권';copy='독서 성향을 알아보면 책을 추천해 드려요.';art=cxGuestArt();footer='<button class="cx-continue" id="cx-assessment">독서 성향 알아보기'+ic('next')+'</button>'}
+ else{
+  title=LB[k][0];copy=LB[k][1];
+  art='<div class="cx-state-art"><button class="cx-read-cover cx-stack" id="cx-detail" data-k="'+k+'" aria-label="읽는 중인 책 '+Math.max(1,books.length)+'권 고르기" aria-haspopup="dialog" aria-expanded="false">'+(books.length?books:[k]).map(function(book,index){return '<span class="cx-stack-layer" data-stack-book="'+book+'" style="--stack-index:'+index+';z-index:'+(3-index)+'" aria-hidden="true">'+coverSVG(book,null,true,107,154.12)+'</span>'}).join('')+'</button><div class="cx-state-progress"><strong>'+q.c+'<small>%</small></strong><p>읽었어요.</p><div class="cx-inline-meter" role="progressbar" aria-label="독서 진도" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div></div></div>';
+  footer='<div class="cx-state-goal"><span>오늘 목표</span><b>'+pages+' / '+goal+'쪽</b></div><button class="cx-continue" id="cx-read">이어서 읽기'+ic('next')+'</button>';
+ }
+ return '<section class="cx-reading cx-state cx-state-'+state+'" aria-labelledby="cx-title"><div class="cx-state-heading"><h2 id="cx-title">'+esc(title)+'</h2><p>'+esc(copy)+'</p></div>'+art+'<div class="cx-state-foot">'+footer+'</div></section>';
+}
 home=function(){
- app.onclick=null;app.className='app hm home-feed';window.scrollTo(0,0);var stackBooks=cxReadingBooks();if(stackBooks.length&&stackBooks.indexOf(DEF)<0)DEF=stackBooks[0];if(BK!==DEF)useBk(DEF);
- var k=DEF,B=LB[k],q=AUTH_SESSION.signedIn?bprog(k):{c:0},today=new Date().getDay(),G=GOAL||10,pages=AUTH_SESSION.signedIn&&RDY.d===todayStr()?Object.keys(RDY.p).length:0;
+ app.onclick=null;app.className='app hm home-feed';window.scrollTo(0,0);
+ var started=AUTH_SESSION.signedIn&&(!!PICKED||OPN.length>0),key=RKEY||(ans.length===Q.length&&ans.every(function(v){return Number.isInteger(v)&&v>=0&&v<4})?calcType().key:''),state=!AUTH_SESSION.signedIn?'guest':started?'reading':key?'recommend':'assessment',recs=state==='recommend'?recList(key):[];
+ var stackBooks=state==='reading'?cxReadingBooks():[];if(stackBooks.length&&stackBooks.indexOf(DEF)<0)DEF=stackBooks[0];if(state==='reading'&&BK!==DEF)useBk(DEF);
+ var k=DEF,B=LB[k],q=state==='reading'?bprog(k):{c:0},today=new Date().getDay(),G=GOAL||10,pages=AUTH_SESSION.signedIn&&RDY.d===todayStr()?Object.keys(RDY.p).length:0;
  var days='일월화수목금토'.split('').map(function(d,i){var n=AUTH_SESSION.signedIn?(i===today?pages:(i<today?WK[i]:null)):null;return '<div class="cx-day'+(n?' is-read':'')+(i===today?' is-today':'')+'"><small>'+d+'</small><span aria-label="'+d+'요일 '+(n?n+'쪽 읽음':'읽은 기록 없음')+'">'+(n?ic('bkck'):(i===today?'<b>오늘</b>':'·'))+'</span></div>'}).join('');
  var posts=PO.filter(function(p){return p.v===0}).sort(function(a,b){return(b.l+b.c.length)-(a.l+a.c.length)}).slice(0,4);
  var nav=[0,1,2,3,4].map(function(i){return '<button data-nav="'+i+'"'+(i===2?' aria-current="page"':'')+'>'+navItemHTML(i)+'</button>'}).join('');
  app.innerHTML='<header class="cx-top"><div class="cx-brand">'+logoSVG()+'<span>똑독</span></div><button class="cx-notice" id="cx-notice" aria-label="알림">'+ic('bell')+(unread()?'<i class="cx-dot"></i>':'')+'</button></header>'
  +''
- +'<section class="cx-reading" aria-labelledby="cx-title"><div class="cx-readhead" aria-hidden="true"></div><div class="cx-readbody"><div><h2 id="cx-title">'+esc(B[0])+'</h2><p class="cx-author">'+esc(B[1])+'</p><div class="cx-inline-meter" role="progressbar" aria-label="독서 진도" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div><p class="cx-progress-copy"><strong>'+q.c+'<small>%</small></strong></p></div><button class="cx-read-cover cx-stack" id="cx-detail" data-k="'+k+'" aria-label="읽는 중인 책 '+Math.max(1,stackBooks.length)+'권 고르기" aria-haspopup="dialog" aria-expanded="false">'+(stackBooks.length?stackBooks:[k]).map(function(book,index){return '<span class="cx-stack-layer" data-stack-book="'+book+'" style="--stack-index:'+index+';z-index:'+(3-index)+'" aria-hidden="true">'+coverSVG(book,null,true,107,154.12)+'</span>'}).join('')+'</button></div><div class="cx-readfoot"><span>오늘 목표<b>'+pages+' / '+G+'쪽</b></span><button class="cx-continue" id="cx-read">'+(AUTH_SESSION.signedIn?'이어서 읽기':'읽기 시작')+ic('next')+'</button></div></section>'
+ +cxHomeCard(state,stackBooks,k,q,pages,G,recs)
  +'<section class="cx-week"><div class="cx-sectionhead"><h2>이번 주 독서</h2><button class="cx-link" id="cx-calendar">전체 보기'+ic('next')+'</button></div><div class="cx-days">'+days+'</div></section>'
  +'<button class="cx-points" id="cx-missions"><span class="cx-pointmark">P</span><b>오늘의 포인트<strong>'+(AUTH_SESSION.signedIn?psDay().act:0)+' / '+PCFG.DAILY_CAP+'P</strong></b>'+ic('next')+'</button>'
  +'<section class="cx-community"><div class="cx-sectionhead"><h2>커뮤니티 인기글</h2><button class="cx-link" id="cx-community">전체 보기'+ic('next')+'</button></div>'+(posts.length?'<ul class="cx-community-list" id="cx-posts">'+posts.map(function(post){var likes=post.l+(AUTH_SESSION.signedIn&&LKD[post.id]?1:0),author=post.mine?ME:post.u;return '<li><button class="cx-community-row" type="button" data-post="'+post.id+'"><span class="cx-community-copy">'+esc(post.x)+'</span><span class="cx-community-meta"><span class="cx-community-author">'+esc((author?author+' · ':'')+(TN[post.t]||post.t))+'</span><span class="cx-community-counts"><span role="img" aria-label="좋아요 '+likes+'개">'+ic('heart')+likes+'</span><span role="img" aria-label="댓글 '+post.c.length+'개">'+ic('chat')+post.c.length+'</span></span></span></button></li>'}).join('')+'</ul>':'<p class="cx-weeknote">아직 올라온 이야기가 없어요.</p>')+'</section>'
  +'<section class="cx-popular" aria-labelledby="cx-popular-title"><div class="cx-sectionhead"><h2 id="cx-popular-title">인기 급상승 오늘의 책</h2><button class="cx-link" id="cx-rank">전체 보기'+ic('next')+'</button></div><div class="shs pps">'+popRank().slice(0,10).map(function(book,i){return bcard(book,i+1)}).join('')+'</div></section>'
  +'<nav class="fx concept-nav" aria-label="주요 메뉴">'+nav+'</nav>';
- document.getElementById('cx-notice').onclick=inbox;document.getElementById('cx-read').onclick=function(){cxEnterReading(k,this)};document.getElementById('cx-detail').onclick=function(){cxOpenReadingBooks(stackBooks.length?stackBooks:[k])};document.getElementById('cx-calendar').onclick=function(){calendar()};document.getElementById('cx-missions').onclick=hMis;document.getElementById('cx-community').onclick=function(){OPENP=0;CU='';CMN=0;CW='all';CF='all';community()};document.getElementById('cx-rank').onclick=rankPg;lbWire(home);
+ var login=document.getElementById('cx-login'),assessment=document.getElementById('cx-assessment'),read=document.getElementById('cx-read'),detail=document.getElementById('cx-detail'),selected=recs.length?recs[0].k:k;
+ if(login)login.onclick=function(){AUTH_NEXT=home;loginPage()};if(assessment)assessment.onclick=function(){TFROM=home;testPg(0,[null,null,null,null])};
+ app.querySelectorAll('[data-rec-book]').forEach(function(b){b.onclick=function(){selected=+b.dataset.recBook;app.querySelectorAll('[data-rec-book]').forEach(function(item){item.setAttribute('aria-pressed',item===b)});document.getElementById('cx-rec-status').textContent='『'+LB[selected][0]+'』을 골랐어요.'}});
+ if(read)read.onclick=function(){if(state==='recommend')bkStart(selected,function(){cxEnterReading(selected,document.getElementById('cx-read'))});else cxEnterReading(k,this)};
+ if(detail)detail.onclick=function(){cxOpenReadingBooks(stackBooks.length?stackBooks:[k])};
+ document.getElementById('cx-notice').onclick=inbox;document.getElementById('cx-calendar').onclick=function(){calendar()};document.getElementById('cx-missions').onclick=hMis;document.getElementById('cx-community').onclick=function(){OPENP=0;CU='';CMN=0;CW='all';CF='all';community()};document.getElementById('cx-rank').onclick=rankPg;lbWire(home);
  var p=document.getElementById('cx-posts');if(p)p.onclick=function(e){
   var button=e.target.closest('[data-post]');if(!button)return;
   OPENP=+button.dataset.post;CU='';CMN=0;CW='all';community();
