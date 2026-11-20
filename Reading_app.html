@@ -3816,6 +3816,28 @@ body{font-size:var(--font-body)}
 #app.hm .cx-state-progress .cx-inline-meter i{background:#174D37}
 #app.hm .cx-state-goal{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;font-size:14px;color:#34483B;flex-wrap:wrap}
 #app.hm .cx-state-goal b{font-size:16px;color:#174D37}
+#app.pf .pfc.pfa>span{background:#E6EEE8!important;color:#174D37!important;border:1px dashed #91A599}
+#app.pf .pfc.pfa>span .ic{width:30px;height:30px}
+#app #dlg.friend-search{max-height:calc(100% - 48px);padding:20px;border-radius:15px!important}
+#app .friend-search-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+#app .friend-search-head h3{margin:0;font-size:20px;line-height:1.4}
+#app .friend-search-head button{width:48px;min-height:48px;flex:none;border:0;background:none;color:#174D37}
+#app .friend-search-head .ic{width:24px;height:24px}
+#app .friend-search-form label{display:block;font-size:14px;font-weight:600;margin-bottom:8px}
+#app .friend-search-field{display:flex;gap:8px;align-items:center}
+#app .friend-search-field input{flex:1;min-width:0;width:100%;min-height:48px;margin:0;font-size:16px;border:1px solid #91A599;border-radius:10px;background:#FFFFFF;color:#17241C;padding:10px 12px}
+#app .friend-search-field button{flex:none;min-width:48px;min-height:48px;border:0;border-radius:10px;background:#174D37;color:#FFFFFF;display:grid;place-items:center}
+#app .friend-search-field button .ic{width:24px;height:24px}
+#app .friend-search-note{margin:12px 0 0;color:#34483B;font-size:14px;line-height:1.6;white-space:pre-line}
+#app .friend-search-results{margin-top:16px;min-width:0}
+#app .friend-search-results h4{margin:16px 0 8px;font-size:16px}
+#app .friend-search-row{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #DFE6DF;min-width:0;flex-wrap:wrap}
+#app .friend-search-avatar{width:40px;height:40px;flex:none;border-radius:50%;background:#DAEAE1;color:#174D37;display:grid;place-items:center;font-size:16px;font-weight:650}
+#app .friend-search-name{flex:1;min-width:3em;font-size:16px;overflow-wrap:anywhere}
+#app .friend-search-actions{display:flex;gap:8px;flex-wrap:wrap;max-width:100%}
+#app .friend-search-actions button{min-height:48px;padding:8px 12px;border:1px solid #174D37;border-radius:10px;background:#174D37;color:#FFFFFF;font:inherit;font-size:14px;white-space:normal;word-break:keep-all}
+#app .friend-search-actions .ghost{background:#FFFFFF;color:#174D37}
+#app .friend-search-actions button:disabled{background:#E6EEE8;color:#34483B;border-color:#91A599;opacity:1}
 /* Service copy preserves the explicit boundary between complete sentences. */
 #app :is(.type-analysis p,.ax p,.account-status,.account-help,.consent-detail p,.hmr small,.ntx b,.tbx p,.mtp),#app #dlg>h3,#app #dlg .sm,#hn,#ptt{white-space:pre-line}
 </style>
@@ -4203,6 +4225,7 @@ function profile(){
   d.innerHTML='<div class="bi"><div class="bc" data-bt="'+esc(b[0])+'" style="background:'+BC[k%3]+'"></div><div><h3 style="margin:0">'+b[0]+'</h3><p style="margin:6px 0 0">'+b[1]+'</p><p style="margin:4px 0 0;font-size:14px">'+b[2]+'쪽 · 완독 '+b[3]+'</p></div></div><button class="btn ghost" id="bx" style="width:100%;margin-top:16px;flex:none">닫기</button>';
   function x(){o.remove();d.remove()}o.onclick=x;app.appendChild(o);app.appendChild(d);var c=document.getElementById("bx");c.onclick=x;c.focus();d.onkeydown=function(e){if(e.key==="Escape")x()}}
  var fl=M.map(function(m,i){return FR[m[0]]?'<button class="fr" data-i="'+i+'" aria-label="'+m[0]+' 프로필 보기"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span></button>':''}).join(""),fc=M.filter(function(m){return FR[m[0]]}).length;
+ var real=realSocialMode();if(real){fc=REAL_SOCIAL.friends.length;if(REAL_SOCIAL.status==='idle'||REAL_SOCIAL.status==='ready'&&Date.now()-REAL_SOCIAL.at>15000){loadRealFriends().then(function(){if(app.classList.contains('pf')&&!document.getElementById('dlg'))profile()})}}
  var bk=myShelf().map(bkTile).join("");
  var hm=[["stamp","독서우표"],["chat","커뮤니티"],["basket","문구점"]];
  var hh=hm.map(function(h,i){return'<button class="hc" data-k="'+i+'"><span>'+ic(h[0])+'</span>'+h[1]+'</button>'}).join("");
@@ -4212,7 +4235,7 @@ function profile(){
  +(function(){var k=RKEY||(ans.indexOf(null)<0?calcType().key:""),t=k&&T[k];return'<button class="profile-type" id="rp"><span class="profile-type-copy"><small>AI 독서 성향</small><strong>'+(t?esc(t[0]):'나의 독서 유형 알아보기')+'</strong>'+(t?'<em>'+k+'</em>':'')+'</span><span class="profile-type-arrow" aria-hidden="true">'+ic("next")+'</span></button>'})()
  +'</section>'
  +'<section class="fs profile-archives"><div class="fsh"><h3>아카이빙</h3></div><div class="archive-actions">'+[['plm','찜한 책','heart'],['p-vault','포인트 보관함','basket'],['p-quotes','문장 보관함','quote'],['mym','내 글 보관함','pen']].map(function(a){return '<button class="archive-action" id="'+a[0]+'"><span aria-hidden="true">'+ic(a[2])+'</span><b>'+a[1]+'</b></button>'}).join('')+'</div></section>'
- +'<section class="fs"><div class="fsh"><h3>독서 메이트 '+fc+'</h3><button class="pme" id="pfr">전체 보기'+ic("next")+'</button></div><div class="box pfl">'+(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):'<p class="pfe">아직 친구가 없어요.</p><button class="pfc pfa" id="pfa"><span>'+ic("plus")+'</span><b>친구 찾기</b></button>')+'</div></section>'
+ +'<section class="fs"><div class="fsh"><h3>독서 메이트 '+fc+'</h3><button class="pme" id="pfr">전체 보기'+ic("next")+'</button></div><div class="box pfl">'+(real?REAL_SOCIAL.friends.map(function(m){return '<button class="pfc" data-real-friend="'+m.id+'" data-real-name="'+esc(m.nickname)+'" aria-label="'+esc(m.nickname)+' 친구 보기"><span>'+esc(m.nickname).charAt(0)+'</span><b>'+esc(m.nickname)+'</b></button>'}).join('')+(fc?'':'<p class="pfe">'+(REAL_SOCIAL.status==='loading'?'친구 목록을 불러오고 있어요.':REAL_SOCIAL.status==='error'?'친구 목록을 다시 확인해 주세요.':'아직 친구가 없어요.')+'</p>'):(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):'<p class="pfe">아직 친구가 없어요.</p>'))+'<button class="pfc pfa" id="pfa" aria-label="친구를 검색해서 추가하기"><span>'+ic("plus")+'</span><b>추가</b></button></div></section>'
  +(function(){var L=readList();return'<section class="fs"><div class="fsh"><h3>읽은 책 '+L.length+'권</h3><button class="pme" id="rbm">전체 보기'+ic("next")+'</button></div><div class="rbl" id="rbl">'+L.map(function(b,i){return'<div class="rbk'+(i>2?" xtra":"")+'"><i data-bt="'+esc(b.t)+'" style="background:'+b.c+'"></i><span class="rbt"><b>'+esc(b.t)+'</b><small>'+esc(b.a)+'</small></span><em class="rbs'+(b.done?" dn":"")+'">'+b.s+'</em></div>'}).join("")+(L.length?'':'<p class="pfe">아직 읽은 책이 없어요.</p>')+'</div>'+'</section>'})()
  +'<button class="pset2" id="pset">'+ic("cog")+'<span>설정</span>'+ic("next")+'</button>'
  +'</div>'
@@ -4223,13 +4246,13 @@ function profile(){
  document.getElementById("rp").onclick=function(){if(RKEY||ans.indexOf(null)<0)typePg();else{TFROM=profile;testPg()}};
  document.getElementById("pme").onclick=meEdit;
  document.getElementById("pset").onclick=setPg;
- app.querySelectorAll(".pfc[data-i]").forEach(function(b){b.onclick=function(){friend(+b.dataset.i,1)}});var pfa=document.getElementById("pfa");if(pfa)pfa.onclick=frList;
+ app.querySelectorAll(".pfc[data-i]").forEach(function(b){b.onclick=function(){friend(+b.dataset.i,1)}});app.querySelectorAll('[data-real-friend]').forEach(function(b){b.onclick=function(){friendSearch(profile,b.dataset.realName)}});document.getElementById('pfa').onclick=function(){friendSearch(profile)};
  var rbm=document.getElementById("rbm");if(rbm)rbm.onclick=function(){RPB=profile;readPg(1)};
 
  document.getElementById("plm").onclick=likedPg;
  document.getElementById("p-vault").onclick=function(){vault(2,profile)};document.getElementById("p-quotes").onclick=quoteArchive;
  app.querySelectorAll(".plbook").forEach(function(b){b.onclick=function(){warn(function(){bookDt(+b.dataset.k,profile)})}});
- document.getElementById("pfr").onclick=frList;
+ document.getElementById("pfr").onclick=function(){if(realSocialMode())friendSearch(profile);else frList()};
  document.getElementById("mym").onclick=function(){CMN=1;CA="post";community()};
  app.querySelectorAll(".myp .fpo").forEach(function(b){b.onclick=function(){CMN=1;CA="post";OPENP=+b.dataset.pid;community()}});
  app.querySelectorAll(".tab button")[2].onclick=home;app.querySelectorAll(".tab button")[0].onclick=tabStamp;app.querySelectorAll(".tab button")[1].onclick=shop;app.querySelectorAll(".tab button")[3].onclick=community;
@@ -4251,6 +4274,44 @@ function readPg(srt,flt){flt=flt||0;
  document.getElementById("rp0").onclick=function(){(RPB||profile)()};
  app.querySelectorAll(".ctb button").forEach(function(b){b.onclick=function(){readPg(srt,+b.dataset.f)}});
  app.querySelectorAll(".rso button").forEach(function(b){b.onclick=function(){readPg(+b.dataset.s,flt)}})}
+var REAL_SOCIAL={status:'idle',authenticated:false,friends:[],incoming:[],pending:null,at:0};
+function realSocialMode(){return location.protocol!=='file:'&&AUTH_SESSION.signedIn&&AUTH_SESSION.provider==='kakao'}
+async function realSocialRequest(url,body){
+ var response=await fetch(url,{method:body?'POST':'GET',credentials:'same-origin',cache:'no-store',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined});
+ var data=await response.json().catch(function(){return {error:'회원 검색 서버에 연결하지 못했어요.'}});
+ if(!response.ok){var error=new Error(data.error||'잠시 후 다시 시도해 주세요.');error.status=response.status;throw error}return data;
+}
+function loadRealFriends(force){
+ var state=REAL_SOCIAL;if(state.pending)return force?state.pending.then(function(){return loadRealFriends(true)}):state.pending;state.status='loading';
+ state.pending=realSocialRequest('/api/friends').then(function(data){if(REAL_SOCIAL!==state)return false;state.friends=data.friends;state.incoming=data.incoming;state.authenticated=true;state.status='ready';state.at=Date.now();return true},function(){if(REAL_SOCIAL===state){state.friends=[];state.incoming=[];state.authenticated=false;state.status='error'}return false}).finally(function(){state.pending=null});return state.pending;
+}
+function friendSearch(back,initial){
+ if(!requireLogin('친구를 찾으려면',function(){friendSearch(back,initial)}))return;
+ var trigger=document.activeElement,query=initial||'',timer=null,version=0,composing=false,previousScroll=app.querySelector('.sc')?app.querySelector('.sc').scrollTop:0;
+ var x=pop('<div class="friend-search-head"><h3 id="friend-search-title">친구 찾기</h3><button type="button" id="friend-search-close" aria-label="닫기">'+ic('close')+'</button></div><form class="friend-search-form" id="friend-search-form"><label for="friend-search-input">닉네임</label><div class="friend-search-field"><input type="search" id="friend-search-input" maxlength="10" autocomplete="off" placeholder="닉네임으로 찾기"><button type="submit" aria-label="검색">'+ic('search')+'</button></div></form><p class="friend-search-note" id="friend-search-status" role="status" aria-live="polite"></p><div class="friend-search-results" id="friend-search-results"></div>');
+ var d=document.getElementById('dlg'),overlay=document.getElementById('ov2'),input=d.querySelector('input'),status=d.querySelector('#friend-search-status'),results=d.querySelector('#friend-search-results');d.classList.add('friend-search');d.setAttribute('aria-labelledby','friend-search-title');input.value=query;
+ function close(refresh){clearTimeout(timer);version++;x();if(refresh!==false&&typeof back==='function'){back();var sc=app.querySelector('.sc');if(sc)sc.scrollTop=previousScroll;var add=document.getElementById('pfa');if(add)add.focus({preventScroll:true})}else if(trigger&&trigger.isConnected)trigger.focus()}
+ function message(text,login){status.textContent=text;results.innerHTML=login?'<button class="btn" id="friend-search-login" style="width:100%;margin-top:8px">'+(location.protocol==='file:'?'개발 서버에서 열기':'카카오로 로그인하기')+'</button>':'';var b=d.querySelector('#friend-search-login');if(b)b.onclick=function(){close(false);if(location.protocol==='file:')location.href='http://localhost:5174/';else kakaoStart()}}
+ function row(user){var rel=user.relation||'received',actions=rel==='friend'?'<button disabled>친구</button>':rel==='sent'?'<button disabled>신청 중</button>':rel==='received'?'<button data-action="accept">수락</button><button class="ghost" data-action="decline">거절</button>':'<button data-action="request">친구 추가</button>';return '<div class="friend-search-row" data-user="'+esc(user.id)+'" role="listitem"><span class="friend-search-avatar" aria-hidden="true">'+esc(Array.from(user.nickname)[0]||'')+'</span><b class="friend-search-name">'+esc(user.nickname)+'</b><div class="friend-search-actions">'+actions+'</div></div>'}
+ async function search(){
+  clearTimeout(timer);query=input.value.trim();var request=++version;
+  if(location.protocol==='file:'){message('실제 회원을 찾으려면 개발 서버에서 열어 주세요.\n카카오로 로그인한 뒤 닉네임으로 찾을 수 있어요.',true);return}
+  if(AUTH_SESSION.provider!=='kakao'){message('실제 회원을 찾으려면 카카오로 로그인해 주세요.',true);return}
+  status.textContent='계정을 찾고 있어요.';results.innerHTML='';
+  try{
+   if(!query){var summary=await realSocialRequest('/api/friends');if(!d.isConnected||request!==version)return;REAL_SOCIAL.friends=summary.friends;REAL_SOCIAL.incoming=summary.incoming;REAL_SOCIAL.authenticated=true;REAL_SOCIAL.status='ready';status.textContent='찾고 싶은 친구의 닉네임을 입력해 주세요.';results.innerHTML=(summary.incoming.length?'<h4>받은 친구 신청 '+summary.incoming.length+'</h4><div role="list">'+summary.incoming.map(row).join('')+'</div>':'')+(summary.friends.length?'<h4>내 친구 '+summary.friends.length+'</h4><div role="list">'+summary.friends.map(function(user){return row({id:user.id,nickname:user.nickname,relation:'friend'})}).join('')+'</div>':'');return}
+   var data=await realSocialRequest('/api/users/search?q='+encodeURIComponent(query));if(!d.isConnected||request!==version)return;
+   status.textContent=data.users.length?data.users.length+'명의 독자를 찾았어요.':'해당 닉네임의 가입 계정을 찾지 못했어요.';results.innerHTML='<div role="list">'+data.users.map(row).join('')+'</div>';
+  }catch(e){if(d.isConnected&&request===version)message(e.status===401?e.message:'검색을 마치지 못했어요.\n잠시 후 다시 검색해 주세요.',e.status===401)}
+ }
+ d.querySelector('#friend-search-close').onclick=function(){close(true)};overlay.onclick=function(){close(true)};
+ d.querySelector('form').onsubmit=function(e){e.preventDefault();if(!composing)search()};input.oncompositionstart=function(){composing=true};input.oncompositionend=function(){composing=false;clearTimeout(timer);timer=setTimeout(search,250)};input.oninput=function(){version++;if(!composing){clearTimeout(timer);timer=setTimeout(search,250)}};
+ results.onclick=async function(e){var button=e.target.closest('[data-action]');if(!button)return;var card=button.closest('[data-user]'),id=card.dataset.user,action=button.dataset.action;card.querySelectorAll('button').forEach(function(b){b.disabled=true});status.textContent=action==='request'?'친구 신청을 보내고 있어요.':'친구 신청을 확인하고 있어요.';
+  try{await realSocialRequest(action==='request'?'/api/friends/request':'/api/friends/respond',action==='request'?{id:id}:{id:id,action:action});await loadRealFriends(true);if(!d.isConnected)return;await search();if(!d.isConnected)return;status.textContent=action==='request'?'친구 신청을 보냈어요.':action==='accept'?'친구가 되었어요.':'친구 신청을 거절했어요.';var next=Array.from(results.querySelectorAll('[data-user]')).find(function(r){return r.dataset.user===id});var focus=next&&next.querySelector('button:not(:disabled)');(focus||input).focus();}
+  catch(error){if(d.isConnected){if(error.status===401){message(error.message,true);return}card.querySelectorAll('button').forEach(function(b){b.disabled=false});status.textContent='친구 신청을 처리하지 못했어요.\n잠시 후 다시 시도해 주세요.'}}
+ };
+ d.onkeydown=function(e){if(e.key==='Escape'){e.preventDefault();close(true);return}if(e.key==='Tab'){var controls=Array.from(d.querySelectorAll('button:not(:disabled),input')),first=controls[0],last=controls[controls.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}};search();input.focus();
+}
 function frList(addOnly,back){
  addOnly=addOnly===true;
  var row=function(m,i){return'<button class="frw" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>취향 일치도 '+m[1]+'%</small>'+ic("next")+'</button>'},F=[],R=[];
@@ -5841,6 +5902,7 @@ function requireLogin(reason,after){
  dialog.showModal();dialog.querySelector('#login-required-go').focus();return false;
 }
 function loginComplete(provider){
+ REAL_SOCIAL={status:'idle',authenticated:false,friends:[],incoming:[],pending:null,at:0};
  AUTH_SESSION.signedIn=true;AUTH_SESSION.provider=provider;
  try{if(provider==='email'||provider==='google')sessionStorage.setItem('ddok_preview_auth',provider);else sessionStorage.removeItem('ddok_preview_auth')}catch(e){}
  if(NEW_ACCOUNT)LOGIN_STATE=null;archiveSave();var next=AUTH_NEXT;AUTH_NEXT=null;if(next)next();else home();
