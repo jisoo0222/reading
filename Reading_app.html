@@ -3834,6 +3834,10 @@ body{font-size:var(--font-body)}
 #app .friend-search-row{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #DFE6DF;min-width:0;flex-wrap:wrap}
 #app .friend-search-avatar{width:40px;height:40px;flex:none;border-radius:50%;background:#DAEAE1;color:#174D37;display:grid;place-items:center;font-size:16px;font-weight:650}
 #app .friend-search-name{flex:1;min-width:3em;font-size:16px;overflow-wrap:anywhere}
+#app .friend-search-copy{flex:1;min-width:3em;overflow-wrap:anywhere}
+#app .friend-search-copy .friend-search-name{display:block}
+#app .friend-search-copy small{display:block;margin-top:4px;font-size:14px;line-height:1.5;color:#34483B;word-break:keep-all;overflow-wrap:anywhere}
+#app .friend-search-preview-note{margin:16px 0 0;font-size:14px;line-height:1.6;color:#34483B;white-space:pre-line}
 #app .friend-search-actions{display:flex;gap:8px;flex-wrap:wrap;max-width:100%}
 #app .friend-search-actions button{min-height:48px;padding:8px 12px;border:1px solid #174D37;border-radius:10px;background:#174D37;color:#FFFFFF;font:inherit;font-size:14px;white-space:normal;word-break:keep-all}
 #app .friend-search-actions .ghost{background:#FFFFFF;color:#174D37}
@@ -4274,8 +4278,14 @@ function readPg(srt,flt){flt=flt||0;
  document.getElementById("rp0").onclick=function(){(RPB||profile)()};
  app.querySelectorAll(".ctb button").forEach(function(b){b.onclick=function(){readPg(srt,+b.dataset.f)}});
  app.querySelectorAll(".rso button").forEach(function(b){b.onclick=function(){readPg(+b.dataset.s,flt)}})}
+// 임시 가입 독자·유형 예시예요. 실제 회원 검색 API와 분리해서 화면 흐름을 확인해요.
+var FRIEND_PREVIEW=true,FRIEND_PREVIEW_TYPES={'지민':'SEWI','은우':'FADI','하린':'FEDI','도윤':'SAWI'};
 var REAL_SOCIAL={status:'idle',authenticated:false,friends:[],incoming:[],pending:null,at:0};
-function realSocialMode(){return location.protocol!=='file:'&&AUTH_SESSION.signedIn&&AUTH_SESSION.provider==='kakao'}
+function realSocialMode(){return !FRIEND_PREVIEW&&location.protocol!=='file:'&&AUTH_SESSION.signedIn&&AUTH_SESSION.provider==='kakao'}
+function previewFriendMembers(){
+ var hasAnswers=ans.length===Q.length&&ans.every(function(v){return Number.isInteger(v)&&v>=0&&v<4}),key=RKEY||(hasAnswers?calcType().key:'FADI');
+ return M.map(function(m,i){var type=FRIEND_PREVIEW_TYPES[m[0]],matches=0;for(var j=0;j<4;j++)if(type[j]===key[j])matches++;return {id:'preview-'+i,nickname:m[0],type:type,similarity:matches*25,relation:FR[m[0]]?'friend':FRIEND_REQ[m[0]]?'sent':'none'}}).filter(function(m){return m.nickname!==ME});
+}
 async function realSocialRequest(url,body){
  var response=await fetch(url,{method:body?'POST':'GET',credentials:'same-origin',cache:'no-store',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined});
  var data=await response.json().catch(function(){return {error:'회원 검색 서버에 연결하지 못했어요.'}});
@@ -4292,9 +4302,17 @@ function friendSearch(back,initial){
  var d=document.getElementById('dlg'),overlay=document.getElementById('ov2'),input=d.querySelector('input'),status=d.querySelector('#friend-search-status'),results=d.querySelector('#friend-search-results');d.classList.add('friend-search');d.setAttribute('aria-labelledby','friend-search-title');input.value=query;
  function close(refresh){clearTimeout(timer);version++;x();if(refresh!==false&&typeof back==='function'){back();var sc=app.querySelector('.sc');if(sc)sc.scrollTop=previousScroll;var add=document.getElementById('pfa');if(add)add.focus({preventScroll:true})}else if(trigger&&trigger.isConnected)trigger.focus()}
  function message(text,login){status.textContent=text;results.innerHTML=login?'<button class="btn" id="friend-search-login" style="width:100%;margin-top:8px">'+(location.protocol==='file:'?'개발 서버에서 열기':'카카오로 로그인하기')+'</button>':'';var b=d.querySelector('#friend-search-login');if(b)b.onclick=function(){close(false);if(location.protocol==='file:')location.href='http://localhost:5174/';else kakaoStart()}}
- function row(user){var rel=user.relation||'received',actions=rel==='friend'?'<button disabled>친구</button>':rel==='sent'?'<button disabled>신청 중</button>':rel==='received'?'<button data-action="accept">수락</button><button class="ghost" data-action="decline">거절</button>':'<button data-action="request">친구 추가</button>';return '<div class="friend-search-row" data-user="'+esc(user.id)+'" role="listitem"><span class="friend-search-avatar" aria-hidden="true">'+esc(Array.from(user.nickname)[0]||'')+'</span><b class="friend-search-name">'+esc(user.nickname)+'</b><div class="friend-search-actions">'+actions+'</div></div>'}
+ function row(user){var rel=user.relation||'received',actions=rel==='friend'?'<button disabled>친구</button>':rel==='sent'?'<button disabled>신청 중</button>':rel==='received'?'<button data-action="accept">수락</button><button class="ghost" data-action="decline">거절</button>':'<button data-action="request">친구 추가</button>';return '<div class="friend-search-row" data-user="'+esc(user.id)+'" role="listitem"><span class="friend-search-avatar" aria-hidden="true">'+esc(Array.from(user.nickname)[0]||'')+'</span><div class="friend-search-copy"><b class="friend-search-name">'+esc(user.nickname)+'</b>'+(user.type?'<small>'+esc(user.type)+' · 유형 일치도 '+user.similarity+'%</small>':'')+'</div><div class="friend-search-actions">'+actions+'</div></div>'}
+ function previewSearch(){
+  var members=previewFriendMembers(),q=query.normalize('NFC').toLocaleLowerCase('ko'),found=q?members.filter(function(m){return m.nickname.normalize('NFC').toLocaleLowerCase('ko').includes(q)}):[];
+  var suggested=members.filter(function(m){return m.relation!=='friend'&&!found.some(function(f){return f.id===m.id})}).sort(function(a,b){return b.similarity-a.similarity||a.nickname.localeCompare(b.nickname,'ko')});
+  status.textContent=q?(found.length?found.length+'명의 독자를 찾았어요.':'해당 닉네임의 독자를 찾지 못했어요.'):'찾고 싶은 친구의 닉네임을 입력해 주세요.';
+  var missingType=!RKEY&&!ans.every(function(v){return Number.isInteger(v)&&v>=0&&v<4});
+  results.innerHTML=(q?'<h4>검색 결과</h4><div role="list">'+found.map(row).join('')+'</div>':'')+'<h4>추천 친구</h4>'+(suggested.length?'<div role="list">'+suggested.map(row).join('')+'</div>':'<p class="friend-search-note">지금은 추천할 다른 친구가 없어요.</p>')+'<p class="friend-search-preview-note">가입 계정과 독서 유형은 임시 예시예요.'+(missingType?'\n성향 검사 전에는 FADI 유형을 기준으로 보여드려요.':'')+'</p>';
+ }
  async function search(){
   clearTimeout(timer);query=input.value.trim();var request=++version;
+  if(FRIEND_PREVIEW){previewSearch();return}
   if(location.protocol==='file:'){message('실제 회원을 찾으려면 개발 서버에서 열어 주세요.\n카카오로 로그인한 뒤 닉네임으로 찾을 수 있어요.',true);return}
   if(AUTH_SESSION.provider!=='kakao'){message('실제 회원을 찾으려면 카카오로 로그인해 주세요.',true);return}
   status.textContent='계정을 찾고 있어요.';results.innerHTML='';
@@ -4307,6 +4325,7 @@ function friendSearch(back,initial){
  d.querySelector('#friend-search-close').onclick=function(){close(true)};overlay.onclick=function(){close(true)};
  d.querySelector('form').onsubmit=function(e){e.preventDefault();if(!composing)search()};input.oncompositionstart=function(){composing=true};input.oncompositionend=function(){composing=false;clearTimeout(timer);timer=setTimeout(search,250)};input.oninput=function(){version++;if(!composing){clearTimeout(timer);timer=setTimeout(search,250)}};
  results.onclick=async function(e){var button=e.target.closest('[data-action]');if(!button)return;var card=button.closest('[data-user]'),id=card.dataset.user,action=button.dataset.action;card.querySelectorAll('button').forEach(function(b){b.disabled=true});status.textContent=action==='request'?'친구 신청을 보내고 있어요.':'친구 신청을 확인하고 있어요.';
+  if(FRIEND_PREVIEW){var member=previewFriendMembers().find(function(m){return m.id===id});if(!member)return;FRIEND_REQ[member.nickname]=true;previewSearch();status.textContent='친구 신청을 보냈어요.';input.focus();return}
   try{await realSocialRequest(action==='request'?'/api/friends/request':'/api/friends/respond',action==='request'?{id:id}:{id:id,action:action});await loadRealFriends(true);if(!d.isConnected)return;await search();if(!d.isConnected)return;status.textContent=action==='request'?'친구 신청을 보냈어요.':action==='accept'?'친구가 되었어요.':'친구 신청을 거절했어요.';var next=Array.from(results.querySelectorAll('[data-user]')).find(function(r){return r.dataset.user===id});var focus=next&&next.querySelector('button:not(:disabled)');(focus||input).focus();}
   catch(error){if(d.isConnected){if(error.status===401){message(error.message,true);return}card.querySelectorAll('button').forEach(function(b){b.disabled=false});status.textContent='친구 신청을 처리하지 못했어요.\n잠시 후 다시 시도해 주세요.'}}
  };
