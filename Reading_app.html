@@ -5705,7 +5705,11 @@ function cxHomeCard(state,books,k,q,pages,goal,recs){
   title='나에게 맞는 세 권';copy='마음이 가는 책을 골라 보세요.';
   art='<div class="cx-state-art"><div class="cx-rec-grid">'+recs.map(function(r,i){var b=LB[r.k];return '<button class="cx-rec-book" data-rec-book="'+r.k+'" aria-pressed="'+(i===0)+'" aria-label="'+esc(b[0])+' 고르기"><span class="cx-rec-cover" data-stack-book="'+r.k+'">'+coverSVG(r.k,null,true,107,154.12)+'<span class="cx-rec-check" aria-hidden="true">'+ic('check')+'</span></span><strong>'+esc(b[0])+'</strong><small>'+esc(b[1])+'</small></button>'}).join('')+'</div></div>';
   footer='<p class="sr" id="cx-rec-status" role="status" aria-live="polite"></p><button class="cx-continue" id="cx-read">읽기 시작'+ic('next')+'</button>';
- }else if(state==='assessment'){title='나에게 맞는 세 권';copy='독서 성향을 알아보면 책을 추천해 드려요.';art=cxGuestArt();footer='<button class="cx-continue" id="cx-assessment">독서 성향 알아보기'+ic('next')+'</button>'}
+ }else if(state==='assessment'){
+  title='나에게 맞는 세 권';copy='독서 성향을 알아보면 책을 추천해 드려요.';
+  art='<div class="cx-state-art"><div class="cx-rec-grid" aria-hidden="true">'+['compass','leaf','moon'].map(function(motif,i){return '<span class="cx-rec-book"><span class="cx-rec-cover">'+coverSVG(i,motif,true,107,154.12)+'</span></span>'}).join('')+'</div></div>';
+  footer='<button class="cx-continue" id="cx-assessment">독서 성향 알아보기'+ic('next')+'</button>';
+ }
  else{
   title=LB[k][0];copy=LB[k][1];
   art='<div class="cx-state-art"><button class="cx-read-cover cx-stack" id="cx-detail" data-k="'+k+'" aria-label="읽는 중인 책 '+Math.max(1,books.length)+'권 고르기" aria-haspopup="dialog" aria-expanded="false">'+(books.length?books:[k]).map(function(book,index){return '<span class="cx-stack-layer" data-stack-book="'+book+'" style="--stack-index:'+index+';z-index:'+(3-index)+'" aria-hidden="true">'+coverSVG(book,null,true,107,154.12)+'</span>'}).join('')+'</button><div class="cx-state-progress"><strong>'+q.c+'<small>%</small></strong><p>읽었어요.</p><div class="cx-inline-meter" role="progressbar" aria-label="독서 진도" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div></div></div>';
