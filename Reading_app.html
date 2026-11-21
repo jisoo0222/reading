@@ -3842,6 +3842,9 @@ body{font-size:var(--font-body)}
 #app .friend-search-actions button{min-height:48px;padding:8px 12px;border:1px solid #174D37;border-radius:10px;background:#174D37;color:#FFFFFF;font:inherit;font-size:14px;white-space:normal;word-break:keep-all}
 #app .friend-search-actions .ghost{background:#FFFFFF;color:#174D37}
 #app .friend-search-actions button:disabled{background:#E6EEE8;color:#34483B;border-color:#91A599;opacity:1}
+#app .friend-search-actions button[data-action="request"]{display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:999px;background:transparent;color:#174D37}
+#app .friend-search-actions button[data-action="request"] span{display:inline-flex;align-items:center;justify-content:center;min-height:27px;padding:0 10px;border:1px solid #BACCBF;border-radius:inherit;font-weight:500;line-height:1.5}
+#app .friend-search-actions button[data-action="request"]:disabled span{background:#E6EEE8;color:#34483B;border-color:#91A599}
 /* Service copy preserves the explicit boundary between complete sentences. */
 #app :is(.type-analysis p,.ax p,.account-status,.account-help,.consent-detail p,.hmr small,.ntx b,.tbx p,.mtp),#app #dlg>h3,#app #dlg .sm,#hn,#ptt{white-space:pre-line}
 </style>
@@ -4210,6 +4213,8 @@ function friend(i,pf){
 }
 I.check="M5 12l5 5 9-10";
 var MYT=["#슬로우리더","#논리·분석","#재미형"],MYX=["#소설","#에세이","#새벽독서"],ME="",MEP="",PRIV=0,SHB=[0,1,2,3,4,5,6],SHMAX=24;
+var DEFAULT_PROFILE_NAME="User";
+function profileNickname(){return typeof ME==="string"&&ME.trim()?ME:""}
 function myShelf(){if(NEW_ACCOUNT&&!OPN.length&&!RDB.length)return [];if(BK!==DEF)useBk(DEF);var d=LB[DEF];return[{t:d[0],a:d[1],c:d[2],s:"읽는 중 · "+Math.round(pg*100/TOT)+"%",k:DEF}].concat(RDB.map(function(b,k){return{t:b[0],a:b[1],c:BC[k%3],s:"완독 "+b[3]}}))}
 function bkTile(b){return'<div class="bkm"><div class="c" style="background:'+b.c+'"></div><p>'+b.t+'</p><small>'+b.s+'</small></div>'}
 function shelfHTML(L){var H=[128,112,136,120,104,132,116,124,108,130],rows=[];for(var i=0;i<L.length;i+=5)rows.push(L.slice(i,i+5));while(rows.length<3)rows.push([]);
@@ -4224,6 +4229,7 @@ function avBg(n){return n===ME&&MEP?'background:var(--pri) center/cover no-repea
 function avS(){return MEP?'background:var(--pri) center/cover no-repeat url('+MEP+')':''}
 function profile(){
  app.className="app";
+ var nickname=profileNickname();
  var sp=SHB.map(function(k,j){var b=RDB[k];return'<button class="sp" data-k="'+k+'" aria-label="'+b[0]+' 책 정보 보기" style="height:'+[92,110,100,110,95,108,102,98][j]+'px;background:'+BC[k%3]+';color:'+(k%3===2?"#4F3A4F":"#F6F1EC")+'">'+b[0]+'</button>'}).join("");
  function bookInfo(k){var b=RDB[k],o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label",b[0]+" 책 정보");
   d.innerHTML='<div class="bi"><div class="bc" data-bt="'+esc(b[0])+'" style="background:'+BC[k%3]+'"></div><div><h3 style="margin:0">'+b[0]+'</h3><p style="margin:6px 0 0">'+b[1]+'</p><p style="margin:4px 0 0;font-size:14px">'+b[2]+'쪽 · 완독 '+b[3]+'</p></div></div><button class="btn ghost" id="bx" style="width:100%;margin-top:16px;flex:none">닫기</button>';
@@ -4234,7 +4240,7 @@ function profile(){
  var hm=[["stamp","독서우표"],["chat","커뮤니티"],["basket","문구점"]];
  var hh=hm.map(function(h,i){return'<button class="hc" data-k="'+i+'"><span>'+ic(h[0])+'</span>'+h[1]+'</button>'}).join("");
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="person"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<div class="pfb"><section class="box pbx2 profile-card" aria-label="내 프로필"><div class="profile-identity"><div class="av3" style="'+avS()+'" role="img" aria-label="프로필 사진">'+(MEP?'':ME?esc(ME).charAt(0):ic('person'))+'</div><div class="profile-name"><h2>'+esc(ME||'? ???')+'</h2>'+(ageOk(AGE)?'<small>'+ageTxt(AGE)+'</small>':'')+'</div><button class="profile-edit" id="pme" aria-label="프로필 편집">'+ic("pen")+'</button></div>'
+ app.innerHTML='<div class="pfb"><section class="box pbx2 profile-card" aria-label="내 프로필"><div class="profile-identity"><div class="av3" style="'+avS()+'" role="img" aria-label="프로필 사진">'+(MEP?'':nickname?esc(nickname).charAt(0):ic('person'))+'</div><div class="profile-name"><h2>'+esc(nickname||DEFAULT_PROFILE_NAME)+'</h2>'+(ageOk(AGE)?'<small>'+ageTxt(AGE)+'</small>':'')+'</div><button class="profile-edit" id="pme" aria-label="프로필 편집">'+ic("pen")+'</button></div>'
  +'<div class="profile-daily"><span>'+ic("book")+'<span>하루 독서 목표</span></span><strong>'+(GOAL||10)+'<small>쪽</small></strong></div>'
  +(function(){var k=RKEY||(ans.indexOf(null)<0?calcType().key:""),t=k&&T[k];return'<button class="profile-type" id="rp"><span class="profile-type-copy"><small>AI 독서 성향</small><strong>'+(t?esc(t[0]):'나의 독서 유형 알아보기')+'</strong>'+(t?'<em>'+k+'</em>':'')+'</span><span class="profile-type-arrow" aria-hidden="true">'+ic("next")+'</span></button>'})()
  +'</section>'
@@ -4302,7 +4308,7 @@ function friendSearch(back,initial){
  var d=document.getElementById('dlg'),overlay=document.getElementById('ov2'),input=d.querySelector('input'),status=d.querySelector('#friend-search-status'),results=d.querySelector('#friend-search-results');d.classList.add('friend-search');d.setAttribute('aria-labelledby','friend-search-title');input.value=query;
  function close(refresh){clearTimeout(timer);version++;x();if(refresh!==false&&typeof back==='function'){back();var sc=app.querySelector('.sc');if(sc)sc.scrollTop=previousScroll;var add=document.getElementById('pfa');if(add)add.focus({preventScroll:true})}else if(trigger&&trigger.isConnected)trigger.focus()}
  function message(text,login){status.textContent=text;results.innerHTML=login?'<button class="btn" id="friend-search-login" style="width:100%;margin-top:8px">'+(location.protocol==='file:'?'개발 서버에서 열기':'카카오로 로그인하기')+'</button>':'';var b=d.querySelector('#friend-search-login');if(b)b.onclick=function(){close(false);if(location.protocol==='file:')location.href='http://localhost:5174/';else kakaoStart()}}
- function row(user){var rel=user.relation||'received',actions=rel==='friend'?'<button disabled>친구</button>':rel==='sent'?'<button disabled>신청 중</button>':rel==='received'?'<button data-action="accept">수락</button><button class="ghost" data-action="decline">거절</button>':'<button data-action="request">친구 추가</button>';return '<div class="friend-search-row" data-user="'+esc(user.id)+'" role="listitem"><span class="friend-search-avatar" aria-hidden="true">'+esc(Array.from(user.nickname)[0]||'')+'</span><div class="friend-search-copy"><b class="friend-search-name">'+esc(user.nickname)+'</b>'+(user.type?'<small>'+esc(user.type)+' · 유형 일치도 '+user.similarity+'%</small>':'')+'</div><div class="friend-search-actions">'+actions+'</div></div>'}
+ function row(user){var rel=user.relation||'received',actions=rel==='friend'?'<button disabled>친구</button>':rel==='sent'?'<button disabled>신청 중</button>':rel==='received'?'<button data-action="accept">수락</button><button class="ghost" data-action="decline">거절</button>':'<button data-action="request"><span>친구 추가</span></button>';return '<div class="friend-search-row" data-user="'+esc(user.id)+'" role="listitem"><span class="friend-search-avatar" aria-hidden="true">'+esc(Array.from(user.nickname)[0]||'')+'</span><div class="friend-search-copy"><b class="friend-search-name">'+esc(user.nickname)+'</b>'+(user.type?'<small>'+esc(user.type)+' · 유형 일치도 '+user.similarity+'%</small>':'')+'</div><div class="friend-search-actions">'+actions+'</div></div>'}
  function previewSearch(){
   var members=previewFriendMembers(),q=query.normalize('NFC').toLocaleLowerCase('ko'),found=q?members.filter(function(m){return m.nickname.normalize('NFC').toLocaleLowerCase('ko').includes(q)}):[];
   var suggested=members.filter(function(m){return m.relation!=='friend'&&!found.some(function(f){return f.id===m.id})}).sort(function(a,b){return b.similarity-a.similarity||a.nickname.localeCompare(b.nickname,'ko')});
@@ -4353,18 +4359,18 @@ function profileGoalWheel(wh,sr,change){
  sr.onkeydown=function(e){if(e.key==="ArrowUp"||e.key==="ArrowDown"){e.preventDefault();set(step(+sr.value||10,e.key==="ArrowUp"?1:-1))}};sr.oninput=input;sr.onchange=input;render();
 }
 function meEdit(){
- var v={n:ME,p:MEP,s:SHB.slice(),ag:AGE,go:GOAL,rv:RECV,pr:PRIV},o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-labelledby","dt");
+ var nickname=profileNickname(),v={n:nickname,p:MEP,s:SHB.slice(),ag:AGE,go:GOAL,rv:RECV,pr:PRIV},o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-labelledby","dt");
  function x(){o.remove();d.remove()}
  function main(){
-  d.innerHTML='<h3 id="dt">내 프로필</h3><div class="mep"><div class="av3" id="mav" style="'+(v.p?'background:var(--pri) center/cover no-repeat url('+v.p+')':'')+'">'+(v.p?'':esc(v.n||ME).charAt(0))+'</div><label class="fadd mphl" for="mfi" id="mph" role="button" tabindex="0">프로필 사진 바꾸기</label><input type="file" id="mfi" class="mfi2" accept="image/*,.heic,.heif,.jpg,.jpeg,.png,.gif,.webp"></div>'
-   +'<label class="mel">닉네임<input id="mnm" maxlength="10" autocomplete="off"></label>'
+  d.innerHTML='<h3 id="dt">내 프로필</h3><div class="mep"><div class="av3" id="mav" style="'+(v.p?'background:var(--pri) center/cover no-repeat url('+v.p+')':'')+'">'+(v.p?'':esc(v.n||nickname).charAt(0))+'</div><label class="fadd mphl" for="mfi" id="mph" role="button" tabindex="0">프로필 사진 바꾸기</label><input type="file" id="mfi" class="mfi2" accept="image/*,.heic,.heif,.jpg,.jpeg,.png,.gif,.webp"></div>'
+   +'<label class="mel">닉네임<input id="mnm" maxlength="10" autocomplete="off" placeholder="'+DEFAULT_PROFILE_NAME+'"></label>'
    +'<div class="mel mfe">하루 목표<div class="gwh" id="mgwh"><span class="gwl">하루</span><span class="gwv"><span class="gwc"><i class="gw" data-o="-2"></i><i class="gw" data-o="-1"></i><input type="number" id="mgr" inputmode="numeric" min="1" max="300" value="'+(v.go||10)+'" aria-label="하루 목표 쪽수, 위아래로 끌어서 바꾸기"><i class="gw" data-o="1"></i><i class="gw" data-o="2"></i></span></span><span class="gwl">쪽</span></div><small class="gwt">숫자를 위아래로 밀어서 조절해 주세요.</small></div>'
    +'<div class="mel mrc"><div><b>프로필 공개 설정</b><small id="mpr-state" aria-live="polite">'+(v.pr?'프로필이 비공개예요.':'프로필이 공개예요.')+'</small></div><button type="button" class="mp-lock" id="mpr" aria-pressed="'+!!v.pr+'" aria-label="'+(v.pr?'프로필 공개로 바꾸기':'프로필 비공개로 바꾸기')+'">'+lk(v.pr?0:2)+'</button></div>'
    +'<div class="mel mrc"><div><b>추천 친구로 보이기</b><small>켜 두면 다른 독자에게 나를 추천 친구·추천 메이트로 보여줘요.</small></div><button class="swc" role="switch" id="mrv" aria-checked="'+!!v.rv+'" aria-label="추천 친구로 보이기"><i></i></button></div>'
    +'<p id="mer" style="color:var(--sub);font-size:14px;margin:8px 0 0;min-height:18px"></p><div class="dbt"><button class="btn ghost" id="mcx">취소</button><button class="btn" id="msv">저장</button></div>';
   document.getElementById("mpr").onclick=function(){v.pr=v.pr?0:1;this.setAttribute("aria-pressed",!!v.pr);this.setAttribute("aria-label",v.pr?"프로필 공개로 바꾸기":"프로필 비공개로 바꾸기");this.innerHTML=lk(v.pr?0:2);document.getElementById("mpr-state").textContent=v.pr?"프로필이 비공개예요.":"프로필이 공개예요."};
   document.getElementById("mrv").onclick=function(){v.rv=v.rv?0:1;this.setAttribute("aria-checked",!!v.rv)};
-  var nm=document.getElementById("mnm"),fi=document.getElementById("mfi");nm.value=v.n;nm.oninput=function(){v.n=nm.value;if(!v.p)document.getElementById("mav").textContent=esc(v.n.trim()||ME).charAt(0)};
+  var nm=document.getElementById("mnm"),fi=document.getElementById("mfi");nm.value=v.n;nm.oninput=function(){v.n=nm.value;if(!v.p)document.getElementById("mav").textContent=esc(v.n.trim()||nickname).charAt(0)};
   document.getElementById("mph").onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();fi.click()}};
   profileGoalWheel(document.getElementById("mgwh"),document.getElementById("mgr"),function(n){v.go=n;document.getElementById("msv").disabled=n===null});
   fi.onchange=function(){var f=fi.files&&fi.files[0],er=document.getElementById("mer");if(!f)return;er.textContent="";
@@ -4736,7 +4742,7 @@ window.addEventListener("resize",function(){if(app.classList.contains("hm"))hFit
 
 /* 홈 포인트 카드를 누르면 뜨는 오늘의 미션 목록 */
 function hMis(){var d=psDay();msSync();
- var x=pop('<h3>오늘의 미션</h3><p class="sm" style="font-size:14px;margin:-2px 0 12px">보유 <b>'+PT+'P</b> · 오늘 <b>'+d.act+'P</b> / '+PCFG.DAILY_CAP+'P</p><div class="hml">'+MS.map(function(m,i){return[m,i]}).sort(function(a,b){return a[0][3]-b[0][3]}).map(function(r){var m=r[0],i=r[1],g=d.got[MK[i]];return'<div class="hmr'+(m[3]?" dn":"")+'"><span>'+ic(m[3]?"check":m[1])+'</span><div><b>'+m[0]+'</b><small>'+MSD[i]+'</small></div><em>'+(m[3]?(g!==undefined&&g<m[2]?"완료 +"+g+"P":"완료"):"+"+m[2]+"P")+'</em></div>'}).join("")+'</div><div class="dbt"><button class="btn ghost" id="hmx">닫기</button><button class="btn" id="hms">디지털 문구점</button></div>');
+ var x=pop('<h3>오늘의 미션</h3><p class="sm" style="font-size:14px;margin:-2px 0 12px">보유 <b>'+PT+'P</b> · 오늘 <b>'+d.act+'P</b> / '+PCFG.DAILY_CAP+'P</p><div class="hml">'+MS.map(function(m,i){return[m,i]}).sort(function(a,b){return a[0][3]-b[0][3]}).map(function(r){var m=r[0],i=r[1],g=d.got[MK[i]];return'<div class="hmr'+(m[3]?" dn":"")+'"><span>'+ic(m[3]?"check":m[1])+'</span><div><b>'+m[0]+'</b><small>'+MSD[i].replace(/\n/g,' ')+'</small></div><em>'+(m[3]?(g!==undefined&&g<m[2]?"완료 +"+g+"P":"완료"):"+"+m[2]+"P")+'</em></div>'}).join("")+'</div><div class="dbt"><button class="btn ghost" id="hmx">닫기</button><button class="btn" id="hms">디지털 문구점</button></div>');
  document.getElementById("hmx").onclick=x;document.getElementById("hms").onclick=function(){x();shop()}}
 var PAW='<svg viewBox="0 0 40 40" width="40" height="40"><circle cx="20" cy="20" r="20" fill="#FFE0EA"/><g fill="#FF9FBE"><ellipse cx="20" cy="25" rx="8" ry="6.2"/><ellipse cx="11.6" cy="17.4" rx="3" ry="3.7" transform="rotate(-25 11.6 17.4)"/><ellipse cx="20" cy="13.2" rx="3" ry="3.7"/><ellipse cx="28.4" cy="17.4" rx="3" ry="3.7" transform="rotate(25 28.4 17.4)"/></g></svg>';
 function home(){
@@ -4817,7 +4823,7 @@ function community(){
  app.firstChild.style.paddingBottom="90px";
  /* 한 사람이 쓴 글 모아 보기 */
  if(CU||CMN){var cr=app.querySelector(".cwrow");cr.style.display="none";if(CU)document.getElementById("tyb").style.display="none";var uh=document.createElement("div");uh.className="sh2";uh.innerHTML='<button class="ib" id="cub" aria-label="뒤로">'+ic("back")+'</button><h2>'+(CU?esc(CU)+' 님의 글':'내 글')+'</h2><span class="sp3"></span>';cr.parentNode.insertBefore(uh,cr);document.getElementById("cub").onclick=CU?function(){CU="";community()}:function(){CMN=0;profile()}}
- var fb=document.createElement("button");if(CU||CMN)fb.style.display="none";fb.className="wfab";fb.setAttribute("aria-label","글쓰기");fb.innerHTML=ic("pencil");app.appendChild(fb);requestAnimationFrame(function(){var t=app.querySelector("nav.tab");if(t)fb.style.bottom=(app.getBoundingClientRect().bottom-t.getBoundingClientRect().top+20)+"px"});
+ var fb=document.createElement("button");if(CU||CMN)fb.style.display="none";fb.className="wfab";fb.setAttribute("aria-label","글쓰기");fb.innerHTML=ic("pencil");app.appendChild(fb);requestAnimationFrame(function(){var t=app.querySelector("nav.tab");if(t)fb.style.bottom=(app.getBoundingClientRect().bottom-t.getBoundingClientRect().top+15)+"px"});
  var post=communityPost;
  var CQ="";
  function cqm(p){var q=CQ.trim().toLowerCase();if(!q)return true;var b=p.bt||(p.b!==undefined?LB[p.b]:null);
@@ -5879,19 +5885,34 @@ async function completeSignupHome(){
 </script>
 <script>
 var GENRE_ICON_CACHE=[];
-// 원본 SVG의 선 중심 경계를 기준으로 긴 변 20px, 선 1.5px로 맞춰요.
+// 원본 SVG의 선 중심 경계를 기준으로 맞추고, 선 굵기는 1.5px로 통일해요.
 var GENRE_ICON_BOUNDS=[[1,1,24.6667,21.3333],[4,5.33333,24,21.33337],[2.66667,2.66667,26.66663,26.66663],[1,1,24,24],[2.66667,2.66667,26.66663,26.66663],[1.00001,1.00002,21.68399,21.68268],[1,1.00001,24,23.99999],[2.66667,4.22,24.79863,25.1133]];
 function genreIconSource(i){
  if(GENRE_ICON_CACHE[i])return GENRE_ICON_CACHE[i];
  var source=FIGMA_ASSETS[GENRE_ASSETS[i]],bounds=GENRE_ICON_BOUNDS[i];
  if(!source||!bounds||!source.startsWith('data:image/svg+xml;base64,'))return source;
  var doc=new DOMParser().parseFromString(atob(source.split(',')[1]),'image/svg+xml'),svg=doc.documentElement;
- var scale=20/Math.max(bounds[2],bounds[3]),x=12-(bounds[0]+bounds[2]/2)*scale,y=12-(bounds[1]+bounds[3]/2)*scale;
+ var size=i===2?19.5:i===6?18.5:20;
+ var scale=size/Math.max(bounds[2],bounds[3]),x=12-(bounds[0]+bounds[2]/2)*scale,y=12-(bounds[1]+bounds[3]/2)*scale;
+ // 외곽 경계와 선의 시각적 중심이 다른 그림만 위치를 보정해요.
+ if(i===0){x+=0.2;y-=0.27}
+ if(i===4)y+=0.86;
  svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('width','24');svg.setAttribute('height','24');svg.setAttribute('preserveAspectRatio','xMidYMid meet');
  var group=doc.createElementNS('http://www.w3.org/2000/svg','g');
  while(svg.firstChild)group.appendChild(svg.firstChild);
  group.setAttribute('transform','translate('+x+' '+y+') scale('+scale+')');svg.appendChild(group);
  svg.querySelectorAll('[stroke]').forEach(function(path){path.setAttribute('stroke','#174D37');path.setAttribute('stroke-width',String(1.5/scale));path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-linejoin','round')});
+ if(i===2){
+  // 전구 원본에서 빛살과 받침선 뒤의 마지막 윤곽선만 키워요.
+  var details=group.querySelector('path'),drawing=details.getAttribute('d'),outlineStart=drawing.lastIndexOf('M');
+  var bulb=details.cloneNode(false),bulbScale=1.23;
+  details.setAttribute('d',drawing.slice(0,outlineStart));
+  bulb.removeAttribute('id');
+  bulb.setAttribute('d',drawing.slice(outlineStart));
+  bulb.setAttribute('transform','translate(16 19) scale('+bulbScale+') translate(-16 -19)');
+  bulb.setAttribute('stroke-width',String(1.5/(scale*bulbScale)));
+  details.after(bulb);
+ }
  return GENRE_ICON_CACHE[i]='data:image/svg+xml;base64,'+btoa(new XMLSerializer().serializeToString(svg));
 }
 </script>
