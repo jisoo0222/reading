@@ -3517,33 +3517,44 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.onb .obp:nth-of-type(3)>.obi{width:100%;max-width:none;max-height:none;height:auto;min-height:210px;flex:1;margin:32px 0}
 @container(max-height:760px){#app.onb .obp:nth-of-type(3)>.obi{margin:24px 0;min-height:180px}}
 
-/* 글쓰기는 본문 입력과 상단 등록 버튼에 집중해요. */
-#app.compose-page,#app.compose-page .sc{background:#FBFCFB!important}
-#app.app.compose-page:not(.rd) .sc>.sh2.concept-heading{background:#FBFCFB!important}
+/* 글 설정과 본문을 분리해 같은16px 간격으로 배치해요. */
+#app.compose-page,#app.compose-page .sc{background:#F5F7F4!important}
+#app.app.compose-page:not(.rd) .sc>.sh2.concept-heading{background:#F5F7F4!important}
 #app.compose-page .compose-form{padding:0;background:transparent;border-radius:0}
-#app.compose-page .compose-submit{flex:none;min-width:64px;min-height:48px;border:0;border-radius:12px;background:#174D37;color:#FFFFFF;font:700 14px/1.5 Pretendard,sans-serif;padding:10px 14px}
-#app.compose-page .compose-author{display:flex;align-items:center;gap:12px;margin-bottom:24px}
-#app.compose-page .compose-avatar{width:44px;height:44px;display:grid;place-items:center;background-color:#DAEAE1;color:#174D37;border-radius:50%;font-size:16px;font-weight:700;flex:none}
-#app.compose-page .compose-author>div{display:flex;align-items:flex-start;flex-direction:column;gap:2px;min-width:0}
-#app.compose-page .compose-author b{font-size:14px;line-height:1.5;color:#17241C;font-weight:700}
-#app.compose-page .compose-form select{font:500 14px/1.5 Pretendard,sans-serif;color:#34483B;min-height:48px;border:0;border-radius:10px;background:transparent;padding:8px 24px 8px 0;max-width:100%;cursor:pointer}
-#app.compose-page .compose-author select{margin-top:-8px;margin-bottom:-8px}
-#app.compose-page .compose-category{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:4px 0;border-top:1px solid #D0DAD3;border-bottom:1px solid #D0DAD3;margin-bottom:16px}
-#app.compose-page .compose-category>label{font-size:14px;font-weight:600;color:#34483B}
-#app.compose-page .compose-category select{font-weight:650;color:#174D37}
-#app.compose-page .compose-form #ct{width:100%;height:380px;min-height:280px;padding:16px 0;border:0!important;border-radius:0;background:transparent;color:#17241C;font-size:16px;line-height:1.8;margin-bottom:16px;resize:vertical}
-#app.compose-page .compose-form #ct:focus-visible{outline:0}
-#app.compose-page .compose-form #ct:focus{box-shadow:inset 0 -2px #174D37}
-#app.compose-page .bsr{background:#EFF3EF;padding:16px;border-radius:12px;margin:20px 0 0}
-#app.compose-page .bsr>label,#app.compose-page .compose-poll>label{display:block;font-size:14px;font-weight:650;line-height:1.5;color:#34483B;margin-bottom:8px}
-#app.compose-page .bsr #bq{background:#FFFFFF;font-size:14px;min-height:48px;padding:10px 12px}
-#app.compose-page .compose-poll{padding:16px;background:#EFF3EF;border-radius:12px;margin:0 0 16px}
-#app.compose-page .compose-poll input{margin-bottom:16px;font-size:14px}
+#app.compose-page .compose-submit{flex:none;min-width:64px;min-height:48px;border:0;border-radius:10px;background:#174D37;color:#FFFFFF;font:700 14px/1.5 Pretendard,sans-serif;padding:10px 14px}
+#app.app.compose-page:not(.hm):not(.rd):not(.onb):not(.spl)>.sc{padding-bottom:190px!important;scroll-padding:80px 0 190px}
+#app.compose-page .compose-head-spacer{width:48px;min-width:48px;flex:none}
+#app.compose-page>.compose-footer{position:absolute;left:0;right:0;top:auto;bottom:88px;transform:none;display:block;padding:16px 20px;margin:0;height:auto;background:#F5F7F4;border-top:1px solid #D7E0D9;z-index:25}
+#app.compose-page .compose-footer .compose-submit{width:100%;min-height:52px;font-size:16px;border-radius:10px}
+#app.compose-page .compose-author{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding:0 4px}
+#app.compose-page .compose-avatar{width:44px;height:44px;display:grid;place-items:center;background-color:#DAEAE1;color:#174D37;border-radius:50%;font-size:18px;font-weight:700;flex:none}
+#app.compose-page .compose-author>div{display:flex;flex-direction:column;gap:2px;min-width:0}
+#app.compose-page .compose-author-label{font-size:14px;line-height:1.5;color:#4C6152}
+#app.compose-page .compose-author b{font-size:16px;line-height:1.5;color:#17241C;font-weight:700;word-break:keep-all;overflow-wrap:anywhere}
+#app.compose-page .compose-settings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:16px;margin-bottom:16px;background:#FFFFFF;border:1px solid #D7E0D9;border-radius:15px}
+#app.compose-page .compose-field{min-width:0}
+#app.compose-page .compose-field label{display:block;margin:0 0 8px;font-size:14px;font-weight:650;line-height:1.5;color:#34483B}
+#app.compose-page .compose-form select{width:100%;min-width:0;max-width:100%;min-height:48px;padding:10px 6px;border:1px solid #AFBDB3;border-radius:10px;background:#F5F7F4;color:#17241C;font:600 16px/1.5 Pretendard,sans-serif;cursor:pointer}
+#app.compose-page .compose-editor{padding:20px;margin-bottom:16px;background:#FFFFFF;border:1px solid #D7E0D9;border-radius:15px}
+#app.compose-page .compose-editor .compose-label{margin:0 0 12px;font-size:16px;font-weight:700;color:#17241C}
+#app.compose-page .compose-form #ct{width:100%;height:260px;min-height:220px;padding:8px 0;border:0!important;border-radius:6px;background:#FFFFFF;color:#17241C;font-size:16px;line-height:1.8;margin:0;resize:vertical}
+#app.compose-page .compose-form #ct:focus-visible{outline:2px solid #174D37;outline-offset:4px;box-shadow:none}
+#app.compose-page .bsr{background:#FFFFFF;border:1px solid #D7E0D9;padding:20px;border-radius:15px;margin:0 0 16px}
+#app.compose-page .bsr>label,#app.compose-page .compose-poll>label{display:block;font-size:16px;font-weight:650;line-height:1.5;color:#17241C;margin-bottom:8px}
+#app.compose-page .bsr #bq{background:#F5F7F4;font-size:16px;min-height:48px;padding:10px 12px}
+#app.compose-page .bsi{gap:12px;align-items:center}
+#app.compose-page .bsi .bt{min-width:0;flex:1;white-space:normal;word-break:keep-all;overflow-wrap:anywhere}
+#app.compose-page .bsi .bt b{font-size:16px;line-height:1.5;color:#17241C}
+#app.compose-page .bsi .bt small{font-size:14px;line-height:1.5;color:#34483B}
+#app.compose-page .compose-poll{padding:20px;border:1px solid #D7E0D9;background:#FFFFFF;border-radius:15px;margin:0 0 16px;min-width:0}
+#app.compose-page .compose-poll legend{padding:0 8px;font-size:16px;font-weight:700;color:#17241C}
+#app.compose-page .compose-poll input{margin-bottom:16px;font-size:16px;background:#F5F7F4}
 #app.compose-page .compose-poll #o1{margin-bottom:0}
-#app.compose-page #ce{font-size:14px;line-height:1.65;color:#A02D40;margin:0 0 16px}
+#app.compose-page #ce{font-size:14px;line-height:1.65;color:#A02D40;margin:0 0 16px;word-break:keep-all}
 #app.compose-page #ce:empty{display:none}
 #app.compose-page select:focus-visible{outline:3px solid #174D37;outline-offset:3px}
-@container(max-height:760px){#app.compose-page .compose-form #ct{height:300px;min-height:240px}}
+@container(max-width:340px){#app.compose-page .compose-settings{grid-template-columns:1fr}}
+@container(max-height:760px){#app.compose-page .compose-form #ct{height:220px;min-height:200px}}
 
 #app.onb .obp>.obi{width:100%;max-width:none;max-height:none;height:auto;min-height:210px;flex:1;margin:32px 0}
 #app.onb .obgo[hidden]{display:block!important;visibility:hidden;pointer-events:none}
@@ -5409,11 +5420,11 @@ function community(){
   function sv(){var a=document.getElementById("ct");if(a)tx=a.value;var p0=document.getElementById("o0");if(p0){o[0]=p0.value;o[1]=document.getElementById("o1").value}}
   function seg(l,k,arr,cur){return'<div class="sg"><b>'+l+'</b><div>'+arr.map(function(t,i){return'<button data-k="'+k+'" data-i="'+i+'" aria-pressed="'+(cur===i)+'">'+t+'</button>'}).join("")+'</div></div>'}
   var keys=["자유","같이","코멘트","밸런스"];
-  function r(){d.innerHTML='<div class="compose-author"><span class="compose-avatar" style="'+avS()+'" aria-hidden="true">'+(MEP?'':esc(ME||'나').charAt(0))+'</span><div><b>'+esc(ME||'내 프로필')+'</b><label class="sr" for="compose-visibility">공개 범위</label><select id="compose-visibility">'+["전체공개","친구공개","나만보기"].map(function(label,i){return '<option value="'+i+'"'+(i===vs?' selected':'')+'>'+label+'</option>'}).join('')+'</select></div></div>'
-   +'<div class="compose-category"><label for="compose-type">글 종류</label><select id="compose-type">'+["자유글","같이 읽어요","코멘트 공유","밸런스 게임"].map(function(label,i){return '<option value="'+i+'"'+(keys[i]===ty?' selected':'')+'>'+label+'</option>'}).join('')+'</select></div>'
-   +(ty!=="자유"?'<div class="bsr"><label for="bq">책 고르기</label><input id="bq" type="search" placeholder="책 제목이나 저자를 검색해 보세요" autocomplete="off" value="'+esc(bk?bk[0]:bq)+'"><div id="bl" class="bls"></div></div>':"")
-   +'<label class="sr" for="ct">내용</label><textarea id="ct" rows="10" placeholder="'+(ty==="같이"?"어떤 책을 함께 읽고 싶으신가요.":ty==="코멘트"?"책을 읽으며 어떤 생각이 들었나요.":ty==="밸런스"?"함께 고를 질문을 적어 주세요.":"오늘 나누고 싶은 이야기를 적어 주세요.")+'">'+esc(tx)+'</textarea>'
-   +(ty==="밸런스"?'<div class="compose-poll"><label for="o0">선택지 A</label><input id="o0" placeholder="첫 번째 선택지를 적어 주세요" value="'+esc(o[0])+'"><label for="o1">선택지 B</label><input id="o1" placeholder="두 번째 선택지를 적어 주세요" value="'+esc(o[1])+'"></div>':"")
+  function r(){d.innerHTML='<div class="compose-author"><span class="compose-avatar" style="'+avS()+'" aria-hidden="true">'+(MEP?'':esc(ME||'나').charAt(0))+'</span><div><span class="compose-author-label">작성자</span><b>'+esc(ME||'내 프로필')+'</b></div></div>'
+   +'<div class="compose-settings"><div class="compose-field"><label for="compose-type">글 종류</label><select id="compose-type">'+["자유글","같이 읽어요","코멘트 공유","밸런스 게임"].map(function(label,i){return '<option value="'+i+'"'+(keys[i]===ty?' selected':'')+'>'+label+'</option>'}).join('')+'</select></div><div class="compose-field"><label for="compose-visibility">공개 범위</label><select id="compose-visibility">'+["전체 공개","친구 공개","나만 보기"].map(function(label,i){return '<option value="'+i+'"'+(i===vs?' selected':'')+'>'+label+'</option>'}).join('')+'</select></div></div>'
+   +(ty!=="자유"?'<section class="bsr" aria-labelledby="compose-book-label"><label id="compose-book-label" for="bq">책 고르기</label><input id="bq" type="search" placeholder="책 제목이나 저자로 찾아보세요" autocomplete="off" value="'+esc(bk?bk[0]:bq)+'"><div id="bl" class="bls"></div></section>':"")
+   +'<section class="compose-editor" aria-labelledby="compose-content-label"><label id="compose-content-label" class="compose-label" for="ct">내용</label><textarea id="ct" rows="8" placeholder="'+(ty==="같이"?"어떤 책을 함께 읽고 싶으신가요.":ty==="코멘트"?"책을 읽으며 어떤 생각이 들었나요.":ty==="밸런스"?"함께 고를 질문을 적어 주세요.":"오늘 나누고 싶은 이야기를 적어 주세요.")+'">'+esc(tx)+'</textarea></section>'
+   +(ty==="밸런스"?'<fieldset class="compose-poll"><legend>선택지</legend><label for="o0">선택지 A</label><input id="o0" placeholder="첫 번째 선택지를 적어 주세요" value="'+esc(o[0])+'"><label for="o1">선택지 B</label><input id="o1" placeholder="두 번째 선택지를 적어 주세요" value="'+esc(o[1])+'"></fieldset>':"")
    +'<p id="ce" role="status" aria-live="polite">'+msg+'</p>';
    document.getElementById("y").onclick=function(){sv();var t=tx.trim();
     if(!t){msg="내용을 입력해 주세요.";r();return}
@@ -5429,7 +5440,7 @@ function community(){
     var bl=document.getElementById("bl");
     bl.onpointerdown=function(e){e.preventDefault()};
     bl.onclick=function(e){var b=e.target.closest(".bsi");if(!b)return;sv();bk=CATB[+b.dataset.c];bq="";bf=false;msg="";r()}}}
-  app.className="app community compose-page";app.innerHTML='<header class="sh2"><button class="ib" id="compose-back" aria-label="뒤로">'+ic("back")+'</button><h2>글쓰기</h2><button class="compose-submit" id="y">등록</button></header><div class="compose-form" id="compose-form"></div>';d=document.getElementById("compose-form");document.getElementById("compose-back").onclick=community;r()}
+  app.className="app community compose-page";app.innerHTML='<header class="sh2"><button class="ib" id="compose-back" aria-label="뒤로">'+ic("back")+'</button><h2>글쓰기</h2><span class="compose-head-spacer" aria-hidden="true"></span></header><div class="compose-form" id="compose-form"></div><footer class="fx compose-footer"><button class="compose-submit" id="y" type="button">등록</button></footer>';d=document.getElementById("compose-form");d.addEventListener("focusin",function(e){var target=e.target;if(!target.matches("input,textarea,select"))return;setTimeout(function(){if(target.isConnected)target.scrollIntoView({block:"nearest",behavior:"auto"})},0)});document.getElementById("compose-back").onclick=community;r()}
  function act(){
   var x=pop('<h3>내 활동</h3><div class="sg"><div><button data-a="1" aria-pressed="true">내가 쓴 댓글</button><button data-a="2" aria-pressed="false">좋아요 누른 글</button></div></div><div id="al"></div><button class="btn ghost" id="n" style="width:100%;margin-top:12px;flex:none">닫기</button>');
   function show(k){var L=[];
