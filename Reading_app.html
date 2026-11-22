@@ -3941,7 +3941,7 @@ function testRes(){
  +'<div class="sec type-analysis"><h3>성향 자세히 보기</h3>'+c.rows+'</div>'+recBox(c.key)
  +'<div class="foot rsf"><button class="btn ghost" id="re">다시 하기</button><button class="btn" id="go">홈으로 가기</button></div>';
  window.scrollTo(0,0);app.scrollTop=0;
- document.getElementById("go").onclick=home;cardWire(c.key,c.t,c.names);
+ document.getElementById("go").onclick=async function(){var b=this;b.disabled=true;try{if(SB_SESSION)await sbSaveMember();home()}catch(e){authNotice(e.message)}finally{b.disabled=false}};cardWire(c.key,c.t,c.names);
  document.getElementById("re").onclick=function(){testPg()}}
 function result(){
  app.className="app type-result entry-result";
@@ -4046,12 +4046,75 @@ function quoteSVG(q,bt,au,th,serif){
  +'<text x="540" y="1740" text-anchor="middle" font-size="30" fill="'+T[4]+'" '+S+'>'+e(ME||"")+(ME?" 님이 읽고 있는 책 · ":"")+'AI 독서 습관</text>'
  +'</svg>'}
 /* 내보낸 문장과 포인트 기록은 현재 기기의 로컬 보관함에 저장해요. */
+// 공개용 프로젝트 주소와 키예요. 관리자 키·카카오 비밀 키는 앱에 넣지 않아요.
+var SB_CONFIG={url:'https://zgsodnnlblfnrbcwatvs.supabase.co',key:'sb_publishable_3L-8Yd6v-Mqu2fame76GJQ_63Nji_ov',redirect:'https://jisoo0222.github.io/reading/Reading_app.html'};
+var SB_SESSION=null,SB_REFRESH=null,SB_MEMBER=null,SB_STORAGE='ddok_supabase_session_v1',SB_PKCE='ddok_supabase_pkce_v1';
+function sbCloudPage(){return location.origin==='https://jisoo0222.github.io'&&location.pathname==='/reading/Reading_app.html'}
+function sbRemember(session){
+ if(!session||!session.access_token||!session.refresh_token)throw Error('로그인 정보를 확인하지 못했어요.\n다시 로그인해 주세요.');
+ SB_SESSION={access_token:session.access_token,refresh_token:session.refresh_token,expires_at:session.expires_at||Math.floor(Date.now()/1000)+(session.expires_in||3600),user:session.user||SB_SESSION&&SB_SESSION.user};
+ localStorage.setItem(SB_STORAGE,JSON.stringify(SB_SESSION));return SB_SESSION;
+}
+async function sbRequest(path,options){
+ options=options||{};if(!/^\/(auth|rest)\/v1\//.test(path))throw Error('연결 주소를 확인해 주세요.');
+ if(options.member){if(!SB_SESSION)throw Error('로그인이 필요해요.');if(SB_SESSION.expires_at<=Date.now()/1000+60){
+  if(!SB_REFRESH)SB_REFRESH=sbRequest('/auth/v1/token?grant_type=refresh_token',{body:{refresh_token:SB_SESSION.refresh_token}}).then(sbRemember).finally(function(){SB_REFRESH=null});await SB_REFRESH;
+ }}
+ var controller=new AbortController(),timeout=setTimeout(function(){controller.abort()},15000),headers={apikey:SB_CONFIG.key};
+ if(options.member)headers.Authorization='Bearer '+SB_SESSION.access_token;if(options.body)headers['Content-Type']='application/json';if(options.prefer)headers.Prefer=options.prefer;
+ try{var response=await fetch(SB_CONFIG.url+path,{method:options.method||(options.body?'POST':'GET'),headers:headers,body:options.body?JSON.stringify(options.body):undefined,credentials:'omit',cache:'no-store',referrerPolicy:'no-referrer',signal:controller.signal});
+  var data=response.status===204?null:await response.json().catch(function(){return null});if(!response.ok){var error=new Error(response.status===401?'로그인 시간이 지났어요.\n다시 로그인해 주세요.':response.status===403?'회원 정보 접근 권한을 확인해 주세요.':response.status===429?'요청이 잠시 몰렸어요.\n조금 뒤 다시 시도해 주세요.':'정보를 불러오거나 저장하지 못했어요.\n잠시 후 다시 시도해 주세요.');error.status=response.status;throw error}return data;
+ }catch(error){if(error.name==='AbortError'||error instanceof TypeError)throw Error('서버에 연결하지 못했어요.\n인터넷 연결을 확인한 뒤 다시 시도해 주세요.');throw error}finally{clearTimeout(timeout)}
+}
+function sbAnswersValid(a){return Array.isArray(a)&&a.length===4&&a.every(function(v){return v===null||Number.isInteger(v)&&v>=0&&v<=3})}
+async function sbSaveMember(overrides){
+ if(!SB_SESSION||!SB_SESSION.user)throw Error('카카오로 로그인한 뒤 저장해 주세요.');
+ var values=Object.assign({nickname:ME,avatar_url:MEP||null,age:AGE,daily_goal:GOAL,reading_answers:ans.slice(),discoverable:!!RECV&&!PRIV},overrides||{}),id=SB_SESSION.user.id;
+ values.nickname=String(values.nickname||'').trim();if(!values.nickname||[...values.nickname].length>10||!Number.isInteger(values.daily_goal)||values.daily_goal<1||values.daily_goal>300||!sbAnswersValid(values.reading_answers))throw Error('닉네임과 독서 목표를 확인해 주세요.');
+ var type=values.reading_answers.every(Number.isInteger)?calcType().key:null;
+ var publicProfile={id:id,nickname:values.nickname,avatar_url:values.avatar_url,reading_type:type,discoverable:values.discoverable};
+ var settings={id:id,age:ageOk(values.age)?values.age:null,daily_goal:values.daily_goal,reading_answers:values.reading_answers,onboarded:true};
+ await sbRequest('/rest/v1/profiles?on_conflict=id',{member:true,body:publicProfile,prefer:'resolution=merge-duplicates,return=minimal'});
+ await sbRequest('/rest/v1/member_settings?on_conflict=id',{member:true,body:settings,prefer:'resolution=merge-duplicates,return=minimal'});
+ SB_MEMBER={profile:publicProfile,settings:settings};return SB_MEMBER;
+}
+async function sbAdoptMember(){
+ var user=await sbRequest('/auth/v1/user',{member:true});if(!user||!user.id)throw Error('회원 정보를 확인하지 못했어요.');SB_SESSION.user=user;sbRemember(SB_SESSION);
+ var rows=await Promise.all([sbRequest('/rest/v1/profiles?id=eq.'+encodeURIComponent(user.id)+'&select=id,nickname,avatar_url,reading_type,discoverable',{member:true}),sbRequest('/rest/v1/member_settings?id=eq.'+encodeURIComponent(user.id)+'&select=id,age,daily_goal,reading_answers,onboarded',{member:true})]);
+ var p=rows[0][0]||{},s=rows[1][0]||{};SB_MEMBER={profile:p,settings:s};AUTH_SESSION={signedIn:false,provider:null};NEW_ACCOUNT=true;LOGIN_STATE=null;beginSignup();
+ var meta=user.user_metadata||{};ME=[...(p.nickname||meta.nickname||meta.full_name||meta.name||'')].slice(0,10).join('');MEP=p.avatar_url||'';AGE=ageOk(s.age)?s.age:null;GOAL=Number.isInteger(s.daily_goal)?s.daily_goal:10;ans=sbAnswersValid(s.reading_answers)?s.reading_answers.slice():[null,null,null,null];RKEY=p.reading_type||'';RECV=p.discoverable===false?0:1;PRIV=p.discoverable===false?1:0;
+ try{sessionStorage.removeItem('ddok_preview_auth')}catch(e){}
+ if(s.onboarded&&p.nickname){NEW_ACCOUNT=false;KAKAO_PENDING=false;archiveLoad();loginComplete('supabase')}
+ else{KAKAO_PENDING=true;info()}
+}
+function sbCleanCallback(){var url=new URL(location.href);['code','error','error_code','error_description','ddok_login'].forEach(function(k){url.searchParams.delete(k)});history.replaceState(null,'',url.pathname+url.search)}
+async function sbKakaoStart(){
+ if(!sbCloudPage()){location.assign(SB_CONFIG.redirect+'?ddok_login=kakao');return}
+ var settings=await sbRequest('/auth/v1/settings');if(!settings.external||!settings.external.kakao)throw Error('카카오 로그인 설정이 아직 꺼져 있어요.\nSupabase에서 카카오 연결을 확인해 주세요.');
+ var bytes=new Uint8Array(32);crypto.getRandomValues(bytes);var verifier=Array.from(bytes,function(b){return b.toString(16).padStart(2,'0')}).join(''),hash=new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(verifier)));
+ var challenge=btoa(String.fromCharCode.apply(null,hash)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+ sessionStorage.setItem(SB_PKCE,JSON.stringify({verifier:verifier,at:Date.now()}));
+ var target=new URL(SB_CONFIG.url+'/auth/v1/authorize');target.search=new URLSearchParams({provider:'kakao',redirect_to:SB_CONFIG.redirect,code_challenge:challenge,code_challenge_method:'s256'}).toString();location.assign(target.href);
+}
+async function sbBootstrap(){
+ if(!sbCloudPage()){splash();return}AUTH_SESSION={signedIn:false,provider:null};try{sessionStorage.removeItem('ddok_preview_auth')}catch(e){}
+ var url=new URL(location.href),code=url.searchParams.get('code'),failure=url.searchParams.get('error'),start=url.searchParams.get('ddok_login');
+ try{
+  if(failure){sessionStorage.removeItem(SB_PKCE);sbCleanCallback();throw Error('카카오 연결을 마치지 못했어요.\n다시 로그인해 주세요.')}
+  if(code){var pending=JSON.parse(sessionStorage.getItem(SB_PKCE)||'null');sbCleanCallback();if(!pending||!pending.verifier||Date.now()-pending.at>600000)throw Error('로그인 확인 시간이 지났어요.\n같은 브라우저에서 다시 로그인해 주세요.');
+   sessionStorage.removeItem(SB_PKCE);sbRemember(await sbRequest('/auth/v1/token?grant_type=pkce',{body:{auth_code:code,code_verifier:pending.verifier}}));await sbAdoptMember();return;
+  }
+  if(start==='kakao'){sbCleanCallback();loginPage();await kakaoStart();return}
+  var stored=JSON.parse(localStorage.getItem(SB_STORAGE)||'null');if(stored&&stored.access_token&&stored.refresh_token){SB_SESSION=stored;await sbAdoptMember();return}splash();
+ }catch(error){if(error.status===401||error.status===400){SB_SESSION=null;localStorage.removeItem(SB_STORAGE)}loginPage();authNotice(error.message||'연결을 확인하고 다시 로그인해 주세요.')}
+}
+function archiveStorageKey(){return SB_SESSION&&SB_SESSION.user?'ddok_archive_v1:'+SB_SESSION.user.id:'ddok_archive_v1'}
 var AUTH_SESSION={signedIn:false,provider:null},AUTH_NEXT=null;
-// 이메일·Google은 기존 미리보기 로그인 상태만 이 탭에서 유지해요. 실제 계정 인증은 카카오 서버 세션으로 확인해요.
-try{var previewAuth=sessionStorage.getItem('ddok_preview_auth');if(previewAuth==='email'||previewAuth==='google'){AUTH_SESSION.signedIn=true;AUTH_SESSION.provider=previewAuth}}catch(e){}
+// 이메일·Google 미리보기는 로컬에서만 유지하고 배포 화면에서는 Supabase 세션을 확인해요.
+try{var previewAuth=sessionStorage.getItem('ddok_preview_auth');if(!sbCloudPage()&&(previewAuth==='email'||previewAuth==='google')){AUTH_SESSION.signedIn=true;AUTH_SESSION.provider=previewAuth}}catch(e){}
 var ARCH={quotes:[],points:[]};
-function archiveSave(){if(!AUTH_SESSION.signedIn)return;try{localStorage.setItem('ddok_archive_v1',JSON.stringify({version:1,quotes:ARCH.quotes,points:ARCH.points,balance:PT,day:PS,owned:OWN,colors:CS}))}catch(e){ptToast('이 기기에 기록을 저장하지 못했어요.\n저장 공간을 확인해 주세요.')}}
-function archiveLoad(){try{var a=JSON.parse(localStorage.getItem('ddok_archive_v1')||'null');if(!a||a.version!==1)return;
+function archiveSave(){if(!AUTH_SESSION.signedIn)return;try{localStorage.setItem(archiveStorageKey(),JSON.stringify({version:1,quotes:ARCH.quotes,points:ARCH.points,balance:PT,day:PS,owned:OWN,colors:CS}))}catch(e){ptToast('이 기기에 기록을 저장하지 못했어요.\n저장 공간을 확인해 주세요.')}}
+function archiveLoad(){try{var a=JSON.parse(localStorage.getItem(archiveStorageKey())||'null');if(!a||a.version!==1)return;
  ARCH.quotes=Array.isArray(a.quotes)?a.quotes.filter(function(q){return q&&typeof q.q==='string'&&typeof q.bt==='string'&&typeof q.au==='string'&&typeof q.at==='string'&&Number.isInteger(q.th)&&q.th>=0&&q.th<QTH.length&&(q.sf===0||q.sf===1)}):[];
  ARCH.points=Array.isArray(a.points)?a.points.filter(function(p){return p&&typeof p.label==='string'&&typeof p.day==='string'&&typeof p.at==='string'&&Number.isFinite(p.amount)&&p.amount!==0}):[];
  if(Number.isFinite(a.balance)&&a.balance>=0)PT=a.balance;
@@ -4381,7 +4444,7 @@ function meEdit(){
    im.onerror=function(){(window.URL||window.webkitURL).revokeObjectURL(url);er.textContent="이 사진 형식은 열 수 없어요. JPG나 PNG 사진으로 다시 골라 주세요."};
    im.src=url;fi.value=""};
   document.getElementById("mcx").onclick=x;
-  document.getElementById("msv").onclick=function(){var n=v.n.trim();if(!n){document.getElementById("mer").textContent="닉네임을 입력해 주세요.";return}var changed=PRIV!==v.pr;ME=n;MEP=v.p;AGE=v.ag;GOAL=v.go;RECV=v.rv;PRIV=v.pr;x();profile();if(changed)pTip(PRIV?"프로필을 비공개로 바꿨어요.":"프로필을 공개로 바꿨어요.")}}
+  document.getElementById("msv").onclick=async function(){var n=v.n.trim();if(!n){document.getElementById("mer").textContent="닉네임을 입력해 주세요.";return}var button=document.getElementById("msv");button.disabled=true;button.setAttribute('aria-busy','true');try{if(SB_SESSION)await sbSaveMember({nickname:n,avatar_url:v.p||null,age:v.ag,daily_goal:v.go,discoverable:!!v.rv&&!v.pr})}catch(e){document.getElementById("mer").style.whiteSpace='pre-line';document.getElementById("mer").textContent=e.message;button.disabled=false;button.removeAttribute('aria-busy');return}var changed=PRIV!==v.pr;ME=n;MEP=v.p;AGE=v.ag;GOAL=v.go;RECV=v.rv;PRIV=v.pr;x();profile();if(changed)pTip(PRIV?"프로필을 비공개로 바꿨어요.":"프로필을 공개로 바꿨어요.")}}
  function pick(){
   d.innerHTML='<h3 id="dt">책장에 보여줄 책</h3><p class="sm" style="font-size:14px">홈 책장에 꽂을 책을 골라 주세요.<br>최대 '+SHMAX+'권까지 고를 수 있어요.</p><div class="mpl">'+RDB.map(function(b,k){var on=v.s.indexOf(k)>-1;return'<button class="mpi" data-k="'+k+'" aria-pressed="'+on+'"><i data-bt="'+esc(b[0])+'" style="background:'+BC[k%3]+'"></i><span><b>'+b[0]+'</b><small>'+b[1]+'</small></span><em aria-hidden="true">'+(on?ic("check"):"")+'</em></button>'}).join("")+'</div><p id="mer" style="color:var(--sub);font-size:14px;margin:8px 0 0;min-height:18px"></p><button class="btn" id="mdn" style="width:100%;margin-top:6px">완료</button>';
   d.querySelector(".mpl").onclick=function(e){var b=e.target.closest(".mpi");if(!b)return;var k=+b.dataset.k,i=v.s.indexOf(k);
@@ -5288,7 +5351,7 @@ useBk(DEF);
 function splash(next){app.className="app spl";
  app.innerHTML='<div class="spw" role="img" aria-label="똑독">'+animatedEntryLogo()+'<h1>똑독</h1><p class="dke">DDOKDOK</p></div>';
  var t=setTimeout(go,typeof next==='function'?(matchMedia('(prefers-reduced-motion: reduce)').matches?0:1250):2200);function go(){clearTimeout(t);if(!app.classList.contains("spl"))return;app.onclick=null;(typeof next==='function'?next:onb)()}app.onclick=go}
-/* 계정 인증은 서버 연동 전이에요. 입력 정보는 저장하거나 전송하지 않아요. */
+/* 카카오는 Supabase 인증으로 연결하고 이메일·Google은 미리보기만 제공해요. */
 function snsConsent(provider,onContinue){
  var name=provider==="kakao"?"카카오":"구글";
  var dialog=document.createElement("dialog"),trigger=document.activeElement;
@@ -5299,7 +5362,7 @@ function snsConsent(provider,onContinue){
  +'<div class="consent-list"><section class="consent-item"><div class="consent-row"><label><input id="sns-terms" type="checkbox"><span><em>[필수]</em>이용약관 동의</span></label><button class="consent-more" data-panel="sns-terms-detail" aria-label="이용약관 내용 보기" aria-expanded="false" aria-controls="sns-terms-detail">'+ic("next")+'</button></div>'
  +'<div class="consent-detail" id="sns-terms-detail" hidden><p><b>서비스 이용</b>똑독에서 독서 목표를 정하고, 책을 읽고, 기록과 감상을 나눌 수 있어요.</p><p><b>함께 지킬 약속</b>다른 사람의 개인정보나 저작물을 허락 없이 게시하지 않고, 서로의 생각과 취향을 존중해 주세요.</p><p><b>동의하지 않는 경우</b>동의하지 않고 회원가입 화면으로 돌아갈 수 있어요.</p></div></section>'
  +'<section class="consent-item"><div class="consent-row"><label><input id="sns-privacy" type="checkbox"><span><em>[필수]</em>개인정보 안내 확인</span></label><button class="consent-more" data-panel="sns-privacy-detail" aria-label="개인정보 안내 내용 보기" aria-expanded="false" aria-controls="sns-privacy-detail">'+ic("next")+'</button></div>'
- +'<div class="consent-detail" id="sns-privacy-detail" hidden><p><b>현재 이용 화면</b>'+(provider==='kakao'?'카카오에서 동의한 프로필 정보를 가져와요.\n가입을 마치면 카카오 계정 식별 정보, 닉네임, 독서 목표와 성향 답변을 이 PC의 개발 서버에 저장해요.\n다음 로그인 때 가입 여부를 확인하는 데 사용해요.':'구글 계정 연결은 아직 지원하지 않아요.')+'</p><p><b>계정 연결 시</b>실제 SNS 연결은 '+name+'의 공식 인증 화면에서 진행해요.<br>제공할 정보와 요청 권한을 확인하고 직접 허용할 수 있어요.<br>SNS 비밀번호는 똑독에 입력하지 않아요.</p><p><b>정보 제공에 동의하기 전</b>연결 시 표시되는 수집 항목, 이용 목적, 보유 기간과 거부 시 영향을 확인해 주세요.<br>동의하지 않으면 계정 연결을 취소할 수 있어요.</p></div></section></div>'
+ +'<div class="consent-detail" id="sns-privacy-detail" hidden><p><b>현재 이용 화면</b>'+(provider==='kakao'?'카카오에서 동의한 프로필 정보를 가져와요.\n가입을 마치면 계정 식별 정보, 닉네임, 프로필 사진, 나이, 독서 목표와 성향 답변을 똑독의 회원 저장소(Supabase)에 저장해요.\n다음 로그인 때 가입 여부를 확인하는 데 사용해요.':'구글 계정 연결은 아직 지원하지 않아요.')+'</p><p><b>계정 연결 시</b>실제 SNS 연결은 '+name+'의 공식 인증 화면에서 진행해요.<br>제공할 정보와 요청 권한을 확인하고 직접 허용할 수 있어요.<br>SNS 비밀번호는 똑독에 입력하지 않아요.</p><p><b>정보 제공에 동의하기 전</b>연결 시 표시되는 수집 항목, 이용 목적, 보유 기간과 거부 시 영향을 확인해 주세요.<br>동의하지 않으면 계정 연결을 취소할 수 있어요.</p></div></section></div>'
  +'<p class="consent-note">각 항목의 내용을 확인한 뒤 동의해 주세요.<br>필수 항목을 모두 선택하면 계속할 수 있어요.</p>'
  +'<div class="foot consent-footer"><button class="btn" id="sns-continue" disabled>동의하고 계속하기</button></div>';
  app.appendChild(dialog);dialog.showModal();
@@ -5338,10 +5401,10 @@ function signupAccount(){
  code.oninput=function(){code.value=code.value.replace(/[^0-9]/g,'');update()};
  confirm.onclick=function(){if(!expected||issuedEmail!==email.value.trim()||code.value!==expected){status.textContent='인증번호가 맞지 않아요.\n화면에 표시된 번호를 다시 확인해 주세요.';status.classList.add('account-error');return}verified=true;status.textContent='미리보기 이메일 확인을 마쳤어요.';status.classList.remove('account-error');confirm.textContent='확인 완료';pw.disabled=again.disabled=false;document.getElementById('password-help').textContent='같은 비밀번호를 두 번 입력해 주세요.';update();pw.focus()};
  pw.oninput=again.oninput=update;
- document.getElementById('account-form').onsubmit=function(e){e.preventDefault();update();if(!valid())return;pw.value=again.value='';expected='';beginSignup()};
+ document.getElementById('account-form').onsubmit=function(e){e.preventDefault();update();if(!valid())return;if(sbCloudPage()){sbPreviewNotice();return}pw.value=again.value='';expected='';beginSignup()};
  document.getElementById('account-back').onclick=loginPage;
  document.getElementById('signup-kakao').onclick=function(){snsConsent('kakao',kakaoStart)};
- document.getElementById('signup-google').onclick=function(){snsConsent('google',beginSignup)};
+ document.getElementById('signup-google').onclick=function(){if(sbCloudPage()){sbPreviewNotice();return}snsConsent('google',beginSignup)};
  update();
 }
 function beginSignup(){
@@ -5374,11 +5437,11 @@ function loginPage(){
  function valid(){return email.validity.valid&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)&&password.value.trim().length>0}
  function update(){submit.disabled=!valid()}
  form.addEventListener("input",update);form.addEventListener("change",update);form.addEventListener("focusin",update);update();
- function enterHome(e){if(e)e.preventDefault();update();if(submit.disabled)return;loginComplete('email')}
+ function enterHome(e){if(e)e.preventDefault();update();if(submit.disabled)return;if(sbCloudPage()){sbPreviewNotice();return}loginComplete('email')}
  submit.onclick=enterHome;form.onsubmit=enterHome;
  password.onkeydown=email.onkeydown=function(e){if(e.key==="Enter")enterHome(e)};
  document.getElementById("auth-kakao").onclick=kakaoStart;
- document.getElementById("auth-google").onclick=function(){loginComplete('google')};
+ document.getElementById("auth-google").onclick=function(){if(sbCloudPage()){sbPreviewNotice();return}loginComplete('google')};
  document.getElementById('auth-browse').onclick=function(){AUTH_NEXT=null;home()};
 }
 
@@ -5862,26 +5925,19 @@ home=function(){
 var KAKAO_PENDING=false,KAKAO_COMPLETING=false;
 async function kakaoStart(){
  if(window.KAKAO_STARTING)return;window.KAKAO_STARTING=true;
- try{const r=await fetch('/auth/kakao/session',{credentials:'same-origin',cache:'no-store'});if(!r.ok||!(r.headers.get('content-type')||'').includes('application/json'))throw Error();location.assign('/auth/kakao/start')}
- catch(e){authNotice('카카오 로그인 연결을 준비하고 있어요.')}
+ try{await sbKakaoStart()}
+ catch(e){authNotice(e.message||'카카오 연결을 확인해 주세요.')}
  finally{window.KAKAO_STARTING=false}
 }
-function authNotice(message){var close=pop('<h3>'+esc(message)+'</h3><button class="btn" id="auth-notice-close" style="width:100%;margin-top:16px">확인</button>');document.getElementById('auth-notice-close').onclick=close}
+function authNotice(message){var close=pop('<h3 style="white-space:pre-line">'+esc(message)+'</h3><button class="btn" id="auth-notice-close" style="width:100%;margin-top:16px">확인</button>');document.getElementById('auth-notice-close').onclick=close}
+function sbPreviewNotice(){authNotice('이메일과 구글 연결은 아직 준비 중이에요.\n카카오로 로그인해 주세요.')}
 async function completeSignupHome(){
- if(!KAKAO_PENDING){loginComplete('email');return}if(KAKAO_COMPLETING)return;KAKAO_COMPLETING=true;
- try{const r=await fetch('/auth/kakao/complete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nickname:ME,goal:GOAL,answers:ans}),credentials:'same-origin'});const d=await r.json();if(!r.ok)throw Error(d.error||'가입 정보를 저장하지 못했어요.\n다시 시도해 주세요.');KAKAO_PENDING=false;NEW_ACCOUNT=false;LOGIN_STATE=null;loginComplete('kakao')}
+ if(KAKAO_COMPLETING)return;if(!SB_SESSION){if(sbCloudPage()){sbPreviewNotice();return}loginComplete('email');return}KAKAO_COMPLETING=true;
+ var button=document.getElementById('go');if(button){button.disabled=true;button.setAttribute('aria-busy','true')}
+ try{await sbSaveMember();KAKAO_PENDING=false;NEW_ACCOUNT=false;LOGIN_STATE=null;loginComplete('supabase')}
  catch(e){authNotice(e.message||'연결을 확인하고 다시 시도해 주세요.')}
- finally{KAKAO_COMPLETING=false}
+ finally{KAKAO_COMPLETING=false;if(button){button.disabled=false;button.removeAttribute('aria-busy')}}
 }
-(async function(){
- const u=new URL(location.href),status=u.searchParams.get('kakao');if(!status)return;window.DDOK_KAKAO_CALLBACK=true;
- u.searchParams.delete('kakao');history.replaceState(null,'',u.pathname+u.search+u.hash);
- if(status!=='success'){loginPage();authNotice(status==='cancelled'?'카카오 연결을 취소했어요.':status==='expired'?'연결 시간이 지났어요.\n다시 로그인해 주세요.':'카카오 연결을 마치지 못했어요.\n연결 설정을 확인해 주세요.');return}
- try{const r=await fetch('/auth/kakao/session',{credentials:'same-origin',cache:'no-store'});if(!r.ok)throw Error();const d=await r.json();if(!d.authenticated)throw Error();
- if(d.onboarded){NEW_ACCOUNT=false;LOGIN_STATE=null;ME=d.profile.nickname;GOAL=d.profile.goal;ans=d.profile.answers;loginComplete('kakao')}
- else{KAKAO_PENDING=true;beginSignup();ME=(d.profile.nickname||'').slice(0,10);const input=document.getElementById('inm');if(input){input.value=ME;input.dispatchEvent(new Event('input'))}}
- }catch(e){loginPage();authNotice('연결을 확인하고 다시 로그인해 주세요.')}
-})();
 </script>
 <script>
 var GENRE_ICON_CACHE=[];
@@ -5965,10 +6021,8 @@ function loginComplete(provider){
   else if(b.id==='cx-detail')reason='읽는 책을 고르려면';
   if(reason){e.preventDefault();e.stopImmediatePropagation();requireLogin(reason)}
  },true);
- // 카카오는 브라우저에 저장한 표시 대신 현재 개발 서버의 세션을 확인해요.
- if(!window.DDOK_KAKAO_CALLBACK&&location.protocol!=='file:')fetch('/auth/kakao/session',{credentials:'same-origin',cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(d){if(d&&d.authenticated&&d.onboarded){AUTH_SESSION.signedIn=true;AUTH_SESSION.provider='kakao';ME=d.profile.nickname;GOAL=d.profile.goal;ans=d.profile.answers;try{sessionStorage.removeItem('ddok_preview_auth')}catch(e){}}}).catch(function(){});
 })();
-if(!window.DDOK_KAKAO_CALLBACK)splash();
+sbBootstrap();
 </script>
 </body>
 </html>
