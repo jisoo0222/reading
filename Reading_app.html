@@ -4063,7 +4063,7 @@ async function sbRequest(path,options){
  var controller=new AbortController(),timeout=setTimeout(function(){controller.abort()},15000),headers={apikey:SB_CONFIG.key};
  if(options.member)headers.Authorization='Bearer '+SB_SESSION.access_token;if(options.body)headers['Content-Type']='application/json';if(options.prefer)headers.Prefer=options.prefer;
  try{var response=await fetch(SB_CONFIG.url+path,{method:options.method||(options.body?'POST':'GET'),headers:headers,body:options.body?JSON.stringify(options.body):undefined,credentials:'omit',cache:'no-store',referrerPolicy:'no-referrer',signal:controller.signal});
-  var data=response.status===204?null:await response.json().catch(function(){return null});if(!response.ok){var error=new Error(response.status===401?'로그인 시간이 지났어요.\n다시 로그인해 주세요.':response.status===403?'회원 정보 접근 권한을 확인해 주세요.':response.status===429?'요청이 잠시 몰렸어요.\n조금 뒤 다시 시도해 주세요.':'정보를 불러오거나 저장하지 못했어요.\n잠시 후 다시 시도해 주세요.');error.status=response.status;throw error}return data;
+  var data=response.status===204?null:await response.json().catch(function(){return null});if(!response.ok){var error=new Error(response.status===401?'로그인 시간이 지났어요.\n다시 로그인해 주세요.':response.status===403?'회원 정보 접근 권한을 확인해 주세요.':response.status===429?'요청이 잠시 몰렸어요.\n조금 뒤 다시 시도해 주세요.':'정보를 불러오거나 저장하지 못했어요.\n잠시 후 다시 시도해 주세요.');error.status=response.status;error.code=data&&data.code;error.detail=data&&data.message;throw error}return data;
  }catch(error){if(error.name==='AbortError'||error instanceof TypeError)throw Error('서버에 연결하지 못했어요.\n인터넷 연결을 확인한 뒤 다시 시도해 주세요.');throw error}finally{clearTimeout(timeout)}
 }
 function sbAnswersValid(a){return Array.isArray(a)&&a.length===4&&a.every(function(v){return v===null||Number.isInteger(v)&&v>=0&&v<=3})}
@@ -4084,7 +4084,7 @@ async function sbAdoptMember(){
  var p=rows[0][0]||{},s=rows[1][0]||{};SB_MEMBER={profile:p,settings:s};AUTH_SESSION={signedIn:false,provider:null};NEW_ACCOUNT=true;LOGIN_STATE=null;beginSignup();
  var meta=user.user_metadata||{};ME=[...(p.nickname||meta.nickname||meta.full_name||meta.name||'')].slice(0,10).join('');MEP=p.avatar_url||'';AGE=ageOk(s.age)?s.age:null;GOAL=Number.isInteger(s.daily_goal)?s.daily_goal:10;ans=sbAnswersValid(s.reading_answers)?s.reading_answers.slice():[null,null,null,null];RKEY=p.reading_type||'';RECV=p.discoverable===false?0:1;PRIV=p.discoverable===false?1:0;
  try{sessionStorage.removeItem('ddok_preview_auth')}catch(e){}
- if(s.onboarded&&p.nickname){NEW_ACCOUNT=false;KAKAO_PENDING=false;archiveLoad();loginComplete('supabase')}
+ if(s.onboarded&&p.nickname){NEW_ACCOUNT=false;KAKAO_PENDING=false;archiveLoad();await sbSyncStart();loginComplete('supabase')}
  else{KAKAO_PENDING=true;info()}
 }
 function sbCleanCallback(){var url=new URL(location.href);['code','error','error_code','error_description','ddok_login'].forEach(function(k){url.searchParams.delete(k)});history.replaceState(null,'',url.pathname+url.search)}
@@ -4108,12 +4108,137 @@ async function sbBootstrap(){
   var stored=JSON.parse(localStorage.getItem(SB_STORAGE)||'null');if(stored&&stored.access_token&&stored.refresh_token){SB_SESSION=stored;await sbAdoptMember();return}splash();
  }catch(error){if(error.status===401||error.status===400){SB_SESSION=null;localStorage.removeItem(SB_STORAGE)}loginPage();authNotice(error.message||'연결을 확인하고 다시 로그인해 주세요.')}
 }
+// 개인 독서 기록은 revision을 비교해 저장해 다른 기기의 변경을 덮어쓰지 않아요.
+var SB_SYNC={uid:null,cache:null,ready:false,capture:false,busy:null,timer:null,nextTry:0,blocked:false,remote:null,notice:false,conflictShown:false};
+var SB_WALLET_CHAIN=Promise.resolve();
+function sbWalletRequest(path,body){
+ var uid=SB_SESSION.user.id,result=SB_WALLET_CHAIN.catch(function(){}).then(async function(){var wallet=await sbRequest(path,{member:true,body:body});if(SB_SESSION&&SB_SESSION.user.id===uid)sbWalletApply(wallet);return wallet});SB_WALLET_CHAIN=result;return result;
+}
+function sbSyncKey(){return 'ddok_sync_v1:'+SB_SESSION.user.id}
+function sbSameState(a,b){function sorted(v){return Array.isArray(v)?v.map(sorted):v&&typeof v==='object'?Object.keys(v).sort().reduce(function(o,k){o[k]=sorted(v[k]);return o},{}):v}return JSON.stringify(sorted(a))===JSON.stringify(sorted(b))}
+function sbSnapshot(){
+ var books=JSON.parse(JSON.stringify(ST));if(OPN.indexOf(BK)>=0)books[BK]={und:und,my:my,BM:BM,cur:cur,pg:pg,mm:MMO};
+ return JSON.parse(JSON.stringify({version:1,reading:{DEF:DEF,OPN:OPN,ST:books,SDT:SDT,DNB:DNB,PICKED:PICKED,RDB:RDB,SHB:SHB,SHR:window.SHR||[[],[],[]],HB:HB,RDY:RDY,RDAYS:RDAYS,RLOG:RLOG,WK:WK,S:S||null,CMTS:CMTS},quotes:ARCH.quotes,stationery:{CS:CS,OP:OP,MY:MY,SLOT:SLOT,AP:AP,THI:THI,UL:UL,BMV:BMV,MMC:MMC}}));
+}
+function sbStateValid(data){
+ if(!data||data.version!==1||!data.reading||!Array.isArray(data.reading.OPN)||!Array.isArray(data.quotes)||!data.stationery)return false;
+ var text=JSON.stringify(data);return text.length<=5242880&&!/"(?:__proto__|constructor|prototype)"\s*:/.test(text);
+}
+function sbApplyState(data){
+ if(!sbStateValid(data))throw Error('저장된 기록의 형식을 확인해 주세요.');
+ var r=data.reading,t=data.stationery,object=function(v){return v&&typeof v==='object'&&!Array.isArray(v)?v:{}},array=function(v){return Array.isArray(v)?v:[]};
+ var book=function(k){return Number.isInteger(k)&&k>=0&&!!LB[k]};
+ DEF=book(r.DEF)?r.DEF:6;OPN=array(r.OPN).filter(book);ST=object(r.ST);SDT=object(r.SDT);DNB=object(r.DNB);PICKED=OPN.length?1:0;
+ RDB=array(r.RDB).filter(function(b){return Array.isArray(b)&&typeof b[0]==='string'&&typeof b[1]==='string'&&typeof b[3]==='string'});SHB=array(r.SHB).filter(book);window.SHR=array(r.SHR).slice(0,3).map(function(a){return array(a).filter(book)});while(window.SHR.length<3)window.SHR.push([]);HB=object(r.HB);
+ RDY=r.RDY&&typeof r.RDY.d==='string'?{d:r.RDY.d,p:object(r.RDY.p),ok:r.RDY.ok?1:0}:{d:todayStr(),p:{}};RDAYS=object(r.RDAYS);RLOG=object(r.RLOG);WK=array(r.WK);CMTS=array(r.CMTS);S=r.S&&typeof r.S==='object'?r.S:{f:1,n:0,m:0,s:0,ff:0};
+ CS=object(t.CS);OP=object(t.OP);MY=array(t.MY);SLOT=array(t.SLOT);AP=object(t.AP);THI=Number.isInteger(t.THI)?t.THI:0;UL=object(t.UL);BMV=object(t.BMV);MMC=typeof t.MMC==='string'?t.MMC:'';
+ ARCH.quotes=data.quotes.filter(function(q){return q&&typeof q.q==='string'&&typeof q.bt==='string'&&typeof q.au==='string'&&typeof q.at==='string'&&Number.isInteger(q.th)&&q.th>=0&&q.th<QTH.length&&(q.sf===0||q.sf===1)});
+ BK=-999;und={};my={};BM=[];MMO={};cur=0;pg=0;useBk(DEF);delete ST[-999];cur=Math.max(0,Math.min(Number.isInteger(cur)?cur:0,PAGES.length-1));pg=PGN[cur];window.hpRef=null;
+}
+function sbSyncPersist(){try{localStorage.setItem(sbSyncKey(),JSON.stringify(SB_SYNC.cache))}catch(e){ptToast('이 기기에 기록을 보관하지 못했어요.\n저장 공간을 확인해 주세요.')}}
+function sbSyncMessage(error){
+ if(SB_SYNC.notice)return;SB_SYNC.notice=true;
+ ptToast(error.code==='PGRST202'||error.code==='42P01'||error.code==='PGRST205'?'서버 기록 저장 준비가 필요해요.\nSupabase에서 sync.sql을 실행해 주세요.':'기록을 이 기기에 보관했어요.\n연결되면 다시 저장할게요.');
+}
+function sbWalletApply(wallet){
+ if(!wallet||!Number.isInteger(wallet.balance)||wallet.balance<0||!wallet.owned||!Array.isArray(wallet.points)||!wallet.day)throw Error('포인트 정보를 확인하지 못했어요.');
+ PT=wallet.balance;OWN=wallet.owned;ARCH.points=wallet.points;PS=wallet.day;msSync();archiveSave();
+}
+async function sbSyncConnect(){
+ var uid=SB_SYNC.uid,rows=await sbRequest('/rest/v1/ddok_states?user_id=eq.'+encodeURIComponent(uid)+'&select=revision,state',{member:true}),wallet=await sbWalletRequest('/rest/v1/rpc/ddok_wallet',{});
+ if(uid!==SB_SYNC.uid)return;if(SB_SYNC.capture)sbCheckpoint();var row=rows[0]||{revision:0,state:null},cache=SB_SYNC.cache;
+ if(row.revision<(cache.revision||0))return;
+ if(row.state&&!sbStateValid(row.state)&&row.revision!==0)throw Error('저장된 기록의 형식을 확인해 주세요.');
+ if(cache.dirty&&row.state&&sbSameState(cache.state,row.state)){cache.revision=row.revision;cache.dirty=false}
+ if(cache.dirty&&row.revision!==(cache.revision===null?0:cache.revision)){
+  SB_SYNC.blocked=true;SB_SYNC.remote=row;
+ }else if(!cache.dirty&&row.revision>0){sbApplyState(row.state);cache.state=sbSnapshot();cache.revision=row.revision;SB_SYNC.last=JSON.stringify(cache.state)}
+ else cache.revision=row.revision;
+ SB_SYNC.ready=true;SB_SYNC.notice=false;sbWalletApply(wallet);sbSyncPersist();
+}
+async function sbSyncStart(){
+ clearTimeout(SB_SYNC.timer);var cache=null;try{cache=JSON.parse(localStorage.getItem(sbSyncKey())||'null')}catch(e){}
+ PT=0;OWN={};ARCH.points=[];PS={d:todayStr(),act:0,got:{}};
+ if(!cache||cache.version!==1||cache.uid!==SB_SESSION.user.id||!sbStateValid(cache.state))cache={version:1,uid:SB_SESSION.user.id,revision:null,dirty:false,state:sbSnapshot(),rewards:[]};
+ cache.rewards=Array.isArray(cache.rewards)?cache.rewards:[];
+ SB_SYNC={uid:SB_SESSION.user.id,cache:cache,ready:false,capture:false,busy:null,timer:null,nextTry:0,blocked:false,remote:null,notice:false,conflictShown:false};
+ sbApplyState(cache.state);
+ try{await sbSyncConnect()}catch(error){sbSyncMessage(error)}
+ SB_SYNC.capture=true;SB_SYNC.cache.state=sbSnapshot();SB_SYNC.last=JSON.stringify(SB_SYNC.cache.state);if(SB_SYNC.cache.revision===0&&(OPN.length||ARCH.quotes.length||MY.length))SB_SYNC.cache.dirty=true;sbSyncPersist();
+ setTimeout(function(){if(SB_SYNC.blocked)sbSyncConflict();else sbSyncFlush()},500);
+}
+function sbCheckpoint(){
+ if(!SB_SESSION||!AUTH_SESSION.signedIn||AUTH_SESSION.provider!=='supabase'||!SB_SYNC.capture||SB_SYNC.uid!==SB_SESSION.user.id)return;
+ var state=sbSnapshot(),text=JSON.stringify(state);if(text!==SB_SYNC.last){SB_SYNC.last=text;SB_SYNC.cache.state=state;SB_SYNC.cache.dirty=true;sbSyncPersist()}
+ if(!SB_SYNC.timer&&(SB_SYNC.cache.dirty||SB_SYNC.cache.rewards.length||!SB_SYNC.ready))SB_SYNC.timer=setTimeout(function(){SB_SYNC.timer=null;sbSyncFlush()},900);
+}
+async function sbSyncFlush(){
+ if(!SB_SYNC.capture||!SB_SESSION||SB_SYNC.uid!==SB_SESSION.user.id||SB_SYNC.blocked||Date.now()<SB_SYNC.nextTry)return;
+ if(SB_SYNC.busy)return SB_SYNC.busy;
+ SB_SYNC.busy=Promise.resolve().then(async function(){
+  try{
+   if(!SB_SYNC.ready)await sbSyncConnect();if(SB_SYNC.blocked){sbSyncConflict();return}
+   while(SB_SYNC.cache.dirty){
+    var state=SB_SYNC.cache.state,text=JSON.stringify(state),saved=await sbRequest('/rest/v1/rpc/ddok_save_state',{member:true,body:{p_state:state,p_revision:SB_SYNC.cache.revision||0}});
+    SB_SYNC.cache.revision=saved.revision;SB_SYNC.cache.dirty=JSON.stringify(SB_SYNC.cache.state)!==text;sbSyncPersist();
+   }
+   while(SB_SYNC.cache.rewards.length){
+    var claim=SB_SYNC.cache.rewards[0];
+    if(claim.day!==todayStr()){SB_SYNC.cache.rewards.shift();sbSyncPersist();ptToast('지난 날짜의 미션은 적립하지 못했어요.\n독서 기록은 그대로 보관했어요.');continue}
+    try{var wallet=await sbWalletRequest('/rest/v1/rpc/ddok_claim_point',{p_mission:claim.mission,p_day:claim.day,p_book:claim.book});SB_SYNC.cache.rewards.shift();sbSyncPersist();if(wallet.granted&&!claim.quiet)ptToast('미션 달성 · +'+wallet.granted+'P')}
+    catch(error){if(error.code==='22023'){SB_SYNC.cache.rewards.shift();sbSyncPersist();if(error.detail==='reward_expired')ptToast('지난 날짜의 미션은 적립하지 못했어요.');else ptToast('아직 미션 조건을 채우지 못했어요.');continue}throw error}
+   }
+   SB_SYNC.notice=false;SB_SYNC.nextTry=0;sbSyncStatus();if(app.classList.contains('hm')&&typeof hpRef==='function')hpRef();
+  }catch(error){
+   if(error.code==='40001'){try{var rows=await sbRequest('/rest/v1/ddok_states?user_id=eq.'+encodeURIComponent(SB_SYNC.uid)+'&select=revision,state',{member:true});if(rows[0]&&sbSameState(rows[0].state,SB_SYNC.cache.state)){SB_SYNC.cache.revision=rows[0].revision;SB_SYNC.cache.dirty=false;sbSyncPersist()}else{SB_SYNC.remote=rows[0];SB_SYNC.blocked=true;sbSyncConflict()}}catch(retryError){SB_SYNC.nextTry=Date.now()+30000;sbSyncMessage(retryError)}}
+   else{SB_SYNC.nextTry=Date.now()+30000;sbSyncMessage(error)}
+  }finally{SB_SYNC.busy=null;sbSyncStatus()}
+ });return SB_SYNC.busy;
+}
+function sbSyncConflict(){
+ if(!SB_SYNC.blocked||SB_SYNC.conflictShown)return;SB_SYNC.conflictShown=true;
+ var dialog=document.createElement('dialog');dialog.className='consent-popup';dialog.setAttribute('aria-labelledby','sync-conflict-title');
+ dialog.innerHTML='<h2 id="sync-conflict-title">다른 기기에서 기록이 바뀌었어요.</h2><p style="white-space:pre-line">서버 기록을 불러오거나 이 기기 기록을 저장할 수 있어요.\n고른 기록으로 독서 진도와 보관함을 맞춰요.\n포인트와 구매 내역은 서버 기록을 유지해요.</p><div class="dbt"><button class="btn ghost" id="sync-remote">서버 기록 불러오기</button><button class="btn" id="sync-local">이 기기 기록 저장하기</button></div>';
+ app.appendChild(dialog);dialog.showModal();
+ dialog.onclose=function(){SB_SYNC.conflictShown=false;dialog.remove()};
+ async function choose(local){
+  try{
+   var row=SB_SYNC.remote;if(!row)throw Error('서버 기록을 다시 확인해 주세요.');
+   // 선택하지 않은 기록도 이 기기의 복구 사본으로 남겨요.
+   localStorage.setItem(sbSyncKey()+':conflict-backup',JSON.stringify(local?row:{state:SB_SYNC.cache.state,revision:SB_SYNC.cache.revision}));
+   if(!local){sbApplyState(row.state);SB_SYNC.cache.state=sbSnapshot();SB_SYNC.cache.dirty=false;SB_SYNC.last=JSON.stringify(SB_SYNC.cache.state)}
+   SB_SYNC.cache.revision=row.revision;SB_SYNC.blocked=false;SB_SYNC.remote=null;sbSyncPersist();dialog.close();if(!local)home();await sbSyncFlush();
+  }catch(error){ptToast(error.message)}
+ }
+ dialog.querySelector('#sync-remote').onclick=function(){choose(false)};dialog.querySelector('#sync-local').onclick=function(){sbCheckpoint();choose(true)};
+}
+function sbQueuePoint(mission,quiet){
+ if(!SB_SYNC.capture)return 0;var day=todayStr(),rewards=SB_SYNC.cache.rewards;
+ if((mission in psDay().got)||rewards.some(function(r){return r.day===day&&r.mission===mission}))return 0;
+ rewards.push({mission:mission,day:day,book:mission==='done'?BK:null,quiet:!!quiet});sbCheckpoint();sbSyncPersist();sbSyncFlush();return 0;
+}
+async function sbBuyItem(id){
+ if(!SB_SYNC.ready||SB_SYNC.blocked){if(SB_SYNC.blocked)sbSyncConflict();else ptToast('서버에 연결한 뒤 구매할 수 있어요.');return false}
+ try{await sbSyncFlush();if(SB_SYNC.blocked){sbSyncConflict();return false}await sbWalletRequest('/rest/v1/rpc/ddok_buy_item',{p_item:id});return true}
+ catch(error){ptToast(error.detail==='insufficient_points'?'포인트가 부족해요.':error.message);return false}
+}
+function sbSyncStatus(){
+ var button=document.getElementById('cloud-sync-status');if(!button)return;
+ button.textContent=SB_SYNC.blocked?'기록 동기화 · 다른 기기 기록 확인':!SB_SYNC.ready?'기록 동기화 · 연결 준비 중':SB_SYNC.cache.dirty||SB_SYNC.cache.rewards.length?'기록 동기화 · 저장 대기 중':'기록 동기화 · 저장됨';
+}
+async function sbSyncRefresh(){
+ if(!SB_SESSION||!SB_SYNC.capture||SB_SYNC.busy||SB_SYNC.blocked||document.hidden||document.querySelector('dialog[open],#dlg')||!(app.classList.contains('hm')||document.getElementById('pme')))return;
+ sbCheckpoint();if(SB_SYNC.cache.dirty||SB_SYNC.cache.rewards.length){await sbSyncFlush();return}
+ var before=SB_SYNC.cache.revision;
+ try{await sbSyncConnect();if(before!==SB_SYNC.cache.revision){if(app.classList.contains('hm'))home();else if(document.getElementById('pme'))profile()}else if(app.classList.contains('hm')&&typeof hpRef==='function')hpRef();sbSyncStatus()}
+ catch(error){sbSyncMessage(error)}
+}
 function archiveStorageKey(){return SB_SESSION&&SB_SESSION.user?'ddok_archive_v1:'+SB_SESSION.user.id:'ddok_archive_v1'}
 var AUTH_SESSION={signedIn:false,provider:null},AUTH_NEXT=null;
 // 이메일·Google 미리보기는 로컬에서만 유지하고 배포 화면에서는 Supabase 세션을 확인해요.
 try{var previewAuth=sessionStorage.getItem('ddok_preview_auth');if(!sbCloudPage()&&(previewAuth==='email'||previewAuth==='google')){AUTH_SESSION.signedIn=true;AUTH_SESSION.provider=previewAuth}}catch(e){}
 var ARCH={quotes:[],points:[]};
-function archiveSave(){if(!AUTH_SESSION.signedIn)return;try{localStorage.setItem(archiveStorageKey(),JSON.stringify({version:1,quotes:ARCH.quotes,points:ARCH.points,balance:PT,day:PS,owned:OWN,colors:CS}))}catch(e){ptToast('이 기기에 기록을 저장하지 못했어요.\n저장 공간을 확인해 주세요.')}}
+function archiveSave(){if(!AUTH_SESSION.signedIn)return;try{localStorage.setItem(archiveStorageKey(),JSON.stringify({version:1,quotes:ARCH.quotes,points:ARCH.points,balance:PT,day:PS,owned:OWN,colors:CS}));sbCheckpoint()}catch(e){ptToast('이 기기에 기록을 저장하지 못했어요.\n저장 공간을 확인해 주세요.')}}
 function archiveLoad(){try{var a=JSON.parse(localStorage.getItem(archiveStorageKey())||'null');if(!a||a.version!==1)return;
  ARCH.quotes=Array.isArray(a.quotes)?a.quotes.filter(function(q){return q&&typeof q.q==='string'&&typeof q.bt==='string'&&typeof q.au==='string'&&typeof q.at==='string'&&Number.isInteger(q.th)&&q.th>=0&&q.th<QTH.length&&(q.sf===0||q.sf===1)}):[];
  ARCH.points=Array.isArray(a.points)?a.points.filter(function(p){return p&&typeof p.label==='string'&&typeof p.day==='string'&&typeof p.at==='string'&&Number.isFinite(p.amount)&&p.amount!==0}):[];
@@ -4204,11 +4329,12 @@ function pointHistory(){var day=todayStr(),items=ARCH.points.filter(function(p){
  var d=document.getElementById('dlg');d.classList.add('point-history');d.setAttribute('aria-labelledby','points-title');document.getElementById('points-close').onclick=close;
 }
 function award(k,quiet){if(!AUTH_SESSION.signedIn)return 0;var s=psDay(),c=PCFG.ACT[k];if(!c||(k in s.got))return 0;
+ if(SB_SESSION&&AUTH_SESSION.provider==='supabase')return sbQueuePoint(k,quiet);
  var give=Math.max(0,Math.min(c.p,PCFG.DAILY_CAP-s.act));s.got[k]=give;s.act+=give;PT+=give;msSync();
  var mi=MK.indexOf(k),nm=mi>=0?MS[mi][0]:"포인트";recordPoints(give,nm+" 미션");
  if(quiet){}else if(give<c.p)ptToast("오늘 받을 수 있는 포인트를 다 채워서 "+give+"P만 받았어요.");else ptToast(nm+" 미션 달성 · +"+give+"P");
  if(typeof hpRef==="function")hpRef();return give}
-function bonusDone(bk){if(!AUTH_SESSION.signedIn)return 0;if(bk==null||DONEPAID[bk]||("done" in psDay().got))return 0;DONEPAID[bk]=1;return award("done")}
+function bonusDone(bk){if(!AUTH_SESSION.signedIn)return 0;if(bk==null||DONEPAID[bk]||("done" in psDay().got))return 0;if(SB_SESSION&&AUTH_SESSION.provider==='supabase')return award('done');DONEPAID[bk]=1;return award("done")}
 function readToday(){if(!AUTH_SESSION.signedIn)return;var s=psDay(),t=s.d;RDAYS[t]=1;
  var n=0,d=t;while(RDAYS[d]){n++;d=dshift(d,-1)}
  var N=PCFG.ACT.streak.days,start=dshift(t,-(N-1));
@@ -4524,11 +4650,11 @@ function shop(){
  ov.onclick=cl;
  
  g.onclick=function(e){var b=e.target.closest("button");if(!b)return;if(b.dataset.i!==undefined)detail(b.dataset.c,+b.dataset.i);else if(b.dataset.c){SC=b.dataset.c;draw()}};
- sheet.onclick=function(e){var b=e.target.closest("button");if(!b)return;var c=sheet.dataset.c,i=+sheet.dataset.i,id=c+i;
+ sheet.onclick=async function(e){var b=e.target.closest("button");if(!b)return;var c=sheet.dataset.c,i=+sheet.dataset.i,id=c+i;
   if(b.classList.contains("cl"))cl();
   else if(b.dataset.k!==undefined){CS[id]=+b.dataset.k;detail(c,i)}
   else if(b.id==="go")vault(2,profile);
-  else if(b.id==="buy"&&!OWN[id]&&PT>=pc(c,i)){var cost=pc(c,i);PT-=cost;OWN[id]=1;recordPoints(-cost,ITM[c][i][0]+" 구매");draw();detail(c,i)}};
+  else if(b.id==="buy"&&!OWN[id]&&PT>=pc(c,i)){if(SB_SESSION&&AUTH_SESSION.provider==='supabase'){if(b.disabled)return;b.disabled=true;b.setAttribute('aria-busy','true');try{if(await sbBuyItem(id)){draw();detail(c,i)}}finally{if(b.isConnected){b.disabled=false;b.removeAttribute('aria-busy')}}return}var cost=pc(c,i);PT-=cost;OWN[id]=1;recordPoints(-cost,ITM[c][i][0]+" 구매");draw();detail(c,i)}};
  document.getElementById("vlt").onclick=pointHistory;
  var tb=app.querySelectorAll(".tab button");tb[0].onclick=tabStamp;tb[2].onclick=home;tb[3].onclick=community;tb[4].onclick=profile;
 }
@@ -5134,7 +5260,7 @@ function pH(pi){return PAGES[pi].map(function(p,pj){return'<p class="pp'+(isHd(p
  function hMerge(a){a=a.filter(function(r){return r[1]>r[0]}).sort(function(x,y){return x[0]-y[0]});var o=[];a.forEach(function(r){var l=o[o.length-1];if(l&&r[0]<=l[1])l[1]=Math.max(l[1],r[1]);else o.push([r[0],r[1]])});return o}
  function hSub(a,s,e){var o=[];a.forEach(function(r){if(r[1]<=s||r[0]>=e)o.push(r);else{if(r[0]<s)o.push([r[0],s]);if(r[1]>e)o.push([e,r[1]])}});return o}
  function hOff(el,node,off){var q=document.createRange();q.setStart(el,0);q.setEnd(node,off);return q.toString().length}
- function rt(){nmx();lf.innerHTML=pH(cur);gck()}
+ function rt(){nmx();lf.innerHTML=pH(cur);gck();sbCheckpoint()}
  function gck(){if(BK>=0&&!BD[BK])return;var t=todayStr();if(RDY.d!==t)RDY={d:t,p:{},ok:0};RDY.p[BK+"-"+pg]=1;readToday();if(Object.keys(RDY.p).length>=Math.max(GOAL||0,PCFG.ACT.jeong.minGoal))award("jeong");if(GOAL&&!RDY.ok&&Object.keys(RDY.p).length>=GOAL){RDY.ok=1;var g=document.getElementById("gl");g.textContent="오늘의 목표 "+GOAL+"쪽을 달성했어요.";g.classList.add("on");setTimeout(function(){g.classList.remove("on")},3200)}}
  function pr(){var pc=function(v){return v*100/TOT};document.getElementById("pg").innerHTML='<div class="pr"><span>'+pg+'p</span><div class="tk"><i style="width:'+pc(pg)+'%"></i><b class="th" style="left:'+pc(pg)+'%" role="slider" aria-label="진행도" aria-valuemin="1" aria-valuemax="'+TOT+'" aria-valuenow="'+pg+'"></b>'+BM.map(function(b){return'<button class="rb" data-p="'+b+'" style="left:'+pc(b)+'%" aria-label="'+b+'쪽 책갈피"></button>'}).join("")+MP.map(function(m){return'<em class="md" style="left:'+pc(mpg(m))+'%;background:'+m[2]+'" aria-label="'+m[0]+' '+mpg(m)+'쪽">'+m[0].charAt(0)+'</em>'}).join("")+'</div><span>'+TOT+'p</span></div><p class="pc">'+Math.round(pc(pg))+'% · '+MP.map(function(m){return m[0]+" "+mpg(m)+"p"}).join(" · ")+'</p>'}
  function fl(n){if(!busy&&n===PGN.length&&cur===PGN.length-1&&BK>=0&&BD[BK]){doneBk(BK);return}if(busy||n<0||n>=PGN.length||n===cur)return;busy=true;eid=null;var d=n>cur?1:-1;pg=PGN[n];
@@ -5934,7 +6060,7 @@ function sbPreviewNotice(){authNotice('이메일과 구글 연결은 아직 준�
 async function completeSignupHome(){
  if(KAKAO_COMPLETING)return;if(!SB_SESSION){if(sbCloudPage()){sbPreviewNotice();return}loginComplete('email');return}KAKAO_COMPLETING=true;
  var button=document.getElementById('go');if(button){button.disabled=true;button.setAttribute('aria-busy','true')}
- try{await sbSaveMember();KAKAO_PENDING=false;NEW_ACCOUNT=false;LOGIN_STATE=null;loginComplete('supabase')}
+ try{await sbSaveMember();KAKAO_PENDING=false;NEW_ACCOUNT=false;LOGIN_STATE=null;await sbSyncStart();loginComplete('supabase')}
  catch(e){authNotice(e.message||'연결을 확인하고 다시 시도해 주세요.')}
  finally{KAKAO_COMPLETING=false;if(button){button.disabled=false;button.removeAttribute('aria-busy')}}
 }
@@ -6021,6 +6147,17 @@ function loginComplete(provider){
   else if(b.id==='cx-detail')reason='읽는 책을 고르려면';
   if(reason){e.preventDefault();e.stopImmediatePropagation();requireLogin(reason)}
  },true);
+})();
+(function(){
+ var checkpointTimer;
+ ['click','input','change','pointerup','keyup'].forEach(function(name){document.addEventListener(name,function(){clearTimeout(checkpointTimer);checkpointTimer=setTimeout(sbCheckpoint,100)})});
+ setInterval(function(){sbCheckpoint();sbSyncStatus()},2000);
+ setInterval(sbSyncRefresh,30000);
+ window.addEventListener('online',function(){SB_SYNC.nextTry=0;sbCheckpoint();sbSyncFlush()});
+ document.addEventListener('visibilitychange',function(){sbCheckpoint();if(document.visibilityState==='hidden')sbSyncFlush();else sbSyncRefresh()});
+ window.addEventListener('pagehide',sbCheckpoint);
+ var originalProfile=profile;
+ profile=function(){var result=originalProfile.apply(this,arguments);if(SB_SESSION&&AUTH_SESSION.signedIn){var host=app.querySelector('.pfb')||app.querySelector('.sc');if(host){var button=document.createElement('button');button.className='btn ghost';button.id='cloud-sync-status';button.style.cssText='width:100%;margin-top:16px;white-space:normal';button.onclick=function(){SB_SYNC.notice=false;SB_SYNC.nextTry=0;if(SB_SYNC.blocked)sbSyncConflict();else{sbCheckpoint();sbSyncFlush()}};host.appendChild(button);sbSyncStatus()}}return result};
 })();
 sbBootstrap();
 </script>
