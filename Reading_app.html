@@ -3859,7 +3859,6 @@ body{font-size:var(--font-body)}
 #app .friend-search-copy{flex:1;min-width:3em;overflow-wrap:anywhere}
 #app .friend-search-copy .friend-search-name{display:block}
 #app .friend-search-copy small{display:block;margin-top:4px;font-size:14px;line-height:1.5;color:#34483B;word-break:keep-all;overflow-wrap:anywhere}
-#app .friend-search-preview-note{margin:16px 0 0;font-size:14px;line-height:1.6;color:#34483B;white-space:pre-line}
 #app .friend-search-actions{display:flex;gap:8px;flex-wrap:wrap;max-width:100%}
 #app .friend-search-actions button{min-height:48px;padding:8px 12px;border:1px solid #174D37;border-radius:10px;background:#174D37;color:#FFFFFF;font:inherit;font-size:14px;white-space:normal;word-break:keep-all}
 #app .friend-search-actions .ghost{background:#FFFFFF;color:#174D37}
@@ -4515,7 +4514,7 @@ function friendSearch(back,initial){
   var suggested=members.filter(function(m){return m.relation!=='friend'&&!found.some(function(f){return f.id===m.id})}).sort(function(a,b){return b.similarity-a.similarity||a.nickname.localeCompare(b.nickname,'ko')});
   status.textContent=q?(found.length?found.length+'명의 독자를 찾았어요.':'해당 닉네임의 독자를 찾지 못했어요.'):'찾고 싶은 친구의 닉네임을 입력해 주세요.';
   var missingType=!RKEY&&!ans.every(function(v){return Number.isInteger(v)&&v>=0&&v<4});
-  results.innerHTML=(q?'<h4>검색 결과</h4><div role="list">'+found.map(row).join('')+'</div>':'')+'<h4>추천 친구</h4>'+(suggested.length?'<div role="list">'+suggested.map(row).join('')+'</div>':'<p class="friend-search-note">지금은 추천할 다른 친구가 없어요.</p>')+'<p class="friend-search-preview-note">가입 계정과 독서 유형은 임시 예시예요.'+(missingType?'\n성향 검사 전에는 FADI 유형을 기준으로 보여드려요.':'')+'</p>';
+  results.innerHTML=(q?'<h4>검색 결과</h4><div role="list">'+found.map(row).join('')+'</div>':'')+'<h4>추천 친구</h4>'+(suggested.length?'<div role="list">'+suggested.map(row).join('')+'</div>':'<p class="friend-search-note">지금은 추천할 다른 친구가 없어요.</p>');
  }
  async function search(){
   clearTimeout(timer);query=input.value.trim();var request=++version;
