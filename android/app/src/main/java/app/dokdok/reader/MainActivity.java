@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Insets;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.view.WindowInsets;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
 import android.webkit.WebResourceError;
@@ -21,6 +23,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
+import android.window.OnBackInvokedDispatcher;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -50,6 +53,22 @@ public class MainActivity extends Activity {
         web = new WebView(this);
         web.setBackgroundColor(Color.parseColor("#F3EDE7"));
         setContentView(web);
+        // API 35 이상에서 강제되는 edge-to-edge에서도 조작이 시스템 바에 가리지 않게 해요.
+        web.setOnApplyWindowInsetsListener((view, insets) -> {
+            if (Build.VERSION.SDK_INT >= 30) {
+                Insets bars = insets.getInsets(WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout());
+                view.setPadding(bars.left, bars.top, bars.right, bars.bottom);
+                return WindowInsets.CONSUMED;
+            }
+            view.setPadding(insets.getSystemWindowInsetLeft(), insets.getSystemWindowInsetTop(),
+                    insets.getSystemWindowInsetRight(), insets.getSystemWindowInsetBottom());
+            return insets.consumeSystemWindowInsets();
+        });
+        web.requestApplyInsets();
+        if (Build.VERSION.SDK_INT >= 33) {
+            getOnBackInvokedDispatcher().registerOnBackInvokedCallback(
+                    OnBackInvokedDispatcher.PRIORITY_DEFAULT, this::onBackPressed);
+        }
 
         WebSettings s = web.getSettings();
         s.setJavaScriptEnabled(true);
@@ -66,6 +85,23 @@ public class MainActivity extends Activity {
         web.addJavascriptInterface(new Bridge(), "AndroidBridge");
 
         web.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView v, WebResourceRequest request) {
+                Uri uri = request.getUrl();
+                boolean email = "mailto".equals(uri.getScheme());
+                boolean policy = "https".equals(uri.getScheme()) && "jisoo0222.github.io".equals(uri.getHost())
+                        && ("/reading/privacy-policy.html".equals(uri.getPath())
+                        || "/reading/community-rules.html".equals(uri.getPath())
+                        || "/reading/delete-account.html".equals(uri.getPath()));
+                if (!email && !policy) return false;
+                try {
+                    startActivity(new Intent(email ? Intent.ACTION_SENDTO : Intent.ACTION_VIEW, uri));
+                } catch (Exception e) {
+                    toast("연결할 앱을 찾지 못했어요");
+                }
+                return true;
+            }
+
             @Override
             public void onPageFinished(WebView v, String url) {
                 v.evaluateJavascript(SHIM, null);
@@ -144,7 +180,7 @@ public class MainActivity extends Activity {
     public void onBackPressed() {
         // 팝업이 열려 있으면 닫고, 아니면 앱 안의 '뒤로' 버튼을 누른 것처럼 동작. 더 갈 곳이 없으면 앱 종료.
         web.evaluateJavascript(
-            "(function(){var d=document.querySelector('dialog[open]');if(d){d.close();return 'x'}" +
+            "(function(){var d=document.querySelector('dialog[open]');if(d){if(d.dispatchEvent(new Event('cancel',{cancelable:true})))d.close();return 'x'}" +
             "var o=document.getElementById('ov2');if(o){o.click();return 'x'}" +
             "var s=document.getElementById('sheet'),ov=document.getElementById('ov');if(s&&s.classList.contains('on')){if(ov)ov.click();else s.classList.remove('on');return 'x'}" +
             "var b=document.querySelector('[aria-label=\"뒤로\"]');if(b){b.click();return 'b'}return ''})()",

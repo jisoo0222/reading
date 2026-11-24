@@ -18,6 +18,7 @@
 - 컴퓨터 브라우저에서 `http://localhost:5173` 을 열어도 같은 화면이 자동 새로고침돼요.
 - 개발 서버가 꺼져 있으면 앱은 자기 안에 들어 있는 화면(마지막 빌드 때의 HTML)을 띄워요.
 - 이 연결은 디버그 실행에서만 동작하고, 배포용(release) 앱에는 들어가지 않아요.
+- 개발 서버 연결은 디버그 전용이지만, Supabase 인증·동기화를 위한 인터넷 권한은 배포용에도 포함돼요. 자동 OS 백업은 사용하지 않아요.
 - 실제 휴대폰을 USB로 연결해서 쓸 때는 `adb reverse tcp:5173 tcp:5173` 을 한 번 실행한 뒤,
   `app/build.gradle` 의 `10.0.2.2` 를 `localhost` 로 바꾸면 돼요.
 
@@ -29,6 +30,9 @@
 - 휴대폰 글자 크기 설정과 상관없이 화면 비율이 유지되도록 글자 확대를 고정했어요.
 
 ## 구성
+
+- 출시 대상 API는 Android16(API36)이며 AGP8.10.0·Gradle8.11.1·JDK17을 사용해요. Android SDK36을 설치한 환경에서 release 빌드와 실기기 확인이 필요해요. 시스템 바가 웹 화면을 가리지 않도록 인셋을 적용해요.
+- 개인정보 안내·탈퇴 웹페이지는 외부 브라우저로, 이메일 문의는 메일 앱으로 연결해요.
 - 패키지 이름: `app.dokdok.reader` / 앱 이름: 똑독 / 최소 Android 8.0(API 26)
 - `app/src/main/java/app/dokdok/reader/MainActivity.java`: 웹뷰 화면, 뒤로가기·사진 선택·저장·공유 연결
 - `app/src/main/res/drawable/ic_launcher_fg.xml`: 앱 아이콘(라벤더 책 + 강아지 발바닥)
