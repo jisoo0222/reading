@@ -3447,10 +3447,10 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app::selection,#app *::selection,#app.rd .pgl::selection,#app.rd .pgl ::selection{background:#C6EED0;color:#174D37;text-shadow:none}
 #app.rd.night .pgl::selection,#app.rd.night .pgl ::selection{background:#3A6248;color:#FFFFFF}
 /* 원본 로고의 문짝과 빛을 순서대로 보여 줘요. */
-#app.spl .spw>.entry-logo-motion{display:block;width:120px;height:auto;margin:0 auto;overflow:visible;transform:translateX(5px);animation:entry-logo-arrive .55s ease-out both}
+#app.spl .spw>.entry-logo-motion{display:block;width:120px;height:auto;margin:0 auto;overflow:visible;transform:translateX(0);animation:entry-logo-arrive .55s ease-out both}
 #app.spl .spw h1{animation:entry-wordmark-in .5s ease-out .3s both}
 #app.spl .spw .dke{animation:entry-wordmark-in .5s ease-out .45s both}
-@keyframes entry-logo-arrive{from{opacity:0;transform:translate(5px,8px)}to{opacity:1;transform:translate(5px,0)}}
+@keyframes entry-logo-arrive{from{opacity:0;transform:translate(0,8px)}to{opacity:1;transform:translate(0,0)}}
 @keyframes entry-wordmark-in{from{opacity:0;translate:0 5px}to{opacity:1;translate:0 0}}
 @media(prefers-reduced-motion:reduce){#app.spl .entry-logo-motion,#app.spl .entry-logo-motion *,#app.spl .spw h1,#app.spl .spw .dke{animation:none!important;opacity:1!important}}
 
