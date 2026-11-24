@@ -2971,7 +2971,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app:is(.community,.community-detail,.home-feed) .tc .tx,#app:is(.community,.community-detail,.home-feed) .tc em{color:#34483B;font-size:14px}
 #app:is(.community,.community-detail,.home-feed) .pa button{color:#34483B!important}
 #app:is(.community,.community-detail,.home-feed) .pa button[aria-pressed=true]{color:#174D37!important}
-#app:is(.community,.community-detail,.home-feed) .wfab{background:#174D37!important;color:white;box-shadow:0 5px 15px #17241C20}
+#app:is(.community,.community-detail,.home-feed) .wfab{bottom:116px;background:#174D37!important;color:white;box-shadow:0 8px 20px #174D3747,0 3px 6px #17241C33}
 /* 마이페이지: 메인과 같은 묶음·여백·색 */
 #app.pf .pfb{background:transparent!important;padding-top:24px}
 #app.pf .pbt{padding:0 0 4px}
@@ -5371,7 +5371,7 @@ function community(){
  app.firstChild.style.paddingBottom="90px";
  /* 한 사람이 쓴 글 모아 보기 */
  if(CU||CMN){var cr=app.querySelector(".cwrow");cr.style.display="none";if(CU)document.getElementById("tyb").style.display="none";var uh=document.createElement("div");uh.className="sh2";uh.innerHTML='<button class="ib" id="cub" aria-label="뒤로">'+ic("back")+'</button><h2>'+(CU?esc(CU)+' 님의 글':'내 글')+'</h2><span class="sp3"></span>';cr.parentNode.insertBefore(uh,cr);document.getElementById("cub").onclick=CU?function(){CU="";community()}:function(){CMN=0;profile()}}
- var fb=document.createElement("button");if(CU||CMN)fb.style.display="none";fb.className="wfab";fb.setAttribute("aria-label","글쓰기");fb.innerHTML=ic("pencil");app.appendChild(fb);requestAnimationFrame(function(){var t=app.querySelector("nav.tab");if(t)fb.style.bottom=(app.getBoundingClientRect().bottom-t.getBoundingClientRect().top+15)+"px"});
+ var fb=document.createElement("button");if(CU||CMN)fb.style.display="none";fb.className="wfab";fb.setAttribute("aria-label","글쓰기");fb.innerHTML=ic("pencil");app.appendChild(fb);
  var post=communityPost;
  var CQ="";
  function cqm(p){var q=CQ.trim().toLowerCase();if(!q)return true;var b=p.bt||(p.b!==undefined?LB[p.b]:null);
@@ -5544,7 +5544,7 @@ function vault(t,back){
 }
 var ih=Object.getOwnPropertyDescriptor(Element.prototype,"innerHTML");
 function wrap(){var sc=document.createElement("div"),k=[];sc.className="sc "+(app.classList.contains("hm")?"hm":app.classList.contains("rd")?"rdc":"");
- Array.from(app.children).forEach(function(c){c.matches(".tab,.prg,.fx,#ov,#sheet,.mn")?k.push(c):sc.appendChild(c)});
+ Array.from(app.children).forEach(function(c){c.matches(".tab,.prg,.fx,.wfab,#ov,#sheet,.mn")?k.push(c):sc.appendChild(c)});
   ih.set.call(app,"");app.appendChild(sc);k.forEach(function(c){app.appendChild(c)});
   thm()}
 Object.defineProperty(app,"innerHTML",{set:function(h){ih.set.call(app,h);wrap()},get:function(){return ih.get.call(app)}});
