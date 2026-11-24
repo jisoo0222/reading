@@ -3979,6 +3979,11 @@ body{font-size:var(--font-body)}
 #app .friend-search-actions button[data-action="request"]:disabled span{background:#E6EEE8;color:#34483B;border-color:#91A599}
 /* Service copy preserves the explicit boundary between complete sentences. */
 #app :is(.type-analysis p,.ax p,.account-status,.account-help,.consent-detail p,.hmr small,.ntx b,.tbx p,.mtp),#app #dlg>h3,#app #dlg .sm,#hn,#ptt{white-space:pre-line}
+/* 검색창은 입력칸 또는 검색 묶음의 바깥에 테두리를 한 번만 표시해요. */
+:root{--search-stroke:#526A5B}
+#app.rd.night{--search-stroke:#A8E5B7}
+#app :is(.csr,.lsi,#ivq,#bq,#friend-search-input,#wi),#sheet #wi{border:1.5px solid var(--search-stroke)!important;border-radius:10px!important}
+#app :is(.csr,.lsi):focus-within,#app :is(#ivq,#bq,#friend-search-input,#wi):focus,#sheet #wi:focus{border-color:var(--pri)!important}
 </style>
 </head>
 <body>
