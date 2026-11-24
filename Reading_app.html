@@ -595,6 +595,10 @@ html,body{background:#2B242D}
 .hd{padding-top:12px}.rh{padding-top:12px}.mn{top:56px}#hn{top:58px}#gl{height:53px;padding-top:12px}.bn .ib{top:12px}
 .bn{margin-top:-12px}.cv{aspect-ratio:3/4}.hs.pop .bk{width:88px}.bc2{height:auto;aspect-ratio:3/4}
 #dlg.fdl .pbx{margin:0;padding:14px}#dlg.fdl .pbt{margin:0}#dlg.fdl .pbx .av2{width:56px;height:56px;font-size:20px}#dlg.fdl .pbx .mb{width:30px;height:30px;font-size:14px}.pnm small{display:block;font-size:14px;color:var(--sub);margin-top:2px}#dlg.fdl .pbx .fadd{flex:none;padding:6px 12px;font-size:14px}
+#dlg.fdl #fa.fadd{min-height:48px;padding:0;border:0;background:transparent;align-self:center}
+#dlg.fdl #fa>span{display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:2px 12px;border:1.5px solid var(--pri);border-radius:inherit;line-height:1.5}
+#dlg.fdl #fa[aria-pressed="true"]>span{background:var(--pri);color:var(--onpri)}
+#dlg.fdl #fa.rq>span{border-style:dashed;border-color:var(--sub);color:var(--sub)}
 .app.hm .blk{margin-top:20px}.app.hm .blk.hdt{margin-top:12px}.app.hm .blk.rblk{margin-top:32px}.sc.hm{padding-bottom:64px}
 .mts .mate{padding:12px 8px 10px}.mts .mate .p{width:40px;height:40px;margin-bottom:6px}
 .app.hm .cp{height:52px}.app.hm #sts .box{padding:10px 12px}
@@ -4491,7 +4495,7 @@ function friend(i,pf){
  var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.className="fdl";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label",n+" 프로필");
  function x(){o.remove();d.remove();if(typeof pf==="function"){pf();return}if(pf===4){matePop(BT);return}if(!!FR[n]!==fr0){if(pf===1)profile();else if(pf===2)community();else if(pf===3&&typeof FCB==="function")FCB()}}
  function main(){var fr=!!FR[n];
-  d.innerHTML='<section class="box pbx"><div class="pbt"><button class="av2" id="ph" aria-label="'+n+' 프로필 사진 크게 보기" style="background:'+m[2]+'">'+n.charAt(0)+'</button><div class="pnm"><h2>'+n+'</h2><small>취향 일치도 '+m[1]+'%</small></div><button class="fadd'+(!fr&&FRIEND_REQ[n]?" rq":"")+'" id="fa" aria-pressed="'+fr+'">'+(fr?"친구 추가됨":FRIEND_REQ[n]?"신청 중":"친구 추가 +")+'</button></div></section>'
+  d.innerHTML='<section class="box pbx"><div class="pbt"><button class="av2" id="ph" aria-label="'+n+' 프로필 사진 크게 보기" style="background:'+m[2]+'">'+n.charAt(0)+'</button><div class="pnm"><h2>'+n+'</h2><small>취향 일치도 '+m[1]+'%</small></div><button class="fadd'+(!fr&&FRIEND_REQ[n]?" rq":"")+'" id="fa" aria-pressed="'+fr+'">' +'<span>'+(fr?"친구 추가됨":FRIEND_REQ[n]?"신청 중":"친구 추가 +")+'</span></button></div></section>'
    +sec(n+" 님의 책장",P.sv,shelf)+sec(n+" 님의 글",P.pv,posts,FP.length?'<button class="pme" id="fpall">전체 보기'+ic("next")+'</button>':"")+'<button class="btn ghost" id="fcl" style="width:100%;margin-top:16px">닫기</button>';
   document.getElementById("fcl").onclick=x;
   function leave(){o.remove();d.remove();var pd=document.getElementById("dlg");if(pd)pd.remove();var po=document.getElementById("ov2");if(po)po.remove()}
