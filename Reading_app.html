@@ -3551,7 +3551,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.compose-page .bsi .bt b{font-size:16px;line-height:1.5;color:#17241C}
 #app.compose-page .bsi .bt small{font-size:14px;line-height:1.5;color:#34483B}
 #app.compose-page .compose-poll{padding:20px;border:1px solid #D7E0D9;background:#FFFFFF;border-radius:15px;margin:0 0 16px;min-width:0}
-#app.compose-page .compose-poll legend{padding:0 8px;font-size:16px;font-weight:700;color:#17241C}
 #app.compose-page .compose-poll input{margin-bottom:16px;font-size:16px;background:#F5F7F4}
 #app.compose-page .compose-poll #o1{margin-bottom:0}
 #app.compose-page #ce{font-size:14px;line-height:1.65;color:#A02D40;margin:0 0 16px;word-break:keep-all}
@@ -5465,7 +5464,7 @@ function community(){
    +'<div class="compose-settings"><div class="compose-field"><label for="compose-type">글 종류</label><select id="compose-type">'+["자유글","같이 읽어요","코멘트 공유","밸런스 게임"].map(function(label,i){return '<option value="'+i+'"'+(keys[i]===ty?' selected':'')+'>'+label+'</option>'}).join('')+'</select></div><div class="compose-field"><label for="compose-visibility">공개 범위</label><select id="compose-visibility">'+["전체 공개","친구 공개","나만 보기"].map(function(label,i){return '<option value="'+i+'"'+(i===vs?' selected':'')+'>'+label+'</option>'}).join('')+'</select></div></div>'
    +'<section class="compose-editor" aria-labelledby="compose-content-label"><label id="compose-content-label" class="compose-label" for="ct">내용</label><textarea id="ct" rows="8" placeholder="'+(ty==="같이"?"어떤 책을 함께 읽고 싶으신가요.":ty==="코멘트"?"책을 읽으며 어떤 생각이 들었나요.":ty==="밸런스"?"함께 고를 질문을 적어 주세요.":"오늘 나누고 싶은 이야기를 적어 주세요.")+'">'+esc(tx)+'</textarea></section>'
    +(ty!=="자유"?'<section class="bsr" aria-labelledby="compose-book-label"><h3 id="compose-book-label">함께 이야기할 책</h3><button type="button" class="compose-book-open" id="compose-book-open">'+(bk?'<span class="compose-book-cover" aria-hidden="true">'+(bk[3]>-1?coverSVG(bk[3],0,true,36,50):'<span style="background:'+bk[2]+'"></span>')+'</span><span class="bt"><b>'+esc(bk[0])+'</b><small>'+esc(bk[1])+'</small></span><span class="compose-book-change">변경</span>':'<span class="compose-book-plus" aria-hidden="true">+</span><span class="bt"><b>책 연결하기</b><small>책 제목이나 저자로 찾아요.</small></span>')+'</button></section>':"")
-   +(ty==="밸런스"?'<fieldset class="compose-poll"><legend>선택지</legend><label for="o0">선택지 A</label><input id="o0" placeholder="첫 번째 선택지를 적어 주세요" value="'+esc(o[0])+'"><label for="o1">선택지 B</label><input id="o1" placeholder="두 번째 선택지를 적어 주세요" value="'+esc(o[1])+'"></fieldset>':"")
+   +(ty==="밸런스"?'<fieldset class="compose-poll" aria-label="선택지"><label for="o0">선택지 A</label><input id="o0" placeholder="첫 번째 선택지를 적어 주세요" value="'+esc(o[0])+'"><label for="o1">선택지 B</label><input id="o1" placeholder="두 번째 선택지를 적어 주세요" value="'+esc(o[1])+'"></fieldset>':"")
    +'<p id="ce" role="status" aria-live="polite">'+msg+'</p></div>';
    document.getElementById("y").onclick=function(){sv();var t=tx.trim();
     if(!t){msg="내용을 입력해 주세요.";r();return}
