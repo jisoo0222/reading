@@ -3979,6 +3979,20 @@ body{font-size:var(--font-body)}
 #app .friend-search-actions button[data-action="request"]:disabled span{background:#E6EEE8;color:#34483B;border-color:#91A599}
 /* Service copy preserves the explicit boundary between complete sentences. */
 #app :is(.type-analysis p,.ax p,.account-status,.account-help,.consent-detail p,.hmr small,.ntx b,.tbx p,.mtp),#app #dlg>h3,#app #dlg .sm,#hn,#ptt{white-space:pre-line}
+/* 독서 성향 분석: 책장을 넘기는 짧은 대기 */
+#app .center.type-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;align-self:center;width:100%;max-width:360px;margin:auto 0;padding:32px 12px;min-height:320px;background:transparent;border-radius:0;text-align:center}
+#app .type-loading-art{width:200px;max-width:100%;margin-bottom:24px;perspective:500px}
+#app .type-loading-art svg{display:block;width:100%;height:auto;overflow:visible}
+#app .type-loading-page{transform-box:view-box;transform-origin:100px 88px;animation:type-page-turn 1.6s cubic-bezier(.4,0,.2,1) infinite}
+#app .type-loading h1{font-size:22px;line-height:1.5;color:var(--ink);word-break:keep-all}
+#app .type-loading .hint{font-size:14px;line-height:1.6;color:var(--sub);margin-top:8px}
+#app .type-loading-dots{display:flex;gap:8px;margin-top:24px;min-height:8px;align-items:center}
+#app .type-loading-dots i{width:6px;height:6px;border-radius:50%;background:var(--pri);animation:type-dot-breathe 1.2s ease-in-out infinite}
+#app .type-loading-dots i:nth-child(2){animation-delay:.15s}
+#app .type-loading-dots i:nth-child(3){animation-delay:.3s}
+@keyframes type-page-turn{0%,12%{transform:rotateY(0deg);opacity:0}22%{opacity:1}75%{transform:rotateY(-165deg);opacity:1}88%,100%{transform:rotateY(-165deg);opacity:0}}
+@keyframes type-dot-breathe{0%,100%{opacity:.35;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+@media(prefers-reduced-motion:reduce){#app .type-loading-page,#app .type-loading-dots i{animation:none!important;transform:none;opacity:1}#app .type-loading-page{display:none}}
 /* 직접 꾸미기: 그림과 도구를 분리한 작업대 */
 #app.craft-page>.sc{padding:0 20px calc(var(--nav-height,88px) + 20px)!important}
 #app.craft-page .craft-workbench{display:grid;gap:16px;padding-top:20px}
@@ -4056,8 +4070,11 @@ function ask(){
  nx.onclick=function(){step<Q.length-1?(step++,ask()):load()};
  document.getElementById("bk").onclick=function(){if(step){step--;ask()}else tiIntro()};
 }
+function personalityLoadingMarkup(profile){
+ return '<div class="center type-loading" role="status" aria-live="polite"><div class="type-loading-art" aria-hidden="true"><svg viewBox="0 0 200 160" fill="none"><ellipse cx="100" cy="140" rx="76" ry="7" fill="#DAEAE1"/><path d="M100 132C77 119 47 117 17 123V47C47 41 77 44 100 57C123 44 153 41 183 47V123C153 117 123 119 100 132Z" fill="#174D37"/><path d="M100 126C78 114 53 111 24 117V40C53 34 78 38 100 51Z" fill="#DAEAE1" stroke="#174D37" stroke-width="2" stroke-linejoin="round"/><path d="M100 126C122 114 147 111 176 117V40C147 34 122 38 100 51Z" fill="#FFFFFF" stroke="#174D37" stroke-width="2" stroke-linejoin="round"/><path d="M37 61C55 59 72 62 87 68M37 76C55 74 72 77 87 83M37 91C55 89 72 92 87 98M113 68C128 62 145 59 163 61M113 83C128 77 145 74 163 76M113 98C128 92 145 89 163 91" stroke="#6E917D" stroke-width="2" stroke-linecap="round"/><g class="type-loading-page"><path d="M100 126C122 114 147 111 176 117V40C147 34 122 38 100 51Z" fill="#EAF3ED" stroke="#174D37" stroke-width="2" stroke-linejoin="round"/><path d="M113 68C128 62 145 59 163 61M113 83C128 77 145 74 163 76M113 98C128 92 145 89 163 91" stroke="#6E917D" stroke-width="2" stroke-linecap="round"/></g><path d="M100 52V126" stroke="#174D37" stroke-width="2" stroke-linecap="round"/></svg></div><h1>독서 성향을 분석하고 있어요.</h1><p class="hint">답변을 바탕으로 '+(profile?'프로필을':'결과를')+' 만드는 중이에요.</p><div class="type-loading-dots" aria-hidden="true"><i></i><i></i><i></i></div></div>';
+}
 function load(){
- app.className="app signup signup-loading";app.innerHTML=signupHeader()+ost(3)+bar(Q.length)+'<div class="center" role="status"><div class="brand-loading" aria-hidden="true">'+brandLogoMarkup(false)+'</div><h1>독서 성향을 분석하고 있어요.</h1><p class="hint">답변을 바탕으로 프로필을 만드는 중이에요.</p></div>';
+ app.className="app signup signup-loading";app.innerHTML=signupHeader()+ost(3)+bar(Q.length)+personalityLoadingMarkup(true);
  setTimeout(result,1600);
 }
 function calcType(){
@@ -4092,7 +4109,7 @@ function testPg(n,a){
  var g=document.getElementById("tqg");g.disabled=a[n]===null;document.getElementById("tq0").onclick=function(){TFROM()};
  app.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){a[n]=+b.dataset.i;app.querySelectorAll(".opt").forEach(function(c){c.setAttribute("aria-pressed",c===b)});g.disabled=false}});
  g.onclick=function(){if(n<Q.length-1){testPg(n+1,a);return}
-  ans=a.slice();app.innerHTML='<div class="sh2 tsh"><h2>테스트</h2></div>'+bar(Q.length)+'<div class="center" role="status"><div class="ring"></div><h1>독서 성향을 분석하고 있어요.</h1><p class="hint">답변을 바탕으로 결과를 만드는 중이에요.</p></div>';setTimeout(testRes,1600)}}
+  ans=a.slice();app.innerHTML='<div class="sh2 tsh"><h2>테스트</h2></div>'+bar(Q.length)+personalityLoadingMarkup(false);setTimeout(testRes,1600)}}
 function testRes(){
  var c=calcType();RKEY=c.key;app.className="app type-result";
  app.innerHTML='<div class="sh2 tsh"><h2>테스트 결과</h2></div><div class="tcard">'+typeSVG(c.key,c.t,c.names)+'</div><div class="tbt tbc"><button class="tci" id="tsv">'+ic("dl")+'이미지 저장</button><button class="tci" id="tsh">'+ic("share")+'공유하기</button></div>'
