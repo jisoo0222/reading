@@ -3870,7 +3870,7 @@ body{font-size:var(--font-body)}
 #app.app .pxb{top:8px;right:8px}
 #app.app :is(#dlg,#sheet)>h3:first-of-type{padding-right:52px}
 /* 짧은 상태 전환과 실제 요청 중인 로딩만 움직여요. */
-#app.app:not(.rd):not(.spl):not(.onb)>.sc{animation:screen-soft-in .18s ease-out both}
+#app.app:not(.rd):not(.spl):not(.onb)>.sc[data-view-enter=true]{animation:screen-soft-in .18s ease-out both}
 #app.app #dlg,dialog[open]{animation:panel-soft-in .18s cubic-bezier(.2,.7,.25,1) both}
 #app.app #sheet.on{animation:panel-soft-in .22s cubic-bezier(.2,.7,.25,1) both}
 .app-loading{position:absolute;top:68px;right:20px;z-index:18;display:flex;align-items:center;gap:8px;max-width:calc(100% - 40px);padding:10px 12px;border:1px solid #B8CABC;border-radius:10px;background:#FFFFFF;color:#174D37;font:500 14px/1.5 Pretendard,sans-serif;pointer-events:none;box-shadow:0 3px 10px #174D3714;animation:screen-soft-in .16s ease-out both}
@@ -5594,11 +5594,12 @@ function vault(t,back){
  document.getElementById("vb0").onclick=function(){(back||profile)()};
 }
 var ih=Object.getOwnPropertyDescriptor(Element.prototype,"innerHTML");
-function wrap(){var sc=document.createElement("div"),k=[];sc.className="sc "+(app.classList.contains("hm")?"hm":app.classList.contains("rd")?"rdc":"");
+var uiRenderView='',uiLastScreen='',uiLastClasses='';
+function wrap(enter){var sc=document.createElement("div"),k=[];sc.className="sc "+(app.classList.contains("hm")?"hm":app.classList.contains("rd")?"rdc":"");sc.dataset.viewEnter=String(enter);
  Array.from(app.children).forEach(function(c){c.matches(".tab,.prg,.fx,.wfab,#ov,#sheet,.mn")?k.push(c):sc.appendChild(c)});
   ih.set.call(app,"");app.appendChild(sc);k.forEach(function(c){app.appendChild(c)});
   thm()}
-Object.defineProperty(app,"innerHTML",{set:function(h){ih.set.call(app,h);wrap()},get:function(){return ih.get.call(app)}});
+Object.defineProperty(app,"innerHTML",{set:function(h){var classes=Array.from(app.classList).filter(function(c){return c!=='has-concept-nav'}).join(' '),screen=uiRenderView?uiRenderView+'|'+classes:classes===uiLastClasses?uiLastScreen:'view|'+classes,enter=screen!==uiLastScreen;uiLastScreen=screen;uiLastClasses=classes;ih.set.call(app,h);wrap(enter)},get:function(){return ih.get.call(app)}});
 I.bm="M7 4h10v16l-5-4-5 4z";I.ul="M7 4v7a5 5 0 0 0 10 0V4M5 20h14";I.cmt="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-9l-4 3v-3H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM8 9h8M8 12h5";
 function q(t,c){return{t:t,c:c}}
 var PAGES=[
@@ -6486,7 +6487,7 @@ home=function(){
  var route={title:'',group:2},queued=false;
  var routes={library:['도서관',0],genrePg:['장르별 책',0],rankPg:['인기 급상승 오늘의 책',0],bookDt:['책 정보',0],lsearch:['책 검색',0],catPg:['분류별 책',0],themeList:['테마 독서',0],shop:['디지털 문구점',1],profile:['마이페이지',4],readPg:['읽은 책',4],shelfPg:['내 책장',4],likedPg:['찜한 책',4],quoteArchive:['문장 보관함',4],setPg:['설정',4],frList:['독서 메이트',4],inbox:['알림',4],community:['커뮤니티',3],loginPage:['로그인',null],signupAccount:['회원가입',null],info:['회원가입',null],goal:['회원가입',null],ask:['회원가입',null],tiIntro:['독서 성향',null],testPg:['독서 성향 테스트',null],typePg:['AI 독서 성향 분석',4],testRes:['테스트 결과',null],result:['독서 성향 결과',null]};
  function schedule(){if(queued)return;queued=true;(document.hidden?setTimeout:requestAnimationFrame)(function(){queued=false;adapt()})}
- Object.keys(routes).forEach(function(name){var fn=window[name];if(typeof fn!=='function')return;window[name]=function(){route={title:routes[name][0],group:routes[name][1]};var out=fn.apply(this,arguments);adapt();return out}});
+ Object.keys(routes).forEach(function(name){var fn=window[name];if(typeof fn!=='function')return;window[name]=function(){var previous=uiRenderView;uiRenderView=name;try{route={title:routes[name][0],group:routes[name][1]};var out=fn.apply(this,arguments);adapt();return out}finally{uiRenderView=previous}}});
  function adapt(){
   if(app.classList.contains('hm')||app.classList.contains('onb')||app.classList.contains('spl')||app.classList.contains('rd'))return;
   var sc=app.querySelector('.sc');if(!sc)return;
