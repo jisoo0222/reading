@@ -1,0 +1,4 @@
+[functions.delete-account]
+# 함수 안에서 Supabase Auth /user로 액세스 토큰을 검증해요.
+# 새 publishable key와도 작동하도록 Edge의 구형 JWT 게이트는 사용하지 않아요.
+verify_jwt = false
