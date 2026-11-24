@@ -3559,6 +3559,37 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.compose-page select:focus-visible{outline:3px solid #174D37;outline-offset:3px}
 @container(max-width:340px){#app.compose-page .compose-settings{grid-template-columns:1fr}}
 @container(max-height:760px){#app.compose-page .compose-form #ct{height:220px;min-height:200px}}
+/* 글쓰기는 한 장의 작성 영역, 책 검색은 별도 선택창으로 나눠요. */
+#app.compose-page .compose-paper{padding:20px;background:#FFF;border:1px solid #D7E0D9;border-radius:15px;min-width:0}
+#app.compose-page .compose-author{padding:0;margin-bottom:20px}
+#app.compose-page .compose-settings{padding:0 0 20px;margin:0;border:0;border-bottom:1px solid #D7E0D9;border-radius:0;gap:12px}
+#app.compose-page .compose-field label{font-weight:500;color:#4C6152}
+#app.compose-page .compose-form select{background:#FFF;padding:10px 8px;font-size:14px}
+#app.compose-page .compose-editor{padding:20px 0;margin:0;border:0;border-radius:0}
+#app.compose-page .compose-form #ct{height:240px;min-height:200px;resize:vertical}
+#app.compose-page .bsr{padding:16px 0 0;margin:0 0 16px;border:0;border-top:1px solid #D7E0D9;border-radius:0}
+#app.compose-page .bsr h3{margin:0 0 12px;font-size:14px;line-height:1.5;font-weight:600;color:#34483B}
+#app.compose-page .compose-book-open{width:100%;min-height:76px;display:flex;align-items:center;gap:12px;padding:12px;border:1px solid #AFBDB3;border-radius:10px;background:#F5F7F4;text-align:left;color:#174D37;cursor:pointer}
+#app.compose-page .compose-book-plus{display:grid;place-items:center;flex:none;width:36px;height:48px;font-size:26px;font-weight:400;background:#DAEAE1;border-radius:6px}
+#app.compose-page .compose-book-cover{position:relative;width:36px;height:50px;flex:none;display:block;overflow:hidden;border-radius:4px}
+#app.compose-page .compose-book-cover>svg,#app.compose-page .compose-book-cover>span{display:block;width:100%;height:100%}
+#app.compose-page .bt{display:flex;flex:1;flex-direction:column;gap:4px;min-width:0;word-break:keep-all;overflow-wrap:anywhere;white-space:normal}
+#app.compose-page .bt b{font-size:16px;line-height:1.5;color:#17241C}
+#app.compose-page .bt small{font-size:14px;line-height:1.5;color:#34483B}
+#app.compose-page .compose-book-change{font-size:14px;font-weight:600;flex:none}
+#app.compose-page .compose-poll{padding:16px;margin:0 0 16px;background:#F5F7F4}
+#app.compose-page #dlg.compose-book-picker{display:flex;flex-direction:column;width:calc(100% - 40px);max-height:calc(100% - 48px);padding:20px;border-radius:15px;overflow:hidden;background:#FFF}
+#app.compose-page .compose-picker-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex:none}
+#app.compose-page .compose-picker-head h3{font-size:20px;line-height:1.5;margin:0}
+#app.compose-page #compose-picker-close{display:grid;place-items:center;width:48px;height:48px;flex:none;border:0;border-radius:10px;background:#F5F7F4;color:#174D37}
+#app.compose-page #compose-picker-close svg{width:24px;height:24px}
+#app.compose-page .compose-picker-label{font-size:14px;line-height:1.5;margin-bottom:8px;color:#34483B;flex:none}
+#app.compose-page #dlg #bq{width:100%;min-width:0;min-height:52px;padding:12px;border:1px solid #91A599;border-radius:10px;background:#F5F7F4;color:#17241C;font:400 16px/1.5 Pretendard,sans-serif;flex:none}
+#app.compose-page #dlg .bls{overflow-y:auto;min-height:0;margin:16px 0 0;overscroll-behavior:contain}
+#app.compose-page #dlg .bsh{display:block;margin:0 0 12px;font-size:14px;line-height:1.5;color:#34483B}
+#app.compose-page #dlg .bsi{display:flex;width:100%;gap:12px;align-items:center;min-height:76px;padding:12px 0;border:0;border-bottom:1px solid #D7E0D9;background:#FFF;text-align:left}
+#app.compose-page .compose-book-choice{flex:none;font-size:22px;color:#174D37;padding:4px}
+@container(max-width:340px){#app.compose-page .compose-paper{padding:16px}#app.compose-page .compose-settings{grid-template-columns:1fr}}
 
 #app.onb .obp>.obi{width:100%;max-width:none;max-height:none;height:auto;min-height:210px;flex:1;margin:32px 0}
 #app.onb .obgo[hidden]{display:block!important;visibility:hidden;pointer-events:none}
@@ -5412,24 +5443,30 @@ function community(){
   else if(b.dataset.u){for(var i=0;i<M.length;i++)if(M[i][0]===b.dataset.u){if(inD){FCB=function(){ref()};friend(i,3)}else friend(i,2)}}}
  function compose(){
   if(!requireLogin('글을 쓰려면',function(){community();var b=app.querySelector('.wfab');if(b)b.click()}))return;
-  var ty="자유",bk,vs=0,tx="",o=["",""],msg="",d,bq="",bf=false;
+  var ty="자유",bk,vs=0,tx="",o=["",""],msg="",d,bq="";
   var CATB=LB.map(function(b,i){return[b[0],b[1],b[2],i]});RDB.forEach(function(b,k){if(!CATB.some(function(c){return c[0]===b[0]}))CATB.push([b[0],b[1],BC[k%3],-1])});
   function recent(){return RDB.slice(0,3).map(function(b){return CATB.filter(function(c){return c[0]===b[0]})[0]})}
   function blist(){var q=bq.trim().toLowerCase(),L,h;
-   if(bk&&!q)return"";
    if(!q){L=recent();h='<small class="bsh">최근에 읽은 책</small>'}
    else{L=CATB.filter(function(c){return(c[0]+c[1]).toLowerCase().indexOf(q)>-1}).slice(0,8);h=L.length?"":'<p class="bse">검색 결과가 없어요.</p>'}
-   return h+L.map(function(c){return'<button type="button" class="bsi" data-c="'+CATB.indexOf(c)+'"><span class="bc2" style="background:'+c[2]+'"></span><span class="bt"><b>'+esc(c[0])+'</b><small>'+esc(c[1])+'</small></span></button>'}).join("")}
-  function bsetl(){var e=document.getElementById("bl");if(e)e.innerHTML=bf||bq.trim()?blist():""}
+   return h+L.map(function(c){return'<button type="button" class="bsi" data-c="'+CATB.indexOf(c)+'"><span class="compose-book-cover" aria-hidden="true">'+(c[3]>-1?coverSVG(c[3],0,true,36,50):'<span style="background:'+c[2]+'"></span>')+'</span><span class="bt"><b>'+esc(c[0])+'</b><small>'+esc(c[1])+'</small></span><span class="compose-book-choice" aria-hidden="true">'+(bk===c?'✓':'+')+'</span></button>'}).join("")}
+  function pickBook(){sv();bq="";var trigger=document.getElementById("compose-book-open"),sc=app.querySelector('.sc'),scroll=sc?sc.scrollTop:0;
+   var close=pop('<div class="compose-picker-head"><h3 id="compose-picker-title">책 고르기</h3><button type="button" id="compose-picker-close" aria-label="책 고르기 닫기">닫기</button></div><label class="compose-picker-label" for="bq">책 제목이나 저자</label><input id="bq" type="search" placeholder="책 제목이나 저자로 찾기" autocomplete="off"><div id="bl" class="bls"></div><p id="compose-picker-count" class="compose-picker-label" role="status" aria-live="polite"></p>');
+   var dlg=document.getElementById("dlg"),overlay=document.getElementById("ov2"),input=document.getElementById("bq"),list=document.getElementById("bl");dlg.classList.add("compose-book-picker");dlg.setAttribute("aria-labelledby","compose-picker-title");
+   function done(){if(watch)watch.disconnect();close();app.removeEventListener("keydown",trap,true);app.removeEventListener("focusin",guard,true);if(sc&&sc.isConnected)sc.scrollTop=scroll;if(trigger&&trigger.isConnected)trigger.focus({preventScroll:true})}
+   function guard(e){if(!dlg.contains(e.target))input.focus({preventScroll:true})}
+   function trap(e){if(e.key==="Escape"){e.preventDefault();e.stopPropagation();done();return}if(e.key!=="Tab")return;var a=Array.from(dlg.querySelectorAll('button,input')).filter(function(el){return !el.disabled}),i=a.indexOf(document.activeElement);if(e.shiftKey&&i<=0){e.preventDefault();a[a.length-1].focus()}else if(!e.shiftKey&&i===a.length-1){e.preventDefault();a[0].focus()}}
+   document.getElementById("compose-picker-close").onclick=done;overlay.onclick=done;app.addEventListener("keydown",trap,true);app.addEventListener("focusin",guard,true);var watch=new MutationObserver(function(){if(!dlg.isConnected)done()});watch.observe(app,{childList:true});
+   input.oninput=function(){bq=input.value;list.innerHTML=blist();document.getElementById("compose-picker-count").textContent=list.querySelectorAll('.bsi').length+'권을 찾았어요.'};list.innerHTML=blist();list.onclick=function(e){var button=e.target.closest(".bsi");if(!button)return;bk=CATB[+button.dataset.c];msg="";done();r();document.getElementById("compose-book-open").focus({preventScroll:true});if(sc)sc.scrollTop=scroll};document.getElementById("compose-picker-close").focus({preventScroll:true})}
   function sv(){var a=document.getElementById("ct");if(a)tx=a.value;var p0=document.getElementById("o0");if(p0){o[0]=p0.value;o[1]=document.getElementById("o1").value}}
   function seg(l,k,arr,cur){return'<div class="sg"><b>'+l+'</b><div>'+arr.map(function(t,i){return'<button data-k="'+k+'" data-i="'+i+'" aria-pressed="'+(cur===i)+'">'+t+'</button>'}).join("")+'</div></div>'}
   var keys=["자유","같이","코멘트","밸런스"];
-  function r(){d.innerHTML='<div class="compose-author"><span class="compose-avatar" style="'+avS()+'" aria-hidden="true">'+(MEP?'':esc(ME||'나').charAt(0))+'</span><div><span class="compose-author-label">작성자</span><b>'+esc(ME||'내 프로필')+'</b></div></div>'
+  function r(){d.innerHTML='<div class="compose-paper"><div class="compose-author"><span class="compose-avatar" style="'+avS()+'" aria-hidden="true">'+(MEP?'':esc(ME||'나').charAt(0))+'</span><div><span class="compose-author-label">작성자</span><b>'+esc(ME||'내 프로필')+'</b></div></div>'
    +'<div class="compose-settings"><div class="compose-field"><label for="compose-type">글 종류</label><select id="compose-type">'+["자유글","같이 읽어요","코멘트 공유","밸런스 게임"].map(function(label,i){return '<option value="'+i+'"'+(keys[i]===ty?' selected':'')+'>'+label+'</option>'}).join('')+'</select></div><div class="compose-field"><label for="compose-visibility">공개 범위</label><select id="compose-visibility">'+["전체 공개","친구 공개","나만 보기"].map(function(label,i){return '<option value="'+i+'"'+(i===vs?' selected':'')+'>'+label+'</option>'}).join('')+'</select></div></div>'
-   +(ty!=="자유"?'<section class="bsr" aria-labelledby="compose-book-label"><label id="compose-book-label" for="bq">책 고르기</label><input id="bq" type="search" placeholder="책 제목이나 저자로 찾아보세요" autocomplete="off" value="'+esc(bk?bk[0]:bq)+'"><div id="bl" class="bls"></div></section>':"")
    +'<section class="compose-editor" aria-labelledby="compose-content-label"><label id="compose-content-label" class="compose-label" for="ct">내용</label><textarea id="ct" rows="8" placeholder="'+(ty==="같이"?"어떤 책을 함께 읽고 싶으신가요.":ty==="코멘트"?"책을 읽으며 어떤 생각이 들었나요.":ty==="밸런스"?"함께 고를 질문을 적어 주세요.":"오늘 나누고 싶은 이야기를 적어 주세요.")+'">'+esc(tx)+'</textarea></section>'
+   +(ty!=="자유"?'<section class="bsr" aria-labelledby="compose-book-label"><h3 id="compose-book-label">함께 이야기할 책</h3><button type="button" class="compose-book-open" id="compose-book-open">'+(bk?'<span class="compose-book-cover" aria-hidden="true">'+(bk[3]>-1?coverSVG(bk[3],0,true,36,50):'<span style="background:'+bk[2]+'"></span>')+'</span><span class="bt"><b>'+esc(bk[0])+'</b><small>'+esc(bk[1])+'</small></span><span class="compose-book-change">변경</span>':'<span class="compose-book-plus" aria-hidden="true">+</span><span class="bt"><b>책 연결하기</b><small>책 제목이나 저자로 찾아요.</small></span>')+'</button></section>':"")
    +(ty==="밸런스"?'<fieldset class="compose-poll"><legend>선택지</legend><label for="o0">선택지 A</label><input id="o0" placeholder="첫 번째 선택지를 적어 주세요" value="'+esc(o[0])+'"><label for="o1">선택지 B</label><input id="o1" placeholder="두 번째 선택지를 적어 주세요" value="'+esc(o[1])+'"></fieldset>':"")
-   +'<p id="ce" role="status" aria-live="polite">'+msg+'</p>';
+   +'<p id="ce" role="status" aria-live="polite">'+msg+'</p></div>';
    document.getElementById("y").onclick=function(){sv();var t=tx.trim();
     if(!t){msg="내용을 입력해 주세요.";r();return}
     if(ty!=="자유"&&!bk){msg="책을 골라 주세요.";r();return}
@@ -5438,12 +5475,7 @@ function community(){
     PO.unshift(np);community()};
    document.getElementById("compose-type").onchange=function(){sv();msg="";ty=keys[+this.value];r()};
    document.getElementById("compose-visibility").onchange=function(){sv();vs=+this.value;msg="";r()};
-   var bqi=document.getElementById("bq");
-   if(bqi){bqi.onfocus=function(){bf=true;bsetl()};bqi.onblur=function(){bf=false;bsetl()};
-    bqi.oninput=function(){bk=null;bq=bqi.value;bf=true;bsetl()};
-    var bl=document.getElementById("bl");
-    bl.onpointerdown=function(e){e.preventDefault()};
-    bl.onclick=function(e){var b=e.target.closest(".bsi");if(!b)return;sv();bk=CATB[+b.dataset.c];bq="";bf=false;msg="";r()}}}
+   var open=document.getElementById("compose-book-open");if(open)open.onclick=pickBook}
   app.className="app community compose-page";app.innerHTML='<header class="sh2"><button class="ib" id="compose-back" aria-label="뒤로">'+ic("back")+'</button><h2>글쓰기</h2><span class="compose-head-spacer" aria-hidden="true"></span></header><div class="compose-form" id="compose-form"></div><footer class="fx compose-footer"><button class="compose-submit" id="y" type="button">등록</button></footer>';d=document.getElementById("compose-form");d.addEventListener("focusin",function(e){var target=e.target;if(!target.matches("input,textarea,select"))return;setTimeout(function(){if(target.isConnected)target.scrollIntoView({block:"nearest",behavior:"auto"})},0)});document.getElementById("compose-back").onclick=community;r()}
  function act(){
   var x=pop('<h3>내 활동</h3><div class="sg"><div><button data-a="1" aria-pressed="true">내가 쓴 댓글</button><button data-a="2" aria-pressed="false">좋아요 누른 글</button></div></div><div id="al"></div><button class="btn ghost" id="n" style="width:100%;margin-top:12px;flex:none">닫기</button>');
