@@ -599,6 +599,22 @@ html,body{background:#2B242D}
 #dlg.fdl #fa>span{display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:2px 12px;border:1.5px solid var(--pri);border-radius:inherit;line-height:1.5}
 #dlg.fdl #fa[aria-pressed="true"]>span{background:var(--pri);color:var(--onpri)}
 #dlg.fdl #fa.rq>span{border-style:dashed;border-color:var(--sub);color:var(--sub)}
+#app #dlg.fdl{padding:0 20px 20px;background:var(--card);border-radius:15px!important}
+#dlg.fdl .friend-profile-top{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px;border-bottom:1px solid var(--line);font-size:18px;font-weight:700}
+#dlg.fdl .friend-profile-top .ib{min-width:48px;min-height:48px;margin-right:-12px}
+#dlg.fdl .friend-profile-intro{display:flex;flex-direction:column;align-items:center;gap:12px;padding:24px 0 20px;text-align:center;border-bottom:1px solid var(--line)}
+#dlg.fdl .friend-profile-intro .av2{width:72px;height:72px;min-height:72px;flex:none;margin:0;font-size:26px;border-radius:50%}
+#dlg.fdl .friend-profile-name{width:100%;min-width:0;margin:0;font-size:23px;font-weight:750;line-height:1.4;word-break:keep-all;overflow-wrap:anywhere}
+#dlg.fdl .friend-profile-actions{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 12px;width:100%;min-width:0}
+#dlg.fdl .friend-profile-match{display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;min-height:32px;padding:4px 12px;border-radius:10px;background:var(--soft);color:var(--pri);font-size:14px;line-height:1.5}
+#dlg.fdl .friend-profile-genres{justify-content:center;flex-wrap:wrap;margin:0;gap:8px}
+#dlg.fdl .fs .fsh{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+#dlg.fdl .fsr{flex-wrap:wrap;max-width:100%}
+#dlg.fdl .fpo{padding:16px;border:1px solid var(--line);border-radius:12px;background:var(--bg);margin:0 0 12px}
+#dlg.fdl #fa.fadd{max-width:100%;white-space:normal}
+#dlg.fdl #fa>span{max-width:100%;word-break:keep-all;overflow-wrap:anywhere}
+#app #dlg.fdl .fs{margin:16px 0 0!important;padding:0!important;border:0!important;border-radius:0;background:transparent!important;box-shadow:none}
+#app #dlg.fdl .fpo{background:var(--bg)!important}
 .app.hm .blk{margin-top:20px}.app.hm .blk.hdt{margin-top:12px}.app.hm .blk.rblk{margin-top:32px}.sc.hm{padding-bottom:64px}
 .mts .mate{padding:12px 8px 10px}.mts .mate .p{width:40px;height:40px;margin-bottom:6px}
 .app.hm .cp{height:52px}.app.hm #sts .box{padding:10px 12px}
@@ -4488,16 +4504,16 @@ function lk(v){return'<svg class="ic l'+v+'" viewBox="0 0 24 24" aria-hidden="tr
 function friend(i,pf){
  var m=M[i],n=m[0],P=PF[n],fr0=!!FR[n];
  function sec(t,v,h,x){var ok=v===2||(v===1&&FR[n]);return'<section class="fs"><div class="fsh"><h3>'+t+'</h3><span class="fsr"><span class="lkt l'+v+'">'+lk(v)+VL[v]+'</span>'+(ok&&x?x:'')+'</span></div>'+(ok?h:'<div class="lkb">'+lk(v)+'<span>'+(v===0?"나만 볼 수 있어요.":"친구에게만 공개돼요.")+'</span></div>')+'</section>'}
- var HF=[128,112,136,120,104,132],shelf=P.b.length?'<div class="sfw fsf" role="list" aria-label="'+n+' 님의 책장">'+(function(){var r=[],h="";for(var q=0;q<P.b.length;q+=5)r.push(P.b.slice(q,q+5));return r.map(function(row,ri){return'<div class="sfr"><div class="sfb">'+row.map(function(t,j){var k=ri*5+j,lt=k%3===2;return'<span class="sfs" role="listitem" data-st="'+esc(t)+'" style="height:'+HF[k%6]+'px;background:'+BC[k%3]+';color:'+(lt?"#4F3A4F":"#F6F1EC")+'"><span>'+t+'</span></span>'}).join("")+'</div><i class="sfl"></i></div>'}).join("")})()+'</div>':'<p class="sm" style="color:var(--sub)">아직 책장에 책이 없어요.</p>';
  /* 친구의 커뮤니티 글: 글마다 공개 범위를 지키고, 누르면 커뮤니티에서 그 글을 열어요 */
- var FP=PO.filter(function(p){return p.u===n&&!p.mine&&(p.v===0||(p.v===1&&FR[n]))});
- var posts=FP.length?FP.slice(0,2).map(function(p){var bk=p.b!==undefined?LB[p.b]:p.bt;return'<button class="pst fpo" data-pid="'+p.id+'"><span class="fpt"><em>'+TN[p.t]+'</em><small>'+p.tm+'</small></span><span class="fpx">'+esc(p.x)+'</span>'+(bk?'<span class="fpb">'+ic("book")+esc(bk[0])+'</span>':'')+'<span class="fpa">'+ic("heart")+p.l+ic("chat")+p.c.length+'</span></button>'}).join(""):'<p class="sm" style="color:var(--sub)">아직 쓴 글이 없어요.</p>';
  var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d.className="fdl";d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-label",n+" 프로필");
  function x(){o.remove();d.remove();if(typeof pf==="function"){pf();return}if(pf===4){matePop(BT);return}if(!!FR[n]!==fr0){if(pf===1)profile();else if(pf===2)community();else if(pf===3&&typeof FCB==="function")FCB()}}
  function main(){var fr=!!FR[n];
-  d.innerHTML='<section class="box pbx"><div class="pbt"><button class="av2" id="ph" aria-label="'+n+' 프로필 사진 크게 보기" style="background:'+m[2]+'">'+n.charAt(0)+'</button><div class="pnm"><h2>'+n+'</h2><small>취향 일치도 '+m[1]+'%</small></div><button class="fadd'+(!fr&&FRIEND_REQ[n]?" rq":"")+'" id="fa" aria-pressed="'+fr+'">' +'<span>'+(fr?"친구 추가됨":FRIEND_REQ[n]?"신청 중":"친구 추가 +")+'</span></button></div></section>'
-   +sec(n+" 님의 책장",P.sv,shelf)+sec(n+" 님의 글",P.pv,posts,FP.length?'<button class="pme" id="fpall">전체 보기'+ic("next")+'</button>':"")+'<button class="btn ghost" id="fcl" style="width:100%;margin-top:16px">닫기</button>';
+ var FP=PO.filter(function(p){return p.u===n&&!p.mine&&(p.v===0||(p.v===1&&FR[n]))});
+ var posts=FP.length?FP.slice(0,2).map(function(p){var bk=p.b!==undefined?LB[p.b]:p.bt;return'<button class="pst fpo" data-pid="'+p.id+'"><span class="fpt"><em>'+TN[p.t]+'</em><small>'+p.tm+'</small></span><span class="fpx">'+esc(p.x)+'</span>'+(bk?'<span class="fpb">'+ic("book")+esc(bk[0])+'</span>':'')+'<span class="fpa">'+ic("heart")+p.l+ic("chat")+p.c.length+'</span></button>'}).join(""):'<p class="sm" style="color:var(--sub)">아직 쓴 글이 없어요.</p>';
+  d.innerHTML='<header class="friend-profile-top"><span>프로필</span><button class="ib" id="friend-profile-close" aria-label="프로필 닫기">'+ic("close")+'</button></header><section class="friend-profile-intro"><button class="av2" id="ph" aria-label="'+n+' 프로필 사진 크게 보기" style="background:'+m[2]+'">'+n.charAt(0)+'</button><h2 class="friend-profile-name">'+esc(n)+'</h2><div class="friend-profile-actions"><span class="friend-profile-match">취향 일치도 <strong>'+m[1]+'%</strong></span><button class="fadd'+(!fr&&FRIEND_REQ[n]?" rq":"")+'" id="fa" aria-pressed="'+fr+'"><span>'+(fr?"친구 추가됨":FRIEND_REQ[n]?"신청 중":"친구 추가 +")+'</span></button></div><div class="chips friend-profile-genres">'+chips(P.g,1)+'</div></section>'
+   +sec("작성한 글",P.pv,posts,FP.length?'<button class="pme" id="fpall">전체 보기'+ic("next")+'</button>':"")+'<button class="btn ghost" id="fcl" style="width:100%;margin-top:16px">닫기</button>';
   document.getElementById("fcl").onclick=x;
+  document.getElementById("friend-profile-close").onclick=x;
   function leave(){o.remove();d.remove();var pd=document.getElementById("dlg");if(pd)pd.remove();var po=document.getElementById("ov2");if(po)po.remove()}
   d.querySelectorAll(".fpo").forEach(function(b){b.onclick=function(){leave();OPENP=+b.dataset.pid;community()}});
   var fpa=document.getElementById("fpall");if(fpa)fpa.onclick=function(){leave();CU=n;community()};
@@ -4512,6 +4528,7 @@ function friend(i,pf){
  main();document.getElementById("fcl").focus()
 }
 I.check="M5 12l5 5 9-10";
+I.close="M6 6l12 12M18 6L6 18";
 var MYT=["#슬로우리더","#논리·분석","#재미형"],MYX=["#소설","#에세이","#새벽독서"],ME="",MEP="",PRIV=0,SHB=[0,1,2,3,4,5,6],SHMAX=24;
 var DEFAULT_PROFILE_NAME="User";
 function profileNickname(){return typeof ME==="string"&&ME.trim()?ME:""}
