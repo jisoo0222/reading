@@ -602,13 +602,13 @@ html,body{background:#2B242D}
 #app #dlg.fdl{padding:0 20px 20px;background:var(--card);border-radius:15px!important}
 #dlg.fdl .friend-profile-top{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px;border-bottom:1px solid var(--line);font-size:18px;font-weight:700}
 #dlg.fdl .friend-profile-top .ib{min-width:48px;min-height:48px;margin-right:-12px}
-#dlg.fdl .friend-profile-intro{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:center;column-gap:16px;row-gap:12px;padding:24px 0 20px;text-align:left;border-bottom:1px solid var(--line)}
+#dlg.fdl .friend-profile-intro{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:center;align-content:start;column-gap:16px;row-gap:4px;padding:24px 0 20px;text-align:left;border-bottom:1px solid var(--line)}
 #dlg.fdl .friend-profile-intro .av2{width:72px;height:72px;min-height:72px;flex:none;margin:0;font-size:26px;border-radius:50%}
-#dlg.fdl .friend-profile-name{grid-column:2;width:100%;min-width:0;margin:0;font-size:23px;font-weight:750;line-height:1.4;word-break:keep-all;overflow-wrap:anywhere}
+#dlg.fdl .friend-profile-title{grid-column:2;display:flex;align-items:center;flex-wrap:wrap;gap:4px 8px;min-width:0}
+#dlg.fdl .friend-profile-name{flex:1;min-width:0;margin:0;font-size:23px;font-weight:750;line-height:1.4;word-break:keep-all;overflow-wrap:anywhere}
 #dlg.fdl .friend-profile-intro .av2{grid-row:1 / 3;align-self:start}
 #dlg.fdl .friend-profile-actions{grid-column:2;display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:8px 12px;width:100%;min-width:0}
 #dlg.fdl .friend-profile-match{display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;min-height:32px;padding:4px 12px;border-radius:10px;background:var(--soft);color:var(--pri);font-size:14px;line-height:1.5}
-#dlg.fdl .friend-profile-genres{grid-column:1 / -1;justify-content:flex-start;flex-wrap:wrap;margin:0;gap:8px}
 #dlg.fdl .friend-posts-label{display:flex;align-items:center;flex-wrap:wrap;gap:8px;min-width:0}
 #dlg.fdl .friend-posts-label .lkt{font-size:14px;font-weight:500}
 #dlg.fdl .fs .fsh{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:12px}
@@ -3979,6 +3979,27 @@ body{font-size:var(--font-body)}
 #app .friend-search-actions button[data-action="request"]:disabled span{background:#E6EEE8;color:#34483B;border-color:#91A599}
 /* Service copy preserves the explicit boundary between complete sentences. */
 #app :is(.type-analysis p,.ax p,.account-status,.account-help,.consent-detail p,.hmr small,.ntx b,.tbx p,.mtp),#app #dlg>h3,#app #dlg .sm,#hn,#ptt{white-space:pre-line}
+/* 직접 꾸미기: 그림과 도구를 분리한 작업대 */
+#app.craft-page>.sc{padding:0 20px calc(var(--nav-height,88px) + 20px)!important}
+#app.craft-page .craft-workbench{display:grid;gap:16px;padding-top:20px}
+#app.craft-page .cvw{flex:none;width:100%;aspect-ratio:4 / 3;min-height:220px;margin:0;border:1.5px solid #526A5B;border-radius:15px;background:#FFFFFF}
+#app.craft-page .tls{position:static;display:grid;gap:16px;padding:12px;border:1px solid var(--line);border-radius:15px;background:var(--card)}
+#app.craft-page .craft-toolrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#app.craft-page .tlb{display:flex;flex-direction:column;justify-content:center;gap:4px;width:100%;min-height:64px;height:auto;padding:6px 2px;border:1.5px solid transparent;border-radius:10px;font:600 14px/1.5 Pretendard,sans-serif;color:var(--sub)}
+#app.craft-page .tlb>.ic{width:24px!important;height:24px!important}
+#app.craft-page .tlb[aria-pressed="true"]{border-color:var(--pri);background:var(--soft);color:var(--pri)}
+#app.craft-page .craft-colors h3,#app.craft-page #pwlabel{display:block;font-size:14px;font-weight:600;color:var(--ink)}
+#app.craft-page .craft-palette{display:grid;grid-template-columns:repeat(5,minmax(48px,1fr));gap:3px;margin-top:4px}
+#app.craft-page .tlc{display:grid;place-items:center;width:100%;min-height:48px;height:auto;margin:0;padding:0;border:1.5px solid transparent;border-radius:10px;background:transparent}
+#app.craft-page .tlc>span{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--swatch);border:1px solid #526A5B}
+#app.craft-page .tlc[aria-pressed="true"]{outline:none;border-color:var(--pri);background:var(--soft)}
+#app.craft-page .tlc[aria-pressed="true"]>span::after{content:"";width:8px;height:13px;border:solid #FFFFFF;border-width:0 2px 2px 0;transform:rotate(45deg);filter:drop-shadow(0 1px 1px #17241C)}
+#app.craft-page .pwb{position:static;transform:none;display:grid;gap:4px;padding:0;border:0;border-radius:0;box-shadow:none;background:transparent}
+#app.craft-page .craft-size{display:grid;grid-template-columns:28px minmax(0,1fr) 32px;align-items:center;gap:12px;min-height:48px}
+#app.craft-page .pwd{justify-self:center;margin:0}
+#app.craft-page .pwb input{writing-mode:horizontal-tb;direction:ltr;appearance:auto;width:100%;height:48px;min-width:0;margin:0;padding:0;background:transparent;accent-color:var(--pri)}
+#app.craft-page #pwn{font-size:14px;font-weight:600;text-align:center;color:var(--sub)}
+#app.craft-page .craft-save{min-height:56px;flex:none;width:100%;border-radius:12px}
 /* 검색창은 입력칸 또는 검색 묶음의 바깥에 테두리를 한 번만 표시해요. */
 :root{--search-stroke:#526A5B}
 #app.rd.night{--search-stroke:#A8E5B7}
@@ -4518,7 +4539,7 @@ function friend(i,pf){
  function main(){var fr=!!FR[n];
  var FP=PO.filter(function(p){return p.u===n&&!p.mine&&(p.v===0||(p.v===1&&FR[n]))});
  var posts=FP.length?FP.slice(0,2).map(function(p){var bk=p.b!==undefined?LB[p.b]:p.bt;return'<button class="pst fpo" data-pid="'+p.id+'"><span class="fpt"><em>'+TN[p.t]+'</em><small>'+p.tm+'</small></span><span class="fpx">'+esc(p.x)+'</span>'+(bk?'<span class="fpb">'+ic("book")+esc(bk[0])+'</span>':'')+'<span class="fpa">'+ic("heart")+p.l+ic("chat")+p.c.length+'</span></button>'}).join(""):'<p class="sm" style="color:var(--sub)">아직 쓴 글이 없어요.</p>';
-  d.innerHTML='<header class="friend-profile-top"><span>프로필</span><button class="ib" id="friend-profile-close" aria-label="프로필 닫기">'+ic("close")+'</button></header><section class="friend-profile-intro"><button class="av2" id="ph" aria-label="'+n+' 프로필 사진 크게 보기" style="background:'+m[2]+'">'+n.charAt(0)+'</button><h2 class="friend-profile-name">'+esc(n)+'</h2><div class="friend-profile-actions"><span class="friend-profile-match">취향 일치도 <strong>'+m[1]+'%</strong></span><button class="fadd'+(!fr&&FRIEND_REQ[n]?" rq":"")+'" id="fa" aria-pressed="'+fr+'"><span>'+(fr?"친구 추가됨":FRIEND_REQ[n]?"신청 중":"친구 추가 +")+'</span></button></div><div class="chips friend-profile-genres">'+chips(P.g,1)+'</div></section>'
+  d.innerHTML='<header class="friend-profile-top"><span>프로필</span><button class="ib" id="friend-profile-close" aria-label="프로필 닫기">'+ic("close")+'</button></header><section class="friend-profile-intro"><button class="av2" id="ph" aria-label="'+n+' 프로필 사진 크게 보기" style="background:'+m[2]+'">'+n.charAt(0)+'</button><div class="friend-profile-title"><h2 class="friend-profile-name">'+esc(n)+'</h2><button class="fadd'+(!fr&&FRIEND_REQ[n]?" rq":"")+'" id="fa" aria-pressed="'+fr+'"><span>'+(fr?"친구 추가됨":FRIEND_REQ[n]?"신청 중":"친구 추가 +")+'</span></button></div><div class="friend-profile-actions"><span class="friend-profile-match">취향 일치도 <strong>'+m[1]+'%</strong></span></div></section>'
    +sec("작성한 글",P.pv,posts,FP.length?'<button class="pme" id="fpall">전체 보기'+ic("next")+'</button>':"")+'<button class="btn ghost" id="fcl" style="width:100%;margin-top:16px">닫기</button>';
   document.getElementById("fcl").onclick=x;
   document.getElementById("friend-profile-close").onclick=x;
@@ -4796,16 +4817,16 @@ function shop(){
 }
 function pop(h){var o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d._a11yReturn=document.activeElement;d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.innerHTML=h;if(/<h3>[^<]*(할까요|하시겠어요|않을까요)\?/.test(h)){d.classList.add("wrn");var wi=document.createElement("span");wi.className="wri";wi.setAttribute("aria-hidden","true");wi.innerHTML='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.3v.2"/></svg>';d.insertBefore(wi,d.firstChild)}function x(){o.remove();d.remove()}o.onclick=x;app.appendChild(o);app.appendChild(d);d.onkeydown=function(e){if(e.key==="Escape")x()};return x}
 function craft(){
- app.className="app";
+ app.className="app craft-page";
  var cl=["#4F3A4F"].concat(COL.slice(0,4)),col=cl[0],er=false;
- app.innerHTML='<div class="sh2"><button class="ib" id="cb" aria-label="뒤로">'+ic("back")+'</button><h2>직접 꾸미기</h2><button class="fadd" id="cs">저장</button></div><div class="cvw" id="cw"><svg class="gpb" aria-hidden="true"><defs><pattern id="gpc" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" fill="none" stroke="currentColor" stroke-width="1" opacity=".3"/></pattern></defs><rect width="100%" height="100%" fill="url(#gpc)"/></svg><canvas id="cv" aria-label="그림 그리는 영역"></canvas><div class="tls"><button class="tlb" data-t="p" aria-label="펜" aria-pressed="true">'+ic("pen")+'</button><button class="tlb" data-t="e" aria-label="지우개" aria-pressed="false">'+ic("eraser")+'</button>'+cl.map(function(c,k){return'<button class="tlc" data-k="'+k+'" style="background:'+c+'" aria-label="색상 '+(k+1)+'" aria-pressed="'+(k===0)+'"></button>'}).join("")+'<button class="tlb" data-t="c" aria-label="모두 지우기">'+ic("trash")+'</button></div><div class="pwb" id="pwb"><i class="pwd" id="pwd"></i><input type="range" id="pwr" min="1" max="24" step="1" value="3" aria-label="펜 굵기"><small id="pwn">3</small></div></div>';
- var cv=document.getElementById("cv"),r=document.getElementById("cw").getBoundingClientRect();cv.width=r.width;cv.height=r.height;
+ app.innerHTML='<div class="sh2"><button class="ib" id="cb" aria-label="뒤로">'+ic("back")+'</button><h2>직접 꾸미기</h2><span class="sp3" aria-hidden="true"></span></div><div class="craft-workbench"><div class="cvw" id="cw"><canvas id="cv" aria-label="그림 그리는 영역"></canvas></div><section class="tls craft-tools" aria-label="그리기 도구"><div class="craft-toolrow"><button class="tlb" data-t="p" aria-pressed="true">'+ic("pen")+'<span>펜</span></button><button class="tlb" data-t="e" aria-pressed="false">'+ic("eraser")+'<span>지우개</span></button><button class="tlb" data-t="c">'+ic("trash")+'<span>모두 지우기</span></button></div><div class="craft-colors"><h3>색상</h3><div class="craft-palette">'+cl.map(function(c,k){return'<button class="tlc" data-k="'+k+'" style="--swatch:'+c+'" aria-label="색상 '+(k+1)+'" aria-pressed="'+(k===0)+'"><span aria-hidden="true"></span></button>'}).join("")+'</div></div><div class="pwb" id="pwb"><label for="pwr" id="pwlabel">펜 굵기</label><div class="craft-size"><i class="pwd" id="pwd" aria-hidden="true"></i><input type="range" id="pwr" min="1" max="24" step="1" value="3" aria-label="펜 굵기"><output id="pwn" for="pwr">3</output></div></div></section><button class="btn craft-save" id="cs">저장</button></div>';
+ var cv=document.getElementById("cv"),r=cv.getBoundingClientRect();cv.width=cv.clientWidth;cv.height=cv.clientHeight;
  var x=cv.getContext("2d"),dn=false,lx=0,ly=0,pw=3,ew=16;x.lineCap="round";x.lineJoin="round";
  /* 굵기 바: 펜과 지우개 굵기를 따로 기억해요 */
  var pwr=document.getElementById("pwr"),pwd=document.getElementById("pwd"),pwn=document.getElementById("pwn");
- function pwu(){var v=er?ew:pw;pwr.min=er?6:1;pwr.max=er?48:24;pwr.value=v;pwn.textContent=v;var d=Math.min(26,Math.max(3,v));pwd.style.width=pwd.style.height=d+"px";pwd.style.background=er?"var(--card)":col;pwd.style.borderColor=er?"var(--sub)":col;pwr.setAttribute("aria-label",er?"지우개 굵기":"펜 굵기")}
+ function pwu(){var v=er?ew:pw;pwr.min=er?6:1;pwr.max=er?48:24;pwr.value=v;pwn.textContent=v;var d=Math.min(26,Math.max(3,v));pwd.style.width=pwd.style.height=d+"px";pwd.style.background=er?"var(--card)":col;pwd.style.borderColor=er?"var(--sub)":col;pwr.setAttribute("aria-label",er?"지우개 굵기":"펜 굵기");document.getElementById("pwlabel").textContent=er?"지우개 굵기":"펜 굵기"}
  pwr.oninput=function(){if(er)ew=+pwr.value;else pw=+pwr.value;pwu()};pwu();
- function ps(e){var b=cv.getBoundingClientRect();return[e.clientX-b.left,e.clientY-b.top]}
+ function ps(e){var b=cv.getBoundingClientRect();return[(e.clientX-b.left)*cv.width/b.width,(e.clientY-b.top)*cv.height/b.height]}
  var dirty=false;cv.onpointerdown=function(e){dn=true;dirty=true;var p=ps(e);lx=p[0];ly=p[1];cv.setPointerCapture(e.pointerId)};
  cv.onpointermove=function(e){if(!dn)return;var p=ps(e);x.globalCompositeOperation=er?"destination-out":"source-over";x.strokeStyle=col;x.lineWidth=er?ew:pw;x.beginPath();x.moveTo(lx,ly);x.lineTo(p[0],p[1]);x.stroke();lx=p[0];ly=p[1]};
  cv.onpointerup=cv.onpointercancel=function(){dn=false};
