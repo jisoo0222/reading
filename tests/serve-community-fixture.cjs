@@ -20,7 +20,7 @@ async function start(){const db=new PGlite();
   res.setHeader('Cache-Control','no-store');
   if(req.url==='/'||req.url==='/Reading_app.html'){
    let html=fs.readFileSync(path.join(root,'Reading_app.html'),'utf8');const index=html.lastIndexOf('sbBootstrap();');
-   const fixture=`sessionStorage.setItem(DDOK_AGE_KEY,'14plus');SB_CONFIG.url='http://127.0.0.1:${port}';SB_CONFIG.key='test-only';SB_SESSION={access_token:'test-A',refresh_token:'test-refresh',expires_at:9999999999,user:{id:'${a}'}};AUTH_SESSION={signedIn:true,provider:'supabase'};ME='검증용 독자A';MEP='';window.TEST_USERS={A:'${a}',B:'${b}',M:'${mod}'};community();`;
+   const fixture=`SB_CONFIG.url='http://127.0.0.1:${port}';SB_CONFIG.key='test-only';SB_SESSION={access_token:'test-A',refresh_token:'test-refresh',expires_at:9999999999,user:{id:'${a}'}};AUTH_SESSION={signedIn:true,provider:'supabase'};ME='검증용 독자A';MEP='';window.TEST_USERS={A:'${a}',B:'${b}',M:'${mod}'};community();`;
    html=html.slice(0,index)+fixture+html.slice(index+'sbBootstrap();'.length);res.setHeader('Content-Type','text/html;charset=utf-8');res.end(html);return;
   }
   if(req.url==='/__state'){await db.exec('reset role');const r=await db.query("select (select count(*) from public.ddok_reports)::int reports,(select count(*) from public.ddok_blocks)::int blocks,(select count(*) from public.ddok_posts)::int posts");res.setHeader('Content-Type','application/json');res.end(JSON.stringify(r.rows[0]));return;}
