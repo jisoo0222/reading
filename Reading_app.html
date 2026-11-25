@@ -3054,6 +3054,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.archive-page .quote-source,#app.archive-page .quote-entry>small{color:#34483B}
 #app:not(.hm) .stpg .drow{padding:20px;margin-bottom:12px;color:#17241C;min-height:58px}
 #app:not(.hm) .stpg h4{font-size:16px;font-weight:750;color:#17241C;margin:20px 0 12px}
+#app .stpg .settings-version{margin:24px 0 0;text-align:center;color:var(--tx3);font-size:14px}
 #app:not(.hm) :is(#dlg,#sheet){background:#FFFFFF;border:0;border-radius:20px;color:#17241C}
 #app:not(.hm) :is(#dlg,#sheet) h3{font-weight:750;color:#17241C}
 #app:not(.hm) .alr{padding:16px;margin-bottom:12px}
@@ -5460,7 +5461,7 @@ function setPg(){
  var PV=[["수집하는 정보","독서 기록, 코멘트, 프로필 설정처럼 서비스를 제공하는 데 필요한 최소한의 정보만 수집해요."],["이용 목적","맞춤 책 추천, 독서 메이트 연결, 독서 기록 정리를 위해 사용해요."],["보관과 삭제","이용자가 요청하거나 탈퇴하면 관련 정보를 지체 없이 삭제해요."]];
  function art(a){return a.map(function(x){return'<p class="sm"><b>'+x[0]+'</b><br><span style="color:var(--sub);font-size:14px">'+x[1]+'</span></p>'}).join("")}
  var note='<p class="dnote">※ 샘플 문구예요.<br>실제 서비스에서는 확정된 내용으로 교체해야 해요.</p>';
- function r(){app.innerHTML='<div class="sh2"><button class="ib" id="dcl" aria-label="뒤로">'+ic("back")+'</button><h2>설정</h2><span class="sp3"></span></div><div class="drw stpg"><h4>알림</h4><button class="drow" data-a="al">알림 설정'+ic("next")+'</button><h4>정보</h4><button class="drow" data-a="nt">공지사항'+ic("next")+'</button><button class="drow" data-a="tm">이용약관'+ic("next")+'</button><button class="drow" data-a="pv">개인정보 처리방침'+ic("next")+'</button><button class="drow" data-a="cs">고객센터'+ic("next")+'</button><p class="dnote" style="text-align:center;margin-top:8px">버전 1.0.0</p></div>';var d=app;
+ function r(){app.innerHTML='<div class="sh2"><button class="ib" id="dcl" aria-label="뒤로">'+ic("back")+'</button><h2>설정</h2><span class="sp3"></span></div><div class="drw stpg"><h4>알림</h4><button class="drow" data-a="al">알림 설정'+ic("next")+'</button><h4>정보</h4><button class="drow" data-a="nt">공지사항'+ic("next")+'</button><button class="drow" data-a="tm">이용약관'+ic("next")+'</button><button class="drow" data-a="pv">개인정보 처리방침'+ic("next")+'</button><button class="drow" data-a="cs">고객센터'+ic("next")+'</button><p class="settings-version">버전 1.0.0</p></div>';var d=app;
   d.querySelectorAll(".drow").forEach(function(b){b.onclick=function(){var a=b.dataset.a;
    if(a==="nt")infoPop("공지사항",NT.map(function(n){return'<p class="sm"><b>'+n[0]+'</b> <small style="color:var(--sub)">'+n[1]+'</small><br><span style="color:var(--sub);font-size:14px">'+n[2]+'</span></p>'}).join(""));
    if(a==="tm")infoPop("이용약관",art(TM)+note);
@@ -6913,8 +6914,9 @@ function privacyNotice(){var close=pop('<h3>개인정보 처리 안내</h3><p>�
  var previousSettings=setPg;
  setPg=function(){
   var r=previousSettings.apply(this,arguments),host=app.querySelector('.drw.stpg');if(!host)return r;
-  function heading(label){var title=document.createElement('h4');title.textContent=label;host.appendChild(title)}
-  function link(label,action,id){var button=document.createElement('button');button.className='drow';if(id)button.id=id;button.textContent=label;button.onclick=action;host.appendChild(button)}
+  var version=host.querySelector('.settings-version');
+  function heading(label){var title=document.createElement('h4');title.textContent=label;host.insertBefore(title,version)}
+  function link(label,action,id){var button=document.createElement('button');button.type='button';button.className='drow';if(id)button.id=id;button.textContent=label;button.insertAdjacentHTML('beforeend',ic('next'));button.onclick=action;host.insertBefore(button,version)}
   heading('계정');link('회원 탈퇴',accountDelete,'account-delete-open');link('문의·이의신청',communitySupport);
   heading('커뮤니티');link('커뮤니티 이용 규칙',function(){communityRules(false)},'settings-community-rules');link('차단 목록',cmBlocks,'settings-block-list');
   var privacy=host.querySelector('[data-a="pv"]');if(privacy)privacy.onclick=privacyNotice;var contact=host.querySelector('[data-a="cs"]');if(contact)contact.onclick=communitySupport;
