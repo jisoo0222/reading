@@ -4030,6 +4030,15 @@ body{font-size:var(--font-body)}
 #app #cm-admin[hidden],#app #cm-options[hidden]{display:none!important}
 #app #cm-kinds{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px}
 #app #cm-kinds button{flex:0 0 auto!important;width:auto!important;min-height:48px;padding:8px 12px!important}
+#app :is(#cq-wrap,#cm-kinds,#cm-write)[hidden]{display:none!important}
+#app .cm-feed-error{width:min(100%,352px);margin:clamp(24px,8vh,64px) auto 0;padding:32px 24px 24px;border:1px solid var(--bd-card);border-radius:15px;background:var(--card);text-align:center;word-break:keep-all;overflow-wrap:anywhere}
+#app .cm-feed-error-mark{position:relative;display:grid;place-items:center;width:64px;height:64px;margin:0 auto 16px;border-radius:50%;background:var(--soft);color:var(--pri)}
+#app .cm-feed-error-mark .ic{width:30px;height:30px}
+#app .cm-feed-error-mark::after{content:"!";position:absolute;right:0;bottom:0;display:grid;place-items:center;width:22px;height:22px;border:2px solid var(--card);border-radius:50%;background:#F6E6E0;color:var(--state-error);font-size:14px;font-weight:750}
+#app .cm-feed-error h3{margin:0;color:var(--ink);font-size:20px;line-height:1.4}
+#app .cm-feed-error p{margin:8px 0 24px;color:var(--sub);font-size:14px;line-height:1.6}
+#app .cm-feed-error .btn{width:100%;min-height:48px;padding:10px 16px;border-radius:10px;white-space:normal}
+#app .cm-feed-error .btn[aria-disabled="true"]{background:#DCE3DE;color:var(--tx3);cursor:wait}
 #app .cm-status,.consent-popup .cm-status{white-space:pre-line;font-size:14px;line-height:1.6;color:var(--sub);margin:12px 0}
 #app .cm-status[role="alert"]{color:var(--state-error,#A02D40)}
 #app .cm-field,.consent-popup .cm-field{display:block;width:100%;min-width:0;font-size:16px;font-weight:600;line-height:1.5;margin:16px 0}
@@ -6805,14 +6814,39 @@ function cmBind(host,refresh){host.onclick=async function(e){var b=e.target.clos
 async function cmRefreshHome(){try{cmApplyFeed(await cmCall('feed'))}catch(e){cmApplyFeed([])}}
 async function cmLiveCommunity(){
  var requested=OPENP&&(CM_LIVE.ids[OPENP]||String(OPENP));OPENP=0;
- cmShell(CMN?'내 글':'커뮤니티','<div class="cm-community-toolbar" id="cm-moderation" hidden><button class="fadd" id="cm-admin">신고 관리</button></div><div class="csr"><input id="cq" type="search" aria-label="커뮤니티 글 검색" placeholder="책 제목, 작가, 글 내용으로 찾기"></div><div class="ctf ctf2" id="cm-kinds"></div><div id="cm-feed" role="status">글을 불러오고 있어요.</div><button class="wfab" id="cm-write" aria-label="글쓰기">'+ic('pencil')+'</button>');
- var feed=app.querySelector('#cm-feed'),search=app.querySelector('#cq'),kind='all';
- function draw(){var q=search.value.trim().toLowerCase(),items=CM_LIVE.posts.filter(function(p){return(!CMN||p.mine)&&(!CU||p.nickname===CU)&&(kind==='all'||p.kind===kind)&&(!q||(p.body+' '+(p.book_title||'')+' '+(p.book_author||'')).toLowerCase().includes(q))});feed.removeAttribute('role');feed.innerHTML=items.length?items.map(function(p){return cmPost(p,false)}).join(''):'<div class="emp">아직 표시할 글이 없어요.</div>';cmBind(feed,reload)}
- async function reload(){try{var rows=await cmCall('feed');if(!feed.isConnected)return;cmApplyFeed(rows);draw()}catch(e){if(feed.isConnected)feed.innerHTML='<p class="cm-status" role="alert">'+esc(cmError(e))+'</p><button class="btn ghost" id="cm-retry">다시 시도</button>';var retry=app.querySelector('#cm-retry');if(retry)retry.onclick=reload}}
- app.querySelector('#cm-write').onclick=cmCompose;
+ cmShell(CMN?'내 글':'커뮤니티','<div class="cm-community-toolbar" id="cm-moderation" hidden><button class="fadd" id="cm-admin">신고 관리</button></div><div class="csr" id="cq-wrap"><input id="cq" type="search" aria-label="커뮤니티 글 검색" placeholder="책 제목, 작가, 글 내용으로 찾기"></div><div class="ctf ctf2" id="cm-kinds"></div><p class="sr" id="cm-feed-status" role="status"></p><div id="cm-feed">글을 불러오고 있어요.</div><button class="wfab" id="cm-write" aria-label="글쓰기">'+ic('pencil')+'</button>');
+ var feed=app.querySelector('#cm-feed'),search=app.querySelector('#cq'),status=app.querySelector('#cm-feed-status'),write=app.querySelector('#cm-write'),kind='all',ready=false,pending=false;
+ function draw(){if(!ready)return;var q=search.value.trim().toLowerCase(),items=CM_LIVE.posts.filter(function(p){return(!CMN||p.mine)&&(!CU||p.nickname===CU)&&(kind==='all'||p.kind===kind)&&(!q||(p.body+' '+(p.book_title||'')+' '+(p.book_author||'')).toLowerCase().includes(q))});feed.innerHTML=items.length?items.map(function(p){return cmPost(p,false)}).join(''):'<div class="emp">아직 표시할 글이 없어요.</div>';cmBind(feed,reload)}
+ function setFeedControls(visible){search.parentElement.hidden=kinds.hidden=write.hidden=!visible}
+ async function reload(){
+  if(pending)return;
+  var retry=feed.querySelector('#cm-retry');
+  pending=true;feed.setAttribute('aria-busy','true');status.textContent='글을 불러오고 있어요.';
+  if(retry){retry.setAttribute('aria-disabled','true');retry.textContent='불러오는 중'}
+  try{
+   var rows=await cmCall('feed');if(!feed.isConnected)return;
+   var restoreFocus=retry&&document.activeElement===retry;
+   ready=true;setFeedControls(true);cmApplyFeed(rows);draw();
+   status.textContent=rows.length?'글을 불러왔어요.':'아직 표시할 글이 없어요.';
+   var target=requested;requested=null;
+   if(target&&rows.some(function(p){return p.id===target}))cmDetail(target);
+   else if(restoreFocus)search.focus({preventScroll:true})
+  }catch(e){
+   if(!feed.isConnected)return;
+   var moveFocus=feed.contains(document.activeElement)||search===document.activeElement||kinds.contains(document.activeElement)||write===document.activeElement;
+   ready=false;setFeedControls(false);
+   var missing=['PGRST202','42P01','PGRST205'].includes(e.code)||e.status===404;
+   var title=missing?'커뮤니티를 준비하고 있어요.':'글을 불러오지 못했어요.';
+   var copy=missing?'준비가 끝나면 여기에서 글을 볼 수 있어요.':navigator.onLine?'잠시 연결이 원활하지 않아요.':'인터넷에 다시 연결한 뒤 시도해 주세요.';
+   feed.innerHTML='<section class="cm-feed-error" aria-labelledby="cm-error-title"><span class="cm-feed-error-mark" aria-hidden="true">'+ic('chat')+'</span><h3 id="cm-error-title">'+title+'</h3><p>'+copy+'</p><button class="btn" id="cm-retry" type="button">다시 시도</button></section>';
+   status.textContent=title+' '+copy;
+   var next=feed.querySelector('#cm-retry');next.onclick=reload;if(moveFocus)next.focus({preventScroll:true})
+  }finally{pending=false;if(feed.isConnected)feed.removeAttribute('aria-busy')}
+ }
+ write.onclick=cmCompose;
  var kinds=app.querySelector('#cm-kinds');function tabs(){kinds.innerHTML=[['all','전체'],['자유','자유글'],['같이','같이 읽어요'],['코멘트','코멘트 공유'],['밸런스','밸런스 게임']].map(function(x){return '<button data-kind="'+x[0]+'" aria-pressed="'+(kind===x[0])+'">'+x[1]+'</button>'}).join('')}tabs();kinds.onclick=function(e){var b=e.target.closest('[data-kind]');if(b){kind=b.dataset.kind;tabs();draw()}};search.oninput=draw;
  var moderation=app.querySelector('#cm-moderation');if(SB_SESSION&&AUTH_SESSION.signedIn)cmCall('status').then(function(s){CM_LIVE.status=s;if(moderation.isConnected&&s.moderator){moderation.hidden=false;moderation.querySelector('button').onclick=cmAdmin}}).catch(function(){});
- await reload();if(requested&&feed.isConnected&&CM_LIVE.posts.some(function(p){return p.id===requested}))cmDetail(requested);
+ await reload();
 }
 async function cmDetail(id){
  cmShell('게시글','<div id="cm-detail" role="status">글을 불러오고 있어요.</div>');var host=app.querySelector('#cm-detail');
