@@ -2062,7 +2062,7 @@ body:has(.app.hso) #pawf{display:none!important}
 #app .lsrow:not(.cwrow){padding-bottom:23px!important;gap:11px!important}
 #app .lsrow:not(.cwrow) .lhb{width:41px!important;height:41px!important;color:var(--pri)}
 #app .lsrow:not(.cwrow) .lhb .ic{width:27px!important;height:27px!important}
-#app .lsr input::placeholder{font-size:14px;font-weight:600;color:var(--tx3)}
+#app .lsr input::placeholder{font-size:14px;font-weight:600}
 #app .csb2{color:var(--pri)!important}
 #lmain>.fs{margin:0!important;padding:0!important;border:0!important}
 #lmain>.fs:first-child{padding-top:26px!important}
@@ -2304,7 +2304,7 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.lib .sh2 h2,#app.exhibit .sh2 h2{font-size:18px!important;font-weight:700}
 #app.lib .lsrow{margin-top:0!important}
 #app.lib .csr{height:51px!important}
-#app.lib .csr input::placeholder{color:var(--tx3);font-size:14px}
+#app.lib .csr input::placeholder{font-size:14px}
 #app.lib .lsrow::after{bottom:-11px!important}
 #app.lib .lsrow{padding-bottom:11px!important}
 #app.lib #lmain>.fs:first-child{margin-top:24px!important;padding-top:0!important;border-top:0!important}
@@ -2396,7 +2396,7 @@ body:has(.app.hso) #pawf{display:none!important}
 #app:is(.community,.community-detail,.home-feed) .sh2 h2{font-size:18px!important;font-weight:700}
 #app:is(.community,.community-detail,.home-feed) .lsrow.cwrow{padding-bottom:11px!important;margin-top:0!important}
 #app:is(.community,.community-detail,.home-feed) .csr{height:51px!important}
-#app:is(.community,.community-detail,.home-feed) .csr input::placeholder{font-size:14px;color:var(--tx3)}
+#app:is(.community,.community-detail,.home-feed) .csr input::placeholder{font-size:14px}
 #app:is(.community,.community-detail,.home-feed) .ctf.ctf2{display:flex;gap:6px;margin:10px 0 12px!important;padding:0!important}
 #app:is(.community,.community-detail,.home-feed) .ctf.ctf2 button{flex:1;justify-content:center;padding:0 6px!important;height:39px;font-size:14px;white-space:nowrap;background:var(--card)}
 #app:is(.community,.community-detail,.home-feed) .po{padding:13px 16px 16px!important;margin:0 0 12px;background:var(--card)!important}
@@ -2931,7 +2931,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app:not(.hm):not(.rd) .btn:not(.ghost){background:#174D37!important;color:#FFFFFF!important;border-color:#174D37!important;box-shadow:none!important;border-radius:12px!important;min-height:48px}
 #app:not(.hm):not(.rd) .btn.ghost{color:#174D37!important;background:#FFFFFF!important;border-color:#AABDB0!important;border-radius:12px!important;min-height:48px}
 #app:not(.hm):not(.rd) :is(.auth-field input,.fld input,#account-form input){background:#FFFFFF;border-color:#AFBDB3;border-radius:12px!important;color:#17241C}
-#app:not(.hm):not(.rd) :is(input,textarea)::placeholder{color:#566B5D;opacity:1}
+:root{--placeholder-text:#89938D}
+#app :is(input,textarea)::placeholder{color:var(--placeholder-text);opacity:1}
 #app:not(.hm):not(.rd) .ib{background:transparent;color:#34483B;border:0;min-width:48px;min-height:48px}
 #app:not(.hm):not(.rd) .book-cover{filter:grayscale(1)}
 #app:not(.hm):not(.rd) :is(.spc,.sm,.hint,.dnote){color:#34483B}
@@ -3251,7 +3252,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.auth .auth-brand h1{font-size:40px!important;line-height:1.2;margin:0!important;color:#174D37}
 #app.auth .auth-form{margin-top:0!important;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;gap:20px}
 #app.auth .auth-field{font-size:14px;font-weight:650;line-height:1.5;gap:8px;color:#17241C}
-#app.auth .auth-field input{height:56px!important;border:1px solid #91A599!important;border-radius:10px!important;background:transparent!important;color:#17241C;font-size:16px!important;padding:0 14px}
+#app.auth .auth-field input{height:56px!important;border:1px solid #91A599!important;border-radius:10px!important;background:var(--card)!important;color:#17241C;font-size:16px!important;padding:0 14px}
 #app.auth .auth-form .btn{margin:4px 0 0!important;height:56px;font-size:16px!important;font-weight:700;background:#174D37;color:#FFFFFF;border:0;border-radius:12px!important}
 #app.auth .auth-form .btn:disabled{opacity:1;background:#DCE3DE;color:#4C6152}
 #app.auth .auth-join{margin-top:12px!important;min-height:48px;font-size:14px;gap:8px;flex-wrap:wrap;color:#34483B}
@@ -3261,7 +3262,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.auth .auth-providers{gap:24px;padding:0!important}
 #app.auth .auth-browse{display:block;margin:16px auto 0;min-height:48px}
 #app.auth .auth-provider{width:60px;height:60px;min-width:48px;min-height:48px}
-#app.auth input::placeholder{color:#526A5B;opacity:1}
 @container(max-height:760px){#app.auth .auth-logo,#app.auth .auth-logo>.brand-logo{width:56px;height:64px}#app.auth .auth-brand h1{font-size:36px!important}}
 
 /* 계정 가입: 인증·비밀번호 입력은 같은 흰 카드로 묶어요. */
@@ -3275,7 +3275,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.signup-account .account-input-row{gap:8px}
 #app.signup-account #account-form input{height:56px!important;min-height:56px;border:1px solid #91A599!important;border-radius:10px!important;background:#FFFFFF!important;font-size:16px;padding:0 12px}
 #app.signup-account #account-form input:disabled{opacity:1!important;background:#EFF3EF!important;color:#526A5B}
-#app.signup-account #account-form input::placeholder{color:#526A5B;opacity:1}
 #app.signup-account .account-small{height:56px;min-height:56px;flex:0 0 96px;border:1px solid #174D37!important;color:#174D37!important;font-size:14px;border-radius:10px!important}
 #app.signup-account .account-small:disabled{opacity:1!important;border-color:#B4C6B9!important;color:#526A5B!important;background:#EFF3EF!important}
 #app.signup-account .account-field>input{margin-top:8px!important}
@@ -3314,7 +3313,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.signup :is(button,input,[role=button]):focus-visible{outline:3px solid #174D37;outline-offset:3px}
 #app.signup-nickname .fld{display:block;margin-top:32px!important;padding:20px!important;background:#FFFFFF;border-radius:15px;font-size:14px;font-weight:650;line-height:1.5;color:#17241C}
 #app.signup-nickname .fld input{width:100%;height:56px;margin-top:12px!important;border:1px solid #91A599!important;background:#FFFFFF!important;border-radius:10px!important;font-size:16px;color:#17241C;font-weight:400}
-#app.signup-nickname input::placeholder{color:#526A5B;opacity:1}
 #app.signup-nickname .signup-age{margin-top:var(--space-card-gap)!important}
 #app.signup-nickname .signup-age-note{margin:10px 0 0;font-size:14px;font-weight:400;line-height:1.5;color:var(--sub)}
 #app.signup-nickname .signup-age-error{display:block;margin:6px 0 0;font-size:14px;font-weight:400;color:var(--state-error)}
@@ -3418,7 +3416,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 /* 독서 화면도 메인의 단색 바탕과 짙은 초록 도구를 사용해요. */
 #app.rd{--reader-canvas:#F5F7F4;--reader-surface:#FFFFFF;--reader-ink:#17241C;--reader-muted:#34483B;--reader-accent:#174D37;--reader-soft:#DAEAE1;--reader-line:#B8C5BC;background:var(--reader-canvas);color:var(--reader-ink)}
-#app.rd.night{--reader-canvas:#202824;--reader-surface:#2B3730;--reader-ink:#F2F4F3;--reader-muted:#CAD8CF;--reader-accent:#A8D5BB;--reader-soft:#3A5042;--reader-line:#688373}
+#app.rd.night{--reader-canvas:#202824;--reader-surface:#2B3730;--reader-ink:#F2F4F3;--reader-muted:#CAD8CF;--reader-accent:#A8D5BB;--reader-soft:#3A5042;--reader-line:#688373;--placeholder-text:#8C9B92}
 #app.rd .sc.rdc{padding-top:0!important;padding-bottom:0!important;background:var(--reader-canvas)}
 /* 상단 제목은 높이와 제목 폭을 함께 늘려요. */
 #app.rd .rh{display:grid;grid-template-columns:64px minmax(0,1fr) 64px;align-items:center;gap:4px;min-height:84px;padding:12px 20px;margin:0 calc(-1*var(--px));background:var(--reader-surface);border-bottom:1px solid var(--reader-line);color:var(--reader-ink)}
@@ -3497,7 +3495,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.compose-page .compose-form :is(input,textarea){display:block;width:100%;min-width:0;padding:14px;border:1px solid #91A599;border-radius:10px;background:#FFFFFF;color:#17241C;font:400 16px/1.7 Pretendard,sans-serif}
 #app.compose-page .compose-form input{min-height:56px}
 #app.compose-page #ct{min-height:200px;margin-bottom:24px;resize:vertical;word-break:keep-all}
-#app.compose-page :is(input,textarea)::placeholder{color:#526A5B;opacity:1}
 #app.compose-page .bsr{margin-bottom:24px}
 #app.compose-page .bls{margin-top:8px}
 #app.compose-page .bsi{min-height:64px;width:100%;padding:12px 0;border-top:1px solid #D0DAD3}
