@@ -3091,6 +3091,10 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 /* 홈·마이페이지 외 화면은 제목과 구분선을 유지해요. */
 #app:not(.hm):not(.pf):not(.rd) .sc>.sh2.concept-heading{position:sticky;top:0!important;z-index:10;isolation:isolate;height:60px!important;min-height:60px!important;width:calc(100% + 40px);margin-left:-20px!important;margin-right:-20px!important;padding:0 20px!important;background:var(--bg)!important;border-bottom:1px solid #B8C5BC!important;border-radius:0!important;box-shadow:none!important;flex:none}
 #app:not(.hm):not(.pf):not(.rd) .concept-heading h2{font-size:18px!important;line-height:1.3;font-weight:750!important;color:#17241C;text-align:center}
+#app .sh2:has(>button[aria-label="뒤로"]):has(>h2){display:grid;grid-template-columns:var(--header-side,48px) minmax(0,1fr) var(--header-side,48px);margin-inline:0}
+#app .sh2:has(>button[aria-label="뒤로"])>h2{grid-area:1/2;margin:0;min-width:0;text-align:center;white-space:normal;word-break:keep-all;overflow-wrap:anywhere}
+#app .sh2:has(>h2)>button[aria-label="뒤로"]{grid-area:1/1;justify-self:start}
+#app .sh2:has(>button[aria-label="뒤로"])>h2+*{grid-area:1/3;justify-self:end}
 #app.auth .concept-heading{margin-bottom:0!important}
 #app.auth .auth-brand{padding-top:26px;height:220px}
 #app.rd .rh{border-bottom:1px solid #B8C5BC}
@@ -3692,9 +3696,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.calendar-page .lgq{padding:12px;margin-top:12px!important}
 #app.calendar-page .lge{margin:0;padding:0;line-height:1.7}
 /* 알림: 최신 디자인 시스템의 카드·간격·색상을 화면 안에서 적용해요. */
-#app.notification-page .sc>.sh2.concept-heading{margin-bottom:24px!important;display:grid;grid-template-columns:80px minmax(0,1fr) 80px;gap:0}
-#app.notification-page .sh2>.ib{justify-self:start}
-#app.notification-page .sh2 h2{margin:0}
+#app.notification-page .sc>.sh2.concept-heading{--header-side:80px;margin-bottom:24px!important;gap:0}
 #app.notification-page .nall{justify-self:end;min-height:48px;padding:0;font-size:14px;font-weight:600;color:var(--strong)}
 #app.notification-page .nall:disabled{color:var(--tx3);opacity:.5}
 #app.notification-page .ntm{gap:12px;padding:20px;margin:0 0 16px;background:var(--card);border:1px solid var(--line);border-radius:15px;box-shadow:none}
