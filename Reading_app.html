@@ -2042,10 +2042,8 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.pf .pnm small{color:var(--tx3)!important}
 #app.pf .myp{background:none!important;border:0!important;padding:0!important;margin-top:16px!important}
 #app.pf .myp .pfe{font-size:14px;font-weight:600;color:var(--tx3);margin:0;padding:0;text-align:left}
-#app.pf .pset2{display:flex!important;align-items:center;gap:8px;width:auto;margin:24px 0 0!important;padding:0!important;border:0!important;background:none!important;font-size:14px;font-weight:600;color:var(--tx3)!important}
-#app.pf .pset2 span{flex:none}
-#app.pf .pset2 .ic{width:var(--ic)!important;height:var(--ic)!important;color:var(--tx3)!important}
-#app.pf .pset2 .ic:last-child{display:none}
+#app.pf .pset2{display:flex!important;align-items:center;gap:12px;width:100%;min-height:60px;margin:24px 0 0!important;padding:16px!important;border:1px solid #D0DAD3!important;background:#FFFFFF!important;font-size:14px;font-weight:700;color:#174D37!important}
+#app.pf .pset2 .ic{width:var(--ic)!important;height:var(--ic)!important;color:#174D37!important}
 #app.pf .pfb{border-top:0!important;box-shadow:none!important}
 
 /* ===== 마이페이지: 시안(1153:2237) 최대한 그대로 ===== */
@@ -2489,7 +2487,6 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.pf #rbl .rbt small{font-size:14px!important;line-height:18px;color:var(--tx3)!important;margin-top:3px!important}
 #app.pf #rbl .rbs{font-size:14px!important;height:27px!important;padding:0 10px!important;max-width:140px;white-space:nowrap}
 #app.pf #rbl .rbs.dn{background:var(--pri)!important;color:var(--onpri)!important}
-#app.pf .pset2{font-size:14px!important;color:var(--tx3)!important}
 #app.pf .pset2>.ic{width:24px!important;height:24px!important}
 
 
@@ -3019,7 +3016,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.pf #rbl .rbs.dn{background:#174D37!important;color:white!important}
 #app.pf .archive-action>span{border:0;background:#E7EDE8;color:#174D37;border-radius:17px}
 #app.pf .archive-action>b{color:#34483B;font-size:14px}
-#app.pf .pset2{background:#FFFFFF;border-radius:16px;padding:16px!important;margin-top:16px;color:#34483B!important}
 /* 로그인·가입: 입력과 선택 상태를 명확하게 */
 #app.auth .sc{background:#F5F7F4!important}
 #app.auth .auth-brand h1{color:#174D37}
@@ -4759,7 +4755,7 @@ function profile(){
  +(function(){var k=RKEY||(ans.indexOf(null)<0?calcType().key:""),t=k&&T[k];return'<button class="profile-type" id="rp"><span class="profile-type-copy"><small>DDTI</small><strong>'+(t?esc(t[0]):'나의 DDTI 알아보기')+'</strong>'+(t?'<em>'+k+'</em>':'')+'</span><span class="profile-type-arrow" aria-hidden="true">'+ic("next")+'</span></button>'})()
  +'</section>'
  +'<section class="fs profile-archives"><div class="fsh"><h3>아카이빙</h3></div><div class="archive-actions">'+[['plm','찜한 책','heart'],['p-vault','포인트 보관함','basket'],['p-quotes','문장 보관함','quote'],['mym','내 글 보관함','pen']].map(function(a){return '<button class="archive-action" id="'+a[0]+'"><span aria-hidden="true">'+ic(a[2])+'</span><b>'+a[1]+'</b></button>'}).join('')+'</div></section>'
- +'<section class="fs"><div class="fsh"><h3>독서 메이트 '+fc+'</h3><button class="pme" id="pfr">전체 보기'+ic("next")+'</button></div><div class="box pfl">'+(real?REAL_SOCIAL.friends.map(function(m){return '<button class="pfc" data-real-friend="'+m.id+'" data-real-name="'+esc(m.nickname)+'" aria-label="'+esc(m.nickname)+' 친구 보기"><span>'+esc(m.nickname).charAt(0)+'</span><b>'+esc(m.nickname)+'</b></button>'}).join('')+(fc||REAL_SOCIAL.status==='loading'?'':'<p class="pfe">'+(REAL_SOCIAL.status==='error'?'친구 목록을 다시 확인해 주세요.':'아직 친구가 없어요.')+'</p>'):(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):'<p class="pfe">아직 친구가 없어요.</p>'))+'<button class="pfc pfa" id="pfa" aria-label="친구를 검색해서 추가하기"><span>'+ic("plus")+'</span><b>추가</b></button></div></section>'
+ +'<section class="fs"><div class="fsh"><h3>독서 메이트 '+fc+'</h3><button class="pme" id="pfr">전체 보기'+ic("next")+'</button></div><div class="box pfl">'+(real?REAL_SOCIAL.friends.map(function(m){return '<button class="pfc" data-real-friend="'+m.id+'" data-real-name="'+esc(m.nickname)+'" aria-label="'+esc(m.nickname)+' 친구 보기"><span>'+esc(m.nickname).charAt(0)+'</span><b>'+esc(m.nickname)+'</b></button>'}).join(''):(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):''))+'<button class="pfc pfa" id="pfa" aria-label="친구를 검색해서 추가하기"><span>'+ic("plus")+'</span><b>추가</b></button></div>'+(real&&REAL_SOCIAL.status==='error'?'<p class="sm">친구 목록을 다시 확인해 주세요.</p>':'')+'</section>'
  +(function(){var L=readList();return'<section class="fs"><div class="fsh"><h3>읽은 책 '+L.length+'권</h3><button class="pme" id="rbm">전체 보기'+ic("next")+'</button></div><div class="rbl" id="rbl">'+L.map(function(b,i){return'<div class="rbk'+(i>2?" xtra":"")+'"><i data-bt="'+esc(b.t)+'" style="background:'+b.c+'"></i><span class="rbt"><b>'+esc(b.t)+'</b><small>'+esc(b.a)+'</small></span><em class="rbs'+(b.done?" dn":"")+'">'+b.s+'</em></div>'}).join("")+(L.length?'':'<p class="pfe">아직 읽은 책이 없어요.</p>')+'</div>'+'</section>'})()
  +'<button class="pset2" id="pset">'+ic("cog")+'<span>설정</span>'+ic("next")+'</button>'
  +'</div>'
