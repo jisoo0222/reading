@@ -3334,6 +3334,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.auth .auth-age-note{flex:none;margin:0;color:var(--sub);font-size:14px;text-align:center}
 
 /* 독서 목표: 같은 높이의 선택 카드와 체크 표시 */
+#app.signup-goal{display:grid;grid-template-rows:minmax(0,1fr) auto}
+#app.signup-goal>.sc{position:relative;inset:auto;scroll-padding-top:60px}
+#app.signup-goal .goal-actions{margin:0;padding:8px var(--px) 24px}
 #app.signup-goal .opts{margin-top:28px;gap:12px}
 #app.signup-goal .opt{min-height:86px;padding:18px 20px!important;border-radius:15px!important;border:1px solid transparent!important;background:#FFFFFF!important;box-shadow:none!important;color:#17241C}
 #app.signup-goal .opt>span:first-child{font-size:16px;font-weight:700;color:#17241C}
@@ -3342,9 +3345,11 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.signup-goal .opt[aria-pressed=true],#app.signup-goal .gcu.on{background:#DAEAE1!important;border-color:#174D37!important;box-shadow:inset 0 0 0 1px #174D37!important}
 #app.signup-goal .opt[aria-pressed=true] .mk{background:#174D37;border-color:#174D37}
 #app.signup-goal .opt[aria-pressed=true] .mk:after{left:8px;top:4px}
-#app.signup-goal .gcu{min-height:64px;padding-top:18px!important;padding-bottom:18px!important}
-#app.signup-goal .gcu .gsl{margin-top:16px;padding-top:16px;border-top:1px solid #A9C2B2}
-#app.signup-goal #gsr{background:transparent;color:#174D37}
+#app.signup-goal .gcu{--goal-wheel-step:22px;min-height:60px;padding-top:12px!important;padding-bottom:12px!important}
+#app.signup-goal .gcu .gsl{margin-top:8px;padding-top:8px;border-top:1px solid #A9C2B2}
+#app.signup-goal :is(.gwh,.gwv){height:calc(4 * var(--goal-wheel-step) + 52px)}
+#app.signup-goal .gw{flex:none;height:var(--goal-wheel-step);line-height:var(--goal-wheel-step)}
+#app.signup-goal #gsr{flex:none;height:48px;background:transparent;color:#174D37}
 
 /* 독서 성향 소개: 한 장의 연초록 안내 카드 */
 #app.signup-intro .tin{margin:0;padding:24px 20px;background:#DAEAE1;border-radius:15px;flex:1 0 auto;min-height:320px;justify-content:center}
@@ -4251,11 +4256,11 @@ function goal(){
  var o=GO.map(function(g){return'<button class="opt" data-v="'+g[0]+'" aria-pressed="'+(!cu&&GOAL===g[0])+'"><span>하루 '+g[0]+'쪽<small>'+gTip(g[0])+'</small></span><span class="mk"></span></button>'}).join("")
   +'<div class="opt gcu'+(cu?" on":"")+'" role="button" tabindex="0" data-c="1" aria-pressed="'+cu+'"><span style="flex:1">직접 설정<span class="gsl"><span class="gwh" id="gwh"><span class="gwl">하루</span><span class="gwv"><span class="gwc" id="gwc"><i class="gw" data-o="-2"></i><i class="gw" data-o="-1"></i><input type="number" id="gsr" inputmode="numeric" min="1" max="300" value="'+(cu?cv:20)+'" aria-label="하루 목표 쪽수, 위아래로 끌어서 바꾸기"><i class="gw" data-o="1"></i><i class="gw" data-o="2"></i></span></span><span class="gwl">쪽</span></span></span></span><span class="mk"></span></div>';
  app.innerHTML=signupHeader()+ost(2)+'<h1>하루에 얼마나 읽어 볼까요.</h1><p class="hint">하루에 읽을 페이지 수를 정해 주세요.<br>목표를 채우면 알려 드려요.</p>'
- +'<div class="opts">'+o+'</div><div class="foot"><button class="btn ghost" id="bk1">이전</button><button class="btn" id="nx2">다음</button></div>';
+ +'<div class="opts">'+o+'</div><div class="foot goal-actions"><button class="btn ghost" id="bk1">이전</button><button class="btn" id="nx2">다음</button></div>';
  var nx=document.getElementById("nx2"),cb=app.querySelector(".gcu"),sr=document.getElementById("gsr");nx.disabled=GOAL===null;
  function pick(b){app.querySelectorAll(".opt").forEach(function(c){c.setAttribute("aria-pressed",c===b)});cb.classList.toggle("on",b===cb);nx.disabled=false}
  app.querySelectorAll(".opt[data-v]").forEach(function(b){b.onclick=function(){GOAL=+b.dataset.v;pick(b)}});
- var wh=document.getElementById("gwh"),wc=document.getElementById("gwc"),WS=30;
+ var wh=document.getElementById("gwh"),wc=document.getElementById("gwc"),WS=parseFloat(getComputedStyle(cb).getPropertyValue('--goal-wheel-step'));
  function g5(v,k){if(!k)return v;if(k>0)return(v%5?Math.ceil(v/5)*5:v+5)+(k-1)*5;return(v%5?Math.floor(v/5)*5:v-5)+(k+1)*5}
  function wn(){var v=Math.round(+sr.value)||0;wc.querySelectorAll(".gw").forEach(function(g){var n=g5(v,+g.dataset.o);g.textContent=n>=1&&n<=300?n:""})}
  function cset(){var v=Math.round(+sr.value);if(v>=1&&v<=300){GOAL=v;nx.disabled=false}else{nx.disabled=true}wn()}
@@ -4268,7 +4273,7 @@ function goal(){
  wh.addEventListener("wheel",function(e){e.preventDefault();wset(g5(Math.round(+sr.value)||20,e.deltaY>0?1:-1))},{passive:false});
  sr.addEventListener("keydown",function(e){if(e.key==="ArrowUp"||e.key==="ArrowDown"){e.preventDefault();wset(g5(Math.round(+sr.value)||20,e.key==="ArrowUp"?1:-1))}});
  wn();
- cb.onclick=function(e){if(e.target===sr||wh.contains(e.target))return;if(!sr.value)sr.value=20;pick(cb);cset()};cb.onkeydown=function(e){if(e.key==="Enter"&&e.target!==sr)cb.onclick(e)};
+ cb.onclick=function(e){if(e.target===sr||wh.contains(e.target))return;if(!sr.value)sr.value=20;pick(cb);cset();cb.scrollIntoView({block:'nearest'})};cb.onkeydown=function(e){if(e.key==="Enter"&&e.target!==sr)cb.onclick(e)};
  sr.onfocus=function(){if(!cb.classList.contains("on")){pick(cb)}cset()};sr.oninput=cset;
  document.getElementById("bk1").onclick=info;
  nx.onclick=tiIntro}
@@ -5835,7 +5840,7 @@ function vault(t,back){
 var ih=Object.getOwnPropertyDescriptor(Element.prototype,"innerHTML");
 var uiRenderView='',uiLastScreen='',uiLastClasses='';
 function wrap(enter){var sc=document.createElement("div"),k=[];sc.className="sc "+(app.classList.contains("hm")?"hm":app.classList.contains("rd")?"rdc":"");sc.dataset.viewEnter=String(enter);
- Array.from(app.children).forEach(function(c){c.matches(".tab,.prg,.fx,.wfab,#ov,#sheet,.mn")?k.push(c):sc.appendChild(c)});
+ Array.from(app.children).forEach(function(c){c.matches(".tab,.prg,.fx,.wfab,#ov,#sheet,.mn,.goal-actions")?k.push(c):sc.appendChild(c)});
   ih.set.call(app,"");app.appendChild(sc);k.forEach(function(c){app.appendChild(c)});
   thm()}
 Object.defineProperty(app,"innerHTML",{set:function(h){var classes=Array.from(app.classList).filter(function(c){return c!=='has-concept-nav'}).join(' '),screen=uiRenderView?uiRenderView+'|'+classes:classes===uiLastClasses?uiLastScreen:'view|'+classes,enter=screen!==uiLastScreen;uiLastScreen=screen;uiLastClasses=classes;ih.set.call(app,h);wrap(enter)},get:function(){return ih.get.call(app)}});
