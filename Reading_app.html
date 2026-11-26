@@ -3353,9 +3353,24 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.signup-goal .gw{flex:none;height:var(--goal-wheel-step);line-height:var(--goal-wheel-step)}
 #app.signup-goal #gsr{flex:none;height:48px;background:transparent;color:#174D37}
 
-/* 독서 성향 소개: 한 장의 연초록 안내 카드 */
-#app.signup-intro .tin{margin:0;padding:24px 20px;background:#DAEAE1;border-radius:15px;flex:1 0 auto;min-height:320px;justify-content:center}
-#app.signup-intro .tin>.entry-logo-motion{width:min(96px,40%);flex:none;margin:0 0 24px}
+/* DDTI 소개: 답변 카드에서 내 취향 프로필이 나와요. */
+#app.signup-intro .tin{margin:0;padding:24px 20px;background:#E7EFE4;border-radius:15px;flex:1 0 auto;min-height:320px;justify-content:center}
+#app.signup-intro .tin>.ddti-art{position:relative;width:min(224px,100%);aspect-ratio:224/148;flex:none;margin:0 0 22px;isolation:isolate}
+.ddti-art::before{content:"";position:absolute;inset:4% 7%;border:1px dashed #9CB4A3;border-radius:50%;transform:rotate(-12deg);z-index:-1}
+.ddti-art-choice{position:absolute;top:14%;width:31%;height:56%;border:1.5px solid #718A77;border-radius:11px;box-shadow:0 4px 0 #174D3717}
+.ddti-art-choice:first-child{left:7%;background:#F7E6DE;transform:rotate(-19deg)}
+.ddti-art-choice:nth-child(2){right:7%;background:#FFF3BA;transform:rotate(18deg)}
+.ddti-art-choice::after{content:"";position:absolute;inset:23% 17%;background:radial-gradient(circle at 5px 5px,#718A77 2px,transparent 2.5px) left top/100% 12px,repeating-linear-gradient(transparent 0 4px,#718A77 4px 6px,transparent 6px 12px) right top/calc(100% - 13px) 100% no-repeat}
+.ddti-art-profile{position:absolute;left:17%;right:17%;top:26%;bottom:13%;display:grid;grid-template-columns:38% 1fr;align-items:center;gap:10%;padding:9%;border:1.5px solid #174D37;border-radius:14px;background:#FFFEF5;box-shadow:3px 5px 0 #174D3726;transform:rotate(-5deg)}
+.ddti-art-avatar{display:grid;place-items:center;aspect-ratio:1;border-radius:11px;background:#D6EBDE;color:#174D37}
+#app .ddti-art-avatar .ic{width:58%;height:58%}
+.ddti-art-traits{display:grid;gap:5px}
+.ddti-art-traits i{height:6px;border-radius:8px;background:#4CAE85}
+.ddti-art-traits i:nth-child(2){width:72%;background:#D896A7}
+.ddti-art-traits i:nth-child(3){width:86%;background:#E8B94B}
+.ddti-art-traits i:nth-child(4){width:56%;background:#719CC2}
+.ddti-art-check{position:absolute;right:12%;bottom:7%;display:grid;place-items:center;width:17%;aspect-ratio:1;border:2px solid #E7EFE4;border-radius:50%;background:#174D37;color:#FFFFFF}
+#app .ddti-art-check .ic{width:57%;height:57%}
 #app.signup-intro .tin h1{font-size:24px;font-weight:750;line-height:1.4;letter-spacing:-.035em;color:#17241C}
 #app.signup-intro .tin .hint{margin-top:12px;color:#34483B;font-size:14px;line-height:1.65}
 #app.signup-intro .tsk{min-height:48px;font-size:14px;color:#174D37;margin-top:16px;text-decoration:underline;text-underline-offset:4px}
@@ -3516,8 +3531,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 ::selection{background:#C6EED0;color:#174D37}
 #app::selection,#app *::selection,#app.rd .pgl::selection,#app.rd .pgl ::selection{background:#C6EED0;color:#174D37;text-shadow:none}
 #app.rd.night .pgl::selection,#app.rd.night .pgl ::selection{background:#3A6248;color:#FFFFFF}
-/* 로고가 양쪽 페이지를 펼치고 오른쪽 책장을 왼쪽으로 넘겨요. */
+/* 시작 로고는 표지가 열리고, 로딩 로고는 책장까지 넘어가요. */
 #app.spl .spw>.entry-logo-motion{width:120px;margin:0 auto;animation:entry-logo-arrive .55s ease-out both}
+#app.spl .entry-logo-cover{position:absolute;inset:0;clip-path:inset(0 31.25% 0 0);transform-origin:left center;animation:entry-cover-open .9s cubic-bezier(.22,.8,.25,1) .12s both}
 .book-opening-logo{position:relative;--entry-book-duration:1.65s}
 .book-opening-logo img{display:block;width:100%;height:auto}
 .book-opening-logo.has-book-motion>.brand-logo{animation:entry-logo-mark var(--entry-book-duration) ease-in-out both}
@@ -3531,13 +3547,14 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.spl .spw h1{animation:entry-wordmark-in .5s ease-out .3s both}
 #app.spl .spw .dke{animation:entry-wordmark-in .5s ease-out .45s both}
 @keyframes entry-logo-arrive{from{opacity:0;transform:translate(0,8px)}to{opacity:1;transform:translate(0,0)}}
+@keyframes entry-cover-open{from{transform:scaleX(1.45455)}to{transform:scaleX(1);visibility:hidden}}
 @keyframes entry-logo-mark{0%,13%,100%{opacity:1}34%,84%{opacity:0}}
 @keyframes entry-logo-spread{0%,12%{opacity:0;transform:translateX(-50%) scale(.74,.92)}34%,82%{opacity:1;transform:translateX(-50%) scale(1)}100%{opacity:0;transform:translateX(-50%) scale(.9)}}
 @keyframes entry-book-left{0%,12%{transform:rotateY(150deg)}39%,100%{transform:rotateY(0deg)}}
 @keyframes entry-book-right{0%,12%{transform:rotateY(-60deg)}39%,100%{transform:rotateY(0deg)}}
 @keyframes entry-page-turn{0%,43%{opacity:0;transform:rotateY(0deg)}46%{opacity:1}77%{opacity:1;transform:rotateY(-177deg)}83%,100%{opacity:0;transform:rotateY(-177deg)}}
 @keyframes entry-wordmark-in{from{opacity:0;translate:0 5px}to{opacity:1;translate:0 0}}
-@media(prefers-reduced-motion:reduce){.entry-logo-spread{display:none}.book-opening-logo.has-book-motion>.brand-logo,#app.spl .entry-logo-motion,#app.spl .spw h1,#app.spl .spw .dke{animation:none!important;opacity:1!important}}
+@media(prefers-reduced-motion:reduce){.entry-logo-spread,#app.spl .entry-logo-cover{display:none}.book-opening-logo.has-book-motion>.brand-logo,#app.spl .entry-logo-motion,#app.spl .spw h1,#app.spl .spw .dke{animation:none!important;opacity:1!important}}
 
 /* 가입 제목 줄은 스크롤 내용이 비치지 않도록 채워요. */
 #app.app:is(.signup,.signup-account,.entry-result,.auth,.compose-page):not(.rd) .sc>.sh2.concept-heading{background:#F5F7F4!important;top:0!important;z-index:10}
@@ -4313,7 +4330,7 @@ function goal(){
  nx.onclick=tiIntro}
 function tiIntro(){
  app.className="app signup signup-intro";
- var art=openingLogoMarkup('entry-logo-motion',matchMedia('(prefers-reduced-motion: reduce)').matches);
+ var art='<div class="ddti-art" aria-hidden="true"><span class="ddti-art-choice"></span><span class="ddti-art-choice"></span><span class="ddti-art-profile"><span class="ddti-art-avatar">'+ic('person')+'</span><span class="ddti-art-traits"><i></i><i></i><i></i><i></i></span></span><span class="ddti-art-check">'+ic('check')+'</span></div>';
  app.innerHTML=signupHeader()+ost(3)+'<div class="tin">'+art
  +'<h1>나의 DDTI 알아보기</h1><p class="hint tis"><span>네 가지 질문에 답하면</span><span>취향에 맞는 책을 추천해요.</span></p><button class="tsk" id="tsk" type="button">검사 건너뛰기</button></div>'
  +'<div class="foot"><button class="btn ghost" id="tib">이전</button><button class="btn" id="tig">시작하기</button></div>';
@@ -6251,8 +6268,8 @@ function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':(typeof
 useBk(DEF);
 function splash(next){app.className="app spl";
  var reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
- app.innerHTML='<div class="spw" role="img" aria-label="똑독">'+openingLogoMarkup('entry-logo-motion',reduceMotion)+'<h1>똑독</h1><p class="dke">DDOKDOK</p></div>';
- var t=setTimeout(go,typeof next==='function'?(reduceMotion?0:1700):2200);function go(){clearTimeout(t);if(!app.classList.contains("spl"))return;app.onclick=null;(typeof next==='function'?next:onb)()}app.onclick=go}
+ app.innerHTML='<div class="spw" role="img" aria-label="똑독"><div class="book-opening-logo entry-logo-motion" aria-hidden="true">'+logoSVG()+(reduceMotion?'':logoSVG('entry-logo-cover'))+'</div><h1>똑독</h1><p class="dke">DDOKDOK</p></div>';
+ var t=setTimeout(go,typeof next==='function'?(reduceMotion?0:1250):2200);function go(){clearTimeout(t);if(!app.classList.contains("spl"))return;app.onclick=null;(typeof next==='function'?next:onb)()}app.onclick=go}
 /* 카카오와 안드로이드 구글 로그인은 Supabase 인증을 사용해요. */
 function snsConsent(provider,onContinue){
  var name=provider==="kakao"?"카카오":"구글";
