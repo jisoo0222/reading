@@ -8,6 +8,7 @@ import android.graphics.Insets;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CancellationSignal;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -25,9 +26,28 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 import android.window.OnBackInvokedDispatcher;
 
+import androidx.credentials.Credential;
+import androidx.credentials.CredentialManager;
+import androidx.credentials.CredentialManagerCallback;
+import androidx.credentials.CustomCredential;
+import androidx.credentials.GetCredentialRequest;
+import androidx.credentials.GetCredentialResponse;
+import androidx.credentials.exceptions.GetCredentialCancellationException;
+import androidx.credentials.exceptions.GetCredentialException;
+import androidx.credentials.exceptions.NoCredentialException;
+
+import com.google.android.libraries.identity.googleid.GetSignInWithGoogleOption;
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
+
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,6 +70,7 @@ public class MainActivity extends Activity {
     private ValueCallback<Uri[]> fileCb;
     private boolean fallbackLoaded;
     private boolean bridgeAttached;
+    private CancellationSignal googleSignIn;
 
     @Override
     protected void onCreate(Bundle state) {
@@ -178,6 +199,11 @@ public class MainActivity extends Activity {
                 || (BuildConfig.DEV_URL + "Reading_app.html").equals(page));
     }
 
+    private boolean isPublishedPage() {
+        String url = web.getUrl();
+        return url != null && PUBLISHED_URL.equals(Uri.parse(url).buildUpon().clearQuery().fragment(null).build().toString());
+    }
+
     private static boolean isKakaoAuthPage(Uri uri) {
         if (!"https".equals(uri.getScheme()) || uri.getUserInfo() != null
                 || (uri.getPort() != -1 && uri.getPort() != 443)) return false;
@@ -221,6 +247,76 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    protected void onDestroy() {
+        if (googleSignIn != null) {
+            googleSignIn.cancel();
+            googleSignIn = null;
+        }
+        super.onDestroy();
+    }
+
+    private void startGoogleSignIn(String requestId) {
+        if (!isPublishedPage() || googleSignIn != null) return;
+        byte[] random = new byte[32];
+        new SecureRandom().nextBytes(random);
+        String nonce = Base64.encodeToString(random, Base64.URL_SAFE | Base64.NO_WRAP | Base64.NO_PADDING);
+        String hashedNonce;
+        try {
+            byte[] bytes = MessageDigest.getInstance("SHA-256").digest(nonce.getBytes(StandardCharsets.UTF_8));
+            StringBuilder hex = new StringBuilder(bytes.length * 2);
+            for (byte b : bytes) hex.append(Character.forDigit((b & 0xff) >>> 4, 16)).append(Character.forDigit(b & 0xf, 16));
+            hashedNonce = hex.toString();
+        } catch (NoSuchAlgorithmException e) {
+            finishGoogleSignIn(requestId, "error", "", "");
+            return;
+        }
+
+        googleSignIn = new CancellationSignal();
+        try {
+            GetSignInWithGoogleOption option = new GetSignInWithGoogleOption.Builder(getString(R.string.google_server_client_id))
+                    .setNonce(hashedNonce)
+                    .build();
+            GetCredentialRequest request = new GetCredentialRequest.Builder().addCredentialOption(option).build();
+            CredentialManager.create(this).getCredentialAsync(this, request, googleSignIn, this::runOnUiThread,
+                    new CredentialManagerCallback<GetCredentialResponse, GetCredentialException>() {
+                        @Override
+                        public void onResult(GetCredentialResponse response) {
+                            Credential credential = response.getCredential();
+                            if (!(credential instanceof CustomCredential)
+                                    || !GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL.equals(credential.getType())) {
+                                finishGoogleSignIn(requestId, "error", "", "");
+                                return;
+                            }
+                            try {
+                                String idToken = GoogleIdTokenCredential.createFrom(credential.getData()).getIdToken();
+                                finishGoogleSignIn(requestId, "ok", idToken, nonce);
+                            } catch (RuntimeException e) {
+                                finishGoogleSignIn(requestId, "error", "", "");
+                            }
+                        }
+
+                        @Override
+                        public void onError(GetCredentialException error) {
+                            String status = "error";
+                            if (error instanceof GetCredentialCancellationException) status = "cancelled";
+                            else if (error instanceof NoCredentialException) status = "no_account";
+                            finishGoogleSignIn(requestId, status, "", "");
+                        }
+                    });
+        } catch (RuntimeException e) {
+            finishGoogleSignIn(requestId, "error", "", "");
+        }
+    }
+
+    private void finishGoogleSignIn(String requestId, String status, String token, String nonce) {
+        googleSignIn = null;
+        if (isFinishing() || isDestroyed() || !isPublishedPage()) return;
+        String payload = "{id:" + JSONObject.quote(requestId) + ",status:" + JSONObject.quote(status)
+                + ",token:" + JSONObject.quote(token) + ",nonce:" + JSONObject.quote(nonce) + "}";
+        web.evaluateJavascript("window.ddokGoogleSignInResult && window.ddokGoogleSignInResult(" + payload + ")", null);
+    }
+
+    @Override
     public void onBackPressed() {
         // 팝업이 열려 있으면 닫고, 아니면 앱 안의 '뒤로' 버튼을 누른 것처럼 동작. 더 갈 곳이 없으면 앱 종료.
         web.evaluateJavascript(
@@ -233,6 +329,12 @@ public class MainActivity extends Activity {
 
     /** 웹 쪽에서 부르는 기능: 이미지 저장, 공유 */
     private class Bridge {
+        @JavascriptInterface
+        public void signInWithGoogle(String requestId) {
+            if (requestId == null || !requestId.matches("[0-9a-f-]{36}")) return;
+            runOnUiThread(() -> startGoogleSignIn(requestId));
+        }
+
         @JavascriptInterface
         public void saveImage(String dataUrl, String name) {
             try {

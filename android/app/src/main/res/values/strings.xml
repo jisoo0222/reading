@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">똑독</string>
+    <string name="google_server_client_id" translatable="false">139397558424-t60anb2rjltlq2p2acvfts2qafui585k.apps.googleusercontent.com</string>
 </resources>

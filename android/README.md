@@ -5,6 +5,13 @@
 서버에 연결할 수 없으면 빌드할 때 APK 안에 담아 둔 화면이 열려요.
 안드로이드 코드나 설치 아이콘이 바뀌면 같은 배포용 키로 서명한 새 APK가 필요해요.
 
+## 구글 로그인
+
+구글 버튼은 안드로이드의 계정 선택 화면을 열고, Supabase에서 로그인 결과를 확인해요.
+처음 로그인하면 닉네임과 만 나이 설정으로 이어지고, 가입을 마친 사용자는 기존 기록을 불러와요.
+Google Cloud에 등록한 Android 클라이언트의 패키지 이름과 SHA-1은 설치한 APK의 서명과 같아야 해요.
+앱에서 쓰는 서버용 클라이언트 ID는 `app/src/main/res/values/strings.xml`에 있어요. 서버용 Client Secret을 APK에 넣지 않아요.
+
 ## 에뮬레이터에서 실행하기
 1. [Android Studio](https://developer.android.com/studio)를 설치하고 실행해요.
 2. **Open** → 이 저장소의 `android` 폴더를 선택해요. (처음 열면 Gradle 동기화에 몇 분 걸려요.)
