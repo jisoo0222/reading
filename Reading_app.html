@@ -5567,29 +5567,50 @@ var DM=1;try{localStorage.removeItem("rd_dm")}catch(e){}
 function applyDM(){DM=1;document.documentElement.setAttribute("data-theme","light")}
 applyDM();
 function infoPop(t,h){var x=pop('<h3>'+t+'</h3>'+h+'<button class="btn" id="iok" style="width:100%;margin-top:14px">확인</button>');document.getElementById("iok").onclick=x;return x}
-function csPop(){
- var x=pop('<h3>고객센터</h3><p class="sm" style="color:var(--sub);font-size:14px">운영 시간은 평일 10:00–18:00예요.<br>문의를 남기면 순서대로 답변해 드려요.</p><textarea id="csq" rows="4" placeholder="문의 내용을 적어 주세요" aria-label="문의 내용"></textarea><p id="cse" style="color:var(--sub);font-size:14px;min-height:18px;margin:4px 0 0"></p><div class="dbt"><button class="btn ghost" id="csn">닫기</button><button class="btn" id="csy">보내기</button></div>');
- document.getElementById("csn").onclick=x;
- document.getElementById("csy").onclick=function(){var v=document.getElementById("csq").value.trim();if(!v){document.getElementById("cse").textContent="문의 내용을 입력해 주세요.";return}
-  var d=document.getElementById("dlg");d.innerHTML='<h3>접수 완료</h3><p class="sm" style="color:var(--sub)">문의를 잘 받았어요.<br>답변이 오면 알려 드릴게요.</p><button class="btn" id="cso" style="width:100%;margin-top:14px">확인</button>';document.getElementById("cso").onclick=x}}
+function settingsSignOut(){
+ if(!AUTH_SESSION.signedIn)return;
+ var close=pop('<h3>로그아웃할까요?</h3><p class="sm">이 기기에서 로그아웃해요.<br>다시 로그인하면 저장한 기록을 볼 수 있어요.</p><div class="dbt"><button class="btn ghost" id="signout-cancel" type="button">취소</button><button class="btn" id="signout-confirm" type="button">로그아웃</button></div>');
+ document.getElementById('signout-cancel').onclick=close;
+ document.getElementById('signout-confirm').onclick=function(){
+  if(this.disabled)return;this.disabled=true;sbCheckpoint();
+  var session=SB_SESSION;
+  if(session)fetch(SB_CONFIG.url+'/auth/v1/logout?scope=local',{method:'POST',headers:{apikey:SB_CONFIG.key,Authorization:'Bearer '+session.access_token},keepalive:true,credentials:'omit',referrerPolicy:'no-referrer'}).catch(function(){});
+  cmClearAccount();close();
+  try{sessionStorage.setItem('ddok_signed_out','1')}catch(e){}
+  location.reload()
+ };
+}
 function setPg(){
  app.className="app";
- var NT=[["똑독이 문을 열었어요.","2026.10.01","AI 독서 습관 앱이 문을 열었어요.\n독서 프로필을 만들고 메이트와 함께 읽어 보세요."],["정기 점검 안내","2026.10.05","더 안정적인 서비스를 위해 새벽 시간에 짧은 점검이 있을 수 있어요."]];
- var TM=[["제1조 (목적)","이 약관은 서비스의 이용 조건과 절차, 이용자와 서비스 운영자의 권리와 의무를 정하는 것을 목적으로 해요."],["제2조 (이용자의 책임)","이용자는 다른 이용자를 존중하고, 타인의 저작물이나 개인정보를 허락 없이 게시하지 않아야 해요."],["제3조 (서비스의 변경)","운영자는 서비스의 일부를 변경하거나 중단할 수 있으며, 중요한 변경은 공지사항으로 알려요."]];
- var PV=[["수집하는 정보","독서 기록, 코멘트, 프로필 설정처럼 서비스를 제공하는 데 필요한 최소한의 정보만 수집해요."],["이용 목적","맞춤 책 추천, 독서 메이트 연결, 독서 기록 정리를 위해 사용해요."],["보관과 삭제","이용자가 요청하거나 탈퇴하면 관련 정보를 지체 없이 삭제해요."]];
- function art(a){return a.map(function(x){return'<p class="sm"><b>'+x[0]+'</b><br><span style="color:var(--sub);font-size:14px">'+x[1]+'</span></p>'}).join("")}
- var note='<p class="dnote">※ 샘플 문구예요.<br>실제 서비스에서는 확정된 내용으로 교체해야 해요.</p>';
- function r(){app.innerHTML='<div class="sh2"><button class="ib" id="dcl" aria-label="뒤로">'+ic("back")+'</button><h2>설정</h2><span class="sp3"></span></div><div class="drw stpg"><h4>알림</h4><button class="drow" data-a="al">알림 설정'+ic("next")+'</button><h4>정보</h4><button class="drow" data-a="nt">공지사항'+ic("next")+'</button><button class="drow" data-a="tm">이용약관'+ic("next")+'</button><button class="drow" data-a="pv">개인정보 처리방침'+ic("next")+'</button><button class="drow" data-a="cs">고객센터'+ic("next")+'</button><p class="settings-version">버전 1.0.0</p></div>';var d=app;
-  d.querySelectorAll(".drow").forEach(function(b){b.onclick=function(){var a=b.dataset.a;
-   if(a==="nt")infoPop("공지사항",NT.map(function(n){return'<p class="sm"><b>'+n[0]+'</b> <small style="color:var(--sub)">'+n[1]+'</small><br><span style="color:var(--sub);font-size:14px">'+n[2]+'</span></p>'}).join(""));
-   if(a==="tm")infoPop("이용약관",art(TM)+note);
-   if(a==="pv")infoPop("개인정보 처리방침",art(PV)+note);
-   if(a==="cs")csPop();
-   if(a==="al")alarm();
-   if(a==="th")themePop(r);
-   if(a==="bm")bmPop(r)}});
-  d.querySelector("#dcl").onclick=profile}
- r()}
+ var groups=[
+  ['계정',[
+   ['settings-logout','로그아웃',settingsSignOut],
+   ['account-delete-open','회원 탈퇴',accountDelete]
+  ]],
+  ['커뮤니티',[
+   ['settings-community-rules','커뮤니티 이용 규칙',function(){communityRules(false)}],
+   ['settings-block-list','차단 목록',cmBlocks]
+  ]],
+  ['알림',[['settings-alerts','알림 설정',alarm]]],
+  ['앱 정보',[
+   ['settings-notices','공지사항',function(){infoPop('공지사항','<p class="sm">등록된 공지사항이 없어요.</p>')}],
+   ['settings-terms','서비스 이용 안내',function(){infoPop('서비스 이용 안내',
+    '<p class="sm"><b>똑독 이용하기</b><br>만 14세부터 이용할 수 있어요.<br>독서 목표를 정하고 책과 문장을 기록할 수 있어요.</p>'
+    +'<p class="sm"><b>함께 읽기</b><br>다른 사람의 개인정보나 허락을 받지 않은 저작물은 올리지 말아 주세요.<br>글을 쓰기 전에 커뮤니티 이용 규칙을 확인해 주세요.</p>')}],
+   ['settings-privacy','개인정보 처리 안내',privacyNotice],
+   ['settings-support','문의·이의신청',communitySupport]
+  ]]
+ ];
+ if(!AUTH_SESSION.signedIn)groups.shift();
+ app.innerHTML='<div class="sh2"><button class="ib" id="dcl" aria-label="뒤로">'+ic("back")+'</button><h2>설정</h2><span class="sp3"></span></div><div class="drw stpg">'+groups.map(function(group,index){
+  var title='settings-section-'+index;
+  return '<section class="settings-group" aria-labelledby="'+title+'"><h4 id="'+title+'">'+group[0]+'</h4>'+group[1].map(function(item){
+   return '<button class="drow" type="button" id="'+item[0]+'">'+item[1]+ic('next')+'</button>'
+  }).join('')+'</section>'
+ }).join('')+'<p class="settings-version">버전 1.0.0</p></div>';
+ groups.forEach(function(group){group[1].forEach(function(item){document.getElementById(item[0]).onclick=item[2]})});
+ document.getElementById('dcl').onclick=profile
+}
 function calendar(y,m,sd){
  var now=new Date();if(y===undefined){y=now.getFullYear();m=now.getMonth()}
  var dt=new Date(y,m,1);y=dt.getFullYear();m=dt.getMonth();
@@ -7192,8 +7213,8 @@ async function accountDelete(){if(!cmNeedAccount('탈퇴하려면',accountDelete
  button.onclick=async function(){if(input.value.trim()!=='탈퇴'||ACCOUNT_DELETING)return;button.disabled=true;button.setAttribute('aria-busy','true');button.textContent='탈퇴 처리 중';document.getElementById('account-delete-error').textContent='계정과 데이터를 삭제하고 있어요.';document.getElementById('account-delete-cancel').disabled=true;var previous=SB_SYNC.capture;ACCOUNT_DELETING=true;SB_SYNC.capture=false;clearTimeout(SB_SYNC.timer);
   try{await sbRequest('/auth/v1/user',{member:true});var response=await fetch(SB_CONFIG.url+'/functions/v1/delete-account',{method:'POST',headers:{apikey:SB_CONFIG.key,Authorization:'Bearer '+SB_SESSION.access_token,'Content-Type':'application/json'},body:JSON.stringify({confirmation:'탈퇴'}),credentials:'omit',referrerPolicy:'no-referrer',signal:AbortSignal.timeout(60000)}),data=await response.json().catch(function(){return {}});if(!response.ok||!data.deleted){if(data.code==='reauth_required'){try{sessionStorage.setItem('ddok_delete_intent','1')}catch(e){}throw Error('안전한 탈퇴를 위해 카카오로 다시 로그인해 주세요.\n다시 로그인한 뒤 15분 안에 탈퇴할 수 있어요.')}throw Error(data.code==='deletion_not_ready'||response.status===404?'탈퇴 서버가 아직 준비되지 않았어요.\n서버 연결 후 다시 시도해 주세요.':'탈퇴를 완료하지 못했어요.\n계정 저장이 잠겨 있을 수 있으니 이 화면에서 다시 시도해 주세요.')}var uid=SB_SESSION.user.id;cmClearAccount(uid);close();location.reload()}catch(e){var error=document.getElementById('account-delete-error');if(error){error.textContent=e.message;button.disabled=false;document.getElementById('account-delete-cancel').disabled=false;if(/다시 로그인/.test(e.message)){var re=document.createElement('button');re.className='btn ghost';re.textContent='카카오로 다시 로그인';re.onclick=function(){close();kakaoStart()};error.after(re)}}SB_SYNC.capture=previous}finally{ACCOUNT_DELETING=false;if(button.isConnected){button.removeAttribute('aria-busy');button.textContent='탈퇴하기'}}};
 }
-function communitySupport(){var close=pop('<h3>문의·이의신청</h3><p>신고 처리나 이용 제한에 대해 궁금한 점이 있으면 알려 주세요.<br>닉네임과 확인할 글의 내용을 함께 적어 주시면 도움이 돼요.</p><p><a href="mailto:team.ddokdok@gmail.com">team.ddokdok@gmail.com</a></p><p>비밀번호나 인증번호는 보내지 마세요.</p><button class="btn ghost" id="cm-support-close">닫기</button>');document.getElementById('cm-support-close').onclick=close}
-function privacyNotice(){var close=pop('<h3>개인정보 처리 안내</h3><p>팀 갤럭시는 계정 식별 정보·닉네임·프로필 사진·DDTI 결과와 독서 목표, 독서 기록과 작성한 콘텐츠를 서비스 제공에 사용해요.<br>커뮤니티를 이용하면 신고·차단·운영 처리 기록도 저장해요.</p><p>똑독은 만 14세부터 이용할 수 있어요.<br>가입할 때 입력한 나이 숫자는 기기에서 확인하고 만 14세 이상 확인 여부만 새로 저장해요.</p><p>회원 인증과 기록 저장은 Supabase를 사용해요.<br>카카오 또는 구글로 로그인할 수 있어요.<br>회원 탈퇴가 완료되면 계정과 관련 데이터의 삭제를 처리해요.<br>백업·서비스 로그의 처리와 운영 서버 지역은 출시 전 확인 항목이에요.</p><p><a href="https://jisoo0222.github.io/reading/privacy-policy.html" target="_blank" rel="noreferrer">개인정보처리방침 자세히 보기</a></p><p>문의: <a href="mailto:team.ddokdok@gmail.com">team.ddokdok@gmail.com</a></p><button class="btn ghost" id="cm-privacy-close">닫기</button>');document.getElementById('cm-privacy-close').onclick=close}
+function communitySupport(){var close=pop('<h3>문의·이의신청</h3><p>앱 사용 문의나 커뮤니티 이용 제한에 대한 이의신청은 이메일로 보내 주세요.<br>어떤 화면이나 글에 관한 내용인지 알려 주시면 확인할게요.</p><p><a href="mailto:team.ddokdok@gmail.com">team.ddokdok@gmail.com</a></p><p>비밀번호나 인증번호는 보내지 마세요.</p><button class="btn ghost" id="cm-support-close">닫기</button>');document.getElementById('cm-support-close').onclick=close}
+function privacyNotice(){var close=pop('<h3>개인정보 처리 안내</h3><p><b>저장하는 정보</b><br>계정과 프로필을 관리하고 독서 기록을 보관하기 위해 닉네임, 프로필 사진, DDTI 답변, 독서 목표와 기록을 사용해요.<br>커뮤니티를 이용하면 글, 댓글, 신고와 차단 기록도 저장해요.</p><p><b>나이 확인</b><br>가입할 때 입력한 나이는 기기에서 확인하고 만 14세 이상 확인 여부만 저장해요.</p><p><b>계정 데이터 삭제</b><br>설정의 회원 탈퇴에서 계정과 관련 데이터를 삭제할 수 있어요.</p><p><a href="https://jisoo0222.github.io/reading/privacy-policy.html" target="_blank" rel="noreferrer">개인정보처리방침 자세히 보기</a></p><p><a href="mailto:team.ddokdok@gmail.com">team.ddokdok@gmail.com</a></p><button class="btn ghost" id="cm-privacy-close">닫기</button>');document.getElementById('cm-privacy-close').onclick=close}
 /* 다른 기기에서 탈퇴한 계정의 인증 실패를 확인하면 이 기기의 계정별 사본도 정리해요. */
 (function(){var original=sbRequest;sbRequest=async function(path,options){var uid=SB_SESSION&&SB_SESSION.user&&SB_SESSION.user.id;try{return await original.apply(this,arguments)}catch(e){if(uid&&path==='/auth/v1/user'&&(e.status===401||['user_not_found','session_not_found','session_expired','bad_jwt'].includes(e.code)))cmClearAccount(uid);throw e}}})();
 /* 실제 서버 응답이 없으면 성공이나 임시 접수를 표시하지 않아요. */
@@ -7202,19 +7223,17 @@ function privacyNotice(){var close=pop('<h3>개인정보 처리 안내</h3><p>�
  var previousCheckpoint=sbCheckpoint;sbCheckpoint=function(){if(!ACCOUNT_DELETING)return previousCheckpoint.apply(this,arguments)};
  var previousHome=home;home=function(){var args=arguments,out=previousHome.apply(this,args);cmRefreshHome().then(function(){if(app.classList.contains('hm')){var sc=app.querySelector('.sc'),top=sc?sc.scrollTop:0;previousHome.apply(null,args);var next=app.querySelector('.sc');if(next)next.scrollTop=top}});return out};
  community=cmLiveCommunity;PO=[];
- var previousSettings=setPg;
- setPg=function(){
-  var r=previousSettings.apply(this,arguments),host=app.querySelector('.drw.stpg');if(!host)return r;
-  var version=host.querySelector('.settings-version');
-  function heading(label){var title=document.createElement('h4');title.textContent=label;host.insertBefore(title,version)}
-  function link(label,action,id){var button=document.createElement('button');button.type='button';button.className='drow';if(id)button.id=id;button.textContent=label;button.insertAdjacentHTML('beforeend',ic('next'));button.onclick=action;host.insertBefore(button,version)}
-  heading('계정');link('회원 탈퇴',accountDelete,'account-delete-open');link('문의·이의신청',communitySupport);
-  if(AUTH_SESSION.provider==='demo')link('테스트 다시 시작',function(){cmClearAccount();loginPage()},'demo-restart');
-  heading('커뮤니티');link('커뮤니티 이용 규칙',function(){communityRules(false)},'settings-community-rules');link('차단 목록',cmBlocks,'settings-block-list');
-  var privacy=host.querySelector('[data-a="pv"]');if(privacy)privacy.onclick=privacyNotice;var contact=host.querySelector('[data-a="cs"]');if(contact)contact.onclick=communitySupport;
-  return r
+ var previousBootstrap=sbBootstrap;sbBootstrap=async function(){
+  var url=new URL(location.href);
+  if(sessionStorage.getItem('ddok_signed_out')==='1'){
+   cmClearAccount();
+   sessionStorage.removeItem('ddok_signed_out');
+   url.searchParams.delete('account_delete');history.replaceState(null,'',url.pathname+url.search);sbCleanCallback();
+   loginPage();ptToast('로그아웃했어요.','success');return
+  }
+  var intent=url.searchParams.get('account_delete');if(intent==='1')sessionStorage.setItem('ddok_delete_intent','1');
+  try{if(sessionStorage.getItem('ddok_delete_intent')==='1')AUTH_NEXT=accountDelete;await previousBootstrap.apply(this,arguments);if(sessionStorage.getItem('ddok_delete_intent')==='1'&&!SB_SESSION)loginPage()}catch(e){authNotice(e.message)}
  };
- var previousBootstrap=sbBootstrap;sbBootstrap=async function(){var intent=new URL(location.href).searchParams.get('account_delete');if(intent==='1')sessionStorage.setItem('ddok_delete_intent','1');try{if(sessionStorage.getItem('ddok_delete_intent')==='1')AUTH_NEXT=accountDelete;await previousBootstrap.apply(this,arguments);if(sessionStorage.getItem('ddok_delete_intent')==='1'&&!SB_SESSION)loginPage()}catch(e){authNotice(e.message)}};
 })();
 
 sbBootstrap();
