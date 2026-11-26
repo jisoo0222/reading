@@ -2727,7 +2727,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.hm .cx-brand{display:flex;align-items:center;gap:8px;font:400 25px DdokdokWordmark,Pretendard,sans-serif;color:#3E9370;letter-spacing:.02em}
 #app.hm .cx-brand .brand-logo{display:block;width:auto;height:30px}
 #app.hm .cx-brand>span{font:600 25px/1.2 Pretendard,"Pretendard Variable","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;letter-spacing:-.02em}
-#app.hm .cx-notice{width:48px;height:48px;border:0;border-radius:50%;background:#ECEEE5;color:#253B30;display:grid;place-items:center;position:relative;padding:0}
+#app.hm .cx-notice{width:48px;height:48px;border:0;border-radius:50%;background:transparent;color:#253B30;display:grid;place-items:center;position:relative;padding:0}
 #app.hm .cx-notice .ic{width:22px;height:22px;stroke-width:1.5}
 #app.hm .cx-dot{width:5px;height:5px;border-radius:50%;background:#3E9370;position:absolute;right:13px;top:11px}
 #app.hm .cx-intro{position:relative;margin-bottom:25px}
@@ -2800,7 +2800,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.hm .sc.hm{padding:24px 22px 110px!important}
 #app.hm .cx-top{margin-bottom:22px}
 #app.hm .cx-brand{color:#252A28;font-size:25px}
-#app.hm .cx-notice{background:#E6EAE7;color:#4E5852}
 #app.hm .cx-intro{margin:0 0 14px}
 #app.hm .cx-intro h1{font-size:15px;line-height:1.4;letter-spacing:-.2px;font-weight:600;color:#333A36}
 #app.hm .cx-reading{padding:22px;border-radius:20px;background:#DAEAE1!important;box-shadow:none;color:#203B2B;min-height:258px}
@@ -2964,7 +2963,8 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.lib .gnt>span img{filter:grayscale(1);opacity:.85}
 #app.lib .gnt{color:#17241C;font-weight:600}
 #app.exhibit .exhibit-row::after{background:#5D7162;height:9px;border-radius:2px}
-#app.exhibit .exhibit-item .hb{background:#FFFFFF;color:#174D37}
+#app.exhibit .exhibit-item .hb{top:-2px;right:-2px;width:48px!important;height:48px!important;background:transparent;color:#174D37;isolation:isolate}
+#app.exhibit .exhibit-item .hb::before{content:"";position:absolute;inset:12px;z-index:-1;border-radius:50%;background:#FFFFFF}
 /* 문구점: 내용의 실제 색은 유지하고 바탕과 카드만 정리해요. */
 #app.shp .mpt3{position:relative;height:auto!important;min-height:104px!important;padding:20px!important;border:1px solid #A9BDB0;border-radius:15px!important;background:#FFFFFF!important}
 #app.shp .mpt3::before,#app.pf .ptc2::before{content:'';position:absolute;inset:0;z-index:-1;background-image:radial-gradient(circle,#3E9370 1px,transparent 1.2px);background-size:15px 15px;opacity:.35;mask-image:linear-gradient(#000,transparent 90%);pointer-events:none}
@@ -3995,8 +3995,9 @@ dialog.app-loading-screen::backdrop{background:#F5F7F4}
 #app.hm .cx-state .cx-continue .ic{width:20px;height:20px;flex:none}
 #app.hm .cx-rec-grid{display:grid;width:100%;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-self:start;align-items:start}
 #app.hm .cx-rec-book{display:flex;flex-direction:column;align-items:center;min-width:0;min-height:48px;border:0;padding:0 0 6px;background:none;color:#17241C;font:inherit;text-align:left;cursor:pointer}
-#app.hm .cx-rec-cover{display:block;width:100%;max-width:90px;aspect-ratio:107/154.12;position:relative;border-radius:10px;box-shadow:2px 3px 0 #DCE3DD}
-#app.hm .cx-rec-cover>svg{display:block;width:100%;height:100%;border-radius:10px;overflow:hidden}
+#app.hm .cx-rec-cover{display:block;width:100%;max-width:90px;aspect-ratio:107/154.12;position:relative;border-radius:5px;box-shadow:2px 3px 0 #DCE3DD}
+#app.hm .cx-rec-cover>svg{display:block;width:100%;height:100%;border-radius:5px;overflow:hidden}
+#app.hm .cx-rec-cover .cva>rect:first-of-type{rx:5px}
 #app.hm .cx-rec-book[aria-pressed=true] .cx-rec-cover{outline:2px solid #174D37;outline-offset:4px}
 #app.hm .cx-rec-check{position:absolute;right:5px;bottom:5px;width:22px;height:22px;border-radius:50%;display:none;place-items:center;background:#174D37;color:#FFFFFF}
 #app.hm .cx-rec-check .ic{width:14px;height:14px}
