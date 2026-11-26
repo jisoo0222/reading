@@ -30,7 +30,8 @@
 - 카카오 서버 설정은 저장소 밖의 `%LOCALAPPDATA%/DDOKDOK/local-auth/kakao-config.json`에서 읽어요. 필드는 `restApiKey`, 선택 항목 `clientSecret`이에요. 환경 변수 `KAKAO_REST_API_KEY`, `KAKAO_CLIENT_SECRET`을 설정하면 파일 값보다 우선해요.
 - 카카오 Developers에 등록할 개발용 Redirect URI는 `http://localhost:5174/auth/kakao/callback`이에요.
 - 로컬 가입 여부·닉네임·목표·성향 답변은 같은 설정 폴더의 `kakao-users.json`에 저장해요. 키·Client Secret·회원 데이터는 Git에 올리지 않아요.
-- GitHub Pages의 카카오·구글 로그인과 회원 정보 저장은 Supabase에 연결돼 있어요. 이메일 가입은 로컬 화면 확인용이에요. 위 로컬 서버 설정은 이전 개발용 연결이며 배포 앱에는 사용하지 않아요.
+- GitHub Pages에서는 카카오·구글·인증된 이메일 계정으로 Supabase에 로그인해요. 이메일 회원가입 화면은 로컬에서 미리 볼 수 있어요. 위 로컬 서버 설정은 이전 개발용 연결이며 배포 앱에는 사용하지 않아요.
+- 배포 앱의 사용성 테스트 계정은 매번 닉네임 설정부터 시작해요. 기록은 탭이 열려 있는 동안만 유지돼요. 커뮤니티 글 저장까지 확인할 때는 로컬 테스트 서버를 사용해요.
 
 ## 출시 필수 기능: 커뮤니티 안전·연령·탈퇴
 

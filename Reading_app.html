@@ -4214,6 +4214,7 @@ function info(confirmExisting){
  var back=document.getElementById("signup-back");
  back.onclick=function(){
   SIGNUP_AGE_CONFIRMED=false;
+  if(TEST_ACCOUNT_PENDING){TEST_ACCOUNT_PENDING=false;NEW_ACCOUNT=false;loginPage();return}
   if(SB_ONBOARDING_PENDING){SB_SESSION=null;SB_MEMBER=null;SB_ONBOARDING_PENDING=false;localStorage.removeItem(SB_STORAGE)}
   if(verifyExisting)loginPage();else signupAccount()
  };
@@ -4289,10 +4290,11 @@ function tiIntro(){
  +'<path d="M63 59q15-2 33 6M60 70q17-2 35 6M57 82q17-1 33 5M127 94q18-8 37-8M128 103q19-8 39-8" fill="none" stroke="#789480" stroke-width="2" stroke-linecap="round"/>'
  +'</svg>';
  app.innerHTML=signupHeader()+ost(3)+'<div class="tin">'+art
- +'<h1>나의 독서 성향 알아보기</h1><p class="hint tis"><span>네 가지 질문에 답하면</span><span>취향에 맞는 책을 추천해요.</span></p><button class="tsk" id="tsk">검사 건너뛰기</button></div>'
+ +'<h1>나의 독서 성향 알아보기</h1><p class="hint tis"><span>네 가지 질문에 답하면</span><span>취향에 맞는 책을 추천해요.</span></p>'+(TEST_ACCOUNT_PENDING?'':'<button class="tsk" id="tsk">검사 건너뛰기</button>')+'</div>'
  +'<div class="foot"><button class="btn ghost" id="tib">이전</button><button class="btn" id="tig">시작하기</button></div>';
  document.getElementById("tib").onclick=goal;document.getElementById("tig").onclick=function(){step=0;ask()};
- document.getElementById("tsk").onclick=function(){var x=pop('<h3>정말 건너뛸까요.</h3><p style="word-break:keep-all">지금 건너뛰어도 괜찮아요.<br>홈에서 언제든 검사할 수 있어요.</p><div class="dbt"><button class="btn ghost" id="skn">취소</button><button class="btn" id="sky">건너뛰기</button></div>');document.getElementById("skn").onclick=x;document.getElementById("sky").onclick=function(){x();SKT=1;completeSignupHome()}}}
+ var skip=document.getElementById("tsk");
+ if(skip)skip.onclick=function(){var x=pop('<h3>정말 건너뛸까요.</h3><p style="word-break:keep-all">지금 건너뛰어도 괜찮아요.<br>홈에서 언제든 검사할 수 있어요.</p><div class="dbt"><button class="btn ghost" id="skn">취소</button><button class="btn" id="sky">건너뛰기</button></div>');document.getElementById("skn").onclick=x;document.getElementById("sky").onclick=function(){x();SKT=1;completeSignupHome()}}}
 var SKT=0,RK={4:"FEDJ",5:"SEWJ",6:"FADJ",7:"FADI",8:"FADI",9:"FEDJ",10:"SAWJ"},RKEY="",PICKED=0;
 function tWrap(t,n){var w=t.split(" "),L=[],c="";w.forEach(function(x){if((c+" "+x).trim().length>n&&c){L.push(c);c=x}else c=(c+" "+x).trim()});if(c)L.push(c);return L}
 /* 결과 1458:2032의 16개 카드 원본 SVG 조각과 배치를 HTML 안에 보관해요. */
@@ -4562,7 +4564,7 @@ var AUTH_SESSION={signedIn:false,provider:null},AUTH_NEXT=null;
 // 이메일·Google 미리보기는 로컬에서만 유지하고 배포 화면에서는 Supabase 세션을 확인해요.
 try{var previewAuth=sessionStorage.getItem('ddok_preview_auth');if(!sbCloudPage()&&(previewAuth==='email'||previewAuth==='google')){AUTH_SESSION.signedIn=true;AUTH_SESSION.provider=previewAuth}}catch(e){}
 var ARCH={quotes:[],points:[]};
-function archiveSave(){if(!AUTH_SESSION.signedIn)return;try{localStorage.setItem(archiveStorageKey(),JSON.stringify({version:1,quotes:ARCH.quotes,points:ARCH.points,balance:PT,day:PS,owned:OWN,colors:CS}));sbCheckpoint()}catch(e){ptToast('이 기기에 기록을 저장하지 못했어요.\n저장 공간을 확인해 주세요.',"error")}}
+function archiveSave(){if(!AUTH_SESSION.signedIn||AUTH_SESSION.provider==='demo')return;try{localStorage.setItem(archiveStorageKey(),JSON.stringify({version:1,quotes:ARCH.quotes,points:ARCH.points,balance:PT,day:PS,owned:OWN,colors:CS}));sbCheckpoint()}catch(e){ptToast('이 기기에 기록을 저장하지 못했어요.\n저장 공간을 확인해 주세요.',"error")}}
 function archiveLoad(){try{var a=JSON.parse(localStorage.getItem(archiveStorageKey())||'null');if(!a||a.version!==1)return;
  ARCH.quotes=Array.isArray(a.quotes)?a.quotes.filter(function(q){return q&&typeof q.q==='string'&&typeof q.bt==='string'&&typeof q.au==='string'&&typeof q.at==='string'&&Number.isInteger(q.th)&&q.th>=0&&q.th<QTH.length&&(q.sf===0||q.sf===1)}):[];
  ARCH.points=Array.isArray(a.points)?a.points.filter(function(p){return p&&typeof p.label==='string'&&typeof p.day==='string'&&typeof p.at==='string'&&Number.isFinite(p.amount)&&p.amount!==0}):[];
@@ -6154,7 +6156,7 @@ function snsConsent(provider,onContinue){
  next.onclick=function(){update();if(next.disabled)return;dialog.close();dialog.remove();(onContinue||home)()};
 }
 
-var NEW_ACCOUNT=false,SIGNUP_DAY="",LOGIN_STATE=null;
+var NEW_ACCOUNT=false,SIGNUP_DAY="",LOGIN_STATE=null,TEST_ACCOUNT_PENDING=false;
 /* 실제 메일·SNS 연결 없이 가입 순서를 확인하는 시제품이에요. 입력한 계정 정보는 저장하지 않아요. */
 function signupAccount(){
  restoreLoginState();app.onclick=null;app.className='app signup-account';window.scrollTo(0,0);
@@ -6174,7 +6176,7 @@ function signupAccount(){
  function valid(){return verified&&emailOK()&&email.value.trim()===issuedEmail&&pw.value.trim().length>0&&pw.value===again.value}
  function update(){request.disabled=!emailOK();confirm.disabled=verified||!/^\d{6}$/.test(code.value);next.disabled=!valid();var mismatch=again.value.length>0&&pw.value!==again.value;pwStatus.textContent=mismatch?'비밀번호가 서로 달라요.\n다시 확인해 주세요.':'';pwStatus.classList.toggle('account-error',mismatch);again.setAttribute('aria-invalid',String(mismatch))}
  email.oninput=function(){expected='';issuedEmail='';verified=false;section.hidden=true;code.value='';pw.value=again.value='';pw.disabled=again.disabled=true;status.textContent='이메일을 입력하고 인증번호를 받아 주세요.';status.classList.remove('account-error');document.getElementById('password-help').textContent='이메일을 확인하면 비밀번호를 입력할 수 있어요.';confirm.textContent='인증번호 확인';request.textContent='인증번호 받기';update()};
- request.onclick=function(){if(!emailOK())return;var n=new Uint32Array(1);crypto.getRandomValues(n);expected=String(100000+n[0]%900000);issuedEmail=email.value.trim();verified=false;code.value='';pw.value=again.value='';pw.disabled=again.disabled=true;section.hidden=false;document.getElementById('preview-code').textContent=expected;status.textContent='메일 대신 화면에 표시된 인증번호를 입력해 주세요.';status.classList.remove('account-error');confirm.textContent='인증번호 확인';request.textContent='다시 받기';document.getElementById('password-help').textContent='이메일을 확인하면 비밀번호를 입력할 수 있어요.';update();code.focus()};
+ request.onclick=function(){if(!emailOK())return;if(!sbPreviewAllowed()){sbPreviewNotice();return}var n=new Uint32Array(1);crypto.getRandomValues(n);expected=String(100000+n[0]%900000);issuedEmail=email.value.trim();verified=false;code.value='';pw.value=again.value='';pw.disabled=again.disabled=true;section.hidden=false;document.getElementById('preview-code').textContent=expected;status.textContent='메일 대신 화면에 표시된 인증번호를 입력해 주세요.';status.classList.remove('account-error');confirm.textContent='인증번호 확인';request.textContent='다시 받기';document.getElementById('password-help').textContent='이메일을 확인하면 비밀번호를 입력할 수 있어요.';update();code.focus()};
  code.oninput=function(){code.value=code.value.replace(/[^0-9]/g,'');update()};
  confirm.onclick=function(){if(!expected||issuedEmail!==email.value.trim()||code.value!==expected){status.textContent='인증번호가 맞지 않아요.\n화면에 표시된 번호를 다시 확인해 주세요.';status.classList.add('account-error');return}verified=true;status.textContent='미리보기 이메일 확인을 마쳤어요.';status.classList.remove('account-error');confirm.textContent='확인 완료';pw.disabled=again.disabled=false;document.getElementById('password-help').textContent='같은 비밀번호를 두 번 입력해 주세요.';update();pw.focus()};
  pw.oninput=again.oninput=update;
@@ -6217,9 +6219,27 @@ function loginPage(){
  document.getElementById("auth-signup").onclick=signupAccount;
  var form=document.getElementById("login-form"),email=document.getElementById("login-email"),password=document.getElementById("login-password"),submit=document.getElementById("login-submit");
  function valid(){return email.validity.valid&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)&&password.value.trim().length>0}
- function update(){submit.disabled=!valid()}
+ function update(){submit.disabled=!valid()||WEB_SIGN_IN||!!GOOGLE_SIGN_IN}
  form.addEventListener("input",update);form.addEventListener("change",update);form.addEventListener("focusin",update);update();
- function enterHome(e){if(e)e.preventDefault();update();if(submit.disabled)return;if(!sbPreviewAllowed()){sbPreviewNotice();return}loginComplete('email')}
+ async function enterHome(e){
+  if(e)e.preventDefault();update();if(submit.disabled)return;
+  var address=email.value.trim(),attempt=password.value;
+  if(address.toLowerCase()==='ddokdok-test@example.invalid'){
+   if(attempt!=='1234'){authNotice('이메일과 비밀번호를 다시 확인해 주세요.');return}
+   password.value='';startTestAccount();return
+  }
+  if(sbPreviewAllowed()){loginComplete('email');return}
+  if(!sbCloudPage()){authNotice('인터넷에 연결한 뒤 앱을 다시 열어 주세요.');return}
+  WEB_SIGN_IN=true;update();submit.setAttribute('aria-busy','true');
+  var finishLoading=uiLoadingBegin(true);
+  try{
+   sbRemember(await sbRequest('/auth/v1/token?grant_type=password',{body:{email:address,password:attempt}}));
+   password.value='';await sbAdoptMember()
+  }catch(e){
+   var message=e.code==='email_not_confirmed'?'이메일 인증을 먼저 마쳐 주세요.':e.code==='invalid_credentials'?'이메일과 비밀번호를 다시 확인해 주세요.':e.message;
+   authNotice(message||'로그인을 마치지 못했어요.\n다시 시도해 주세요.')
+  }finally{finishLoading();WEB_SIGN_IN=false;submit.removeAttribute('aria-busy');update()}
+ }
  submit.onclick=enterHome;form.onsubmit=enterHome;
  password.onkeydown=email.onkeydown=function(e){if(e.key==="Enter")enterHome(e)};
  document.getElementById("auth-kakao").onclick=kakaoStart;
@@ -6813,10 +6833,19 @@ async function ddokGoogleSignInResult(result){
  }
 }
 function authNotice(message){var close=pop('<h3 style="white-space:pre-line">'+esc(message)+'</h3><button class="btn" id="auth-notice-close" style="width:100%;margin-top:16px">확인</button>');document.getElementById('auth-notice-close').onclick=close}
-function sbPreviewNotice(){authNotice('이메일 연결은 아직 준비 중이에요.\n카카오나 구글로 로그인해 주세요.')}
+function sbPreviewNotice(){authNotice('이메일 회원가입은 아직 준비 중이에요.\n카카오나 구글로 가입해 주세요.')}
+function startTestAccount(){
+ cmClearAccount();
+ TEST_ACCOUNT_PENDING=true;SB_ONBOARDING_PENDING=false;AUTH_NEXT=null;NEW_ACCOUNT=true;LOGIN_STATE=null;
+ beginSignup()
+}
 async function completeSignupHome(){
  if(SB_ONBOARDING_SAVING)return;
  if(!SIGNUP_AGE_CONFIRMED){info();return}
+ if(TEST_ACCOUNT_PENDING){
+  if(!ans.every(Number.isInteger)){tiIntro();return}
+  TEST_ACCOUNT_PENDING=false;SIGNUP_AGE_CONFIRMED=false;loginComplete('demo');NEW_ACCOUNT=false;return
+ }
  if(!SB_SESSION){if(!sbPreviewAllowed()){sbPreviewNotice();return}SIGNUP_AGE_CONFIRMED=false;loginComplete('email');return}SB_ONBOARDING_SAVING=true;
  var button=document.getElementById('go');if(button){button.disabled=true;button.setAttribute('aria-busy','true')}
  var finishLoading=uiLoadingBegin(true);
@@ -6921,14 +6950,14 @@ function loginComplete(provider){
 /* 출시용 커뮤니티: 화면의 mine/admin 값이 아니라 서버가 권한을 검사해요. */
 var COMMUNITY_VERSION='2026-11-24.1',CM_LIVE={posts:[],ids:{},status:null},ACCOUNT_DELETING=false;
 function cmError(e){var d=e&&e.detail||e&&e.code||'';return d==='terms_required'?'커뮤니티 이용 규칙에 동의해 주세요.':d==='community_restricted'?'커뮤니티 이용이 제한돼 있어요.\n운영자에게 받은 안내를 확인해 주세요.':d==='age_confirmation_required'?'만 14세 이상인지 다시 확인해 주세요.':d==='account_deleting'?'탈퇴 처리가 진행 중이에요.\n탈퇴 화면에서 다시 시도해 주세요.':d==='rate_limited'?'요청이 잠시 몰렸어요.\n잠시 후 다시 시도해 주세요.':d==='moderator_required'?'운영자만 사용할 수 있어요.':d==='owner_required'?'내가 작성한 내용만 바꿀 수 있어요.':d==='content_unavailable'?'이 글은 지금 볼 수 없어요.':e&&(['PGRST202','42P01','PGRST205'].indexOf(e.code)>-1||e.status===404)?'커뮤니티 서버가 아직 준비되지 않았어요.\n서버 연결 후 다시 이용해 주세요.':e&&e.message||'처리하지 못했어요.\n다시 시도해 주세요.'}
-async function cmCall(action,data){return sbRequest('/rest/v1/rpc/ddok_community',{member:!!SB_SESSION,body:{p_action:action,p_data:data||{}}})}
+async function cmCall(action,data){return sbRequest('/rest/v1/rpc/ddok_community',{member:!!SB_SESSION&&!TEST_ACCOUNT_PENDING&&AUTH_SESSION.provider!=='demo',body:{p_action:action,p_data:data||{}}})}
 function cmNote(message){authNotice(cmError(typeof message==='string'?{message:message}:message))}
 async function cmAgeRequest(action,data){try{return await cmCall(action,data)}catch(e){if(['PGRST202','42P01','PGRST205'].includes(e.code)||e.status===404)return null;throw e}}
 function cmConfirmSignupAge(){return cmAgeRequest('confirm_age',{age_band:'14plus'})}
 function communityRulesMarkup(){return '<p>똑독은 만 14세부터 이용할 수 있어요.</p><ol class="community-rule-list"><li>다른 독자를 존중해 주세요.<br>욕설, 괴롭힘, 협박과 차별·혐오 표현은 올릴 수 없어요.</li><li>안전한 이야기를 나눠 주세요.<br>성적 착취, 음란물, 잔혹한 폭력, 자해·불법 행위를 부추기는 내용은 올릴 수 없어요.</li><li>개인정보와 저작권을 지켜 주세요.<br>다른 사람의 연락처·사진·개인 기록이나 허락받지 않은 저작물을 올릴 수 없어요.</li><li>광고와 도배를 삼가 주세요.<br>사칭, 사기, 반복 게시와 악의적인 신고도 금지해요.</li><li>글쓴이의 생각과 다른 의견도 존중해 주세요.<br>규칙을 어긴 글·댓글·사용자는 메뉴에서 신고하거나 차단할 수 있어요.</li><li>운영자가 신고 내용을 확인해요.<br>위반이 확인되면 내용을 숨기거나 커뮤니티 이용을 제한할 수 있어요.<br>일시 제한은 24시간이며, 심각한 위반은 해제 전까지 이용을 제한할 수 있어요.</li></ol>'}
 function communityRules(accept){return new Promise(function(resolve){var dialog=document.createElement('dialog');dialog.className='consent-popup community-rules';dialog.setAttribute('aria-labelledby','community-rules-title');dialog.innerHTML='<h2 id="community-rules-title">커뮤니티 이용 규칙</h2>'+communityRulesMarkup()+(accept?'<label class="cm-agree"><input type="checkbox" id="community-rules-check">이용 규칙을 읽고 동의해요.</label>':'')+'<p><a href="mailto:team.ddokdok@gmail.com">문의·이의신청: team.ddokdok@gmail.com</a></p><p id="community-rules-error" class="cm-status" role="status"></p><div class="dbt"><button class="btn ghost" id="community-rules-cancel">닫기</button>'+(accept?'<button class="btn" id="community-rules-save" disabled>동의하고 계속하기</button>':'')+'</div>';app.appendChild(dialog);dialog.showModal();var done=false;function close(ok){if(done)return;done=true;dialog.close();dialog.remove();resolve(ok)}dialog.addEventListener('cancel',function(e){e.preventDefault();close(false)});dialog.querySelector('#community-rules-cancel').onclick=function(){close(false)};
  if(accept){var b=dialog.querySelector('#community-rules-save'),check=dialog.querySelector('#community-rules-check');check.onchange=function(){b.disabled=!check.checked};b.onclick=async function(){if(!check.checked)return;b.disabled=true;try{await cmCall('accept_terms',{version:COMMUNITY_VERSION});close(true)}catch(e){dialog.querySelector('#community-rules-error').textContent=cmError(e);b.disabled=false}}}})}
-function cmNeedAccount(reason,next){if(SB_SESSION&&AUTH_SESSION.signedIn)return true;if(AUTH_SESSION.signedIn){var close=pop('<h3>로그인해 주세요.</h3><p>기록을 서버에 저장하려면 계정을 연결해 주세요.</p><div class="dbt"><button class="btn ghost" id="cm-login-cancel">닫기</button><button class="btn" id="cm-login-go">로그인하기</button></div>');document.getElementById('cm-login-cancel').onclick=close;document.getElementById('cm-login-go').onclick=function(){close();loginPage()}}else requireLogin(reason,next);return false}
+function cmNeedAccount(reason,next){if(SB_SESSION&&AUTH_SESSION.signedIn&&AUTH_SESSION.provider==='supabase')return true;if(AUTH_SESSION.signedIn){var close=pop('<h3>로그인해 주세요.</h3><p>기록을 서버에 저장하려면 계정을 연결해 주세요.</p><div class="dbt"><button class="btn ghost" id="cm-login-cancel">닫기</button><button class="btn" id="cm-login-go">로그인하기</button></div>');document.getElementById('cm-login-cancel').onclick=close;document.getElementById('cm-login-go').onclick=function(){close();loginPage()}}else requireLogin(reason,next);return false}
 async function cmReady(){if(!cmNeedAccount('커뮤니티를 이용하려면',community))return false;try{var s=await cmCall('status');CM_LIVE.status=s;if(!s.age){cmNote({detail:'age_confirmation_required'});return false}if(s.restricted){cmNote({detail:'community_restricted'});return false}return s.terms||await communityRules(true)}catch(e){cmNote(e);return false}}
 function cmDate(value){var d=new Date(value);if(!Number.isFinite(d.getTime()))return '';return new Intl.DateTimeFormat('ko-KR',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}).format(d)}
 function cmNav(){return '<nav class="tab nvb concept-nav" data-concept-nav="1" aria-label="주요 메뉴">'+['도서관','문구점','홈','커뮤니티','마이페이지'].map(function(n,i){return '<button data-cmnav="'+i+'"'+(i===3?' aria-current="page"':'')+'>'+navItemHTML(i)+'</button>'}).join('')+'</nav>'}
@@ -7030,6 +7059,7 @@ function privacyNotice(){var close=pop('<h3>개인정보 처리 안내</h3><p>�
   function heading(label){var title=document.createElement('h4');title.textContent=label;host.insertBefore(title,version)}
   function link(label,action,id){var button=document.createElement('button');button.type='button';button.className='drow';if(id)button.id=id;button.textContent=label;button.insertAdjacentHTML('beforeend',ic('next'));button.onclick=action;host.insertBefore(button,version)}
   heading('계정');link('회원 탈퇴',accountDelete,'account-delete-open');link('문의·이의신청',communitySupport);
+  if(AUTH_SESSION.provider==='demo')link('테스트 다시 시작',function(){cmClearAccount();loginPage()},'demo-restart');
   heading('커뮤니티');link('커뮤니티 이용 규칙',function(){communityRules(false)},'settings-community-rules');link('차단 목록',cmBlocks,'settings-block-list');
   var privacy=host.querySelector('[data-a="pv"]');if(privacy)privacy.onclick=privacyNotice;var contact=host.querySelector('[data-a="cs"]');if(contact)contact.onclick=communitySupport;
   return r
