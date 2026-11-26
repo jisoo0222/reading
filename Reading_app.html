@@ -2521,6 +2521,21 @@ body:has(.app.hso) #pawf{display:none!important}
 .quote-source b{font-size:14px;color:var(--ink)}
 .quote-entry>small{display:block;margin-top:10px;font-size:14px;color:var(--tx3)}
 .quote-entry .quote-open{width:100%;height:56px;margin-top:16px;font-size:16px}
+#app .sc>#vc:has(>.archive-empty){display:flex;flex:1 0 auto;flex-direction:column}
+#app .archive-empty{flex:1 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:24px 12px;text-align:center;word-break:keep-all}
+#app .archive-empty h3{color:#174D37;font-size:20px;line-height:1.4}
+#app .archive-empty p{max-width:28ch;font-size:14px;line-height:1.65;color:#34483B}
+#app .archive-empty .btn{flex:none;min-height:48px;margin-top:10px;padding:0 20px}
+.archive-empty-art{position:relative;display:grid;place-items:center;width:132px;height:124px;margin-bottom:10px;color:#174D37}
+.archive-empty-art::before{content:"";position:absolute;inset:4px 7px;border-radius:50%;background:#DAEAE1}
+.archive-empty-art[data-kind="items"]::before{background:#F6E6E0}
+.archive-empty-art[data-kind="quotes"]::before{background:#FEF7BB}
+.archive-empty-main,.archive-empty-badge{display:grid;place-items:center;position:relative;border:1px solid #91A599}
+.archive-empty-main{width:76px;height:78px;background:#FFFFFF;border-radius:15px;transform:rotate(-9deg);box-shadow:4px 5px 0 #174D371F}
+.archive-empty-badge{position:absolute;right:9px;bottom:14px;width:38px;height:38px;border-radius:50%;background:#FEF7BB;transform:rotate(8deg)}
+.archive-empty-art[data-kind="quotes"] .archive-empty-badge{background:#DAEAE1}
+#app .archive-empty-main>.ic{width:36px;height:36px}
+#app .archive-empty-badge>.ic{width:18px;height:18px}
 
 
 /* 오늘 포인트 내역: 공통 팝업과 뉴트럴 구분선 */
@@ -4561,9 +4576,14 @@ function archiveLoad(){try{var a=JSON.parse(localStorage.getItem(archiveStorageK
  }catch(e){}}
 function archiveQuote(q,bt,au,th,sf){var item=ARCH.quotes.find(function(a){return a.q===q&&a.bt===bt&&a.au===au});if(item){item.th=th;item.sf=sf;item.at=new Date().toISOString()}else ARCH.quotes.unshift({q:q,bt:bt,au:au,th:th,sf:sf,at:new Date().toISOString()});ARCH.quotes.sort(function(a,b){return b.at.localeCompare(a.at)});archiveSave()}
 function archiveTime(at){var d=new Date(at);return isNaN(d.getTime())?'':d.toLocaleDateString('ko-KR')+' '+d.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false})}
+function archiveEmpty(kind,title,copy){
+ var icons={liked:['book','heart'],items:['basket','pen'],quotes:['quote','bm']}[kind],destination=kind==='items'?'shop':'library';
+ return '<div class="archive-empty"><div class="archive-empty-art" data-kind="'+kind+'" aria-hidden="true"><span class="archive-empty-main">'+ic(icons[0])+'</span><span class="archive-empty-badge">'+ic(icons[1])+'</span></div><h3>'+esc(title)+'</h3><p>'+esc(copy)+'</p><button class="btn" type="button" data-archive-destination="'+destination+'">'+(destination==='shop'?'문구점':'도서관')+' 바로가기</button></div>'
+}
 function quoteArchive(){app.className='app archive-page';window.scrollTo(0,0);
- app.innerHTML='<div class="sh2"><button class="ib" id="qa-back" aria-label="뒤로">'+ic('back')+'</button><h2>문장 보관함</h2><span class="sp3"></span></div><p class="archive-intro">책을 읽으며 내보낸 문장이 여기에 모여요.</p>'+(ARCH.quotes.length?'<div class="quote-archive-list">'+ARCH.quotes.map(function(q,i){return '<article class="quote-entry"><blockquote>'+esc(q.q)+'</blockquote><p class="quote-source"><b>'+esc(q.bt)+'</b><span>'+esc(q.au)+'</span></p><small>'+esc(archiveTime(q.at))+'</small><button class="btn ghost quote-open" data-quote="'+i+'">문장 카드 보기</button></article>'}).join('')+'</div>':'<div class="emp">아직 내보낸 문장이 없어요.<br>독서 화면에서 문장을 골라 저장하거나 공유해 보세요.</div>');
- document.getElementById('qa-back').onclick=profile;app.querySelectorAll('[data-quote]').forEach(function(b){b.onclick=function(){var q=ARCH.quotes[+b.dataset.quote];quoteShare(q.q,q.bt,q.au,q.th,q.sf)}})
+ app.innerHTML='<div class="sh2"><button class="ib" id="qa-back" aria-label="뒤로">'+ic('back')+'</button><h2>문장 보관함</h2><span class="sp3"></span></div>'+(ARCH.quotes.length?'<p class="archive-intro">책을 읽으며 내보낸 문장이 여기에 모여요.</p><div class="quote-archive-list">'+ARCH.quotes.map(function(q,i){return '<article class="quote-entry"><blockquote>'+esc(q.q)+'</blockquote><p class="quote-source"><b>'+esc(q.bt)+'</b><span>'+esc(q.au)+'</span></p><small>'+esc(archiveTime(q.at))+'</small><button class="btn ghost quote-open" data-quote="'+i+'">문장 카드 보기</button></article>'}).join('')+'</div>':archiveEmpty('quotes','아직 내보낸 문장이 없어요.','독서 화면에서 문장을 골라 저장하거나 공유해 보세요.'));
+ document.getElementById('qa-back').onclick=profile;var go=app.querySelector('[data-archive-destination]');if(go)go.onclick=library;
+ app.querySelectorAll('[data-quote]').forEach(function(b){b.onclick=function(){var q=ARCH.quotes[+b.dataset.quote];quoteShare(q.q,q.bt,q.au,q.th,q.sf)}})
 }
 function quoteShare(q,bt,au,theme,font){
  var th=Number.isInteger(theme)&&theme>=0&&theme<QTH.length?theme:0,sf=font===0?0:1,x=pop('<h3>문장 카드로 공유</h3><p class="sm" style="font-size:14px;margin:-2px 0 10px">인스타그램 스토리(9:16) 크기로 만들어져요.</p><div class="qpv" id="qpv"></div><div class="qth" id="qth">'+QTH.map(function(t,i){return'<button data-i="'+i+'" aria-label="'+t[0]+' 배경" aria-pressed="'+(i===th)+'" style="background:'+t[1]+';color:'+t[2]+'">가</button>'}).join("")+'</div><div class="och" id="qff"><button data-f="1" aria-pressed="true">명조</button><button data-f="0" aria-pressed="false">고딕</button></div><div class="dbt"><button class="btn ghost" id="qsv">저장하기</button><button class="btn" id="qsh">공유하기</button></div>');
@@ -5034,7 +5054,7 @@ function bkStart(k,go){go=go||function(){reader(k)};if(OPN.indexOf(k)>-1&&BMT[k]
 function mateSel(k,go){var F=M.filter(function(m){return FR[m[0]]}),sel=[];
  var x=pop('<h3>함께 읽을 메이트를 골라 볼까요.</h3><p class="sm" style="font-size:14px;margin:-2px 0 10px">『'+esc(LB[k][0])+'』를 함께 읽을 메이트를 골라 주세요.<br>고른 메이트의 코멘트만 책에 보여요.</p>'
   +(F.length?'<div class="mts msl">'+F.map(function(m){return'<button class="mtc" data-n="'+esc(m[0])+'" aria-pressed="false"><span class="mav" style="background:'+m[2]+'">'+esc(m[0]).charAt(0)+'</span><b>'+esc(m[0])+'</b><small>취향 일치도 <span class="mate-match-score">'+m[1]+'%</span></small><em>친구</em></button>'}).join("")+'<button class="mtc mate-add" id="msf" aria-label="친구 추가">'+ic("plus")+'<b>친구 추가</b></button></div>'
-   :'<div class="msn"><p>아직 친구가 없어요.</p><small>친구를 추가하면 함께 읽고 서로의 코멘트를 볼 수 있어요.</small><button class="btn ghost" id="msf" style="width:100%;margin-top:10px">친구 추가하러 가기</button></div>')
+   :'<div class="msn"><p>아직 친구가 없어요.</p><small>친구를 추가하면 함께 읽고<br>서로의 코멘트를 볼 수 있어요.</small><button class="btn ghost" id="msf" style="width:100%;margin-top:10px">친구 추가하러 가기</button></div>')
   +'<button class="btn" id="msg" style="width:100%;margin-top:12px">혼자 읽기 시작</button>');
  var g=document.getElementById("msg");
  var rail=document.querySelector("#dlg .msl");if(rail){var drag=null,slid=false;rail.onpointerdown=function(e){if(e.pointerType!=="mouse"||e.button!==0)return;drag={x:e.clientX,left:rail.scrollLeft,id:e.pointerId};slid=false};rail.onpointermove=function(e){if(!drag)return;var dx=e.clientX-drag.x;if(!slid&&Math.abs(dx)<6)return;if(!slid){slid=true;rail.setPointerCapture(drag.id);rail.classList.add("mate-sliding")}e.preventDefault();var scale=rail.getBoundingClientRect().width/rail.offsetWidth;rail.scrollLeft=drag.left-dx/scale};function endSlide(){drag=null;rail.classList.remove("mate-sliding");setTimeout(function(){slid=false},0)}rail.onpointerup=endSlide;rail.onpointercancel=endSlide;rail.addEventListener("click",function(e){if(slid){e.preventDefault();e.stopImmediatePropagation()}},true)}
@@ -5810,17 +5830,17 @@ function vault(t,back){
   document.getElementById("vt").innerHTML=TB.map(function(x,i){return'<button role="tab" aria-selected="'+(t===i)+'" data-t="'+i+'">'+x+'</button>'}).join("");
   var h="";
   if(t===0){var L=LB.filter(function(b,k){return HB[k]});
-   h=L.length?L.map(function(b){return'<div class="alr"><div><b>'+b[0]+'</b><small>'+b[1]+'</small></div><span class="bc2" style="background:'+b[2]+'"></span></div>'}).join(""):'<div class="emp">찜한 책이 없어요.<br><button class="fadd" id="tolb" style="margin-top:10px">도서관에서 찾아보기</button></div>'}
+   h=L.length?L.map(function(b){return'<div class="alr"><div><b>'+b[0]+'</b><small>'+b[1]+'</small></div><span class="bc2" style="background:'+b[2]+'"></span></div>'}).join(""):archiveEmpty('liked','찜한 책이 없어요.','책 표지의 하트를 누르면 여기에 모여요.')}
   if(t===1){var mine=[],cm=[],lk3=[];
    PO.forEach(function(p){if(p.mine)mine.push(esc(p.x)+'<small class="dt"> '+p.tm+'</small>');p.c.forEach(function(c){if(c[3])cm.push(esc(c[1])+'<small class="dt"> ← '+esc(p.x.slice(0,16))+'…</small>')});if(LKD[p.id])lk3.push(esc(p.x))});
    h=sec("내가 쓴 글",rows(mine))+sec("내가 쓴 댓글",rows(cm))+sec("내가 남긴 코멘트",CMTS.map(function(c){return'<div class="cr"><small class="dt">'+c.d+' · '+esc(c.b)+'</small><br>'+esc(c.t)+'</div>'}).join(""))+sec("좋아요 누른 글",rows(lk3))}
   if(t===2){var ids=Object.keys(OWN).filter(function(id){return OWN[id]&&/^(PN|HL)/.test(id)});
-   h=(ids.length?'<p class="sm" style="color:var(--sub);font-size:14px;word-break:keep-all">문구점에서 산 아이템이에요.<br>적용하면 독서 화면과 앱 전체에 반영돼요.</p>':'<div class="emp">아직 산 아이템이 없어요.<br>문구점에서 산 스티커와 형광펜이 여기에 모여요.</div>')+ids.map(function(id){var c=id.slice(0,2),i=+id.slice(2),it=ITM[c][i],on=c==="TH"?THI===i:AP[c]===id;return'<div class="vi"><div class="pvw vp">'+pv(c,i,COL[(id in CS)?CS[id]:i%5])+'</div><div class="vn"><b>'+it[0]+'</b><small>'+CN[c]+'</small></div><button class="fadd" data-a="'+id+'" aria-pressed="'+on+'">'+(on?"적용 중":"적용")+'</button></div>'}).join("")}
+   h=(ids.length?'<p class="sm" style="color:var(--sub);font-size:14px;word-break:keep-all">문구점에서 산 아이템이에요.<br>적용하면 독서 화면과 앱 전체에 반영돼요.</p>':archiveEmpty('items','아직 산 아이템이 없어요.','문구점에서 산 스티커와 형광펜이 여기에 모여요.'))+ids.map(function(id){var c=id.slice(0,2),i=+id.slice(2),it=ITM[c][i],on=c==="TH"?THI===i:AP[c]===id;return'<div class="vi"><div class="pvw vp">'+pv(c,i,COL[(id in CS)?CS[id]:i%5])+'</div><div class="vn"><b>'+it[0]+'</b><small>'+CN[c]+'</small></div><button class="fadd" data-a="'+id+'" aria-pressed="'+on+'">'+(on?"적용 중":"적용")+'</button></div>'}).join("")}
   document.getElementById("vc").innerHTML=h}
  body();
  document.getElementById("vt").onclick=function(e){var b=e.target.closest("button");if(b){t=+b.dataset.t;body()}};
  document.getElementById("vc").onclick=function(e){var b=e.target.closest("button");if(!b)return;
-  if(b.id==="tolb"){library();return}
+  if(b.dataset.archiveDestination){(b.dataset.archiveDestination==='shop'?shop:library)();return}
   if(b.dataset.a){var id=b.dataset.a,c=id.slice(0,2),i=+id.slice(2);if(c!=="TH"&&AP[c]===id)unapply(c);else applyItem(c,i);thm();body();return}};
  document.getElementById("vb0").onclick=function(){(back||profile)()};
 }
@@ -6353,8 +6373,8 @@ var HTK=null;new MutationObserver(function(){var w=app.querySelector(".htw");if(
 
 /* 마이페이지 > 찜한 책 */
 function likedPg(){app.className="app";window.scrollTo(0,0);var ids=LB.map(function(_,k){return k}).filter(function(k){return HB[k]});
- app.innerHTML='<div class="sh2"><button class="ib" id="lk0" aria-label="뒤로">'+ic("back")+'</button><h2>찜한 책</h2><span class="sp3"></span></div>'+(ids.length?'<div class="box tlx"><div class="pps">'+ids.map(function(k){return bcard(k)}).join("")+'</div></div>':'<div class="emp">찜한 책이 없어요.<br>책 표지의 하트를 누르면 여기에 모여요.</div>');
- document.getElementById("lk0").onclick=profile;lbWire(likedPg)}
+ app.innerHTML='<div class="sh2"><button class="ib" id="lk0" aria-label="뒤로">'+ic("back")+'</button><h2>찜한 책</h2><span class="sp3"></span></div>'+(ids.length?'<div class="box tlx"><div class="pps">'+ids.map(function(k){return bcard(k)}).join("")+'</div></div>':archiveEmpty('liked','찜한 책이 없어요.','책 표지의 하트를 누르면 여기에 모여요.'));
+ document.getElementById("lk0").onclick=profile;var go=app.querySelector('[data-archive-destination]');if(go)go.onclick=library;lbWire(likedPg)}
 
 /* 장르 · 검색 · 완독 도장 */
 var LQ="",GEN=["소설","시·에세이","인문·철학","사회·역사","자기계발","과학·기술","예술·언어","AI 소설"],GIC=["gIncog","gScroll","bulb","globe","gTree","gRocket","gMusic","gStar"];
