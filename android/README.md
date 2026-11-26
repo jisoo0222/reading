@@ -1,7 +1,9 @@
-# 똑독 안드로이드 앱 (에뮬레이터 실행용)
+# 똑독 안드로이드 앱
 
-웹 프로토타입 `../Reading_app.html`을 그대로 띄우는 안드로이드 앱이에요.
-빌드할 때마다 이 HTML이 앱 안으로 자동 복사되므로, 화면 수정은 지금처럼 HTML 파일 하나만 고치면 돼요.
+배포용 APK를 열면 [GitHub Pages의 똑독 화면](https://jisoo0222.github.io/reading/Reading_app.html)을 불러와요.
+`main`의 화면 수정은 GitHub Pages 배포가 끝나면 앱을 다시 열 때 반영돼요.
+서버에 연결할 수 없으면 빌드할 때 APK 안에 담아 둔 화면이 열려요.
+안드로이드 코드나 설치 아이콘이 바뀌면 같은 배포용 키로 서명한 새 APK가 필요해요.
 
 ## 에뮬레이터에서 실행하기
 1. [Android Studio](https://developer.android.com/studio)를 설치하고 실행해요.

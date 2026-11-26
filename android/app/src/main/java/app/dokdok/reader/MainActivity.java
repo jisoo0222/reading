@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 똑독 웹 프로토타입(Reading_app.html)을 그대로 띄우는 안드로이드 화면.
+ * GitHub Pages의 똑독 화면을 띄우고 연결이 끊기면 앱에 담긴 화면을 보여 줘요.
  * - 시스템 뒤로가기 → 앱 안의 '뒤로' 버튼(gback)과 연결
  * - 프로필 사진 고르기 → 갤러리 선택 창
  * - 이미지 저장(문장 카드·독서 유형 카드·스티커) → 사진 앱(Pictures/DdokDok)에 저장
@@ -42,10 +42,14 @@ public class MainActivity extends Activity {
     private static final int REQ_FILE = 41;
     private static final int REQ_SHARE = 42;
     private static final String ASSET_URL = "file:///android_asset/index.html";
+    private static final String PUBLISHED_URL = "https://jisoo0222.github.io/reading/Reading_app.html";
+    private static final String SUPABASE_AUTH_HOST = "zgsodnnlblfnrbcwatvs.supabase.co";
     /** 앱에 들어 있는 Pretendard 글꼴을 웹 화면에 건네줄 때 쓰는 가상 주소 */
     private static final String FONT_URL = "https://dokdok.app.font/PretendardVariable.woff2";
     private WebView web;
     private ValueCallback<Uri[]> fileCb;
+    private boolean fallbackLoaded;
+    private boolean bridgeAttached;
 
     @Override
     protected void onCreate(Bundle state) {
@@ -73,7 +77,9 @@ public class MainActivity extends Activity {
         WebSettings s = web.getSettings();
         s.setJavaScriptEnabled(true);
         s.setDomStorageEnabled(true);
-        s.setAllowFileAccess(true);
+        s.setAllowFileAccess(false);
+        s.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
+        if (!BuildConfig.DEBUG) s.setCacheMode(WebSettings.LOAD_NO_CACHE);
         s.setMediaPlaybackRequiresUserGesture(false);
         s.setTextZoom(100); // 시스템 글꼴 크기 때문에 레이아웃이 깨지지 않게 고정
         // 화면 설계(폭 360px)를 기기 폭에 맞춰 통째로 확대해서 Pixel 등 큰 화면을 꽉 채워요.
@@ -82,18 +88,23 @@ public class MainActivity extends Activity {
         s.setSupportZoom(false);
         s.setBuiltInZoomControls(false);
         web.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        web.addJavascriptInterface(new Bridge(), "AndroidBridge");
+        setBridgeAttached(true);
 
         web.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView v, WebResourceRequest request) {
                 Uri uri = request.getUrl();
+                if (!request.isForMainFrame()) return true;
+                if (isAppPage(uri)) {
+                    setBridgeAttached(true);
+                    return false;
+                }
+                if (isKakaoAuthPage(uri)) {
+                    setBridgeAttached(false);
+                    return false;
+                }
                 boolean email = "mailto".equals(uri.getScheme());
-                boolean policy = "https".equals(uri.getScheme()) && "jisoo0222.github.io".equals(uri.getHost())
-                        && ("/reading/privacy-policy.html".equals(uri.getPath())
-                        || "/reading/community-rules.html".equals(uri.getPath())
-                        || "/reading/delete-account.html".equals(uri.getPath()));
-                if (!email && !policy) return false;
+                if (!email && !"https".equals(uri.getScheme()) && !"http".equals(uri.getScheme())) return true;
                 try {
                     startActivity(new Intent(email ? Intent.ACTION_SENDTO : Intent.ACTION_VIEW, uri));
                 } catch (Exception e) {
@@ -104,7 +115,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onPageFinished(WebView v, String url) {
-                v.evaluateJavascript(SHIM, null);
+                if (isAppPage(Uri.parse(url))) v.evaluateJavascript(SHIM, null);
             }
 
             @Override
@@ -126,12 +137,12 @@ public class MainActivity extends Activity {
 
             @Override
             public void onReceivedError(WebView v, WebResourceRequest r, WebResourceError e) {
-                // 개발 서버에 연결하지 못하면 앱 안의 화면으로 바꿔 띄워요.
-                if (r.isForMainFrame() && !BuildConfig.DEV_URL.isEmpty()
-                        && r.getUrl().toString().startsWith(BuildConfig.DEV_URL)) {
-                    toast("개발 서버가 꺼져 있어서 앱에 들어 있는 화면을 띄웠어요");
-                    v.loadUrl(ASSET_URL);
-                }
+                loadFallback(v, r);
+            }
+
+            @Override
+            public void onReceivedHttpError(WebView v, WebResourceRequest r, WebResourceResponse e) {
+                loadFallback(v, r);
             }
         });
         web.setWebChromeClient(new WebChromeClient() {
@@ -152,14 +163,47 @@ public class MainActivity extends Activity {
             }
         });
 
-        if (state != null) web.restoreState(state);
-        else web.loadUrl(BuildConfig.DEV_URL.isEmpty() ? ASSET_URL : BuildConfig.DEV_URL);
+        web.loadUrl(startPage());
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle out) {
-        super.onSaveInstanceState(out);
-        web.saveState(out);
+    private static String startPage() {
+        return BuildConfig.DEV_URL.isEmpty() ? PUBLISHED_URL : BuildConfig.DEV_URL;
+    }
+
+    private static boolean isAppPage(Uri uri) {
+        if (!uri.isHierarchical()) return false;
+        String page = uri.buildUpon().clearQuery().fragment(null).build().toString();
+        if (ASSET_URL.equals(page) || PUBLISHED_URL.equals(page)) return true;
+        return !BuildConfig.DEV_URL.isEmpty() && (BuildConfig.DEV_URL.equals(page)
+                || (BuildConfig.DEV_URL + "Reading_app.html").equals(page));
+    }
+
+    private static boolean isKakaoAuthPage(Uri uri) {
+        if (!"https".equals(uri.getScheme()) || uri.getUserInfo() != null
+                || (uri.getPort() != -1 && uri.getPort() != 443)) return false;
+        String host = uri.getHost();
+        if ("kauth.kakao.com".equals(host) || "accounts.kakao.com".equals(host)) return true;
+        if (!SUPABASE_AUTH_HOST.equals(host)) return false;
+        String path = uri.getEncodedPath();
+        return "/auth/v1/callback".equals(path)
+                || ("/auth/v1/authorize".equals(path) && "kakao".equals(uri.getQueryParameter("provider")));
+    }
+
+    private void setBridgeAttached(boolean attached) {
+        if (attached == bridgeAttached) return;
+        if (attached) web.addJavascriptInterface(new Bridge(), "AndroidBridge");
+        else web.removeJavascriptInterface("AndroidBridge");
+        bridgeAttached = attached;
+    }
+
+    private void loadFallback(WebView view, WebResourceRequest request) {
+        if (fallbackLoaded || !request.isForMainFrame()) return;
+        Uri uri = request.getUrl();
+        if (!isAppPage(uri) || "file".equals(uri.getScheme())) return;
+        fallbackLoaded = true;
+        toast("연결이 잠시 끊겨서 앱에 들어 있는 화면을 보여 드려요.");
+        setBridgeAttached(true);
+        view.loadUrl(ASSET_URL);
     }
 
     @Override
