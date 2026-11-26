@@ -3350,24 +3350,14 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.signup-goal .gw{flex:none;height:var(--goal-wheel-step);line-height:var(--goal-wheel-step)}
 #app.signup-goal #gsr{flex:none;height:48px;background:transparent;color:#174D37}
 
-/* DDTI 소개: 답변 카드에서 내 취향 프로필이 나와요. */
-#app.signup-intro .tin{margin:0;padding:24px 20px;background:#E7EFE4;border-radius:15px;flex:1 0 auto;min-height:320px;justify-content:center}
-#app.signup-intro .tin>.ddti-art{position:relative;width:min(224px,100%);aspect-ratio:224/148;flex:none;margin:0 0 22px;isolation:isolate}
-.ddti-art::before{content:"";position:absolute;inset:4% 7%;border:1px dashed #9CB4A3;border-radius:50%;transform:rotate(-12deg);z-index:-1}
-.ddti-art-choice{position:absolute;top:14%;width:31%;height:56%;border:1.5px solid #718A77;border-radius:11px;box-shadow:0 4px 0 #174D3717}
-.ddti-art-choice:first-child{left:7%;background:#F7E6DE;transform:rotate(-19deg)}
-.ddti-art-choice:nth-child(2){right:7%;background:#FFF3BA;transform:rotate(18deg)}
-.ddti-art-choice::after{content:"";position:absolute;inset:23% 17%;background:radial-gradient(circle at 5px 5px,#718A77 2px,transparent 2.5px) left top/100% 12px,repeating-linear-gradient(transparent 0 4px,#718A77 4px 6px,transparent 6px 12px) right top/calc(100% - 13px) 100% no-repeat}
-.ddti-art-profile{position:absolute;left:17%;right:17%;top:26%;bottom:13%;display:grid;grid-template-columns:38% 1fr;align-items:center;gap:10%;padding:9%;border:1.5px solid #174D37;border-radius:14px;background:#FFFEF5;box-shadow:3px 5px 0 #174D3726;transform:rotate(-5deg)}
-.ddti-art-avatar{display:grid;place-items:center;aspect-ratio:1;border-radius:11px;background:#D6EBDE;color:#174D37}
-#app .ddti-art-avatar .ic{width:58%;height:58%}
-.ddti-art-traits{display:grid;gap:5px}
-.ddti-art-traits i{height:6px;border-radius:8px;background:#4CAE85}
-.ddti-art-traits i:nth-child(2){width:72%;background:#D896A7}
-.ddti-art-traits i:nth-child(3){width:86%;background:#E8B94B}
-.ddti-art-traits i:nth-child(4){width:56%;background:#719CC2}
-.ddti-art-check{position:absolute;right:12%;bottom:7%;display:grid;place-items:center;width:17%;aspect-ratio:1;border:2px solid #E7EFE4;border-radius:50%;background:#174D37;color:#FFFFFF}
-#app .ddti-art-check .ic{width:57%;height:57%}
+/* DDTI 소개는 도서관과 같은 표지 그림을 사용해요. */
+#app.signup-intro .tin{margin:0;padding:24px 20px;background:#DAEAE1;border-radius:15px;flex:1 0 auto;min-height:320px;justify-content:center}
+#app.signup-intro .tin>.ddti-art{position:relative;width:min(242px,100%);aspect-ratio:242/158;flex:none;margin:0 0 22px}
+.ddti-art-cover{position:absolute;top:10%;width:37%;border-radius:7px;overflow:hidden;box-shadow:0 5px 10px #174D3733}
+.ddti-art-cover:nth-child(1){left:12%;transform:rotate(-15deg) scale(.92)}
+.ddti-art-cover:nth-child(2){right:12%;transform:rotate(15deg) scale(.92)}
+.ddti-art-cover:nth-child(3){top:4%;left:30%;width:40%;transform:rotate(-4deg)}
+.ddti-art-cover .cva{display:block;width:100%;height:auto}
 #app.signup-intro .tin h1{font-size:24px;font-weight:750;line-height:1.4;letter-spacing:-.035em;color:#17241C}
 #app.signup-intro .tin .hint{margin-top:12px;color:#34483B;font-size:14px;line-height:1.65}
 #app.signup-intro .tsk{min-height:48px;font-size:14px;color:#174D37;margin-top:16px;text-decoration:underline;text-underline-offset:4px}
@@ -4333,7 +4323,9 @@ function goal(){
  nx.onclick=tiIntro}
 function tiIntro(){
  app.className="app signup signup-intro";
- var art='<div class="ddti-art" aria-hidden="true"><span class="ddti-art-choice"></span><span class="ddti-art-choice"></span><span class="ddti-art-profile"><span class="ddti-art-avatar">'+ic('person')+'</span><span class="ddti-art-traits"><i></i><i></i><i></i><i></i></span></span><span class="ddti-art-check">'+ic('check')+'</span></div>';
+ var art='<div class="ddti-art" aria-hidden="true">'+[[0,'stars'],[2,'leaf'],[1,'compass']].map(function(cover){
+  return '<span class="ddti-art-cover">'+coverSVG(cover[0],cover[1],true,107,154.12,THREE_BOOK_PALETTES[cover[0]])+'</span>'
+ }).join('')+'</div>';
  app.innerHTML=signupHeader()+ost(3)+'<div class="tin">'+art
  +'<h1>나의 DDTI 알아보기</h1><p class="hint tis"><span>네 가지 질문에 답하면</span><span>취향에 맞는 책을 추천해요.</span></p><button class="tsk" id="tsk" type="button">검사 건너뛰기</button></div>'
  +'<div class="foot"><button class="btn ghost" id="tib">이전</button><button class="btn" id="tig">시작하기</button></div>';
