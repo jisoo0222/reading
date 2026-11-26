@@ -4099,8 +4099,14 @@ dialog.app-loading-screen::backdrop{background:#F5F7F4}
 #app .cm-community-toolbar[hidden]{display:none}
 #app .cm-community-toolbar button{min-height:48px;padding:8px 12px;border-radius:10px}
 #app #cm-admin[hidden],#app #cm-options[hidden]{display:none!important}
-#app #cm-kinds{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px}
-#app #cm-kinds button{flex:0 0 auto!important;width:auto!important;min-height:48px;padding:8px 12px!important}
+#app #cm-kinds{--kind-fade:18px;--kind-start:0px;--kind-end:0px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;scroll-padding-inline:var(--kind-fade);margin:10px 0 12px;padding:4px}
+#app #cm-kinds[data-fade-start]{--kind-start:var(--kind-fade)}
+#app #cm-kinds[data-fade-end]{--kind-end:var(--kind-fade)}
+#app #cm-kinds:is([data-fade-start],[data-fade-end]){mask-image:linear-gradient(to right,transparent,#000 var(--kind-start),#000 calc(100% - var(--kind-end)),transparent)}
+#app #cm-kinds button{flex:none;min-height:48px;padding:8px 13px;border:1px solid #BDCBC1;border-radius:11px;background:#FFFFFF;color:#34483B;font:600 14px/1.45 Pretendard,sans-serif;white-space:nowrap;cursor:pointer}
+#app #cm-kinds button[aria-pressed=true]{border-color:#174D37;background:#174D37;color:#FFFFFF}
+#app #cm-kinds button:focus-visible{outline:2px solid #174D37;outline-offset:2px}
+#app #cm-write{border:0!important;box-shadow:none}
 #app :is(#cq-wrap,#cm-kinds,#cm-write)[hidden]{display:none!important}
 #app .cm-feed-error{width:min(100%,352px);margin:clamp(24px,8vh,64px) auto 0;padding:32px 24px 24px;border:1px solid var(--bd-card);border-radius:15px;background:var(--card);text-align:center;word-break:keep-all;overflow-wrap:anywhere}
 #app .cm-feed-error-mark{position:relative;display:grid;place-items:center;width:64px;height:64px;margin:0 auto 16px;border-radius:50%;background:var(--soft);color:var(--pri)}
@@ -7114,7 +7120,7 @@ function cmBind(host,refresh){host.onclick=async function(e){var b=e.target.clos
 async function cmRefreshHome(){try{cmApplyFeed(await cmCall('feed',null,true))}catch(e){cmApplyFeed([])}}
 async function cmLiveCommunity(){
  var requested=OPENP&&(CM_LIVE.ids[OPENP]||String(OPENP));OPENP=0;
- cmShell(CMN?'내 글':'커뮤니티','<div class="cm-community-toolbar" id="cm-moderation" hidden><button class="fadd" id="cm-admin">신고 관리</button></div><div class="csr" id="cq-wrap"><input id="cq" type="search" aria-label="커뮤니티 글 검색" placeholder="책 제목, 작가, 글 내용으로 찾기"></div><div class="ctf ctf2" id="cm-kinds"></div><p class="sr" id="cm-feed-status" role="status"></p><div id="cm-feed"></div><button class="wfab" id="cm-write" aria-label="글쓰기">'+ic('pencil')+'</button>');
+ cmShell(CMN?'내 글':'커뮤니티','<div class="cm-community-toolbar" id="cm-moderation" hidden><button class="fadd" id="cm-admin">신고 관리</button></div><div class="csr" id="cq-wrap"><input id="cq" type="search" aria-label="커뮤니티 글 검색" placeholder="책 제목, 작가, 글 내용으로 찾기"></div><div id="cm-kinds" role="group" aria-label="글 종류"></div><p class="sr" id="cm-feed-status" role="status"></p><div id="cm-feed"></div><button class="wfab" id="cm-write" aria-label="글쓰기">'+ic('pencil')+'</button>');
  var feed=app.querySelector('#cm-feed'),search=app.querySelector('#cq'),status=app.querySelector('#cm-feed-status'),write=app.querySelector('#cm-write'),kind='all',ready=false,pending=false;
  function draw(){if(!ready)return;var q=search.value.trim().toLowerCase(),items=CM_LIVE.posts.filter(function(p){return(!CMN||p.mine)&&(!CU||p.nickname===CU)&&(kind==='all'||p.kind===kind)&&(!q||(p.body+' '+(p.book_title||'')+' '+(p.book_author||'')).toLowerCase().includes(q))});feed.innerHTML=items.length?items.map(function(p){return cmPost(p,false)}).join(''):'<div class="emp">아직 표시할 글이 없어요.</div>';cmBind(feed,reload)}
  function setFeedControls(visible){search.parentElement.hidden=kinds.hidden=write.hidden=!visible}
@@ -7144,7 +7150,20 @@ async function cmLiveCommunity(){
   }finally{pending=false;if(feed.isConnected)feed.removeAttribute('aria-busy')}
  }
  write.onclick=cmCompose;
- var kinds=app.querySelector('#cm-kinds');function tabs(){kinds.innerHTML=[['all','전체'],['자유','자유글'],['같이','같이 읽어요'],['코멘트','코멘트 공유'],['밸런스','밸런스 게임']].map(function(x){return '<button data-kind="'+x[0]+'" aria-pressed="'+(kind===x[0])+'">'+x[1]+'</button>'}).join('')}tabs();kinds.onclick=function(e){var b=e.target.closest('[data-kind]');if(b){kind=b.dataset.kind;tabs();draw()}};search.oninput=draw;
+ var kinds=app.querySelector('#cm-kinds');
+ kinds.innerHTML=[['all','전체'],['자유','자유글'],['같이','같이 읽어요'],['코멘트','코멘트 공유'],['밸런스','밸런스 게임']].map(function(x){return '<button type="button" data-kind="'+x[0]+'" aria-pressed="'+(kind===x[0])+'">'+x[1]+'</button>'}).join('');
+ var choices=Array.from(kinds.children);
+ function updateKindEdges(){
+  kinds.toggleAttribute('data-fade-start',kinds.scrollLeft>1);
+  kinds.toggleAttribute('data-fade-end',kinds.scrollWidth-kinds.clientWidth-kinds.scrollLeft>1)
+ }
+ var kindLayout=new ResizeObserver(function(){if(kinds.isConnected)updateKindEdges();else kindLayout.disconnect()});
+ kindLayout.observe(kinds);choices.forEach(function(button){kindLayout.observe(button)});
+ kinds.addEventListener('scroll',updateKindEdges,{passive:true});updateKindEdges();
+ function revealKind(button){button.scrollIntoView({block:'nearest',inline:'nearest'});updateKindEdges()}
+ kinds.addEventListener('focusin',function(e){if(e.target.matches('[data-kind]'))revealKind(e.target)});
+ kinds.onclick=function(e){var b=e.target.closest('[data-kind]');if(b){kind=b.dataset.kind;choices.forEach(function(button){button.setAttribute('aria-pressed',button===b)});revealKind(b);draw()}};
+ search.oninput=draw;
  var moderation=app.querySelector('#cm-moderation');if(SB_SESSION&&AUTH_SESSION.signedIn)cmCall('status',null,true).then(function(s){CM_LIVE.status=s;if(moderation.isConnected&&s.moderator){moderation.hidden=false;moderation.querySelector('button').onclick=cmAdmin}}).catch(function(){});
  await reload();
 }
