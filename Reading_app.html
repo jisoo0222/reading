@@ -4053,11 +4053,11 @@ dialog.app-loading-screen::backdrop{background:#F5F7F4}
 #app .friend-search-actions button[data-action="request"]:disabled span{background:#E6EEE8;color:#34483B;border-color:#91A599}
 /* Service copy preserves the explicit boundary between complete sentences. */
 #app :is(.type-analysis p,.ax p,.account-status,.account-help,.consent-detail p,.hmr small,.ntx b,.mtp),#app #dlg>h3,#app #dlg .sm,#hn,#ptt{white-space:pre-line}
-/* 독서 성향 분석: 책장을 넘기는 짧은 대기 */
+/* DDTI 분석: 똑독 로고의 표지와 책갈피를 살린 책장 넘김 */
 #app .center.type-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;align-self:center;width:100%;max-width:360px;margin:auto 0;padding:32px 12px;min-height:320px;background:transparent;border-radius:0;text-align:center}
 #app .type-loading-art{width:200px;max-width:100%;margin-bottom:24px;perspective:500px}
 #app .type-loading-art svg{display:block;width:100%;height:auto;overflow:visible}
-#app .type-loading-page{transform-box:view-box;transform-origin:100px 88px;animation:type-page-turn 1.6s cubic-bezier(.4,0,.2,1) infinite}
+#app .type-loading-page{transform-box:view-box;transform-origin:102px 108px;animation:type-page-turn 1.6s cubic-bezier(.4,0,.2,1) infinite}
 #app .type-loading h1{font-size:22px;line-height:1.5;color:var(--ink);word-break:keep-all}
 #app .type-loading .hint{font-size:14px;line-height:1.6;color:var(--sub);margin-top:8px}
 .type-loading-dots{display:flex;gap:8px;margin-top:24px;min-height:8px;align-items:center}
@@ -4195,7 +4195,17 @@ function ask(){
  document.getElementById("bk").onclick=function(){if(step){step--;ask()}else tiIntro()};
 }
 function personalityLoadingMarkup(profile){
- return '<div class="center type-loading" role="status" aria-live="polite"><div class="type-loading-art" aria-hidden="true"><svg viewBox="0 0 200 160" fill="none"><ellipse cx="100" cy="140" rx="76" ry="7" fill="#DAEAE1"/><path d="M100 132C77 119 47 117 17 123V47C47 41 77 44 100 57C123 44 153 41 183 47V123C153 117 123 119 100 132Z" fill="#174D37"/><path d="M100 126C78 114 53 111 24 117V40C53 34 78 38 100 51Z" fill="#DAEAE1" stroke="#174D37" stroke-width="2" stroke-linejoin="round"/><path d="M100 126C122 114 147 111 176 117V40C147 34 122 38 100 51Z" fill="#FFFFFF" stroke="#174D37" stroke-width="2" stroke-linejoin="round"/><path d="M37 61C55 59 72 62 87 68M37 76C55 74 72 77 87 83M37 91C55 89 72 92 87 98M113 68C128 62 145 59 163 61M113 83C128 77 145 74 163 76M113 98C128 92 145 89 163 91" stroke="#6E917D" stroke-width="2" stroke-linecap="round"/><g class="type-loading-page"><path d="M100 126C122 114 147 111 176 117V40C147 34 122 38 100 51Z" fill="#EAF3ED" stroke="#174D37" stroke-width="2" stroke-linejoin="round"/><path d="M113 68C128 62 145 59 163 61M113 83C128 77 145 74 163 76M113 98C128 92 145 89 163 91" stroke="#6E917D" stroke-width="2" stroke-linecap="round"/></g><path d="M100 52V126" stroke="#174D37" stroke-width="2" stroke-linecap="round"/></svg></div><h1>DDTI를 분석하고 있어요.</h1><p class="hint">답변을 바탕으로 '+(profile?'프로필을':'결과를')+' 만드는 중이에요.</p><div class="type-loading-dots" aria-hidden="true"><i></i><i></i><i></i></div></div>';
+ var paper='M102 43C124 36 147 35 173 38V175C147 173 124 178 102 188Z';
+ var lines='M116 68C130 64 144 62 157 63M116 85C130 81 144 79 157 80M116 102C130 98 144 96 157 97';
+ var book='<svg viewBox="0 0 200 212" fill="none"><ellipse cx="99" cy="201" rx="71" ry="6" fill="#DAEAE1"/>'
+  +'<rect x="82" y="30" width="100" height="160" rx="8" fill="#006D4E"/>'
+  +'<path d="'+paper+'" fill="#FFFFFF" stroke="#D2E3D8" stroke-width="1.5"/>'
+  +'<path d="'+lines+'" stroke="#BED3C6" stroke-width="2" stroke-linecap="round"/>'
+  +'<path d="M151 176L165 175V196L158 191L151 198Z" fill="#FFC95F"/>'
+  +'<path d="M18 47C18 43 21 40 25 39L92 19C97 17 102 20 102 26V191C102 196 97 199 92 197L25 179C21 178 18 175 18 171Z" fill="#00946D"/>'
+  +'<path d="M66 108L79 107V112L66 111Z" fill="#FFC95F"/><ellipse cx="82" cy="109.5" rx="6.4" ry="5.8" fill="#FFC95F"/>'
+  +'<g class="type-loading-page"><path d="'+paper+'" fill="#F9FFFB" stroke="#91B8A2" stroke-width="1.5"/><path d="'+lines+'" stroke="#9ABAA7" stroke-width="2" stroke-linecap="round"/></g></svg>';
+ return '<div class="center type-loading" role="status" aria-live="polite"><div class="type-loading-art" aria-hidden="true">'+book+'</div><h1>DDTI를 분석하고 있어요.</h1><p class="hint">답변을 바탕으로 '+(profile?'프로필을':'결과를')+' 만드는 중이에요.</p><div class="type-loading-dots" aria-hidden="true"><i></i><i></i><i></i></div></div>';
 }
 function load(){
  app.className="app signup signup-loading";app.innerHTML=signupHeader()+ost(3)+bar(Q.length)+personalityLoadingMarkup(true);
