@@ -3348,7 +3348,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 
 /* 독서 성향 소개: 한 장의 연초록 안내 카드 */
 #app.signup-intro .tin{margin:0;padding:24px 20px;background:#DAEAE1;border-radius:15px;flex:1 0 auto;min-height:320px;justify-content:center}
-#app.signup-intro .tin>svg{width:136px;height:auto;margin:0 0 24px;color:#174D37;--pri:#174D37;--bg:#DAEAE1;--card:#FFFFFF}
+#app.signup-intro .tin>svg{width:min(208px,100%);height:auto;flex:none;margin:0 0 24px;color:#174D37}
 #app.signup-intro .tin h1{font-size:24px;font-weight:750;line-height:1.4;letter-spacing:-.035em;color:#17241C}
 #app.signup-intro .tin .hint{margin-top:12px;color:#34483B;font-size:14px;line-height:1.65}
 #app.signup-intro .tsk{min-height:48px;font-size:14px;color:#174D37;margin-top:16px;text-decoration:underline;text-underline-offset:4px}
@@ -4268,7 +4268,21 @@ function goal(){
  nx.onclick=tiIntro}
 function tiIntro(){
  app.className="app signup signup-intro";
- app.innerHTML=signupHeader()+ost(3)+'<div class="tin"><svg viewBox="0 0 200 160" width="168" height="134" aria-hidden="true"><circle cx="100" cy="82" r="70" fill="var(--card)"/><path d="M100 58c-14-7-32-7-44-2v54c12-5 30-5 44 2z" fill="var(--bg)" stroke="var(--pri)" stroke-width="3" stroke-linejoin="round"/><path d="M100 58c14-7 32-7 44-2v54c-12-5-30-5-44 2z" fill="var(--bg)" stroke="var(--pri)" stroke-width="3" stroke-linejoin="round"/><path d="M100 58v54" stroke="var(--pri)" stroke-width="3"/></svg>'
+ var art='<svg viewBox="0 0 224 144" width="224" height="144" aria-hidden="true" focusable="false">'
+ +'<ellipse cx="112" cy="71" rx="75" ry="58" fill="#F5F7F0"/>'
+ +'<ellipse cx="112" cy="125" rx="70" ry="7" fill="currentColor" opacity=".12"/>'
+ +'<path d="M31 41c0 7-3 10-10 10 7 0 10 3 10 10 0-7 3-10 10-10-7 0-10-3-10-10z" fill="#D6A839"/>'
+ +'<path d="M189 22c0 6-3 9-9 9 6 0 9 3 9 9 0-6 3-9 9-9-6 0-9-3-9-9z" fill="#D96890"/>'
+ +'<circle cx="51" cy="26" r="3" fill="#4CAE85"/><circle cx="199" cy="66" r="3" fill="#4CAE85"/>'
+ +'<g stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'
+ +'<path d="M43 50Q77 39 112 57Q147 39 181 50L191 111Q151 107 112 125Q73 107 33 111Z" fill="#4CAE85"/>'
+ +'<path d="M50 42Q82 32 112 52Q142 32 174 42L184 102Q146 98 112 117Q78 98 40 102Z" fill="#FFFEF5"/>'
+ +'<path d="M112 52v65" fill="none"/>'
+ +'<path d="M147 38q8-1 16 1v36l-8-6-8 6z" fill="#FEF7BB"/>'
+ +'</g>'
+ +'<path d="M63 59q15-2 33 6M60 70q17-2 35 6M57 82q17-1 33 5M127 94q18-8 37-8M128 103q19-8 39-8" fill="none" stroke="#789480" stroke-width="2" stroke-linecap="round"/>'
+ +'</svg>';
+ app.innerHTML=signupHeader()+ost(3)+'<div class="tin">'+art
  +'<h1>나의 독서 성향 알아보기</h1><p class="hint tis"><span>네 가지 질문에 답하면</span><span>취향에 맞는 책을 추천해요.</span></p><button class="tsk" id="tsk">검사 건너뛰기</button></div>'
  +'<div class="foot"><button class="btn ghost" id="tib">이전</button><button class="btn" id="tig">시작하기</button></div>';
  document.getElementById("tib").onclick=goal;document.getElementById("tig").onclick=function(){step=0;ask()};
