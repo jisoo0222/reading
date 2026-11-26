@@ -35,4 +35,4 @@
 - 개인정보 안내·탈퇴 웹페이지는 외부 브라우저로, 이메일 문의는 메일 앱으로 연결해요.
 - 패키지 이름: `app.dokdok.reader` / 앱 이름: 똑독 / 최소 Android 8.0(API 26)
 - `app/src/main/java/app/dokdok/reader/MainActivity.java`: 웹뷰 화면, 뒤로가기·사진 선택·저장·공유 연결
-- `app/src/main/res/drawable/ic_launcher_fg.xml`: 앱 아이콘(라벤더 책 + 강아지 발바닥)
+- `app/src/main/res/drawable/ic_launcher_fg.xml`: 똑독 메인 로고를 담은 앱 설치 아이콘
