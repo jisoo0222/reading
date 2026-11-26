@@ -2966,7 +2966,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.exhibit .exhibit-row::after{background:#5D7162;height:9px;border-radius:2px}
 #app.exhibit .exhibit-item .hb{background:#FFFFFF;color:#174D37}
 /* 문구점: 내용의 실제 색은 유지하고 바탕과 카드만 정리해요. */
-#app.shp .mpt3{position:relative;isolation:isolate;height:auto!important;min-height:104px!important;padding:20px!important;border-radius:20px!important;background:#DAEAE1!important;overflow:hidden}
+#app.shp .mpt3{position:relative;height:auto!important;min-height:104px!important;padding:20px!important;border:1px solid #A9BDB0;border-radius:15px!important;background:#FFFFFF!important}
 #app.shp .mpt3::before,#app.pf .ptc2::before{content:'';position:absolute;inset:0;z-index:-1;background-image:radial-gradient(circle,#3E9370 1px,transparent 1.2px);background-size:15px 15px;opacity:.35;mask-image:linear-gradient(#000,transparent 90%);pointer-events:none}
 #app.shp .mpl3>small{font-size:14px!important;font-weight:600;color:#213C2B}
 #app.shp .pt3 b{font-size:28px!important;font-weight:750;color:#17241C}
@@ -5003,7 +5003,7 @@ function shopPreview(c,i){var art={0:'shop_imgRectangle34627078',1:'shop_imgElli
 function shop(){
  app.className="app shp";
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="basket"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
- app.innerHTML='<nav class="sh2 shopnav" aria-label="디지털 문구점 상단 메뉴"><span class="sp3" aria-hidden="true"></span><h2>디지털 문구점</h2><span class="sp3"></span></nav><div class="mpt3"><div class="mpl3"><small>나의 포인트</small><span class="pt3">'+SHI.coin+'<b id="ptx"></b></span></div><button class="vl3" id="vlt">포인트 내역 '+ic("next")+'</button></div><div id="gr"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav><div id="ov"></div><div id="sheet" role="dialog"></div>';
+ app.innerHTML='<nav class="sh2 shopnav" aria-label="디지털 문구점 상단 메뉴"><span class="sp3" aria-hidden="true"></span><h2>디지털 문구점</h2><span class="sp3"></span></nav><div class="mpt3"><div class="mpl3"><small>나의 포인트</small><span class="pt3"><b id="ptx"></b></span></div><button class="vl3" id="vlt">포인트 내역 '+ic("next")+'</button></div><div id="gr"></div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav><div id="ov"></div><div id="sheet" role="dialog"></div>';
  app.firstChild.style.paddingBottom="76px";
  var sheet=document.getElementById("sheet"),ov=document.getElementById("ov"),g=document.getElementById("gr");
  function cl(){sheet.classList.remove("on");ov.classList.remove("on")}
