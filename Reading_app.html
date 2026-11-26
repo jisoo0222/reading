@@ -3464,6 +3464,9 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.rd .fol{bottom:76px;color:var(--reader-muted);font:500 14px/1.5 Pretendard,sans-serif}
 #app.rd #grb{bottom:12px;width:112px;height:48px;min-height:48px;padding:0;background:var(--reader-surface);border:1px solid var(--reader-line);border-radius:15px}
 #app.rd #grb i{width:40px;height:4px;background:var(--reader-accent);opacity:1}
+#app.rd #reader-settings{position:absolute;right:16px;bottom:12px;z-index:5;display:grid;place-items:center;width:48px;height:48px;padding:0;border:1px solid var(--reader-line);border-radius:15px;background:var(--reader-surface);color:var(--reader-accent);box-shadow:0 4px 12px #17241C20;cursor:pointer}
+#app.rd #reader-settings>.ic{width:24px;height:24px}
+#app.rd.cpo #reader-settings{visibility:hidden}
 /* 도구 패널과 사전·설정 시트 */
 #app.rd #cp{padding:0 20px 20px;background:var(--reader-surface);color:var(--reader-ink);border:1px solid var(--reader-line);border-bottom:0;border-radius:15px 15px 0 0}
 #app.rd .cph{height:48px;min-height:48px}
@@ -3491,10 +3494,10 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.app.rd #sheet button:focus-visible{outline-color:var(--reader-accent)!important}
 #app.rd #sheet .cl{min-height:56px;background:var(--reader-surface)!important;color:var(--reader-accent)!important;border:1px solid var(--reader-accent)!important;border-radius:12px!important;font-size:16px}
 #app.rd #sheet :is(input,textarea){border:1px solid var(--reader-line);border-radius:10px;background:var(--reader-canvas);color:var(--reader-ink)}
-#app.rd #selb{background:#174D37;border:1px solid #174D37;border-radius:12px;padding:4px;gap:0}
+#app.rd #selb{width:max-content;max-width:calc(100% - 16px);flex-wrap:wrap;justify-content:center;background:#174D37;border:1px solid #174D37;border-radius:12px;padding:4px;gap:0}
 #app.rd #selb button{min-height:48px;gap:6px;padding:10px 12px;color:#FFFFFF;font-size:14px;border-radius:8px}
 #app.rd #selb .ic{width:18px;height:18px}
-#app.rd :is(.rh button,#grb,.cpt,#sheet button):focus-visible{outline:3px solid var(--reader-accent);outline-offset:3px}
+#app.rd :is(.rh button,#grb,#reader-settings,.cpt,#sheet button):focus-visible{outline:3px solid var(--reader-accent);outline-offset:3px}
 #app.rd.zen .rh{display:none}
 @container(max-height:760px){#app.rd .rh{min-height:80px;padding-top:10px;padding-bottom:10px}#app.rd .pgl{padding-top:24px}#app.rd .cpg{gap:8px;padding-bottom:16px}#app.rd .cpt{min-height:72px}}
 
@@ -6060,17 +6063,19 @@ function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':(typeof
   var n=at(e.clientX);show(n);tk.setPointerCapture(e.pointerId);
   tk.onpointermove=function(v){n=at(v.clientX);show(n)};
   tk.onpointerup=tk.onpointercancel=function(){tk.onpointermove=tk.onpointerup=tk.onpointercancel=null;if(n!==cur){eid=null;nmx();cur=n;pg=PGN[n];rt();un.innerHTML=""}pr()}});
- var CPT=[["hl","형광펜","ul"],["memo","스티커","memo"],["wd","단어 사전","dict"],["ch","인물 사전","person"],["sh","책 공유","bksh"],["set","읽기 설정","set"]];
+ var CPT=[["hl","형광펜","ul"],["memo","스티커","memo"],["wd","단어 사전","dict"],["ch","인물 사전","person"],["sh","책 공유","bksh"]];
  var cp=document.createElement("div");cp.id="cp";cp.setAttribute("role","dialog");cp.setAttribute("aria-label","읽기 도구");
  cp.innerHTML='<div class="cph" id="cph"><i></i></div><div class="cpg">'+CPT.map(function(t){return'<button class="cpt" data-a="'+t[0]+'"><span>'+ic(t[2])+'</span>'+t[1]+'</button>'}).join("")+'</div>';
  cp.appendChild(document.getElementById("pg"));
  var pov=document.createElement("div");pov.id="pov";
  var grb=document.createElement("button");grb.id="grb";grb.setAttribute("aria-label","읽기 도구 열기");grb.innerHTML='<i></i>';
+ var settings=document.createElement("button");settings.type="button";settings.id="reader-settings";settings.setAttribute("aria-label","읽기 설정");settings.setAttribute("aria-haspopup","dialog");settings.setAttribute("aria-controls","sheet");settings.innerHTML=ic("cog");
  var selb=document.createElement("div");selb.id="selb";selb.setAttribute("role","toolbar");selb.setAttribute("aria-label","선택한 문장");selb.innerHTML='<button data-s="hl">'+ic("ul")+'형광펜</button><button data-s="cm">'+ic("chat")+'코멘트</button><button data-s="sh">'+ic("share")+'공유하기</button>';
- [pov,cp,grb,selb].forEach(function(el){app.appendChild(el)});
+ [pov,cp,grb,settings,selb].forEach(function(el){app.appendChild(el)});
  function cpOpen(){if(tool)tset(tool);nmx();selHide();pr();app.classList.add("cpo");cp.classList.add("on");pov.classList.add("on")}
  function cpClose(){app.classList.remove("cpo");cp.classList.remove("on");pov.classList.remove("on")}
  pov.onclick=cpClose;grb.onclick=cpOpen;
+ settings.onclick=function(){selHide();nmx();st()};
  var cy0=null;document.getElementById("cph").addEventListener("pointerdown",function(e){cy0=e.clientY;e.currentTarget.setPointerCapture(e.pointerId)});
  document.getElementById("cph").addEventListener("pointerup",function(e){if(cy0!==null&&(e.clientY-cy0>30||Math.abs(e.clientY-cy0)<5))cpClose();cy0=null});
  var gy0=null;grb.addEventListener("pointerdown",function(e){gy0=e.clientY});grb.addEventListener("pointerup",function(e){if(gy0!==null&&gy0-e.clientY>20)cpOpen();gy0=null});
@@ -6088,18 +6093,37 @@ function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':(typeof
   if(a==="hl")hlPop();else if(a==="cm")tset(3);else if(a==="memo")memo();
   else if(a==="bm"){var i=BM.indexOf(pg);i>-1?BM.splice(i,1):BM.push(pg);rt();pr();toast(i>-1?pg+"쪽 책갈피를 뺐어요.":pg+"쪽에 책갈피를 꽂았어요.")}
   else if(a==="wd"){so('<h3 class="dh">단어 사전</h3><form class="dsr" role="search"><input id="wi" type="search" placeholder="찾을 단어를 입력하세요" aria-label="찾을 단어" autocomplete="off"><button aria-label="검색">'+ic("search")+'</button></form><div id="wr" aria-live="polite"></div>');wsr();document.getElementById("wi").focus()}
-  else if(a==="ch")dic();else if(a==="sh"){bookShare(BT,BK>=0?LB[BK][1]:"",BK>=0?LB[BK][2]:"#6A4F6A")}else if(a==="set")st()};
+  else if(a==="ch")dic();else if(a==="sh"){bookShare(BT,BK>=0?LB[BK][1]:"",BK>=0?LB[BK][2]:"#6A4F6A")}};
  function selRange(){var s=window.getSelection();if(!s||!s.rangeCount||s.isCollapsed)return null;var r=s.getRangeAt(0);return lf.contains(r.commonAncestorContainer)&&String(s).trim()?r:null}
  function selHide(){selb.classList.remove("on")}
- function selShow(){var r=selRange();if(!r||app.classList.contains("cpo")){selHide();return}var a=app.getBoundingClientRect(),q=r.getBoundingClientRect();selb.classList.add("on");var w=selb.offsetWidth,h=selb.offsetHeight,l=Math.min(Math.max(8,q.left-a.left+q.width/2-w/2),a.width-w-8),t=q.top-a.top-h-10;if(t<8)t=q.bottom-a.top+10;selb.style.left=l+"px";selb.style.top=t+"px"}
+ function selShow(){
+  var range=selRange();if(!range||app.classList.contains("cpo")||sheet.classList.contains("on")){selHide();return}
+  var appRect=app.getBoundingClientRect(),page=tx.getBoundingClientRect(),viewport=window.visualViewport;
+  var sx=appRect.width/app.offsetWidth||1,sy=appRect.height/app.offsetHeight||1,edge=8,gap=6*sy;
+  var left=Math.max(appRect.left,page.left,viewport?viewport.offsetLeft:0)+edge*sx;
+  var right=Math.min(appRect.right,page.right,viewport?viewport.offsetLeft+viewport.width:innerWidth)-edge*sx;
+  var top=Math.max(appRect.top,page.top,viewport?viewport.offsetTop:0)+edge*sy;
+  var bottom=Math.min(appRect.bottom,page.bottom,settings.getBoundingClientRect().top,viewport?viewport.offsetTop+viewport.height:innerHeight)-edge*sy;
+  if(left>=right||top>=bottom){selHide();return}
+  var selected=Array.from(range.getClientRects()).filter(function(rect){return rect.right>left&&rect.left<right&&rect.bottom>top&&rect.top<bottom&&rect.width&&rect.height});
+  if(!selected.length){selHide();return}
+  var x1=Math.max(left,Math.min.apply(null,selected.map(function(rect){return rect.left}))),x2=Math.min(right,Math.max.apply(null,selected.map(function(rect){return rect.right})));
+  var y1=Math.max(top,Math.min.apply(null,selected.map(function(rect){return rect.top}))),y2=Math.min(bottom,Math.max.apply(null,selected.map(function(rect){return rect.bottom})));
+  selb.style.maxWidth=(right-left)/sx+"px";selb.classList.add("on");
+  var menu=selb.getBoundingClientRect(),above=y1-gap-menu.height,below=y2+gap;
+  if(menu.height>bottom-top){selHide();return}
+  var x=Math.max(left,Math.min(right-menu.width,(x1+x2-menu.width)/2));
+  var y=above>=top?above:below+menu.height<=bottom?below:y1-top>bottom-y2?top:bottom-menu.height;
+  selb.style.left=(x-appRect.left)/sx-app.clientLeft+"px";selb.style.top=(y-appRect.top)/sy-app.clientTop+"px";
+ }
  if(!window.TUTD)setTimeout(tut,400);
  function tut(){
   if(document.getElementById("lf")!==lf||document.getElementById("tut"))return;
   var ov=document.createElement("div");ov.id="tut";app.appendChild(ov);
-  var C=[["hl","형광펜","형광펜을 고를 수 있어요.\n글을 길게 눌러 문장을 고른 뒤 칠해 주세요."],["memo","스티커","스티커에 글을 적고 원하는 자리에 붙여요.\n직접 만든 스티커도 쓸 수 있어요."],["wd","단어 사전","모르는 단어의 뜻을 찾아봐요."],["ch","인물 사전","등장인물에 대한 메모를 남겨요.\n추가한 이름은 본문에 색으로 표시돼요."],["sh","책 공유","읽는 책을 친구에게 공유해요.\n문장 공유는 글을 길게 눌러 문장을 고른 뒤 할 수 있어요."],["set","읽기 설정","화면 밝기, 책 넘김, 글자 크기와 글씨체를 바꿔요."],["pg","쪽 이동","막대를 밀어 원하는 쪽으로 가요.\n독서 메이트가 읽는 위치도 볼 수 있어요."]],i=-1,opening=false,timer=null,frame=null,closed=false;
+  var C=[["hl","형광펜","형광펜을 고를 수 있어요.\n글을 길게 눌러 문장을 고른 뒤 칠해 주세요."],["memo","스티커","스티커에 글을 적고 원하는 자리에 붙여요.\n직접 만든 스티커도 쓸 수 있어요."],["wd","단어 사전","모르는 단어의 뜻을 찾아봐요."],["ch","인물 사전","등장인물에 대한 메모를 남겨요.\n추가한 이름은 본문에 색으로 표시돼요."],["sh","책 공유","읽는 책을 친구에게 공유해요.\n문장 공유는 글을 길게 눌러 문장을 고른 뒤 할 수 있어요."],["pg","쪽 이동","막대를 밀어 원하는 쪽으로 가요.\n독서 메이트가 읽는 위치도 볼 수 있어요."],["set","읽기 설정","오른쪽 설정에서 화면 모드, 책 넘김, 글자 크기와 글씨체를 바꿔요."]],i=-1,opening=false,timer=null,frame=null,closed=false;
   var previousFocus=document.activeElement;
   function active(){return !closed&&ov.isConnected&&document.getElementById("lf")===lf}
-  function target(){return i<0?grb:C[i][0]==="pg"?document.getElementById("pg"):cp.querySelector('.cpt[data-a="'+C[i][0]+'"]')}
+  function target(){return i<0?grb:C[i][0]==="pg"?document.getElementById("pg"):C[i][0]==="set"?settings:cp.querySelector('.cpt[data-a="'+C[i][0]+'"]')}
   function position(){
    if(!active()||opening)return;var t=target(),bx=ov.querySelector(".tbx"),spot=ov.querySelector(".tsp");if(!t||!bx||!spot)return;
    var a=ov.getBoundingClientRect(),r=t.getBoundingClientRect(),sx=a.width/ov.offsetWidth||1,sy=a.height/ov.offsetHeight||1,W=ov.offsetWidth,H=ov.offsetHeight,pad=6,gap=14,edge=16;
@@ -6119,6 +6143,7 @@ function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':(typeof
   function openTools(){if(!active()||opening||i>=0)return;opening=true;ov.onpointerdown=ov.onpointerup=ov.onpointercancel=null;ov.querySelector(".tnx").disabled=true;cpOpen();timer=setTimeout(function(){if(!active())return;opening=false;i=0;render()},320)}
   function render(){
    if(!active())return;if(i>=C.length){done();return}var c=i<0?["grb","읽기 도구 열기","아래 손잡이를 누르거나 위로 밀면 읽기 도구가 열려요."]:C[i];
+   if(c[0]==="set")cpClose();
    ov.className=i<0?"t1":"t2";ov.innerHTML='<i class="tsp" aria-hidden="true"></i><div class="tbx" role="dialog" aria-modal="true" aria-labelledby="tut-title" aria-describedby="tut-copy"><small>'+(i<0?'읽기 도구 안내':(i+1)+' / '+C.length)+'</small><b id="tut-title">'+c[1]+'</b><p id="tut-copy">'+c[2]+'</p><div class="tbt2"><button class="tsk" type="button">건너뛰기</button><button class="tnx" type="button">'+(i<0?'도구 열기':i===C.length-1?'시작하기':'다음')+'</button></div></div>';
    ov.querySelector(".tsk").onclick=done;ov.querySelector(".tnx").onclick=i<0?openTools:function(){i++;render()};
    if(i<0){var y=null;ov.onpointerdown=function(e){if(e.target.closest("button"))return;y=e.clientY;ov.setPointerCapture(e.pointerId)};ov.onpointerup=function(e){if(y!==null&&y-e.clientY>40)openTools();y=null};ov.onpointercancel=function(){y=null}}
@@ -6130,6 +6155,7 @@ function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':(typeof
  if(window.SELH)document.removeEventListener("selectionchange",window.SELH);
  window.SELH=function(){if(document.getElementById("lf")!==lf){document.removeEventListener("selectionchange",window.SELH);return}clearTimeout(window.SELT);window.SELT=setTimeout(selShow,120)};
  document.addEventListener("selectionchange",window.SELH);
+ lf.addEventListener("scroll",selShow,{passive:true});
  selb.addEventListener("pointerdown",function(e){e.preventDefault()});
  selb.onclick=function(e){var b=e.target.closest("button");if(!b)return;var r=selRange();if(!r){selHide();return}
   var txt=String(window.getSelection()).trim(),els=[].filter.call(lf.querySelectorAll(".s"),function(s){return r.intersectsNode(s)}),ids=els.map(function(s){return s.dataset.id});
