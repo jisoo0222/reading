@@ -3987,8 +3987,11 @@ dialog.app-loading-screen::backdrop{background:#F5F7F4}
 #app.hm .cx-rec-book strong,#app.hm .cx-rec-book small{display:block;width:100%;font-size:14px;font-weight:650;line-height:1.5;word-break:keep-all;overflow-wrap:anywhere}
 #app.hm .cx-rec-book strong{margin-top:12px}
 #app.hm .cx-rec-book small{font-weight:400;color:#34483B;margin-top:2px}
-#app.hm .cx-state-reading .cx-state-art{justify-content:space-between;gap:16px;flex-wrap:wrap}
-#app.hm .cx-state-reading .cx-state-art{min-height:154px}
+#app.hm .cx-state-reading .cx-state-art{justify-content:flex-start;gap:20px;min-height:154px;margin-top:24px}
+#app.hm .cx-state-book-info{flex:1;min-width:0}
+#app.hm .cx-state-book-info .cx-state-heading{padding:0;margin-bottom:12px}
+#app.hm .cx-state-book-info .cx-state-heading h2{font-size:20px}
+#app.hm .cx-state-book-info .cx-state-heading p{margin-top:4px}
 #app.hm .cx-state-reading .cx-read-cover.cx-stack{position:relative;inset:auto;width:112px!important;height:auto!important;max-width:48%;aspect-ratio:107/154.12;flex:none;border:0;padding:0;background:transparent!important;border-radius:10px!important}
 #app.hm .cx-state-reading .cx-stack-layer:first-child{transform:rotate(-4deg);box-shadow:5px 6px 0 #E4EBE4,6px 7px 0 #C8D7CA}
 #app.hm .cx-state-progress{min-width:0;flex:1 1 6em;color:#174D37}
@@ -6755,7 +6758,7 @@ function cxOpenReadingBooks(books){
 
 function cxGuestArt(assessment){return '<div class="cx-state-art cx-guest-art'+(assessment?' cx-assessment-art':'')+'" aria-hidden="true">'+['<circle cx="24" cy="24" r="13"/><path d="M24 7v34M7 24h34"/>','<path d="M24 7c9 11 15 20 0 34C9 27 15 18 24 7Z"/>','<path d="M10 12c6-3 10-2 14 1 4-3 8-4 14-1v25c-6-3-10-2-14 1-4-3-8-4-14-1V12Zm14 1v25"/>'].map(function(p){if(assessment)p='<path d="M18 18a6 6 0 0 1 12 0c0 5-6 5-6 11"/><circle cx="24" cy="35" r="1" fill="currentColor" stroke="none"/>';return '<span class="cx-blank-book"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">'+p+'</svg></span>'}).join('')+'</div>'}
 function cxHomeCard(state,books,k,q,pages,goal,recs){
- var title='',copy='',art='',footer='';
+ var title='',copy='',art='',progress='',footer='';
  if(state==='guest'){title='취향에 맞는 책을 만나요.';copy='로그인하면 나에게 맞는 책을 추천해 드려요.';art=cxGuestArt();footer='<button class="cx-continue" id="cx-login">로그인하기'+ic('next')+'</button>'}
  else if(state==='recommend'){
   title='나에게 맞는 세 권';copy='마음이 가는 책을 골라 보세요.';
@@ -6768,10 +6771,13 @@ function cxHomeCard(state,books,k,q,pages,goal,recs){
  }
  else{
   title=LB[k][0];copy=LB[k][1];
-  art='<div class="cx-state-art"><button class="cx-read-cover cx-stack" id="cx-detail" data-k="'+k+'" aria-label="읽는 중인 책 '+Math.max(1,books.length)+'권 고르기" aria-haspopup="dialog" aria-expanded="false">'+(books.length?books:[k]).map(function(book,index){return '<span class="cx-stack-layer" data-stack-book="'+book+'" style="--stack-index:'+index+';z-index:'+(3-index)+'" aria-hidden="true">'+coverSVG(book,null,true,107,154.12,books.length===3?THREE_BOOK_PALETTES[index]:null)+'</span>'}).join('')+'</button><div class="cx-state-progress"><strong>'+q.c+'<small>%</small></strong><p>읽었어요.</p><div class="cx-inline-meter" role="progressbar" aria-label="독서 진도" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div></div></div>';
+  art='<button class="cx-read-cover cx-stack" id="cx-detail" data-k="'+k+'" aria-label="읽는 중인 책 '+Math.max(1,books.length)+'권 고르기" aria-haspopup="dialog" aria-expanded="false">'+(books.length?books:[k]).map(function(book,index){return '<span class="cx-stack-layer" data-stack-book="'+book+'" style="--stack-index:'+index+';z-index:'+(3-index)+'" aria-hidden="true">'+coverSVG(book,null,true,107,154.12,books.length===3?THREE_BOOK_PALETTES[index]:null)+'</span>'}).join('')+'</button>';
+  progress='<div class="cx-state-progress"><strong>'+q.c+'<small>%</small></strong><p>읽었어요.</p><div class="cx-inline-meter" role="progressbar" aria-label="독서 진도" aria-valuenow="'+q.c+'" aria-valuemin="0" aria-valuemax="100"><i style="width:'+q.c+'%"></i></div></div>';
   footer='<div class="cx-state-goal"><span>오늘 목표</span><b>'+pages+' / '+goal+'쪽</b></div><button class="cx-continue" id="cx-read">이어서 읽기'+ic('next')+'</button>';
  }
- return '<section class="cx-reading cx-state cx-state-'+state+'" aria-labelledby="cx-title"><div class="cx-state-heading"><h2 id="cx-title">'+esc(title)+'</h2><p>'+esc(copy)+'</p></div>'+art+'<div class="cx-state-foot">'+footer+'</div></section>';
+ var heading='<div class="cx-state-heading"><h2 id="cx-title">'+esc(title)+'</h2><p>'+esc(copy)+'</p></div>';
+ var content=state==='reading'?'<div class="cx-state-art">'+art+'<div class="cx-state-book-info">'+heading+progress+'</div></div>':heading+art;
+ return '<section class="cx-reading cx-state cx-state-'+state+'" aria-labelledby="cx-title">'+content+'<div class="cx-state-foot">'+footer+'</div></section>';
 }
 home=function(){
  app.onclick=null;app.className='app hm home-feed';window.scrollTo(0,0);
