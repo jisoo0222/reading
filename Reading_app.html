@@ -4208,7 +4208,7 @@ function info(confirmExisting){
  app.className="app signup signup-nickname";
  app.innerHTML=signupHeader(true)+(verifyExisting?'<h1>만 나이를 확인해 주세요.</h1>':ost(1)+'<h1>반가워요.<br>나를 알려 주세요.</h1><p class="hint">프로필에 쓸 닉네임을 알려 주세요.</p>')
  +'<form id="signup-info" novalidate><label class="fld">닉네임<input id="inm" maxlength="10" placeholder="10자 이내로 입력해 주세요" autocomplete="off"'+(verifyExisting?' readonly':'')+' required></label>'
- +'<div class="fld signup-age"><label for="signup-age">만 나이</label><input id="signup-age" type="number" inputmode="numeric" min="0" max="120" step="1" placeholder="만 나이를 입력해 주세요" autocomplete="off" aria-describedby="signup-age-note signup-age-error"'+(SIGNUP_AGE_CONFIRMED?'':' required')+'><p class="signup-age-note" id="signup-age-note">'+(SIGNUP_AGE_CONFIRMED?'만 14세 이상임을 확인했어요.<br>':'')+'똑독은 만 14세부터 이용할 수 있어요.<br>나이 숫자는 서버에 보내지 않아요.</p><p class="signup-age-error" id="signup-age-error" role="status"></p></div></form>'
+ +'<div class="fld signup-age"><label for="signup-age">만 나이</label><input id="signup-age" type="number" inputmode="numeric" min="0" max="120" step="1" placeholder="만 나이를 입력해 주세요" autocomplete="off" aria-describedby="signup-age-note signup-age-error"'+(SIGNUP_AGE_CONFIRMED?'':' required')+'><p class="signup-age-note" id="signup-age-note">'+(SIGNUP_AGE_CONFIRMED?'만 14세 이상임을 확인했어요.<br>':'')+'똑독은 만 14세부터 이용할 수 있어요.</p><p class="signup-age-error" id="signup-age-error" role="status"></p></div></form>'
  +'<div class="foot"><button class="btn" id="nx1" type="submit" form="signup-info">'+(verifyExisting?'확인':'다음')+'</button></div>';
  var back=document.getElementById("signup-back");
  back.onclick=function(){
@@ -4224,7 +4224,7 @@ function info(confirmExisting){
  age.oninput=function(){
   SIGNUP_AGE_CONFIRMED=false;
   age.required=true;
-  document.getElementById('signup-age-note').innerHTML='똑독은 만 14세부터 이용할 수 있어요.<br>나이 숫자는 서버에 보내지 않아요.';
+  document.getElementById('signup-age-note').textContent='똑독은 만 14세부터 이용할 수 있어요.';
   age.removeAttribute('aria-invalid');error.textContent='';update()
  };
  document.getElementById('signup-info').onsubmit=async function(e){
