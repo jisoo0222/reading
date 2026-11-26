@@ -774,7 +774,7 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .seh{font-size:18px;color:var(--sub);cursor:grab;padding:0 4px;touch-action:none;user-select:none}.ser i{width:24px;aspect-ratio:3/4;border-radius:3px;flex:none}.sen{flex:1;min-width:0}.sen b{display:block;font-size:14px}.sen small{font-size:14px;color:var(--sub)}
 .sex{flex:none;font:inherit;font-size:14px;font-weight:600;border:1.5px solid var(--pri);color:var(--pri);background:none;border-radius:999px;padding:4px 10px;cursor:pointer}.ser.off .sex{background:var(--pri);color:var(--onpri)}
 .sfb.tgt{outline:2px dashed var(--pri);outline-offset:4px;border-radius:6px}
-#mfi{display:none!important}.mep .fadd{flex:none;white-space:nowrap;padding:9px 16px}.mep{gap:16px}
+#mfi{display:none!important}
 .sel .ser{padding:6px 10px}
 .mfe{margin-top:14px}.mfe .och{margin-top:6px;gap:6px}.mfe .och button{font-size:14px;padding:7px 12px}
 .pbx2{padding:14px 14px 12px}.pbx2 .pbt{display:flex;align-items:center;gap:12px}.pbx2 .av3{margin:0;width:54px;height:54px;font-size:20px;border:0;flex:none}.pbx2 .pnm{flex:1;min-width:0}.pbx2 .pnm h2{font-size:19px}.pbx2 .pnm small{font-size:14px;color:var(--sub)}
@@ -897,8 +897,8 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .dnb{text-align:center}.dnc{display:flex;align-items:flex-end;width:72px;aspect-ratio:3/4;margin:4px auto 14px;border-radius:4px 8px 8px 4px;padding:6px;box-sizing:border-box;box-shadow:inset 4px 0 0 rgba(0,0,0,.08)}.dnc b{font-size:14px;color:#F6F1EC;line-height:1.2;text-align:left;word-break:keep-all}.dnc:not([style*="6A4F6A"]) b{color:#1F1E1E}
 .dnb h3{margin:0 0 14px;word-break:keep-all}.dnd{margin:0;background:var(--bg);border-radius:14px;padding:12px 16px;display:flex;flex-direction:column;gap:8px}.dnd div{display:flex;justify-content:space-between;font-size:14px}.dnd dt{color:var(--sub)}.dnd dd{margin:0;font-weight:700;color:var(--pri)}
 .dnm{margin:14px 0 4px;font-size:14px;color:var(--ink)}
-#mfi.mfi2{display:block!important;position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0);pointer-events:none}
-.mphl{display:inline-flex;align-items:center;justify-content:center;cursor:pointer}.mep{position:relative}
+.mep{position:relative}
+#dlg .mep #mav{padding:0;cursor:pointer}
 .mrc{display:flex!important;flex-direction:row!important;align-items:center;gap:12px;justify-content:space-between;margin-top:14px}.mrc>div{display:flex;flex-direction:column;gap:2px}.mrc b{font-size:14px;color:var(--ink)}.mrc small{font-size:14px;color:var(--sub);line-height:1.45;word-break:keep-all;font-weight:400}.mrc .swc{flex:none}
 .sfs[style*="#6A4F6A"],.sv[style*="#6A4F6A"],.ser i[style*="#6A4F6A"]{background:var(--bk0,#4CAE85)!important;color:var(--bk0t,#F6F1EC)!important}
 .sfs[style*="#B2A5D6"],.sv[style*="#B2A5D6"],.ser i[style*="#B2A5D6"]{background:var(--bk1,#B2A5D6)!important;color:var(--bk1t,#1F1E1E)!important}
@@ -1888,11 +1888,12 @@ body:has(.app.hso) #pawf{display:none!important}
 
 /* 자물쇠 = 프로필 공개/비공개, 설정은 아래 줄로 */
 #app.pf .pset2{display:flex!important}
-#dlg .mp-lock{width:var(--h-ibtn);height:var(--h-ibtn);padding:0;flex:none;display:grid;place-items:center;border:1px solid var(--bd);border-radius:50%;background:var(--card);color:var(--pri)}
-#dlg .mp-lock[aria-pressed="true"]{background:var(--pri);border-color:var(--pri);color:var(--onpri)}
-#dlg .mp-lock .ic{width:var(--ic);height:var(--ic);color:inherit}
-#ptip{position:absolute;left:50%;bottom:110px;z-index:60;transform:translate(-50%,8px);opacity:0;transition:opacity .25s,transform .25s;background:var(--ink);color:var(--bg);font-size:14px;font-weight:500;padding:10px 16px;border-radius:var(--r-full);white-space:nowrap;pointer-events:none}
-#ptip.on{opacity:1;transform:translate(-50%,0)}
+#dlg .mp-lock{width:52px;height:48px;padding:0;flex:none;display:grid;place-items:center;border:0;border-radius:12px;background:transparent;color:var(--pri);cursor:pointer}
+#dlg .mp-lock::before,#dlg .mp-lock .ic{grid-area:1/1}
+#dlg .mp-lock::before{content:"";width:32px;height:32px;border:1px solid var(--bd);border-radius:50%;background:var(--card)}
+#dlg .mp-lock[aria-pressed="true"]{color:var(--onpri)}
+#dlg .mp-lock[aria-pressed="true"]::before{background:var(--pri);border-color:var(--pri)}
+#dlg .mp-lock .ic{width:17px;height:17px;color:inherit}
 
 /* ===== 기본 윗 여백 (Space/top 16): 탭 화면은 모두 위 16에서 시작 ===== */
 :root{--s-top:16px}
@@ -2243,10 +2244,10 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.pf #rbl .rbt small{font-size:14px!important;margin-top:3px!important}
 #app.pf #rbl .rbs{font-size:14px!important;height:22px!important;padding:0 6px!important}
 
-#mgwh{margin-top:12px}
-.gwh #mgr{width:76px;height:46px;margin:2px 0;border:0;background:transparent;font:inherit;font-size:22px;font-weight:700;color:var(--pri);text-align:center;padding:0;cursor:ns-resize;-moz-appearance:textfield}
-.gwh #mgr:focus{outline:none;cursor:text;background:var(--card);border-radius:8px}
-.gwh #mgr::-webkit-inner-spin-button,.gwh #mgr::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+#dlg .profile-goal-input{display:flex;align-items:center;gap:8px;margin:6px 0 0;color:var(--ink)}
+#dlg .profile-goal-input #mgr{width:104px;min-height:48px;margin:0;text-align:left;appearance:textfield}
+#dlg #mgr::-webkit-inner-spin-button,#dlg #mgr::-webkit-outer-spin-button{appearance:none;margin:0}
+#dlg .profile-goal-error:not(:empty){display:block;margin-top:4px;color:var(--state-error)}
 
 /* 디자인 시스템 v3 · Figma 1262:1852 */
 :root{--pri:#174D37;--strong:#296A4F;--bd-card:#3E9370;--bd:#B1AFAE;--tx3:#898585;--sheet:#E3E3E3;--shelf-bar:#4B4B4B;--h-header:60px;--r-home-card:24px}
@@ -3195,13 +3196,15 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.pf .profile-daily .ic{width:18px;height:18px;color:#174D37}
 #app.pf .profile-daily strong{font-size:26px;font-weight:750;line-height:1.2;color:#174D37}
 #app.pf .profile-daily strong small{font-size:14px;font-weight:600;margin-left:5px}
-#app.pf .profile-type{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:94px;padding:16px;border:0;border-radius:12px;background:#DAEAE1;color:#174D37;font:inherit;text-align:left;cursor:pointer}
+#app.pf .profile-type{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:94px;padding:16px;border:0;border-radius:12px;background:var(--ddti-profile-bg,#DAEAE1);color:#174D37;font:inherit;text-align:left;cursor:pointer}
+#app.pf .profile-type[data-ddti]{color:#17241C}
 #app.pf .profile-type-copy{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0}
 #app.pf .profile-type-copy>small{font-size:14px;line-height:1.4;color:#34483B}
 #app.pf .profile-type-copy>strong{font-size:16px;line-height:1.5;font-weight:750;word-break:keep-all}
 #app.pf .profile-type-copy>em{font-size:14px;line-height:1.4;font-style:normal;font-weight:650;letter-spacing:.08em}
-#app.pf .profile-type-arrow{width:32px;height:32px;display:grid;place-items:center;flex:none;border:1px solid #91AE9E;border-radius:50%}
+#app.pf .profile-type-arrow{width:32px;height:32px;display:grid;place-items:center;flex:none;border:1px solid var(--ddti-profile-accent,#91AE9E);border-radius:50%;color:var(--ddti-profile-accent,#174D37)}
 #app.pf .profile-type-arrow .ic{width:16px;height:16px}
+#app.pf #p-quotes .ic{fill:currentColor;stroke:none}
 #app.pf .profile-card button:focus-visible{outline:3px solid #174D37;outline-offset:3px}
 
 #app.pf .profile-identity .av3>.ic{width:28px;height:28px}
@@ -4732,6 +4735,7 @@ function switchControl(id,label,on,description){
 }
 I.lock='M7 11V8a5 5 0 0 1 10 0v3M6 11h12a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2zM12 15v2';
 I.quote='M10 6H4v7h5c0 3-1.5 4-4 5M20 6h-6v7h5c0 3-1.5 4-4 5';
+I.quoteMarks='M10 6C6 7.2 4 9.9 4 13.2 4 15.3 5.2 16.5 6.9 16.5s2.9-1.2 2.9-2.9-1.2-2.8-2.8-2.8h-.4c.6-1.5 1.8-2.6 3.8-3.4L10 6Zm9 0c-4 1.2-6 3.9-6 7.2 0 2.1 1.2 3.3 2.9 3.3s2.9-1.2 2.9-2.9-1.2-2.8-2.8-2.8h-.4c.6-1.5 1.8-2.6 3.8-3.4L19 6Z';
 var B=[{t:"너는 지금도 충분해",a:"김수현",c:"#6A4F6A",n:38},{t:"지금, 여기, 행복",a:"김수현",c:"#B2A5D6",n:21},{t:"느리게 읽는 밤",a:"이서윤",c:"#C9B3C9",n:57}];
 var M=[["지민",89,"#666161"],["은우",84,"#898585"],["하린",78,"#444141"],["도윤",72,"#1F1E1E"]];
 var AC=["#4CAE85","#B1AFAE","#666161"];
@@ -4798,6 +4802,13 @@ function avS(){return MEP?'background:var(--pri) center/cover no-repeat url('+ME
 function composeAuthorMarkup(){
  return '<div class="compose-author"><span class="compose-avatar" style="'+esc(avS())+'" aria-hidden="true">'+(MEP?'':esc(Array.from(ME||'나')[0]))+'</span><div><span class="compose-author-label">작성자</span><b>'+esc(ME||'내 프로필')+'</b></div></div>'
 }
+/* 결과 카드 원본의 제목 영역과 강조색을 마이페이지에도 사용해요. */
+var DDTI_PROFILE_COLORS={
+ FADI:['#EFF0F5','#434A86'],FADJ:['#EDF1F4','#305981'],FAWI:['#F0F3F7','#4F76A0'],FAWJ:['#F2F2F8','#6268AD'],
+ FEDI:['#ECF2F1','#236A57'],FEDJ:['#F2F3EE','#666D35'],FEWI:['#EFF5F2','#458568'],FEWJ:['#EEF4F5','#357885'],
+ SADI:['#F6F0EC','#955320'],SADJ:['#F4F0EF','#805241'],SAWI:['#F4F1EC','#78601F'],SAWJ:['#F7F0EE','#A34A39'],
+ SEDI:['#F8F1F3','#A85775'],SEDJ:['#F4F0F4','#7D507E'],SEWI:['#F7F2F6','#A46691'],SEWJ:['#F8EFF2','#AE4762']
+};
 function profile(){
  app.className="app";
  var nickname=profileNickname();
@@ -4813,9 +4824,9 @@ function profile(){
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="person"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
  app.innerHTML='<div class="pfb"><section class="box pbx2 profile-card" aria-label="내 프로필"><div class="profile-identity"><div class="av3" style="'+avS()+'" role="img" aria-label="프로필 사진">'+(MEP?'':nickname?esc(nickname).charAt(0):ic('person'))+'</div><div class="profile-name"><h2>'+esc(nickname||DEFAULT_PROFILE_NAME)+'</h2>'+(ageOk(AGE)?'<small>'+ageTxt(AGE)+'</small>':'')+'</div><button class="profile-edit" id="pme" aria-label="프로필 편집">'+ic("pen")+'</button></div>'
  +'<div class="profile-daily"><span>'+ic("book")+'<span>하루 독서 목표</span></span><strong>'+(GOAL||10)+'<small>쪽</small></strong></div>'
- +(function(){var k=RKEY||(ans.indexOf(null)<0?calcType().key:""),t=k&&T[k];return'<button class="profile-type" id="rp"><span class="profile-type-copy"><small>DDTI</small><strong>'+(t?esc(t[0]):'나의 DDTI 알아보기')+'</strong>'+(t?'<em>'+k+'</em>':'')+'</span><span class="profile-type-arrow" aria-hidden="true">'+ic("next")+'</span></button>'})()
+ +(function(){var k=RKEY||(ans.indexOf(null)<0?calcType().key:""),t=k&&T[k],colors=t&&DDTI_PROFILE_COLORS[k];return'<button class="profile-type" id="rp"'+(colors?' data-ddti="'+k+'" style="--ddti-profile-bg:'+colors[0]+';--ddti-profile-accent:'+colors[1]+'"':'')+'><span class="profile-type-copy"><small>DDTI</small><strong>'+(t?esc(t[0]):'나의 DDTI 알아보기')+'</strong>'+(t?'<em>'+k+'</em>':'')+'</span><span class="profile-type-arrow" aria-hidden="true">'+ic("next")+'</span></button>'})()
  +'</section>'
- +'<section class="fs profile-archives"><div class="fsh"><h3>아카이빙</h3></div><div class="archive-actions">'+[['plm','찜한 책','heart'],['p-vault','포인트 보관함','basket'],['p-quotes','문장 보관함','quote'],['mym','내 글 보관함','pen']].map(function(a){return '<button class="archive-action" id="'+a[0]+'"><span aria-hidden="true">'+ic(a[2])+'</span><b>'+a[1]+'</b></button>'}).join('')+'</div></section>'
+ +'<section class="fs profile-archives"><div class="fsh"><h3>아카이빙</h3></div><div class="archive-actions">'+[['plm','찜한 책','heart'],['p-vault','포인트 보관함','basket'],['p-quotes','문장 보관함','quoteMarks'],['mym','내 글 보관함','pen']].map(function(a){return '<button class="archive-action" id="'+a[0]+'"><span aria-hidden="true">'+ic(a[2])+'</span><b>'+a[1]+'</b></button>'}).join('')+'</div></section>'
  +'<section class="fs"><div class="fsh"><h3>독서 메이트 '+fc+'</h3><button class="pme" id="pfr">전체 보기'+ic("next")+'</button></div><div class="box pfl">'+(real?REAL_SOCIAL.friends.map(function(m){return '<button class="pfc" data-real-friend="'+m.id+'" data-real-name="'+esc(m.nickname)+'" aria-label="'+esc(m.nickname)+' 친구 보기"><span>'+esc(m.nickname).charAt(0)+'</span><b>'+esc(m.nickname)+'</b></button>'}).join(''):(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):''))+'<button class="pfc pfa" id="pfa" aria-label="친구를 검색해서 추가하기"><span>'+ic("plus")+'</span><b>추가</b></button></div>'+(real&&REAL_SOCIAL.status==='error'?'<p class="sm">친구 목록을 다시 확인해 주세요.</p>':'')+'</section>'
  +(function(){var L=readList();return'<section class="fs"><div class="fsh"><h3>읽은 책 '+L.length+'권</h3><button class="pme" id="rbm">전체 보기'+ic("next")+'</button></div><div class="rbl" id="rbl">'+L.map(function(b,i){return'<div class="rbk'+(i>2?" xtra":"")+'"><i data-bt="'+esc(b.t)+'" style="background:'+b.c+'"></i><span class="rbt"><b>'+esc(b.t)+'</b><small>'+esc(b.a)+'</small></span><em class="rbs'+(b.done?" dn":"")+'">'+b.s+'</em></div>'}).join("")+(L.length?'':'<p class="pfe">아직 읽은 책이 없어요.</p>')+'</div>'+'</section>'})()
  +'<button class="pset2" id="pset">'+ic("cog")+'<span>설정</span>'+ic("next")+'</button>'
@@ -4924,27 +4935,13 @@ function frList(addOnly,back){
  var x=pop('<h3>'+(addOnly?'친구 추가':'내 친구 '+F.length)+'</h3>'+(addOnly?(R.length?'<div class="frl">'+R.join("")+'</div>':'<p class="frE">추천할 친구가 없어요.</p>'):(F.length?'<div class="frl">'+F.join("")+'</div>':'<p class="frE">아직 친구가 없어요.</p>'+(R.length?'<h4 class="frH">추천 친구</h4><div class="frl">'+R.join("")+'</div>':'')))+'<button class="btn ghost" id="flx" style="width:100%;margin-top:14px">닫기</button>');
  document.getElementById("flx").onclick=function(){x();if(typeof back==="function")back()};
  document.querySelectorAll("#dlg .frw").forEach(function(b){b.onclick=function(){x();friend(+b.dataset.i,addOnly?function(){frList(true,back)}:1)}})}
-function profileGoalWheel(wh,sr,change){
- var wc=wh.querySelector(".gwc"),drag=null;
- function step(v,k){if(!k)return v;return k>0?(v%5?Math.ceil(v/5)*5:v+5)+(k-1)*5:(v%5?Math.floor(v/5)*5:v-5)+(k+1)*5}
- function render(){var v=Math.round(+sr.value)||0;wc.querySelectorAll(".gw").forEach(function(e){var n=step(v,+e.dataset.o);e.textContent=n>=1&&n<=300?n:""})}
- function input(){var n=Math.round(+sr.value);change(n>=1&&n<=300?n:null);render()}
- function set(n){sr.value=Math.max(1,Math.min(300,n));input()}
- wh.addEventListener("pointerdown",function(e){if(e.target===sr&&document.activeElement===sr)return;drag={y:e.clientY,v:+sr.value||10,id:e.pointerId,m:false}});
- wh.addEventListener("pointermove",function(e){if(!drag)return;var dy=e.clientY-drag.y;if(!drag.m&&Math.abs(dy)>4){drag.m=true;wh.setPointerCapture(drag.id);wh.classList.add("drg")}if(!drag.m)return;e.preventDefault();var k=Math.round(-dy/30);set(step(drag.v,k));wc.style.transform="translateY("+(dy+k*30)+"px)"});
- function end(){if(!drag)return;var moved=drag.m;drag=null;wc.style.transform="";wh.classList.remove("drg");if(moved){wh.dataset.dragged="1";setTimeout(function(){delete wh.dataset.dragged},0)}}
- wh.addEventListener("pointerup",end);wh.addEventListener("pointercancel",end);
- wh.addEventListener("click",function(e){if(wh.dataset.dragged){e.preventDefault();e.stopPropagation();return}if(e.target.classList.contains("gw")&&e.target.textContent)set(+e.target.textContent)},true);
- wh.addEventListener("wheel",function(e){e.preventDefault();if(e.deltaY)set(step(+sr.value||10,e.deltaY>0?1:-1))},{passive:false});
- sr.onkeydown=function(e){if(e.key==="ArrowUp"||e.key==="ArrowDown"){e.preventDefault();set(step(+sr.value||10,e.key==="ArrowUp"?1:-1))}};sr.oninput=input;sr.onchange=input;render();
-}
 function meEdit(){
  var nickname=profileNickname(),v={n:nickname,p:MEP,s:SHB.slice(),ag:AGE,go:GOAL,rv:RECV,pr:PRIV},o=document.createElement("div"),d=document.createElement("div");o.id="ov2";d.id="dlg";d._a11yReturn=document.activeElement;d.setAttribute("role","dialog");d.setAttribute("aria-modal","true");d.setAttribute("aria-labelledby","dt");
  function x(){o.remove();d.remove()}
  function main(){
-  d.innerHTML='<h3 id="dt">내 프로필</h3><div class="mep"><div class="av3" id="mav" style="'+(v.p?'background:var(--pri) center/cover no-repeat url('+v.p+')':'')+'">'+(v.p?'':esc(v.n||nickname).charAt(0))+'</div><label class="fadd mphl" for="mfi" id="mph" role="button" tabindex="0">프로필 사진 바꾸기</label><input type="file" id="mfi" class="mfi2" accept="image/*,.heic,.heif,.jpg,.jpeg,.png,.gif,.webp"></div>'
+  d.innerHTML='<h3 id="dt">내 프로필</h3><div class="mep"><button type="button" class="av3" id="mav" aria-label="프로필 사진 바꾸기">'+(v.p?'':esc((v.n||nickname).charAt(0)))+'</button><input type="file" id="mfi" hidden accept="image/*,.heic,.heif,.jpg,.jpeg,.png,.gif,.webp"></div>'
    +'<label class="mel">닉네임<input id="mnm" maxlength="10" autocomplete="off" placeholder="'+DEFAULT_PROFILE_NAME+'"></label>'
-   +'<div class="mel mfe">하루 목표<div class="gwh" id="mgwh"><span class="gwl">하루</span><span class="gwv"><span class="gwc"><i class="gw" data-o="-2"></i><i class="gw" data-o="-1"></i><input type="number" id="mgr" inputmode="numeric" min="1" max="300" value="'+(v.go||10)+'" aria-label="하루 목표 쪽수, 위아래로 끌어서 바꾸기"><i class="gw" data-o="1"></i><i class="gw" data-o="2"></i></span></span><span class="gwl">쪽</span></div><small class="gwt">숫자를 위아래로 밀어서 조절해 주세요.</small></div>'
+   +'<div class="mel"><label for="mgr">하루 목표</label><div class="profile-goal-input"><input type="number" id="mgr" inputmode="numeric" min="1" max="300" step="1" value="'+(v.go||10)+'" aria-describedby="mgr-error" required><span>쪽</span></div><small class="profile-goal-error" id="mgr-error" role="status"></small></div>'
    +'<div class="mel mrc"><div><b>프로필 공개 설정</b><small id="mpr-state" aria-live="polite">'+(v.pr?'프로필이 비공개예요.':'프로필이 공개예요.')+'</small></div><button type="button" class="mp-lock" id="mpr" aria-pressed="'+!!v.pr+'" aria-label="'+(v.pr?'프로필 공개로 바꾸기':'프로필 비공개로 바꾸기')+'">'+lk(v.pr?0:2)+'</button></div>'
     +'<div class="mel mrc"><div><b>추천 친구로 보이기</b><small id="mrv-help"></small></div>'+switchControl('mrv','추천 친구로 보이기',v.rv&&!v.pr,'mrv-help')+'</div>'
    +'<p id="mer" style="color:var(--sub);font-size:14px;margin:8px 0 0;min-height:18px"></p><div class="dbt"><button class="btn ghost" id="mcx">취소</button><button class="btn" id="msv">저장</button></div>';
@@ -4952,18 +4949,25 @@ function meEdit(){
    function showRecommend(){recommend.disabled=!!v.pr;recommend.setAttribute("aria-checked",!!v.rv&&!v.pr);recommendHelp.textContent=v.pr?"프로필을 공개하면 추천 친구로 보일 수 있어요.":"켜 두면 다른 독자에게 나를 추천 친구·추천 메이트로 보여 줘요."}
    document.getElementById("mpr").onclick=function(){v.pr=v.pr?0:1;this.setAttribute("aria-pressed",!!v.pr);this.setAttribute("aria-label",v.pr?"프로필 공개로 바꾸기":"프로필 비공개로 바꾸기");this.innerHTML=lk(v.pr?0:2);document.getElementById("mpr-state").textContent=v.pr?"프로필이 비공개예요.":"프로필이 공개예요.";showRecommend()};
    recommend.onclick=function(){v.rv=v.rv?0:1;showRecommend()};showRecommend();
-  var nm=document.getElementById("mnm"),fi=document.getElementById("mfi");nm.value=v.n;nm.oninput=function(){v.n=nm.value;if(!v.p)document.getElementById("mav").textContent=esc(v.n.trim()||nickname).charAt(0)};
-  document.getElementById("mph").onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();fi.click()}};
-  profileGoalWheel(document.getElementById("mgwh"),document.getElementById("mgr"),function(n){v.go=n;document.getElementById("msv").disabled=n===null});
+  var nm=document.getElementById("mnm"),fi=document.getElementById("mfi"),photo=document.getElementById("mav"),daily=document.getElementById("mgr"),save=document.getElementById("msv");
+  nm.value=v.n;nm.oninput=function(){v.n=nm.value;if(!v.p)photo.textContent=(v.n.trim()||nickname).charAt(0)};
+  function showPhoto(){if(v.p){photo.textContent="";photo.style.background="var(--pri) center/cover no-repeat url("+v.p+")"}}
+  showPhoto();photo.onclick=function(){fi.click()};
+  function updateGoal(){
+   var valid=daily.validity.valid&&Number.isInteger(daily.valueAsNumber);
+   v.go=valid?daily.valueAsNumber:null;save.disabled=!valid||save.hasAttribute('aria-busy');
+   daily.setAttribute('aria-invalid',String(!valid));document.getElementById('mgr-error').textContent=valid?'':'1쪽부터 300쪽까지 입력해 주세요.'
+  }
+  daily.oninput=updateGoal;updateGoal();
   fi.onchange=function(){var f=fi.files&&fi.files[0],er=document.getElementById("mer");if(!f)return;er.textContent="";
    if(!/^image\//.test(f.type)&&!/\.(heic|heif|jpe?g|png|gif|webp|bmp)$/i.test(f.name)){er.textContent="이미지 파일만 올릴 수 있어요.";return}
-   function set(u){v.p=u;var a=document.getElementById("mav");a.textContent="";a.style.background="var(--pri) center/cover no-repeat url("+u+")"}
+   function set(u){v.p=u;showPhoto()}
    var url=(window.URL||window.webkitURL).createObjectURL(f),im=new Image();
    im.onload=function(){try{var S=256,c=document.createElement("canvas"),w=im.naturalWidth,h=im.naturalHeight,m=Math.min(w,h);c.width=c.height=S;c.getContext("2d").drawImage(im,(w-m)/2,(h-m)/2,m,m,0,0,S,S);set(c.toDataURL("image/jpeg",.88))}catch(_){var r=new FileReader();r.onload=function(){set(r.result)};r.readAsDataURL(f)}(window.URL||window.webkitURL).revokeObjectURL(url)};
    im.onerror=function(){(window.URL||window.webkitURL).revokeObjectURL(url);er.textContent="이 사진 형식은 열 수 없어요. JPG나 PNG 사진으로 다시 골라 주세요."};
    im.src=url;fi.value=""};
   document.getElementById("mcx").onclick=x;
-  document.getElementById("msv").onclick=async function(){var n=v.n.trim();if(!n){document.getElementById("mer").textContent="닉네임을 입력해 주세요.";return}var button=document.getElementById("msv");button.disabled=true;button.setAttribute('aria-busy','true');try{if(SB_SESSION)await sbSaveMember({nickname:n,avatar_url:v.p||null,age:v.ag,daily_goal:v.go,discoverable:!!v.rv&&!v.pr})}catch(e){document.getElementById("mer").style.whiteSpace='pre-line';document.getElementById("mer").textContent=e.message;button.disabled=false;button.removeAttribute('aria-busy');return}var changed=PRIV!==v.pr;ME=n;MEP=v.p;AGE=v.ag;GOAL=v.go;RECV=v.rv;PRIV=v.pr;x();profile();if(changed)pTip(PRIV?"프로필을 비공개로 바꿨어요.":"프로필을 공개로 바꿨어요.")}}
+  document.getElementById("msv").onclick=async function(){var n=v.n.trim();if(!n){document.getElementById("mer").textContent="닉네임을 입력해 주세요.";return}var button=document.getElementById("msv");button.disabled=true;button.setAttribute('aria-busy','true');try{if(SB_SESSION)await sbSaveMember({nickname:n,avatar_url:v.p||null,age:v.ag,daily_goal:v.go,discoverable:!!v.rv&&!v.pr})}catch(e){document.getElementById("mer").style.whiteSpace='pre-line';document.getElementById("mer").textContent=e.message;button.disabled=false;button.removeAttribute('aria-busy');return}var changed=PRIV!==v.pr;ME=n;MEP=v.p;AGE=v.ag;GOAL=v.go;RECV=v.rv;PRIV=v.pr;x();profile();if(changed)ptToast(PRIV?"프로필을 비공개로 바꿨어요.":"프로필을 공개로 바꿨어요.","success")}}
  function pick(){
   d.innerHTML='<h3 id="dt">책장에 보여줄 책</h3><p class="sm" style="font-size:14px">홈 책장에 꽂을 책을 골라 주세요.<br>최대 '+SHMAX+'권까지 고를 수 있어요.</p><div class="mpl">'+RDB.map(function(b,k){var on=v.s.indexOf(k)>-1;return'<button class="mpi" data-k="'+k+'" aria-pressed="'+on+'"><i data-bt="'+esc(b[0])+'" style="background:'+BC[k%3]+'"></i><span><b>'+b[0]+'</b><small>'+b[1]+'</small></span><em aria-hidden="true">'+(on?ic("check"):"")+'</em></button>'}).join("")+'</div><p id="mer" style="color:var(--sub);font-size:14px;margin:8px 0 0;min-height:18px"></p><button class="btn" id="mdn" style="width:100%;margin-top:6px">완료</button>';
   d.querySelector(".mpl").onclick=function(e){var b=e.target.closest(".mpi");if(!b)return;var k=+b.dataset.k,i=v.s.indexOf(k);
@@ -6716,7 +6720,6 @@ function shHome(){
 }
 
 /* 마이페이지 짧은 안내 */
-function pTip(t){var e=document.getElementById("ptip");if(e)e.remove();e=document.createElement("div");e.id="ptip";e.setAttribute("role","status");e.textContent=t;app.appendChild(e);requestAnimationFrame(function(){e.classList.add("on")});setTimeout(function(){e.classList.remove("on");setTimeout(function(){e.remove()},300)},2000)}
 
 /* 가입 화면: 질문(h1)은 한 줄 — 넘치면 글자를 줄여 맞춤 */
 
