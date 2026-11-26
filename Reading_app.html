@@ -85,8 +85,10 @@ h1{font-size:26px;line-height:1.35;font-weight:700;letter-spacing:-.02em}
 .bk{width:152px}
 .cv{aspect-ratio:3/4;border-radius:10px;position:relative}
 .cv::before{content:"";position:absolute;left:10px;top:0;bottom:0;width:2px;background:rgba(255,255,255,.35)}
-.hb{position:absolute;right:8px;bottom:8px;width:34px;height:34px;border-radius:50%;border:0;background:var(--card);color:var(--pri);display:grid;place-items:center;cursor:pointer}
-.hb .ic{width:18px}.hb[aria-pressed="true"] .ic{fill:var(--pri)}
+#app .hb{position:absolute;right:0;bottom:0;z-index:3;isolation:isolate;width:48px;height:48px;border-radius:50%;border:0;padding:0;background:transparent;color:var(--pri);display:grid;place-items:center;cursor:pointer}
+#app .hb::before{content:'';position:absolute;inset:12px;z-index:-1;border-radius:50%;background:var(--card)}
+#app .hb:focus-visible{outline-offset:-4px!important}
+.hb[aria-pressed="true"] .ic{fill:var(--pri)}
 .bk .t{font-size:14px;font-weight:600;margin-top:8px}
 .bk .a{font-size:14px;color:var(--sub)}
 .rdr{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:14px;color:var(--sub)}
@@ -474,7 +476,7 @@ button.chip{font:inherit;font-size:14px;font-weight:600;background:none;cursor:p
 .tc{display:flex;align-items:center;gap:6px;margin-top:10px;padding-top:10px;border-top:1.5px solid var(--line);font-size:14px}
 .tc small{font-size:14px;color:var(--sec);font-weight:700;flex:none}.tc .tx{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tc em{display:flex;align-items:center;gap:2px;font-style:normal;color:var(--sub);font-size:14px}.tc em .ic{width:14px;height:14px}
-.pa{display:flex;justify-content:flex-end;gap:14px;margin-top:10px}
+.pa{display:flex;gap:14px;margin-top:10px}
 .pa button{display:flex;align-items:center;gap:4px;background:none;border:0;font:inherit;font-size:14px;color:var(--sub);cursor:pointer;padding:0}
 .pa .ic{width:18px;height:18px}.pa button[aria-pressed="true"]{color:var(--pri)}.pa button[aria-pressed="true"] .ic{fill:var(--pri)}
 .wfab{position:absolute;right:16px;bottom:90px;width:52px;height:52px;border-radius:50%;background:var(--pri);color:var(--onpri);border:0;display:grid;place-items:center;cursor:pointer;z-index:4}
@@ -626,10 +628,10 @@ html,body{background:#2B242D}
 .app.hm .cp{height:52px}.app.hm #sts .box{padding:10px 12px}
 .hs.pop .bk .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hs.pop .bk .a{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.hs.pop .rdr{white-space:normal!important;flex-wrap:wrap;align-items:center}
 #dlg.fdl .pnm small{white-space:nowrap;font-size:14px}#dlg.fdl .bkm small{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.02em}
-.pps{grid-auto-columns:29%}.pps .bk{position:relative;width:auto;cursor:pointer}.pps .hb{width:28px;height:28px;right:6px;bottom:6px}.pps .hb .ic{width:16px;height:16px}.pps .bk .t{font-size:14px;margin-top:6px}.pps .bk .a{font-size:14px}
+.pps{grid-auto-columns:29%}.pps .bk{position:relative;width:auto;cursor:pointer}.pps .bk .t{font-size:14px;margin-top:6px}.pps .bk .a{font-size:14px}
 .rkl{display:flex;flex-direction:column;gap:10px}.rkr{display:flex;align-items:center;gap:12px;position:relative;width:auto;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;cursor:pointer}
 .rkn{width:22px;font-size:17px;color:var(--pri);text-align:center;flex:none}.rkr .cv{width:52px;flex:none;border-radius:6px}.rki{flex:1;min-width:0}.rki .t{margin:0;font-size:14px;font-weight:600}.rki .a{font-size:14px;color:var(--sub)}.rki small{font-size:14px;color:var(--sec);font-weight:600}
-.rkr .hb{position:static;flex:none;width:32px;height:32px;background:var(--bg)}
+#app .rkr .hb::before{background:var(--bg)}
 .pfr{flex:none;display:flex;flex-direction:column;align-items:center;background:none;border:0;font:inherit;color:var(--ink);cursor:pointer;padding:4px 6px}.pfr small{font-size:14px;color:var(--sub)}.pfr b{font-size:18px;color:var(--pri)}
 .frl{display:flex;flex-direction:column}.frw{display:flex;align-items:center;gap:10px;width:100%;padding:10px 0;background:none;border:0;border-top:1.5px solid var(--line);font:inherit;color:var(--ink);cursor:pointer;text-align:left}.frw:first-child{border-top:0}
 .frw span{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#F6F1EC;font-weight:700;flex:none}.frw b{font-size:15px}.frw small{flex:1;text-align:right;font-size:14px;color:var(--sub)}.frw .ic{width:16px;height:16px;color:var(--sub)}
@@ -1131,7 +1133,7 @@ html.and body{background:var(--bg)}html.and .app{height:100dvh;max-width:none}
 .cva{position:absolute;inset:0;width:100%;height:100%;border-radius:inherit;z-index:0;display:block}
 .cv[data-art],.bcv[data-art],.hcv[data-art]{overflow:hidden}
 .cv[data-art]::before,.bcv[data-art]::before,.hcv[data-art]::before{z-index:1}
-.cv .hb,.cv .dstp{z-index:3}
+.cv .dstp{z-index:3}
 .bcv[data-art] b,.hcv[data-art] b{position:absolute;left:10%;right:10%;bottom:9%;z-index:2;color:var(--ink,#F6F1EC)!important;text-align:center;line-height:1.3}
 .hcv[data-art] b{left:12px;right:8px;text-align:left;font-size:14px}
 .hcv[data-art] .hmt{z-index:3}
@@ -1561,7 +1563,7 @@ nav.tab.nvb{padding-bottom:calc(11px + env(safe-area-inset-bottom,0px))!importan
 .app.shp .gd{padding-left:16px!important;padding-right:16px!important}
 .mpt3{margin-left:0;margin-right:0}
 /* 목록 카드: 더 넉넉하게 */
-.app .rkr{padding:14px 16px!important;gap:14px!important;min-height:88px}
+.app .rkr{padding:14px 56px 14px 16px!important;gap:14px!important;min-height:88px}
 .app .rkr .cv{width:52px!important;flex:none}
 .app .rkr .t{font-size:16px!important;font-weight:600}.app .rkr .a{font-size:14px!important}.app .rkr small{font-size:14px!important}
 .app .rbk{padding:14px 16px!important;min-height:64px;gap:14px!important}
@@ -1576,7 +1578,6 @@ nav.tab.nvb{padding-bottom:calc(11px + env(safe-area-inset-bottom,0px))!importan
 .app:not(.hm):not(.shp) .ctf.ctf2 button{min-height:40px;padding:0 16px!important;font-size:14px!important;font-weight:600}
 .app .och button{min-height:44px;padding:0 18px!important;font-size:14px!important}
 .app .dgt button{min-height:52px!important;font-size:15px!important}
-.app .hb{width:32px!important;height:32px!important}
 /* 도서관: 책 카드·장르 크게 */
 .app .ppx .pps .bk{width:124px!important}
 .app .gnc{gap:16px 8px!important}
@@ -2017,8 +2018,6 @@ body:has(.app.hso) #pawf{display:none!important}
 #app .rkt.rk1{flex:1.25}
 #app .rkt .rkc{position:relative;width:100%}
 #app .rkt .cv{width:100%;aspect-ratio:3/4}
-#app .rkt .hb{position:absolute;right:6px;bottom:6px;width:32px!important;height:32px!important;border-radius:50%;background:var(--card);display:grid;place-items:center;border:0;padding:0}
-#app .rkt .hb .ic{width:18px!important;height:18px!important}
 #app .rkb{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:14px;font-weight:800;background:var(--soft);color:var(--strong);margin-bottom:4px}
 #app .rkt.rk1 .rkb{width:36px;height:36px;font-size:17px;background:var(--pri);color:#fff}
 #app .rkt .t{margin:6px 0 0;font-size:14px;font-weight:600;color:var(--ink);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -2068,8 +2067,6 @@ body:has(.app.hso) #pawf{display:none!important}
 #app .ppx .pps{grid-auto-columns:142px!important;gap:12px!important;padding-right:var(--px)}
 #app .ppx .pps .bk{width:142px!important;position:relative;padding:0!important;background:none!important;border:0!important}
 #app .ppx .pps .cv{width:142px!important;height:202px!important;aspect-ratio:auto!important}
-#app .ppx .hb{position:absolute;right:9px;bottom:9px;width:30px!important;height:30px!important;border-radius:50%;background:var(--card)!important;display:grid;place-items:center;color:var(--pri)!important;border:0}
-#app .ppx .hb .ic{width:20px!important;height:20px!important}
 #app .ppx .t{margin:3px 0 0!important;font-size:16px!important;font-weight:600!important;color:var(--ink);line-height:29.7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #app .ppx .a{margin:0!important;font-size:14px!important;font-weight:600;color:#898585!important;line-height:17px}
 #app .ppx .rdr{margin-top:13px!important;font-size:14px!important;font-weight:600;color:var(--bd)!important}
@@ -2319,8 +2316,6 @@ body:has(.app.hso) #pawf{display:none!important}
 #app .exhibit-display{position:relative;min-width:0}
 #app .exhibit-item{position:relative;min-width:0}
 #app .exhibit-item .exhibit-book{display:block;width:100%}
-#app .exhibit-item .hb{top:6px;right:6px;bottom:auto;padding:0;z-index:1}
-#app .exhibit-item .hb:focus-visible{outline:2px solid var(--pri);outline-offset:2px}
 
 
 /* 로그인 1258:708 · 기존 Pretendard를 단일 HTML 안에서 재사용 */
@@ -2964,8 +2959,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.lib .gnt>span img{filter:grayscale(1);opacity:.85}
 #app.lib .gnt{color:#17241C;font-weight:600}
 #app.exhibit .exhibit-row::after{background:#5D7162;height:9px;border-radius:2px}
-#app.exhibit .exhibit-item .hb{top:-2px;right:-2px;width:48px!important;height:48px!important;background:transparent;color:#174D37;isolation:isolate}
-#app.exhibit .exhibit-item .hb::before{content:"";position:absolute;inset:12px;z-index:-1;border-radius:50%;background:#FFFFFF}
 /* 문구점: 내용의 실제 색은 유지하고 바탕과 카드만 정리해요. */
 #app.shp .mpt3{position:relative;height:auto!important;min-height:104px!important;padding:20px!important;border:1px solid #A9BDB0;border-radius:15px!important;background:#FFFFFF!important}
 #app.shp .mpt3::before,#app.pf .ptc2::before{content:'';position:absolute;inset:0;z-index:-1;background-image:radial-gradient(circle,#3E9370 1px,transparent 1.2px);background-size:15px 15px;opacity:.35;mask-image:linear-gradient(#000,transparent 90%);pointer-events:none}
@@ -3126,9 +3119,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.lib .ppx .bk .t{font-size:14px!important;line-height:1.4!important;margin-top:9px!important;font-weight:700}
 #app.lib .ppx .bk .a{font-size:14px!important;line-height:1.5!important;margin-top:3px!important}
 #app.lib .ppx .rdr{font-size:14px!important;line-height:1.5!important;margin-top:6px!important}
-#app.lib .ppx .hb{width:48px!important;height:48px!important;right:-3px!important;bottom:-3px!important;background:transparent!important;isolation:isolate}
-#app.lib .ppx .hb::before{content:'';position:absolute;inset:12px;background:#FFFFFF;border-radius:50%;z-index:-1}
-#app.lib .ppx .hb .ic{width:16px!important;height:16px!important}
 /* 홈 아이콘에 남아 있던 이전 원형 버튼 장식을 제거해요. */
 #app:not(.hm) nav.concept-nav button:nth-child(3) .ic{width:24px!important;height:24px!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:inherit!important}
 
@@ -3710,7 +3700,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.hm .cx-community-copy{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:16px;line-height:1.55;font-weight:500;word-break:keep-all;overflow-wrap:anywhere}
 #app.hm .cx-community-meta{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px 12px;margin-top:10px;font-size:14px;line-height:1.5;color:#34483B}
 #app.hm .cx-community-author{min-width:0;word-break:keep-all;overflow-wrap:anywhere}
-#app.hm .cx-community-counts{display:flex;align-items:center;gap:12px;flex:none;margin-inline-start:auto}
+#app.hm .cx-community-counts{display:flex;align-items:center;gap:12px;flex:none}
 #app.hm .cx-community-counts>span{display:inline-flex;align-items:center;gap:4px}
 #app.hm .cx-community-counts .ic{width:16px;height:16px;flex:none}
 #app.hm .cx-community-row:focus-visible{outline:3px solid #174D37;outline-offset:3px;border-radius:5px}
@@ -5739,7 +5729,7 @@ function communityPost(p,full,expanded){
   return'<article class="po" data-id="'+p.id+'"><div class="ph2"><button class="pav2" data-u="'+esc(un)+'" style="'+avBg(un)+'" aria-label="'+esc(un)+' 프로필'+(fr&&!p.mine?' · 친구':'')+'">'+avTx(un)+(fr&&!p.mine?'<span class="post-friend-badge" aria-hidden="true">'+ic("users")+'</span>':'')+'</button><div class="pn"><div class="post-author"><b>'+esc(un)+'</b></div><small>'+p.tm+' · '+TN[p.t]+(p.ed?' · <em class="edt">수정됨</em>':'')+'</small></div>'+(me&&!full?'<button class="pmn" data-menu="'+p.id+'" aria-label="글 메뉴">'+ic("more")+'</button>':'')+'<span class="vis">'+vic(p.v)+VIS[p.v][1]+'</span></div>'
    +'<span class="tg2">'+TN[p.t]+'</span><p class="pt2'+(full||expanded||p.x.length<=70?" open":"")+'">'+esc(p.x)+'</p>'+(!full&&!expanded&&p.x.length>70?'<button class="mre">더보기</button>':'')+bk+(p.img?'<img class="pim" src="'+p.img+'" alt="공유한 모음집 항목">':'')+bal
    +(tc&&!full?'<div class="tc"><small>인기 댓글</small><span class="pav2 s" style="'+avBg(tc[3]?ME:tc[0])+'">'+avTx(tc[3]?ME:tc[0])+'</span><span class="tx"><b>'+esc(tc[3]?ME:tc[0])+'</b> '+esc(tc[1])+'</span><em>'+ic("heart")+tc[2]+'</em></div>':'')
-   +'<div class="pa"><button data-cm="'+p.id+'" aria-label="댓글 '+cmCommentCount(p)+'개">'+ic("chat")+cmCommentCount(p)+'</button><button data-l="'+p.id+'" aria-pressed="'+lk2+'">'+ic("heart")+(p.l+(lk2?1:0))+'</button></div></article>'}
+   +'<div class="pa"><button data-l="'+p.id+'" aria-pressed="'+lk2+'">'+ic("heart")+(p.l+(lk2?1:0))+'</button><button data-cm="'+p.id+'" aria-label="댓글 '+cmCommentCount(p)+'개">'+ic("chat")+cmCommentCount(p)+'</button></div></article>'}
 function community(){
  app.className="app community";
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="chat"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
@@ -6914,7 +6904,7 @@ home=function(){
  +cxHomeCard(state,stackBooks,k,q,pages,G,recs)
  +'<section class="cx-week"><div class="cx-sectionhead"><h2>이번 주 독서</h2><button class="cx-link" id="cx-calendar">전체 보기'+ic('next')+'</button></div><div class="cx-days">'+days+'</div></section>'
  +'<button class="cx-points" id="cx-missions"><span class="cx-pointmark">P</span><b>오늘의 포인트<strong>'+(AUTH_SESSION.signedIn?psDay().act:0)+' / '+PCFG.DAILY_CAP+'P</strong></b>'+ic('next')+'</button>'
- +'<section class="cx-community"><div class="cx-sectionhead"><h2>커뮤니티 인기글</h2><button class="cx-link" id="cx-community">전체 보기'+ic('next')+'</button></div>'+(posts.length?'<ul class="cx-community-list" id="cx-posts">'+posts.map(function(post){var likes=post.l+(AUTH_SESSION.signedIn&&LKD[post.id]?1:0),author=post.mine?ME:post.u;return '<li><button class="cx-community-row" type="button" data-post="'+post.id+'"><span class="cx-community-copy">'+esc(post.x)+'</span><span class="cx-community-meta"><span class="cx-community-author">'+esc((author?author+' · ':'')+(TN[post.t]||post.t))+'</span><span class="cx-community-counts"><span role="img" aria-label="댓글 '+post.c.length+'개">'+ic('chat')+post.c.length+'</span><span role="img" aria-label="좋아요 '+likes+'개">'+ic('heart')+likes+'</span></span></span></button></li>'}).join('')+'</ul>':'<p class="cx-weeknote">아직 올라온 이야기가 없어요.</p>')+'</section>'
+ +'<section class="cx-community"><div class="cx-sectionhead"><h2>커뮤니티 인기글</h2><button class="cx-link" id="cx-community">전체 보기'+ic('next')+'</button></div>'+(posts.length?'<ul class="cx-community-list" id="cx-posts">'+posts.map(function(post){var likes=post.l+(AUTH_SESSION.signedIn&&LKD[post.id]?1:0),author=post.mine?ME:post.u;return '<li><button class="cx-community-row" type="button" data-post="'+post.id+'"><span class="cx-community-copy">'+esc(post.x)+'</span><span class="cx-community-meta"><span class="cx-community-author">'+esc((author?author+' · ':'')+(TN[post.t]||post.t))+'</span><span class="cx-community-counts"><span role="img" aria-label="좋아요 '+likes+'개">'+ic('heart')+likes+'</span><span role="img" aria-label="댓글 '+post.c.length+'개">'+ic('chat')+post.c.length+'</span></span></span></button></li>'}).join('')+'</ul>':'<p class="cx-weeknote">아직 올라온 이야기가 없어요.</p>')+'</section>'
  +'<section class="cx-popular" aria-labelledby="cx-popular-title"><div class="cx-sectionhead"><h2 id="cx-popular-title">인기 급상승 오늘의 책</h2><button class="cx-link" id="cx-rank">전체 보기'+ic('next')+'</button></div><div class="shs pps">'+popRank().slice(0,10).map(function(book,i){return bcard(book,i+1)}).join('')+'</div></section>'
  +'<nav class="fx concept-nav" aria-label="주요 메뉴">'+nav+'</nav>';
  var login=document.getElementById('cx-login'),assessment=document.getElementById('cx-assessment'),read=document.getElementById('cx-read'),detail=document.getElementById('cx-detail'),selected=recs.length?recs[0].k:k;
@@ -7137,7 +7127,7 @@ function cmPost(p,full){var content='<article class="po cm-live-post" data-post=
  if(p.book_title)content+='<button class="bkl" data-cm-book="'+esc(p.id)+'">'+ic('book')+'<span class="bt"><b>'+esc(p.book_title)+'</b><small>'+esc(p.book_author||'')+'</small></span></button>';
  if(p.image&&/^data:image\/(png|jpeg|webp);base64,/.test(p.image))content+='<img class="pim" src="'+esc(p.image)+'" alt="공유한 그림">';
  if(p.options)content+='<div class="cm-poll">'+p.options.map(function(t,i){return '<button class="btn ghost" data-cm-vote="'+esc(p.id)+'" data-choice="'+i+'" aria-pressed="'+(p.choice===i)+'">'+esc(t)+(p.choice!==null?' · '+Number((p.votes||[])[i]||0)+'표':'')+'</button>'}).join('')+'</div>';
- content+='<div class="pa"><button data-cm-open="'+esc(p.id)+'" aria-label="댓글 '+Number(p.comment_count||0)+'개">'+ic('chat')+Number(p.comment_count||0)+'</button><button data-cm-like="'+esc(p.id)+'" aria-pressed="'+!!p.liked+'" aria-label="좋아요 '+Number(p.likes||0)+'개">'+ic('heart')+Number(p.likes||0)+'</button></div></article>';return content}
+ content+='<div class="pa"><button data-cm-like="'+esc(p.id)+'" aria-pressed="'+!!p.liked+'" aria-label="좋아요 '+Number(p.likes||0)+'개">'+ic('heart')+Number(p.likes||0)+'</button><button data-cm-open="'+esc(p.id)+'" aria-label="댓글 '+Number(p.comment_count||0)+'개">'+ic('chat')+Number(p.comment_count||0)+'</button></div></article>';return content}
 function cmBind(host,refresh){host.onclick=async function(e){var b=e.target.closest('button');if(!b){var art=e.target.closest('[data-post]');if(art)cmDetail(art.dataset.post);return}var id=b.dataset.cmLike||b.dataset.cmVote;
  if(id){b.disabled=true;if(!await cmReady()){if(b.isConnected)b.disabled=false;return}try{await cmCall(b.dataset.cmLike?'like':'vote',{post_id:id,choice:Number(b.dataset.choice)});await refresh()}catch(err){cmNote(err)}finally{if(b.isConnected)b.disabled=false}return}
  if(b.dataset.cmOpen){cmDetail(b.dataset.cmOpen);return}if(b.dataset.cmMenu){cmPostMenu(b.dataset.cmMenu,refresh);return}
