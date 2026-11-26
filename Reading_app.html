@@ -575,7 +575,7 @@ html,body{background:#2B242D}
 .mpi{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:8px 10px;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;font:inherit;color:var(--ink);cursor:pointer}.mpi[aria-pressed="true"]{border-color:var(--pri)}
 .mpi i{width:28px;aspect-ratio:3/4;border-radius:3px;flex:none}.mpi span{flex:1;min-width:0}.mpi b{display:block;font-size:14px}.mpi small{font-size:14px;color:var(--sub)}
 .mpi em{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;flex:none;color:var(--onpri)}.mpi[aria-pressed="true"] em{background:var(--pri);border-color:var(--pri)}.mpi em .ic{width:14px;height:14px}
-#gl{position:absolute;left:0;right:0;top:0;z-index:30;height:46px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 16px;background:var(--pri);color:var(--onpri);font-size:14px;font-weight:700;transform:translateY(-100%);transition:transform .35s ease;pointer-events:none}
+#gl{position:absolute;left:0;right:0;top:0;z-index:30;height:46px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 16px;font-size:14px;font-weight:700;transform:translateY(-100%);transition:transform .35s ease;pointer-events:none}
 #gl.on{transform:none}
 @media (prefers-reduced-motion:reduce){#gl{transition:none}}
 .shs{display:grid;grid-auto-flow:column;grid-auto-columns:29%;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}.shs::-webkit-scrollbar{display:none}.shs>*{scroll-snap-align:start}
@@ -918,7 +918,7 @@ mark.hl{color:inherit;background:none;padding:0 1px;-webkit-box-decoration-break
 .hpg2{height:8px;border-radius:4px;background:var(--line);margin:8px 14px 8px 0;overflow:hidden}.hpg2 i{display:block;height:100%;background:var(--pri);border-radius:4px;transition:width .3s}
 .hpr{list-style:none;margin:0 14px 10px 0;padding:0;display:flex;flex-direction:column;gap:3px}.hpr li{display:flex;justify-content:space-between;font-size:14px;color:var(--sub)}.hpr b{color:var(--ink);font-weight:600}
 .hpm{position:relative}.hpb{position:absolute;top:-4px;right:2px;font-style:normal;font-size:14px;font-weight:700;padding:0 5px;border-radius:999px;background:var(--sec);color:var(--onpri)}
-#ptt{position:fixed;left:50%;bottom:96px;transform:translate(-50%,10px);max-width:320px;width:max-content;padding:10px 16px;border-radius:12px;background:var(--ink);color:var(--bg);font-size:14px;line-height:1.45;text-align:center;word-break:keep-all;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:999}#ptt.on{opacity:1;transform:translate(-50%,0)}
+#ptt{position:fixed;left:50%;bottom:96px;transform:translate(-50%,10px);max-width:320px;width:max-content;padding:10px 16px;border-radius:12px;font-size:14px;line-height:1.5;text-align:center;word-break:keep-all;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:999}#ptt.on{opacity:1;transform:translate(-50%,0)}
 .hpx .hph{padding:0 14px}.hpx .hpg2{margin:8px 14px}.hpx .hpr{margin:0 14px 12px}
 .hpx .hpl{padding-top:8px}.hpb{top:-6px!important;right:0!important}
 .gfto{margin:12px 0 4px;display:flex;flex-direction:column;gap:8px}.gfto b{font-size:14px}.gfto small{font-size:14px;color:var(--sub);word-break:keep-all;line-height:1.5}
@@ -3911,7 +3911,8 @@ body{font-size:var(--font-body)}
 #ptt .notice-icon{display:grid;place-items:center;flex:none;width:24px;height:24px;border:1px solid currentColor;border-radius:50%;font-weight:750}
 #ptt .notice-copy{min-width:0;white-space:pre-line;overflow-wrap:anywhere}
 :root{--toast-bg:#000000;--toast-text:#FFFFFF}
-#ptt,#app.rd #hn.is-toast{background:var(--toast-bg);color:var(--toast-text);padding:10px 16px;border-radius:12px;font-size:14px;line-height:1.5}
+#ptt,#app.rd #hn.is-toast,#app.rd #gl{background:var(--toast-bg);color:var(--toast-text)}
+#app.rd #hn.is-toast{padding:10px 16px;border-radius:12px;font-size:14px;line-height:1.5}
 #app.app .obp{overflow-y:auto;overscroll-behavior-y:contain}
 #app.app :is(#dlg,#sheet){scroll-padding:20px;overscroll-behavior:contain}
 #app.app .pxb{top:8px;right:8px}
@@ -3920,20 +3921,18 @@ body{font-size:var(--font-body)}
 #app.app:not(.rd):not(.spl):not(.onb)>.sc[data-view-enter=true]{animation:screen-soft-in .18s ease-out both}
 #app.app #dlg,dialog[open]{animation:panel-soft-in .18s cubic-bezier(.2,.7,.25,1) both}
 #app.app #sheet.on{animation:panel-soft-in .22s cubic-bezier(.2,.7,.25,1) both}
-.app-loading{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:18;display:flex;align-items:center;gap:8px;width:max-content;max-width:calc(100% - 40px);padding:10px 12px;border:1px solid #B8CABC;border-radius:10px;background:#FFFFFF;color:#174D37;font:500 14px/1.5 Pretendard,sans-serif;pointer-events:none;box-shadow:0 3px 10px #174D3714;animation:screen-soft-in .16s ease-out both}
-.request-spinner{width:16px;height:16px;flex:none;border:2px solid #DAEAE1;border-top-color:#174D37;border-radius:50%;animation:request-turn .85s linear infinite}
-#app>.app-loading-screen{position:absolute;inset:0;z-index:80;display:grid;place-items:center;background:#F5F7F4;color:#174D37;text-align:center}
-#app:has(>.app-loading-screen)>:not(.app-loading-screen){visibility:hidden}
+dialog.app-loading-screen{position:fixed;inset:0;box-sizing:border-box;width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:#F5F7F4;color:#174D37;text-align:center}
+dialog.app-loading-screen[open]{display:grid;place-items:center;animation:screen-soft-in .16s ease-out both}
+dialog.app-loading-screen::backdrop{background:#F5F7F4}
 .app-loading-content{display:grid;justify-items:center;gap:18px;padding:24px}
 .app-loading-logo{width:min(96px,34vw);margin-bottom:2px}
-.app-loading-content p{font-size:16px;font-weight:600;line-height:1.5;word-break:keep-all}
-#app .app-loading-content .type-loading-dots{margin-top:0}
+.app-loading-content p{font-size:16px;font-weight:600;line-height:1.5;word-break:keep-all;outline:none}
+.app-loading-content .type-loading-dots{margin-top:0}
 #app.hm .cx-rec-cover{transition:transform .18s ease,box-shadow .18s ease}
 #app.hm .cx-rec-book[aria-pressed=true] .cx-rec-cover{transform:translateY(-3px)}
 @keyframes screen-soft-in{from{opacity:0}to{opacity:1}}
 @keyframes panel-soft-in{from{opacity:0;translate:0 8px}to{opacity:1;translate:0 0}}
-@keyframes request-turn{to{transform:rotate(360deg)}}
-@media(prefers-reduced-motion:reduce){#app.app>.sc,#app.app #dlg,#app.app #sheet.on,dialog[open],.app-loading,.request-spinner{animation:none!important}#app.hm .cx-rec-cover{transition:none!important}#app.hm .cx-rec-book[aria-pressed=true] .cx-rec-cover{transform:none}}
+@media(prefers-reduced-motion:reduce){#app.app>.sc,#app.app #dlg,#app.app #sheet.on,dialog[open]{animation:none!important}#app.hm .cx-rec-cover{transition:none!important}#app.hm .cx-rec-book[aria-pressed=true] .cx-rec-cover{transform:none}}
 /* Home reading card: one shared frame for sign-in, recommendations and reading. */
 #app.hm .cx-reading.cx-state{display:flex;flex-direction:column;min-height:0;height:auto;padding:0!important;background:#FFFFFF!important;color:#17241C;border:1px solid #A9BDB0!important;border-radius:15px!important;overflow:hidden;box-shadow:0 6px 18px #174D371A,0 2px 5px #174D370D;animation:none}
 #app.hm .cx-reading.cx-state::before,#app.hm .cx-reading.cx-state::after{content:none!important}
@@ -4014,13 +4013,13 @@ body{font-size:var(--font-body)}
 #app .type-loading-page{transform-box:view-box;transform-origin:100px 88px;animation:type-page-turn 1.6s cubic-bezier(.4,0,.2,1) infinite}
 #app .type-loading h1{font-size:22px;line-height:1.5;color:var(--ink);word-break:keep-all}
 #app .type-loading .hint{font-size:14px;line-height:1.6;color:var(--sub);margin-top:8px}
-#app .type-loading-dots{display:flex;gap:8px;margin-top:24px;min-height:8px;align-items:center}
-#app .type-loading-dots i{width:6px;height:6px;border-radius:50%;background:var(--pri);animation:type-dot-breathe 1.2s ease-in-out infinite}
-#app .type-loading-dots i:nth-child(2){animation-delay:.15s}
-#app .type-loading-dots i:nth-child(3){animation-delay:.3s}
+.type-loading-dots{display:flex;gap:8px;margin-top:24px;min-height:8px;align-items:center}
+.type-loading-dots i{width:6px;height:6px;border-radius:50%;background:var(--pri);animation:type-dot-breathe 1.2s ease-in-out infinite}
+.type-loading-dots i:nth-child(2){animation-delay:.15s}
+.type-loading-dots i:nth-child(3){animation-delay:.3s}
 @keyframes type-page-turn{0%,12%{transform:rotateY(0deg);opacity:0}22%{opacity:1}75%{transform:rotateY(-165deg);opacity:1}88%,100%{transform:rotateY(-165deg);opacity:0}}
 @keyframes type-dot-breathe{0%,100%{opacity:.35;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
-@media(prefers-reduced-motion:reduce){#app .type-loading-page,#app .type-loading-dots i{animation:none!important;transform:none;opacity:1}#app .type-loading-page{display:none}}
+@media(prefers-reduced-motion:reduce){#app .type-loading-page,.type-loading-dots i{animation:none!important;transform:none;opacity:1}#app .type-loading-page{display:none}}
 /* 직접 꾸미기: 그림과 도구를 분리한 작업대 */
 #app.craft-page>.sc{padding:0 20px calc(var(--nav-height,88px) + 20px)!important}
 #app.craft-page .craft-workbench{display:grid;gap:16px;padding-top:20px}
@@ -4340,46 +4339,41 @@ function sbRemember(session){
  SB_SESSION={access_token:session.access_token,refresh_token:session.refresh_token,expires_at:session.expires_at||Math.floor(Date.now()/1000)+(session.expires_in||3600),user:session.user||SB_SESSION&&SB_SESSION.user};
  localStorage.setItem(SB_STORAGE,JSON.stringify(SB_SESSION));return SB_SESSION;
 }
-function uiLoadingBegin(fullscreen){
- var mode=fullscreen?'screen':'request',states=uiLoadingBegin.states||(uiLoadingBegin.states={});
- var state=states[mode];
- if(!state){state=states[mode]={pending:0,timer:null,node:null};state.observer=new MutationObserver(function(){if(state.pending&&state.node&&!state.node.isConnected)app.appendChild(state.node)});state.observer.observe(app,{childList:true})}
+function uiLoadingBegin(message){
+ var state=uiLoadingBegin.state||(uiLoadingBegin.state={pending:0,timer:null,node:null});
  state.pending++;
  if(!state.timer&&!state.node)state.timer=setTimeout(function(){
   state.timer=null;if(!state.pending)return;
-  var node=document.createElement('div');
-  node.setAttribute('role','status');node.setAttribute('aria-live','polite');
-  if(fullscreen){
-   node.className='app-loading-screen';
-   state.focus=document.activeElement;
-   node.innerHTML='<div class="app-loading-content">'+openingLogoMarkup('app-loading-logo',matchMedia('(prefers-reduced-motion: reduce)').matches)+'<p>연결하고 있어요.</p><span class="type-loading-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>'
-  }else{
-   node.className='app-loading';
-   node.innerHTML='<span class="request-spinner" aria-hidden="true"></span><span>불러오고 있어요.</span>'
-  }
-  state.node=node;app.appendChild(node)
+  var node=document.createElement('dialog');
+  node.className='app-loading-screen';
+  node.setAttribute('aria-labelledby','app-loading-message');
+  node.innerHTML='<div class="app-loading-content">'+openingLogoMarkup('app-loading-logo',matchMedia('(prefers-reduced-motion: reduce)').matches)+'<p id="app-loading-message" tabindex="-1" autofocus></p><span class="type-loading-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>';
+  node.querySelector('p').textContent=message||'불러오고 있어요.';
+  node.addEventListener('cancel',function(e){e.preventDefault()});
+  state.node=node;document.body.appendChild(node);node.showModal()
  },180);
  var finished=false;
  return function(){
   if(finished)return;finished=true;state.pending--;
   if(state.pending)return;
   clearTimeout(state.timer);state.timer=null;
-  var node=state.node,focus=state.focus;state.node=null;state.focus=null;
-  if(node)node.remove();
-  if(fullscreen&&focus&&focus.isConnected&&document.activeElement===document.body)focus.focus({preventScroll:true})
+  var node=state.node;state.node=null;
+  if(node){node.close();node.remove()}
  };
 }
 async function sbRequest(path,options){
  options=options||{};if(!/^\/(auth|rest)\/v1\//.test(path))throw Error('연결 주소를 확인해 주세요.');
- if(options.member){if(!SB_SESSION)throw Error('로그인이 필요해요.');if(SB_SESSION.expires_at<=Date.now()/1000+60){
-  if(!SB_REFRESH)SB_REFRESH=sbRequest('/auth/v1/token?grant_type=refresh_token',{body:{refresh_token:SB_SESSION.refresh_token}}).then(sbRemember).finally(function(){SB_REFRESH=null});await SB_REFRESH;
- }}
- var controller=new AbortController(),timeout=setTimeout(function(){controller.abort()},15000),headers={apikey:SB_CONFIG.key};
- if(options.member)headers.Authorization='Bearer '+SB_SESSION.access_token;if(options.body)headers['Content-Type']='application/json';if(options.prefer)headers.Prefer=options.prefer;
- var finishLoading=app.classList.contains('rd')?function(){}:uiLoadingBegin();
- try{var response=await fetch(SB_CONFIG.url+path,{method:options.method||(options.body?'POST':'GET'),headers:headers,body:options.body?JSON.stringify(options.body):undefined,credentials:'omit',cache:'no-store',referrerPolicy:'no-referrer',signal:controller.signal});
+ var finishLoading=options.background?null:uiLoadingBegin(),timeout;
+ try{
+  if(options.member){if(!SB_SESSION)throw Error('로그인이 필요해요.');if(SB_SESSION.expires_at<=Date.now()/1000+60){
+   if(!SB_REFRESH)SB_REFRESH=sbRequest('/auth/v1/token?grant_type=refresh_token',{background:true,body:{refresh_token:SB_SESSION.refresh_token}}).then(sbRemember).finally(function(){SB_REFRESH=null});await SB_REFRESH;
+  }}
+  var controller=new AbortController(),headers={apikey:SB_CONFIG.key};
+  timeout=setTimeout(function(){controller.abort()},15000);
+  if(options.member)headers.Authorization='Bearer '+SB_SESSION.access_token;if(options.body)headers['Content-Type']='application/json';if(options.prefer)headers.Prefer=options.prefer;
+  var response=await fetch(SB_CONFIG.url+path,{method:options.method||(options.body?'POST':'GET'),headers:headers,body:options.body?JSON.stringify(options.body):undefined,credentials:'omit',cache:'no-store',referrerPolicy:'no-referrer',signal:controller.signal});
   var data=response.status===204?null:await response.json().catch(function(){return null});if(!response.ok){var error=new Error(response.status===401?'로그인 시간이 지났어요.\n다시 로그인해 주세요.':response.status===403?'회원 정보 접근 권한을 확인해 주세요.':response.status===429?'요청이 잠시 몰렸어요.\n조금 뒤 다시 시도해 주세요.':'정보를 불러오거나 저장하지 못했어요.\n잠시 후 다시 시도해 주세요.');error.status=response.status;error.code=data&&data.code;error.detail=data&&data.message;throw error}return data;
- }catch(error){if(error.name==='AbortError'||error instanceof TypeError)throw Error('서버에 연결하지 못했어요.\n인터넷 연결을 확인한 뒤 다시 시도해 주세요.');throw error}finally{clearTimeout(timeout);finishLoading()}
+ }catch(error){if(error.name==='AbortError'||error instanceof TypeError)throw Error('서버에 연결하지 못했어요.\n인터넷 연결을 확인한 뒤 다시 시도해 주세요.');throw error}finally{clearTimeout(timeout);if(finishLoading)finishLoading()}
 }
 function sbAnswersValid(a){return Array.isArray(a)&&a.length===4&&a.every(function(v){return v===null||Number.isInteger(v)&&v>=0&&v<=3})}
 async function sbSaveMember(overrides){
@@ -4426,19 +4420,19 @@ async function sbBootstrap(){
    var pending=JSON.parse(request||'null');
    if(failure){var name=pending&&SB_OAUTH_LABELS[pending.provider];throw Error((name?name+' ':'')+'로그인을 마치지 못했어요.\n다시 로그인해 주세요.')}
    if(!pending||!pending.verifier||Date.now()-pending.at>600000)throw Error('로그인 확인 시간이 지났어요.\n같은 브라우저에서 다시 로그인해 주세요.');
-   finishLoading=uiLoadingBegin(true);
+   finishLoading=uiLoadingBegin('연결하고 있어요.');
    sbRemember(await sbRequest('/auth/v1/token?grant_type=pkce',{body:{auth_code:code,code_verifier:pending.verifier}}));await sbAdoptMember();return;
   }
   if(start==='kakao'){sbCleanCallback();loginPage();await kakaoStart();return}
-  var stored=JSON.parse(localStorage.getItem(SB_STORAGE)||'null');if(stored&&stored.access_token&&stored.refresh_token){finishLoading=uiLoadingBegin(true);SB_SESSION=stored;await sbAdoptMember();return}splash();
+  var stored=JSON.parse(localStorage.getItem(SB_STORAGE)||'null');if(stored&&stored.access_token&&stored.refresh_token){finishLoading=uiLoadingBegin('연결하고 있어요.');SB_SESSION=stored;await sbAdoptMember();return}splash();
  }catch(error){if(error.status===401||error.status===400){SB_SESSION=null;localStorage.removeItem(SB_STORAGE)}loginPage();authNotice(error.message||'연결을 확인하고 다시 로그인해 주세요.')}
  finally{if(finishLoading)finishLoading()}
 }
 // 개인 독서 기록은 revision을 비교해 저장해 다른 기기의 변경을 덮어쓰지 않아요.
 var SB_SYNC={uid:null,cache:null,ready:false,capture:false,busy:null,timer:null,nextTry:0,blocked:false,remote:null,notice:false,conflictShown:false};
 var SB_WALLET_CHAIN=Promise.resolve();
-function sbWalletRequest(path,body){
- var uid=SB_SESSION.user.id,result=SB_WALLET_CHAIN.catch(function(){}).then(async function(){var wallet=await sbRequest(path,{member:true,body:body});if(SB_SESSION&&SB_SESSION.user.id===uid)sbWalletApply(wallet);return wallet});SB_WALLET_CHAIN=result;return result;
+function sbWalletRequest(path,body,background){
+ var uid=SB_SESSION.user.id,result=SB_WALLET_CHAIN.catch(function(){}).then(async function(){var wallet=await sbRequest(path,{member:true,body:body,background:background});if(SB_SESSION&&SB_SESSION.user.id===uid)sbWalletApply(wallet);return wallet});SB_WALLET_CHAIN=result;return result;
 }
 function sbSyncKey(){return 'ddok_sync_v1:'+SB_SESSION.user.id}
 function sbSameState(a,b){function sorted(v){return Array.isArray(v)?v.map(sorted):v&&typeof v==='object'?Object.keys(v).sort().reduce(function(o,k){o[k]=sorted(v[k]);return o},{}):v}return JSON.stringify(sorted(a))===JSON.stringify(sorted(b))}
@@ -4471,7 +4465,7 @@ function sbWalletApply(wallet){
  PT=wallet.balance;OWN=wallet.owned;ARCH.points=wallet.points;PS=wallet.day;msSync();archiveSave();
 }
 async function sbSyncConnect(){
- var uid=SB_SYNC.uid,rows=await sbRequest('/rest/v1/ddok_states?user_id=eq.'+encodeURIComponent(uid)+'&select=revision,state',{member:true}),wallet=await sbWalletRequest('/rest/v1/rpc/ddok_wallet',{});
+ var uid=SB_SYNC.uid,rows=await sbRequest('/rest/v1/ddok_states?user_id=eq.'+encodeURIComponent(uid)+'&select=revision,state',{member:true,background:true}),wallet=await sbWalletRequest('/rest/v1/rpc/ddok_wallet',{},true);
  if(uid!==SB_SYNC.uid)return;if(SB_SYNC.capture)sbCheckpoint();var row=rows[0]||{revision:0,state:null},cache=SB_SYNC.cache;
  if(row.revision<(cache.revision||0))return;
  if(row.state&&!sbStateValid(row.state)&&row.revision!==0)throw Error('저장된 기록의 형식을 확인해 주세요.');
@@ -4505,18 +4499,18 @@ async function sbSyncFlush(){
   try{
    if(!SB_SYNC.ready)await sbSyncConnect();if(SB_SYNC.blocked){sbSyncConflict();return}
    while(SB_SYNC.cache.dirty){
-    var state=SB_SYNC.cache.state,text=JSON.stringify(state),saved=await sbRequest('/rest/v1/rpc/ddok_save_state',{member:true,body:{p_state:state,p_revision:SB_SYNC.cache.revision||0}});
+    var state=SB_SYNC.cache.state,text=JSON.stringify(state),saved=await sbRequest('/rest/v1/rpc/ddok_save_state',{member:true,background:true,body:{p_state:state,p_revision:SB_SYNC.cache.revision||0}});
     SB_SYNC.cache.revision=saved.revision;SB_SYNC.cache.dirty=JSON.stringify(SB_SYNC.cache.state)!==text;sbSyncPersist();
    }
    while(SB_SYNC.cache.rewards.length){
     var claim=SB_SYNC.cache.rewards[0];
     if(claim.day!==todayStr()){SB_SYNC.cache.rewards.shift();sbSyncPersist();ptToast('지난 날짜의 미션은 적립하지 못했어요.\n독서 기록은 그대로 보관했어요.');continue}
-    try{var wallet=await sbWalletRequest('/rest/v1/rpc/ddok_claim_point',{p_mission:claim.mission,p_day:claim.day,p_book:claim.book});SB_SYNC.cache.rewards.shift();sbSyncPersist();if(wallet.granted&&!claim.quiet)ptToast('미션 달성 · +'+wallet.granted+'P','success')}
+     try{var wallet=await sbWalletRequest('/rest/v1/rpc/ddok_claim_point',{p_mission:claim.mission,p_day:claim.day,p_book:claim.book},true);SB_SYNC.cache.rewards.shift();sbSyncPersist();if(wallet.granted&&!claim.quiet)ptToast('미션 달성 · +'+wallet.granted+'P','success')}
     catch(error){if(error.code==='22023'){SB_SYNC.cache.rewards.shift();sbSyncPersist();if(error.detail==='reward_expired')ptToast('지난 날짜의 미션은 적립하지 못했어요.');else ptToast('아직 미션 조건을 채우지 못했어요.');continue}throw error}
    }
    SB_SYNC.notice=false;SB_SYNC.nextTry=0;sbSyncStatus();if(app.classList.contains('hm')&&typeof hpRef==='function')hpRef();
   }catch(error){
-   if(error.code==='40001'){try{var rows=await sbRequest('/rest/v1/ddok_states?user_id=eq.'+encodeURIComponent(SB_SYNC.uid)+'&select=revision,state',{member:true});if(rows[0]&&sbSameState(rows[0].state,SB_SYNC.cache.state)){SB_SYNC.cache.revision=rows[0].revision;SB_SYNC.cache.dirty=false;sbSyncPersist()}else{SB_SYNC.remote=rows[0];SB_SYNC.blocked=true;sbSyncConflict()}}catch(retryError){SB_SYNC.nextTry=Date.now()+30000;sbSyncMessage(retryError)}}
+   if(error.code==='40001'){try{var rows=await sbRequest('/rest/v1/ddok_states?user_id=eq.'+encodeURIComponent(SB_SYNC.uid)+'&select=revision,state',{member:true,background:true});if(rows[0]&&sbSameState(rows[0].state,SB_SYNC.cache.state)){SB_SYNC.cache.revision=rows[0].revision;SB_SYNC.cache.dirty=false;sbSyncPersist()}else{SB_SYNC.remote=rows[0];SB_SYNC.blocked=true;sbSyncConflict()}}catch(retryError){SB_SYNC.nextTry=Date.now()+30000;sbSyncMessage(retryError)}}
    else{SB_SYNC.nextTry=Date.now()+30000;sbSyncMessage(error)}
   }finally{SB_SYNC.busy=null;sbSyncStatus()}
  });return SB_SYNC.busy;
@@ -4769,7 +4763,7 @@ function profile(){
  +(function(){var k=RKEY||(ans.indexOf(null)<0?calcType().key:""),t=k&&T[k];return'<button class="profile-type" id="rp"><span class="profile-type-copy"><small>AI 독서 성향</small><strong>'+(t?esc(t[0]):'나의 독서 유형 알아보기')+'</strong>'+(t?'<em>'+k+'</em>':'')+'</span><span class="profile-type-arrow" aria-hidden="true">'+ic("next")+'</span></button>'})()
  +'</section>'
  +'<section class="fs profile-archives"><div class="fsh"><h3>아카이빙</h3></div><div class="archive-actions">'+[['plm','찜한 책','heart'],['p-vault','포인트 보관함','basket'],['p-quotes','문장 보관함','quote'],['mym','내 글 보관함','pen']].map(function(a){return '<button class="archive-action" id="'+a[0]+'"><span aria-hidden="true">'+ic(a[2])+'</span><b>'+a[1]+'</b></button>'}).join('')+'</div></section>'
- +'<section class="fs"><div class="fsh"><h3>독서 메이트 '+fc+'</h3><button class="pme" id="pfr">전체 보기'+ic("next")+'</button></div><div class="box pfl">'+(real?REAL_SOCIAL.friends.map(function(m){return '<button class="pfc" data-real-friend="'+m.id+'" data-real-name="'+esc(m.nickname)+'" aria-label="'+esc(m.nickname)+' 친구 보기"><span>'+esc(m.nickname).charAt(0)+'</span><b>'+esc(m.nickname)+'</b></button>'}).join('')+(fc?'':'<p class="pfe">'+(REAL_SOCIAL.status==='loading'?'친구 목록을 불러오고 있어요.':REAL_SOCIAL.status==='error'?'친구 목록을 다시 확인해 주세요.':'아직 친구가 없어요.')+'</p>'):(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):'<p class="pfe">아직 친구가 없어요.</p>'))+'<button class="pfc pfa" id="pfa" aria-label="친구를 검색해서 추가하기"><span>'+ic("plus")+'</span><b>추가</b></button></div></section>'
+ +'<section class="fs"><div class="fsh"><h3>독서 메이트 '+fc+'</h3><button class="pme" id="pfr">전체 보기'+ic("next")+'</button></div><div class="box pfl">'+(real?REAL_SOCIAL.friends.map(function(m){return '<button class="pfc" data-real-friend="'+m.id+'" data-real-name="'+esc(m.nickname)+'" aria-label="'+esc(m.nickname)+' 친구 보기"><span>'+esc(m.nickname).charAt(0)+'</span><b>'+esc(m.nickname)+'</b></button>'}).join('')+(fc||REAL_SOCIAL.status==='loading'?'':'<p class="pfe">'+(REAL_SOCIAL.status==='error'?'친구 목록을 다시 확인해 주세요.':'아직 친구가 없어요.')+'</p>'):(fc?M.map(function(m,i){return FR[m[0]]?'<button class="pfc" data-i="'+i+'"><span style="background:'+m[2]+'">'+m[0].charAt(0)+'</span><b>'+m[0]+'</b><small>'+m[1]+'%</small></button>':''}).join(""):'<p class="pfe">아직 친구가 없어요.</p>'))+'<button class="pfc pfa" id="pfa" aria-label="친구를 검색해서 추가하기"><span>'+ic("plus")+'</span><b>추가</b></button></div></section>'
  +(function(){var L=readList();return'<section class="fs"><div class="fsh"><h3>읽은 책 '+L.length+'권</h3><button class="pme" id="rbm">전체 보기'+ic("next")+'</button></div><div class="rbl" id="rbl">'+L.map(function(b,i){return'<div class="rbk'+(i>2?" xtra":"")+'"><i data-bt="'+esc(b.t)+'" style="background:'+b.c+'"></i><span class="rbt"><b>'+esc(b.t)+'</b><small>'+esc(b.a)+'</small></span><em class="rbs'+(b.done?" dn":"")+'">'+b.s+'</em></div>'}).join("")+(L.length?'':'<p class="pfe">아직 읽은 책이 없어요.</p>')+'</div>'+'</section>'})()
  +'<button class="pset2" id="pset">'+ic("cog")+'<span>설정</span>'+ic("next")+'</button>'
  +'</div>'
@@ -4817,13 +4811,17 @@ function previewFriendMembers(){
  return M.map(function(m,i){var type=FRIEND_PREVIEW_TYPES[m[0]],matches=0;for(var j=0;j<4;j++)if(type[j]===key[j])matches++;return {id:'preview-'+i,nickname:m[0],type:type,similarity:matches*25,relation:FR[m[0]]?'friend':FRIEND_REQ[m[0]]?'sent':'none'}}).filter(function(m){return m.nickname!==ME});
 }
 async function realSocialRequest(url,body){
- var response=await fetch(url,{method:body?'POST':'GET',credentials:'same-origin',cache:'no-store',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined});
- var data=await response.json().catch(function(){return {error:'회원 검색 서버에 연결하지 못했어요.'}});
- if(!response.ok){var error=new Error(data.error||'잠시 후 다시 시도해 주세요.');error.status=response.status;throw error}return data;
+ var controller=new AbortController(),timeout=setTimeout(function(){controller.abort()},15000);
+ try{
+  var response=await fetch(url,{method:body?'POST':'GET',credentials:'same-origin',cache:'no-store',headers:body?{'Content-Type':'application/json'}:{},body:body?JSON.stringify(body):undefined,signal:controller.signal});
+  var data=await response.json().catch(function(){return {error:'회원 검색 서버에 연결하지 못했어요.'}});
+  if(!response.ok){var error=new Error(data.error||'잠시 후 다시 시도해 주세요.');error.status=response.status;throw error}return data;
+ }finally{clearTimeout(timeout)}
 }
 function loadRealFriends(force){
- var state=REAL_SOCIAL;if(state.pending)return force?state.pending.then(function(){return loadRealFriends(true)}):state.pending;state.status='loading';
- state.pending=realSocialRequest('/api/friends').then(function(data){if(REAL_SOCIAL!==state)return false;state.friends=data.friends;state.incoming=data.incoming;state.authenticated=true;state.status='ready';state.at=Date.now();return true},function(){if(REAL_SOCIAL===state){state.friends=[];state.incoming=[];state.authenticated=false;state.status='error'}return false}).finally(function(){state.pending=null});return state.pending;
+ var state=REAL_SOCIAL;if(state.pending)return force?state.pending.then(function(){return loadRealFriends(true)}):state.pending;
+ var finishLoading=state.status==='idle'?uiLoadingBegin():null;state.status='loading';
+ state.pending=realSocialRequest('/api/friends').then(function(data){if(REAL_SOCIAL!==state)return false;state.friends=data.friends;state.incoming=data.incoming;state.authenticated=true;state.status='ready';state.at=Date.now();return true},function(){if(REAL_SOCIAL===state){state.friends=[];state.incoming=[];state.authenticated=false;state.status='error'}return false}).finally(function(){state.pending=null;if(finishLoading)finishLoading()});return state.pending;
 }
 function friendSearch(back,initial){
  if(!requireLogin('친구를 찾으려면',function(){friendSearch(back,initial)}))return;
@@ -4840,24 +4838,29 @@ function friendSearch(back,initial){
   var missingType=!RKEY&&!ans.every(function(v){return Number.isInteger(v)&&v>=0&&v<4});
   results.innerHTML=(q?'<h4>검색 결과</h4><div role="list">'+found.map(row).join('')+'</div>':'')+'<h4>추천 친구</h4>'+(suggested.length?'<div role="list">'+suggested.map(row).join('')+'</div>':'<p class="friend-search-note">지금은 추천할 다른 친구가 없어요.</p>');
  }
- async function search(){
+ async function search(background){
   clearTimeout(timer);query=input.value.trim();var request=++version;
   if(FRIEND_PREVIEW){previewSearch();return}
   if(location.protocol==='file:'){message('실제 회원을 찾으려면 개발 서버에서 열어 주세요.\n카카오로 로그인한 뒤 닉네임으로 찾을 수 있어요.',true);return}
   if(AUTH_SESSION.provider!=='kakao'){message('실제 회원을 찾으려면 카카오로 로그인해 주세요.',true);return}
-  status.textContent='계정을 찾고 있어요.';results.innerHTML='';
+  var finishLoading=background?null:uiLoadingBegin();
+  status.textContent='';results.innerHTML='';results.setAttribute('aria-busy','true');
   try{
    if(!query){var summary=await realSocialRequest('/api/friends');if(!d.isConnected||request!==version)return;REAL_SOCIAL.friends=summary.friends;REAL_SOCIAL.incoming=summary.incoming;REAL_SOCIAL.authenticated=true;REAL_SOCIAL.status='ready';status.textContent='찾고 싶은 친구의 닉네임을 입력해 주세요.';results.innerHTML=(summary.incoming.length?'<h4>받은 친구 신청 '+summary.incoming.length+'</h4><div role="list">'+summary.incoming.map(row).join('')+'</div>':'')+(summary.friends.length?'<h4>내 친구 '+summary.friends.length+'</h4><div role="list">'+summary.friends.map(function(user){return row({id:user.id,nickname:user.nickname,relation:'friend'})}).join('')+'</div>':'');return}
    var data=await realSocialRequest('/api/users/search?q='+encodeURIComponent(query));if(!d.isConnected||request!==version)return;
    status.textContent=data.users.length?data.users.length+'명의 독자를 찾았어요.':'해당 닉네임의 가입 계정을 찾지 못했어요.';results.innerHTML='<div role="list">'+data.users.map(row).join('')+'</div>';
   }catch(e){if(d.isConnected&&request===version)message(e.status===401?e.message:'검색을 마치지 못했어요.\n잠시 후 다시 검색해 주세요.',e.status===401)}
+  finally{if(request===version)results.removeAttribute('aria-busy');if(finishLoading)finishLoading()}
  }
  d.querySelector('#friend-search-close').onclick=function(){close(true)};overlay.onclick=function(){close(true)};
- d.querySelector('form').onsubmit=function(e){e.preventDefault();if(!composing)search()};input.oncompositionstart=function(){composing=true};input.oncompositionend=function(){composing=false;clearTimeout(timer);timer=setTimeout(search,250)};input.oninput=function(){version++;if(!composing){clearTimeout(timer);timer=setTimeout(search,250)}};
- results.onclick=async function(e){var button=e.target.closest('[data-action]');if(!button)return;var card=button.closest('[data-user]'),id=card.dataset.user,action=button.dataset.action;card.querySelectorAll('button').forEach(function(b){b.disabled=true});status.textContent=action==='request'?'친구 신청을 보내고 있어요.':'친구 신청을 확인하고 있어요.';
+ function scheduleSearch(){clearTimeout(timer);timer=setTimeout(function(){search(true)},250)}
+ d.querySelector('form').onsubmit=function(e){e.preventDefault();if(!composing)search()};input.oncompositionstart=function(){composing=true};input.oncompositionend=function(){composing=false;scheduleSearch()};input.oninput=function(){version++;if(!composing)scheduleSearch()};
+ results.onclick=async function(e){var button=e.target.closest('[data-action]');if(!button)return;var card=button.closest('[data-user]'),id=card.dataset.user,action=button.dataset.action;card.querySelectorAll('button').forEach(function(b){b.disabled=true});status.textContent='';
   if(FRIEND_PREVIEW){var member=previewFriendMembers().find(function(m){return m.id===id});if(!member)return;FRIEND_REQ[member.nickname]=true;previewSearch();status.textContent='친구 신청을 보냈어요.';input.focus();return}
-  try{await realSocialRequest(action==='request'?'/api/friends/request':'/api/friends/respond',action==='request'?{id:id}:{id:id,action:action});await loadRealFriends(true);if(!d.isConnected)return;await search();if(!d.isConnected)return;status.textContent=action==='request'?'친구 신청을 보냈어요.':action==='accept'?'친구가 되었어요.':'친구 신청을 거절했어요.';var next=Array.from(results.querySelectorAll('[data-user]')).find(function(r){return r.dataset.user===id});var focus=next&&next.querySelector('button:not(:disabled)');(focus||input).focus();}
+  var finishLoading=uiLoadingBegin();
+  try{await realSocialRequest(action==='request'?'/api/friends/request':'/api/friends/respond',action==='request'?{id:id}:{id:id,action:action});await loadRealFriends(true);if(!d.isConnected)return;await search(true);if(!d.isConnected)return;finishLoading();status.textContent=action==='request'?'친구 신청을 보냈어요.':action==='accept'?'친구가 되었어요.':'친구 신청을 거절했어요.';var next=Array.from(results.querySelectorAll('[data-user]')).find(function(r){return r.dataset.user===id});var focus=next&&next.querySelector('button:not(:disabled)');(focus||input).focus();}
   catch(error){if(d.isConnected){if(error.status===401){message(error.message,true);return}card.querySelectorAll('button').forEach(function(b){b.disabled=false});status.textContent='친구 신청을 처리하지 못했어요.\n잠시 후 다시 시도해 주세요.'}}
+  finally{finishLoading()}
  };
  d.onkeydown=function(e){if(e.key==='Escape'){e.preventDefault();close(true);return}if(e.key==='Tab'){var controls=Array.from(d.querySelectorAll('button:not(:disabled),input')),first=controls[0],last=controls[controls.length-1];if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}};search();input.focus();
 }
@@ -6231,7 +6234,7 @@ function loginPage(){
   if(sbPreviewAllowed()){loginComplete('email');return}
   if(!sbCloudPage()){authNotice('인터넷에 연결한 뒤 앱을 다시 열어 주세요.');return}
   WEB_SIGN_IN=true;update();submit.setAttribute('aria-busy','true');
-  var finishLoading=uiLoadingBegin(true);
+  var finishLoading=uiLoadingBegin('연결하고 있어요.');
   try{
    sbRemember(await sbRequest('/auth/v1/token?grant_type=password',{body:{email:address,password:attempt}}));
    password.value='';await sbAdoptMember()
@@ -6791,7 +6794,7 @@ home=function(){
 var SB_ONBOARDING_PENDING=false,SB_ONBOARDING_SAVING=false,GOOGLE_SIGN_IN=null,WEB_SIGN_IN=false;
 async function webSignInStart(provider){
  if(WEB_SIGN_IN||GOOGLE_SIGN_IN)return;WEB_SIGN_IN=true;
- var finishLoading=uiLoadingBegin(true);
+ var finishLoading=uiLoadingBegin('연결하고 있어요.');
  try{await sbOAuthStart(provider)}
  catch(e){authNotice(e.message||SB_OAUTH_LABELS[provider]+' 연결을 확인해 주세요.')}
  finally{finishLoading();WEB_SIGN_IN=false}
@@ -6821,7 +6824,7 @@ async function ddokGoogleSignInResult(result){
   if(result.status==='cancelled')return;
   if(result.status==='no_account')throw Error('기기의 구글 계정을 확인하고 다시 시도해 주세요.');
   if(result.status!=='ok'||!result.token||!result.nonce)throw Error('구글 로그인을 마치지 못했어요.\n다시 시도해 주세요.');
-  finishLoading=uiLoadingBegin(true);
+  finishLoading=uiLoadingBegin('연결하고 있어요.');
   var session=await sbRequest('/auth/v1/token?grant_type=id_token',{body:{provider:'google',id_token:result.token,nonce:result.nonce}});
   sbRemember(session);
   await sbAdoptMember()
@@ -6848,7 +6851,7 @@ async function completeSignupHome(){
  }
  if(!SB_SESSION){if(!sbPreviewAllowed()){sbPreviewNotice();return}SIGNUP_AGE_CONFIRMED=false;loginComplete('email');return}SB_ONBOARDING_SAVING=true;
  var button=document.getElementById('go');if(button){button.disabled=true;button.setAttribute('aria-busy','true')}
- var finishLoading=uiLoadingBegin(true);
+ var finishLoading=uiLoadingBegin('연결하고 있어요.');
  try{await cmConfirmSignupAge();await sbSaveMember();SIGNUP_AGE_CONFIRMED=false;SB_ONBOARDING_PENDING=false;NEW_ACCOUNT=false;LOGIN_STATE=null;await sbSyncStart();loginComplete('supabase')}
  catch(e){authNotice(e.message||'연결을 확인하고 다시 시도해 주세요.')}
  finally{finishLoading();SB_ONBOARDING_SAVING=false;if(button){button.disabled=false;button.removeAttribute('aria-busy')}}
@@ -6950,7 +6953,7 @@ function loginComplete(provider){
 /* 출시용 커뮤니티: 화면의 mine/admin 값이 아니라 서버가 권한을 검사해요. */
 var COMMUNITY_VERSION='2026-11-24.1',CM_LIVE={posts:[],ids:{},status:null},ACCOUNT_DELETING=false;
 function cmError(e){var d=e&&e.detail||e&&e.code||'';return d==='terms_required'?'커뮤니티 이용 규칙에 동의해 주세요.':d==='community_restricted'?'커뮤니티 이용이 제한돼 있어요.\n운영자에게 받은 안내를 확인해 주세요.':d==='age_confirmation_required'?'만 14세 이상인지 다시 확인해 주세요.':d==='account_deleting'?'탈퇴 처리가 진행 중이에요.\n탈퇴 화면에서 다시 시도해 주세요.':d==='rate_limited'?'요청이 잠시 몰렸어요.\n잠시 후 다시 시도해 주세요.':d==='moderator_required'?'운영자만 사용할 수 있어요.':d==='owner_required'?'내가 작성한 내용만 바꿀 수 있어요.':d==='content_unavailable'?'이 글은 지금 볼 수 없어요.':e&&(['PGRST202','42P01','PGRST205'].indexOf(e.code)>-1||e.status===404)?'커뮤니티 서버가 아직 준비되지 않았어요.\n서버 연결 후 다시 이용해 주세요.':e&&e.message||'처리하지 못했어요.\n다시 시도해 주세요.'}
-async function cmCall(action,data){return sbRequest('/rest/v1/rpc/ddok_community',{member:!!SB_SESSION&&!TEST_ACCOUNT_PENDING&&AUTH_SESSION.provider!=='demo',body:{p_action:action,p_data:data||{}}})}
+async function cmCall(action,data,background){return sbRequest('/rest/v1/rpc/ddok_community',{member:!!SB_SESSION&&!TEST_ACCOUNT_PENDING&&AUTH_SESSION.provider!=='demo',background:background,body:{p_action:action,p_data:data||{}}})}
 function cmNote(message){authNotice(cmError(typeof message==='string'?{message:message}:message))}
 async function cmAgeRequest(action,data){try{return await cmCall(action,data)}catch(e){if(['PGRST202','42P01','PGRST205'].includes(e.code)||e.status===404)return null;throw e}}
 function cmConfirmSignupAge(){return cmAgeRequest('confirm_age',{age_band:'14plus'})}
@@ -6976,18 +6979,18 @@ function cmBind(host,refresh){host.onclick=async function(e){var b=e.target.clos
  if(b.dataset.cmUser){var p=CM_LIVE.posts.find(function(x){return x.author_id===b.dataset.cmUser});if(p)cmUser(p,refresh);return}
  if(b.dataset.cmBook){var p=CM_LIVE.posts.find(function(x){return x.id===b.dataset.cmBook});if(p&&p.book_id!==null&&LB[p.book_id])bookDt(p.book_id,community);else cmNote('이 책은 도서관에서 확인할 수 없어요.');}
  }}
-async function cmRefreshHome(){try{cmApplyFeed(await cmCall('feed'))}catch(e){cmApplyFeed([])}}
+async function cmRefreshHome(){try{cmApplyFeed(await cmCall('feed',null,true))}catch(e){cmApplyFeed([])}}
 async function cmLiveCommunity(){
  var requested=OPENP&&(CM_LIVE.ids[OPENP]||String(OPENP));OPENP=0;
- cmShell(CMN?'내 글':'커뮤니티','<div class="cm-community-toolbar" id="cm-moderation" hidden><button class="fadd" id="cm-admin">신고 관리</button></div><div class="csr" id="cq-wrap"><input id="cq" type="search" aria-label="커뮤니티 글 검색" placeholder="책 제목, 작가, 글 내용으로 찾기"></div><div class="ctf ctf2" id="cm-kinds"></div><p class="sr" id="cm-feed-status" role="status"></p><div id="cm-feed">글을 불러오고 있어요.</div><button class="wfab" id="cm-write" aria-label="글쓰기">'+ic('pencil')+'</button>');
+ cmShell(CMN?'내 글':'커뮤니티','<div class="cm-community-toolbar" id="cm-moderation" hidden><button class="fadd" id="cm-admin">신고 관리</button></div><div class="csr" id="cq-wrap"><input id="cq" type="search" aria-label="커뮤니티 글 검색" placeholder="책 제목, 작가, 글 내용으로 찾기"></div><div class="ctf ctf2" id="cm-kinds"></div><p class="sr" id="cm-feed-status" role="status"></p><div id="cm-feed"></div><button class="wfab" id="cm-write" aria-label="글쓰기">'+ic('pencil')+'</button>');
  var feed=app.querySelector('#cm-feed'),search=app.querySelector('#cq'),status=app.querySelector('#cm-feed-status'),write=app.querySelector('#cm-write'),kind='all',ready=false,pending=false;
  function draw(){if(!ready)return;var q=search.value.trim().toLowerCase(),items=CM_LIVE.posts.filter(function(p){return(!CMN||p.mine)&&(!CU||p.nickname===CU)&&(kind==='all'||p.kind===kind)&&(!q||(p.body+' '+(p.book_title||'')+' '+(p.book_author||'')).toLowerCase().includes(q))});feed.innerHTML=items.length?items.map(function(p){return cmPost(p,false)}).join(''):'<div class="emp">아직 표시할 글이 없어요.</div>';cmBind(feed,reload)}
  function setFeedControls(visible){search.parentElement.hidden=kinds.hidden=write.hidden=!visible}
  async function reload(){
   if(pending)return;
   var retry=feed.querySelector('#cm-retry');
-  pending=true;feed.setAttribute('aria-busy','true');status.textContent='글을 불러오고 있어요.';
-  if(retry){retry.setAttribute('aria-disabled','true');retry.textContent='불러오는 중'}
+  pending=true;feed.setAttribute('aria-busy','true');status.textContent='';
+  if(retry)retry.setAttribute('aria-disabled','true');
   try{
    var rows=await cmCall('feed');if(!feed.isConnected)return;
    var restoreFocus=retry&&document.activeElement===retry;
@@ -7010,11 +7013,11 @@ async function cmLiveCommunity(){
  }
  write.onclick=cmCompose;
  var kinds=app.querySelector('#cm-kinds');function tabs(){kinds.innerHTML=[['all','전체'],['자유','자유글'],['같이','같이 읽어요'],['코멘트','코멘트 공유'],['밸런스','밸런스 게임']].map(function(x){return '<button data-kind="'+x[0]+'" aria-pressed="'+(kind===x[0])+'">'+x[1]+'</button>'}).join('')}tabs();kinds.onclick=function(e){var b=e.target.closest('[data-kind]');if(b){kind=b.dataset.kind;tabs();draw()}};search.oninput=draw;
- var moderation=app.querySelector('#cm-moderation');if(SB_SESSION&&AUTH_SESSION.signedIn)cmCall('status').then(function(s){CM_LIVE.status=s;if(moderation.isConnected&&s.moderator){moderation.hidden=false;moderation.querySelector('button').onclick=cmAdmin}}).catch(function(){});
+ var moderation=app.querySelector('#cm-moderation');if(SB_SESSION&&AUTH_SESSION.signedIn)cmCall('status',null,true).then(function(s){CM_LIVE.status=s;if(moderation.isConnected&&s.moderator){moderation.hidden=false;moderation.querySelector('button').onclick=cmAdmin}}).catch(function(){});
  await reload();
 }
 async function cmDetail(id){
- cmShell('게시글','<div id="cm-detail" role="status">글을 불러오고 있어요.</div>');var host=app.querySelector('#cm-detail');
+ cmShell('게시글','<div id="cm-detail"></div>');var host=app.querySelector('#cm-detail');
  async function draw(){try{var data=await cmCall('detail',{id:id});if(!host.isConnected)return;var p=data.post,exists=CM_LIVE.posts.findIndex(function(x){return x.id===id});if(exists<0)CM_LIVE.posts.push(p);else CM_LIVE.posts[exists]=p;
  host.innerHTML=cmPost(p,true)+'<h3 class="cmh">댓글 '+data.comments.length+'</h3><div class="cm-live-comments">'+data.comments.map(function(c){return '<article class="cmr"><div><div class="cmn"><b>'+esc(c.nickname)+'</b><small>'+cmDate(c.created_at)+'</small></div><p>'+esc(c.body)+'</p><div class="cm-comment-actions">'+(c.mine?'<button data-comment-delete="'+c.id+'">삭제</button>':'<button data-comment-report="'+c.id+'">신고</button><button data-comment-block="'+c.author_id+'">사용자 차단</button>')+'</div></div></article>'}).join('')+'</div><form class="cm-new-comment"><label for="cm-comment-body">댓글</label><textarea id="cm-comment-body" maxlength="1000" rows="3" placeholder="생각을 나눠 주세요."></textarea><p class="cm-status" id="cm-comment-error" role="status"></p><button class="btn" type="submit">등록</button></form>';
  cmBind(host,draw);host.querySelectorAll('[data-comment-delete]').forEach(function(b){b.onclick=function(e){e.stopPropagation();cmDelete('comment',b.dataset.commentDelete,draw)}});host.querySelectorAll('[data-comment-report]').forEach(function(b){b.onclick=function(e){e.stopPropagation();cmReport('comment',b.dataset.commentReport)}});host.querySelectorAll('[data-comment-block]').forEach(function(b){b.onclick=function(e){e.stopPropagation();cmBlock(b.dataset.commentBlock,community)}});
@@ -7029,14 +7032,14 @@ function cmDelete(type,id,after){var close=pop('<h3>'+(type==='post'?'글을':'�
 async function cmReport(type,id){if(!cmNeedAccount('신고하려면',community))return;var reasons=[['harassment','괴롭힘·욕설·협박'],['hate','차별·혐오'],['sexual','성적·착취 콘텐츠'],['violence','폭력·자해 조장'],['privacy','개인정보 침해'],['copyright','저작권 침해'],['spam','광고·도배·사기'],['other','기타']];var close=pop('<h3>신고하기</h3><label class="cm-field" for="cm-report-reason">신고 이유<select id="cm-report-reason">'+reasons.map(function(r){return '<option value="'+r[0]+'">'+r[1]+'</option>'}).join('')+'</select></label><label class="cm-field" for="cm-report-detail">설명<span class="cm-optional">선택</span><textarea id="cm-report-detail" maxlength="1000" rows="4" placeholder="확인할 내용을 알려 주세요."></textarea></label><p>신고자의 정보는 상대방에게 보여주지 않아요.</p><p class="cm-status" id="cm-report-error" role="status"></p><div class="dbt"><button class="btn ghost" id="cm-report-cancel">취소</button><button class="btn" id="cm-report-submit">신고 보내기</button></div>');document.getElementById('cm-report-cancel').onclick=close;document.getElementById('cm-report-submit').onclick=async function(){var b=this;b.disabled=true;try{var r=await cmCall('report',{target_type:type,target_id:id,reason:document.getElementById('cm-report-reason').value,detail:document.getElementById('cm-report-detail').value.trim()});if(!r.submitted)throw Error('신고를 접수하지 못했어요.');close();cmNote('신고를 접수했어요.\n운영자가 내용을 확인할게요.')}catch(e){document.getElementById('cm-report-error').textContent=cmError(e);b.disabled=false}}}
 async function cmBlock(id,after){if(!cmNeedAccount('사용자를 차단하려면',community))return;var close=pop('<h3>사용자를 차단할까요.</h3><p>서로의 글과 댓글을 볼 수 없게 돼요.<br>설정의 차단 목록에서 해제할 수 있어요.</p><p class="cm-status" id="cm-block-error" role="status"></p><div class="dbt"><button class="btn ghost" id="cm-block-cancel">취소</button><button class="btn" id="cm-block-confirm">차단</button></div>');document.getElementById('cm-block-cancel').onclick=close;document.getElementById('cm-block-confirm').onclick=async function(){var b=this;b.disabled=true;try{await cmCall('block',{user_id:id});close();await cmRefreshHome();after()}catch(e){document.getElementById('cm-block-error').textContent=cmError(e);b.disabled=false}}}
 function cmUser(p,after){var close=pop('<h3>'+esc(p.nickname)+' 님</h3>'+(p.mine?'<p>내가 작성한 글이에요.</p>':'<button class="drow" id="cm-user-report">사용자 신고</button><button class="drow" id="cm-user-block">사용자 차단</button>')+'<button class="btn ghost" id="cm-user-close">닫기</button>');document.getElementById('cm-user-close').onclick=close;if(!p.mine){document.getElementById('cm-user-report').onclick=function(){close();cmReport('user',p.author_id)};document.getElementById('cm-user-block').onclick=function(){close();cmBlock(p.author_id,after)}}}
-async function cmBlocks(){if(!cmNeedAccount('차단 목록을 보려면',cmBlocks))return;cmShell('차단 목록','<div id="cm-block-list" role="status">목록을 불러오고 있어요.</div>');app.querySelector('#cm-back').onclick=setPg;app.querySelector('[data-cmnav="3"]').removeAttribute('aria-current');app.querySelector('[data-cmnav="4"]').setAttribute('aria-current','page');var host=app.querySelector('#cm-block-list');try{var rows=await cmCall('blocks');if(!host.isConnected)return;host.innerHTML=rows.length?rows.map(function(r){return '<div class="cm-block-row"><b>'+esc(r.nickname)+'</b><button class="fadd" data-unblock="'+r.id+'">차단 해제</button></div>'}).join(''):'<div class="emp">차단한 사용자가 없어요.</div>';host.querySelectorAll('[data-unblock]').forEach(function(b){b.onclick=async function(){b.disabled=true;try{await cmCall('unblock',{user_id:b.dataset.unblock});cmBlocks()}catch(e){cmNote(e);b.disabled=false}}})}catch(e){host.textContent=cmError(e)}}
+async function cmBlocks(){if(!cmNeedAccount('차단 목록을 보려면',cmBlocks))return;cmShell('차단 목록','<div id="cm-block-list"></div>');app.querySelector('#cm-back').onclick=setPg;app.querySelector('[data-cmnav="3"]').removeAttribute('aria-current');app.querySelector('[data-cmnav="4"]').setAttribute('aria-current','page');var host=app.querySelector('#cm-block-list');try{var rows=await cmCall('blocks');if(!host.isConnected)return;host.innerHTML=rows.length?rows.map(function(r){return '<div class="cm-block-row"><b>'+esc(r.nickname)+'</b><button class="fadd" data-unblock="'+r.id+'">차단 해제</button></div>'}).join(''):'<div class="emp">차단한 사용자가 없어요.</div>';host.querySelectorAll('[data-unblock]').forEach(function(b){b.onclick=async function(){b.disabled=true;try{await cmCall('unblock',{user_id:b.dataset.unblock});cmBlocks()}catch(e){cmNote(e);b.disabled=false}}})}catch(e){host.textContent=cmError(e)}}
 function cmBookLabel(k){var b=k!==''&&LB[Number(k)];return b?'<span class="compose-book-cover" aria-hidden="true">'+coverSVG(Number(k),0,true,36,50)+'</span><span class="bt"><b>'+esc(b[0])+'</b><small>'+esc(b[1])+'</small></span><span class="compose-book-change">변경</span>':'<span class="compose-book-plus" aria-hidden="true">+</span><span class="bt"><b>책 연결하기</b><small>책 제목이나 저자로 찾아요.</small></span>'}
 function cmPickBook(done){var close=pop('<h3>책 고르기</h3><label class="cm-field" for="bq">책 제목이나 저자<input id="bq" type="search" autocomplete="off" placeholder="책 제목이나 저자로 찾기"></label><div id="cm-book-results"></div><button class="btn ghost" id="cm-book-cancel">닫기</button>');var input=document.getElementById('bq'),list=document.getElementById('cm-book-results');function draw(){var q=input.value.trim().toLowerCase(),ids=[];if(q)LB.forEach(function(b,i){if((b[0]+' '+b[1]).toLowerCase().includes(q))ids.push(i)});else RDB.slice(0,3).forEach(function(b){var k=LB.findIndex(function(x){return x[0]===b[0]});if(k>=0)ids.push(k)});ids=ids.slice(0,8);list.innerHTML=ids.length?ids.map(function(k){return '<button class="bsi" type="button" data-cm-pick="'+k+'">'+cmBookLabel(k)+'</button>'}).join(''):'<p class="cm-status">'+(q?'찾는 책이 없어요.':'책 제목이나 저자로 찾아보세요.')+'</p>';list.querySelectorAll('[data-cm-pick]').forEach(function(b){b.onclick=function(){var k=Number(b.dataset.cmPick);close();done(k)}})}input.oninput=draw;draw();document.getElementById('cm-book-cancel').onclick=close;input.focus()}
 async function cmCompose(existing,image){if(!await cmReady())return;var p=existing&&existing.id?existing:null,book=p&&p.book_id!==null?p.book_id:'',kind=p?p.kind:'자유',visibility=p?p.visibility:0;
  cmShell(p?'글 수정':'글쓰기','<form class="compose-form cm-compose-form" id="cm-compose"><div class="compose-paper">'+composeAuthorMarkup()+'<div class="compose-settings"><label class="cm-field">글 종류<select id="cm-kind"'+(p?' disabled':'')+'>'+['자유','같이','코멘트','밸런스'].map(function(k){return '<option value="'+k+'"'+(k===kind?' selected':'')+'>'+TN[k]+'</option>'}).join('')+'</select></label><label class="cm-field">공개 범위<select id="cm-visibility">'+['전체 공개','친구 공개','나만 보기'].map(function(k,i){return '<option value="'+i+'"'+(i===visibility?' selected':'')+(i===1?' disabled':'')+'>'+k+(i===1?' · 실제 친구 연결 준비 중':'')+'</option>'}).join('')+'</select></label></div><section class="compose-editor" aria-labelledby="cm-content-label"><label class="compose-label" id="cm-content-label" for="cm-body">내용</label><textarea id="cm-body" rows="8" maxlength="5000" required placeholder="오늘 나누고 싶은 이야기를 적어 주세요.">'+esc(p?p.body:'')+'</textarea></section><section class="bsr"><h3>함께 이야기할 책</h3><input id="cm-book" type="hidden" value="'+book+'"><button class="compose-book-open" id="cm-book-open" type="button"'+(p?' disabled':'')+'>'+cmBookLabel(book)+'</button></section><fieldset class="compose-poll" id="cm-options" aria-label="선택지" hidden><label for="cm-option-a">선택지 A</label><input id="cm-option-a" maxlength="80" value="'+esc(p&&p.options?p.options[0]:'')+'"><label for="cm-option-b">선택지 B</label><input id="cm-option-b" maxlength="80" value="'+esc(p&&p.options?p.options[1]:'')+'"></fieldset>'+(image?'<img class="pim" src="'+esc(image)+'" alt="공유할 그림">':'')+'<p class="cm-status" id="cm-compose-error" role="status"></p><button class="cm-inline-link" id="cm-compose-rules" type="button">커뮤니티 이용 규칙</button></div></form><footer class="fx compose-footer"><button class="compose-submit" id="cm-compose-submit" type="submit" form="cm-compose">'+(p?'저장':'등록')+'</button></footer>','compose-page');var form=app.querySelector('#cm-compose'),type=form.querySelector('#cm-kind'),options=form.querySelector('#cm-options');function update(){options.hidden=type.value!=='밸런스'}type.onchange=update;update();form.querySelector('#cm-book-open').onclick=function(){cmPickBook(function(k){form.querySelector('#cm-book').value=k;form.querySelector('#cm-book-open').innerHTML=cmBookLabel(k)})};form.querySelector('#cm-compose-rules').onclick=function(){communityRules(false)};
  form.onsubmit=async function(e){e.preventDefault();var b=app.querySelector('#cm-compose-submit'),k=form.querySelector('#cm-book').value,body=form.querySelector('#cm-body').value.trim(),opts=[form.querySelector('#cm-option-a').value.trim(),form.querySelector('#cm-option-b').value.trim()];if(b.disabled||!body)return;if(type.value!=='자유'&&k===''){form.querySelector('#cm-compose-error').textContent='책을 골라 주세요.';return}if(type.value==='밸런스'&&opts.some(function(x){return !x})){form.querySelector('#cm-compose-error').textContent='선택지를 두 개 입력해 주세요.';return}b.disabled=true;b.setAttribute('aria-busy','true');try{var data={kind:type.value,body:body,visibility:Number(form.querySelector('#cm-visibility').value),book_id:k===''?null:Number(k),book_title:k===''?null:LB[Number(k)][0],book_author:k===''?null:LB[Number(k)][1],options:type.value==='밸런스'?opts:null,image:image||null};if(p)data.id=p.id;var result=await cmCall(p?'edit_post':'create_post',data);await cmRefreshHome();if(form.isConnected)cmDetail(result.id)}catch(err){form.querySelector('#cm-compose-error').textContent=cmError(err);b.disabled=false;b.removeAttribute('aria-busy')}};
 }
-async function cmAdmin(){cmShell('신고 관리','<div id="cm-admin-list" role="status">권한과 신고를 확인하고 있어요.</div>');var host=app.querySelector('#cm-admin-list');try{var rows=await cmCall('moderation_queue');if(!host.isConnected)return;host.innerHTML=rows.length?rows.map(function(r,i){return '<article class="box cm-report-card"><h3>'+esc(r.nickname||'사용자')+' · '+esc({post:'게시글',comment:'댓글',user:'사용자'}[r.target_type]||r.target_type)+'</h3><small>'+cmDate(r.created_at)+' · '+esc(r.status==='pending'?'검토 대기':'검토 완료')+'</small><p class="cm-report-content">'+esc(r.content||'현재 내용을 확인할 수 없어요.')+'</p><p>신고 이유: '+esc({harassment:'괴롭힘·욕설·협박',hate:'차별·혐오',sexual:'성적·착취 콘텐츠',violence:'폭력·자해 조장',privacy:'개인정보 침해',copyright:'저작권 침해',spam:'광고·도배·사기',other:'기타'}[r.reason]||r.reason)+'</p>'+(r.detail?'<p>'+esc(r.detail)+'</p>':'')+'<label class="cm-field" for="cm-mod-note-'+i+'">처리 이유<textarea id="cm-mod-note-'+i+'" rows="3" maxlength="1000" required></textarea></label><label class="cm-field" for="cm-mod-action-'+i+'">조치<select id="cm-mod-action-'+i+'">'+[['dismiss','조치 없이 검토 완료'],['hide','콘텐츠 숨기기'],['restore','콘텐츠 복원'],['restrict','커뮤니티 이용 24시간 제한'],['ban','해제 전까지 커뮤니티 이용 제한'],['release','이용 제한 해제']].filter(function(x){return r.target_type!=='user'||x[0]!=='hide'&&x[0]!=='restore'}).map(function(x){return '<option value="'+x[0]+'">'+x[1]+'</option>'}).join('')+'</select></label><p class="cm-status" id="cm-mod-error-'+i+'" role="status"></p><button class="btn" data-mod-index="'+i+'">적용</button></article>'}).join(''):'<div class="emp">접수된 신고가 없어요.</div>';host.querySelectorAll('[data-mod-index]').forEach(function(b){b.onclick=async function(){var i=Number(b.dataset.modIndex),note=host.querySelector('#cm-mod-note-'+i).value.trim();if(!note){host.querySelector('#cm-mod-error-'+i).textContent='처리 이유를 입력해 주세요.';return}b.disabled=true;try{await cmCall('moderate',{report_id:rows[i].id,action:host.querySelector('#cm-mod-action-'+i).value,note:note});await cmRefreshHome();cmAdmin()}catch(e){host.querySelector('#cm-mod-error-'+i).textContent=cmError(e);b.disabled=false}}})}catch(e){host.textContent=cmError(e)}}
+async function cmAdmin(){cmShell('신고 관리','<div id="cm-admin-list"></div>');var host=app.querySelector('#cm-admin-list');try{var rows=await cmCall('moderation_queue');if(!host.isConnected)return;host.innerHTML=rows.length?rows.map(function(r,i){return '<article class="box cm-report-card"><h3>'+esc(r.nickname||'사용자')+' · '+esc({post:'게시글',comment:'댓글',user:'사용자'}[r.target_type]||r.target_type)+'</h3><small>'+cmDate(r.created_at)+' · '+esc(r.status==='pending'?'검토 대기':'검토 완료')+'</small><p class="cm-report-content">'+esc(r.content||'현재 내용을 확인할 수 없어요.')+'</p><p>신고 이유: '+esc({harassment:'괴롭힘·욕설·협박',hate:'차별·혐오',sexual:'성적·착취 콘텐츠',violence:'폭력·자해 조장',privacy:'개인정보 침해',copyright:'저작권 침해',spam:'광고·도배·사기',other:'기타'}[r.reason]||r.reason)+'</p>'+(r.detail?'<p>'+esc(r.detail)+'</p>':'')+'<label class="cm-field" for="cm-mod-note-'+i+'">처리 이유<textarea id="cm-mod-note-'+i+'" rows="3" maxlength="1000" required></textarea></label><label class="cm-field" for="cm-mod-action-'+i+'">조치<select id="cm-mod-action-'+i+'">'+[['dismiss','조치 없이 검토 완료'],['hide','콘텐츠 숨기기'],['restore','콘텐츠 복원'],['restrict','커뮤니티 이용 24시간 제한'],['ban','해제 전까지 커뮤니티 이용 제한'],['release','이용 제한 해제']].filter(function(x){return r.target_type!=='user'||x[0]!=='hide'&&x[0]!=='restore'}).map(function(x){return '<option value="'+x[0]+'">'+x[1]+'</option>'}).join('')+'</select></label><p class="cm-status" id="cm-mod-error-'+i+'" role="status"></p><button class="btn" data-mod-index="'+i+'">적용</button></article>'}).join(''):'<div class="emp">접수된 신고가 없어요.</div>';host.querySelectorAll('[data-mod-index]').forEach(function(b){b.onclick=async function(){var i=Number(b.dataset.modIndex),note=host.querySelector('#cm-mod-note-'+i).value.trim();if(!note){host.querySelector('#cm-mod-error-'+i).textContent='처리 이유를 입력해 주세요.';return}b.disabled=true;try{await cmCall('moderate',{report_id:rows[i].id,action:host.querySelector('#cm-mod-action-'+i).value,note:note});await cmRefreshHome();cmAdmin()}catch(e){host.querySelector('#cm-mod-error-'+i).textContent=cmError(e);b.disabled=false}}})}catch(e){host.textContent=cmError(e)}}
 function cmClearAccount(uid){try{[SB_STORAGE,SB_PKCE,'ddok_preview_auth','ddok_delete_intent'].forEach(function(k){localStorage.removeItem(k);sessionStorage.removeItem(k)});if(uid){['ddok_sync_v1:'+uid,'ddok_sync_v1:'+uid+':conflict-backup','ddok_archive_v1:'+uid].forEach(function(k){localStorage.removeItem(k)})}}catch(e){}SB_SESSION=null;SB_MEMBER=null;AUTH_SESSION={signedIn:false,provider:null};SB_SYNC.capture=false;clearTimeout(SB_SYNC.timer);CM_LIVE={posts:[],ids:{},status:null};PO=[]}
 async function accountDelete(){if(!cmNeedAccount('탈퇴하려면',accountDelete))return;var close=pop('<h3>회원 탈퇴</h3><p>계정, 프로필, 독서 기록, 보관함과 작성한 글·댓글을 삭제해요.<br>삭제한 내용은 복구할 수 없어요.</p><p>기기에 직접 내려받거나 다른 앱으로 공유한 파일은 자동으로 지워지지 않아요.</p><label class="cm-field" for="account-delete-confirm">확인하려면 ‘탈퇴’를 입력해 주세요.<input id="account-delete-confirm" autocomplete="off"></label><p class="cm-status" id="account-delete-error" role="status"></p><div class="dbt"><button class="btn ghost" id="account-delete-cancel">취소</button><button class="btn" id="account-delete-go" disabled>탈퇴하기</button></div>');var input=document.getElementById('account-delete-confirm'),button=document.getElementById('account-delete-go');input.oninput=function(){button.disabled=input.value.trim()!=='탈퇴'};document.getElementById('account-delete-cancel').onclick=close;
  button.onclick=async function(){if(input.value.trim()!=='탈퇴'||ACCOUNT_DELETING)return;button.disabled=true;button.setAttribute('aria-busy','true');button.textContent='탈퇴 처리 중';document.getElementById('account-delete-error').textContent='계정과 데이터를 삭제하고 있어요.';document.getElementById('account-delete-cancel').disabled=true;var previous=SB_SYNC.capture;ACCOUNT_DELETING=true;SB_SYNC.capture=false;clearTimeout(SB_SYNC.timer);

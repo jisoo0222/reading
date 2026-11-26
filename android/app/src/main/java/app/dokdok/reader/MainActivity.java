@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Insets;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,7 +13,9 @@ import android.os.CancellationSignal;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowInsets;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
@@ -23,7 +26,8 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.window.OnBackInvokedDispatcher;
 
 import androidx.credentials.Credential;
@@ -67,6 +71,7 @@ public class MainActivity extends Activity {
     /** 앱에 들어 있는 Pretendard 글꼴을 웹 화면에 건네줄 때 쓰는 가상 주소 */
     private static final String FONT_URL = "https://dokdok.app.font/PretendardVariable.woff2";
     private WebView web;
+    private TextView activeToast;
     private ValueCallback<Uri[]> fileCb;
     private boolean fallbackLoaded;
     private boolean bridgeAttached;
@@ -320,7 +325,7 @@ public class MainActivity extends Activity {
     public void onBackPressed() {
         // 팝업이 열려 있으면 닫고, 아니면 앱 안의 '뒤로' 버튼을 누른 것처럼 동작. 더 갈 곳이 없으면 앱 종료.
         web.evaluateJavascript(
-            "(function(){var d=document.querySelector('dialog[open]');if(d){if(d.dispatchEvent(new Event('cancel',{cancelable:true})))d.close();return 'x'}" +
+            "(function(){var d=document.querySelector('dialog.app-loading-screen[open]')||document.querySelector('dialog[open]');if(d){if(d.dispatchEvent(new Event('cancel',{cancelable:true})))d.close();return 'x'}" +
             "var o=document.getElementById('ov2');if(o){o.click();return 'x'}" +
             "var s=document.getElementById('sheet'),ov=document.getElementById('ov');if(s&&s.classList.contains('on')){if(ov)ov.click();else s.classList.remove('on');return 'x'}" +
             "var b=document.querySelector('[aria-label=\"뒤로\"]');if(b){b.click();return 'b'}return ''})()",
@@ -376,7 +381,38 @@ public class MainActivity extends Activity {
     }
 
     private void toast(String m) {
-        runOnUiThread(() -> Toast.makeText(this, m, Toast.LENGTH_SHORT).show());
+        runOnUiThread(() -> {
+            if (isFinishing() || isDestroyed()) return;
+            dismissToast(activeToast);
+            TextView message = new TextView(this);
+            activeToast = message;
+            GradientDrawable background = new GradientDrawable();
+            background.setColor(Color.BLACK);
+            background.setCornerRadius(dp(12));
+            message.setBackground(background);
+            message.setTextColor(Color.WHITE);
+            message.setTextSize(14);
+            message.setGravity(Gravity.CENTER);
+            message.setPadding(dp(16), dp(10), dp(16), dp(10));
+            message.setAccessibilityLiveRegion(View.ACCESSIBILITY_LIVE_REGION_POLITE);
+            FrameLayout.LayoutParams layout = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,
+                    Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+            layout.setMargins(dp(16), 0, dp(16), web.getPaddingBottom() + dp(96));
+            addContentView(message, layout);
+            message.setText(m);
+            message.postDelayed(() -> dismissToast(message), 4000);
+        });
+    }
+
+    private void dismissToast(TextView message) {
+        if (message == null || message != activeToast) return;
+        if (message.getParent() instanceof ViewGroup parent) parent.removeView(message);
+        activeToast = null;
+    }
+
+    private int dp(int value) {
+        return Math.round(value * getResources().getDisplayMetrics().density);
     }
 
     /**
