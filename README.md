@@ -30,7 +30,7 @@
 - 카카오 서버 설정은 저장소 밖의 `%LOCALAPPDATA%/DDOKDOK/local-auth/kakao-config.json`에서 읽어요. 필드는 `restApiKey`, 선택 항목 `clientSecret`이에요. 환경 변수 `KAKAO_REST_API_KEY`, `KAKAO_CLIENT_SECRET`을 설정하면 파일 값보다 우선해요.
 - 카카오 Developers에 등록할 개발용 Redirect URI는 `http://localhost:5174/auth/kakao/callback`이에요.
 - 로컬 가입 여부·닉네임·목표·성향 답변은 같은 설정 폴더의 `kakao-users.json`에 저장해요. 키·Client Secret·회원 데이터는 Git에 올리지 않아요.
-- GitHub Pages의 카카오 로그인과 회원정보 저장은 Supabase에 연결돼 있어요. 이메일·Google 가입은 로컬 화면 확인용이에요. 위 로컬 서버 설정은 이전 개발용 연결이며 배포 앱에는 사용하지 않아요.
+- GitHub Pages의 카카오·구글 로그인과 회원 정보 저장은 Supabase에 연결돼 있어요. 이메일 가입은 로컬 화면 확인용이에요. 위 로컬 서버 설정은 이전 개발용 연결이며 배포 앱에는 사용하지 않아요.
 
 ## 출시 필수 기능: 커뮤니티 안전·연령·탈퇴
 
@@ -68,8 +68,8 @@
 
 1. 기존 회원정보 SQL(`profiles`, `member_settings`)을 설치한 Supabase 프로젝트의 **SQL Editor → New query**를 열어요.
 2. [supabase/sync.sql](supabase/sync.sql) 파일 전체를 복사해 실행해요. 기존 기록을 지우지 않으며 다시 실행해도 돼요.
-3. 배포된 `Reading_app.html`을 새로고침하고 카카오로 로그인해요. 추가 비밀 키나 별도 서버는 필요하지 않아요.
-4. 책을 읽고 문장·책갈피·메모를 남긴 뒤, 마이페이지 아래 **기록 동기화 · 저장됨**을 확인해요. 다른 브라우저에서 같은 카카오 계정으로 로그인하면 기록을 불러와요.
+3. 배포된 `Reading_app.html`을 새로고침하고 카카오 또는 구글로 로그인해요.
+4. 책을 읽고 문장·책갈피·메모를 남긴 뒤, 마이페이지 아래 **기록 동기화 · 저장됨**을 확인해요. 다른 브라우저에서 같은 계정으로 로그인하면 기록을 불러와요.
 
 SQL을 실행하기 전에도 회원 로그인은 유지돼요. 기록은 기기에 보관하고 동기화를 재시도하며, 포인트 구매는 서버 준비 뒤에 할 수 있어요. 실행 후 마이페이지의 동기화 버튼을 누르면 바로 다시 연결해요.
 
