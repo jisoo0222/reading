@@ -2489,10 +2489,10 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.type-result .ddti-book-list .rbx{margin:0;padding:0}
 #app.type-result .ddti-book-list .rbk{background:none!important;border-radius:0!important}
 #app.type-result .ddti-book-list .rbk+.rbk{border-top:1px solid var(--bd-card)!important}
-.ddti-mate-recommendation{word-break:keep-all;overflow-wrap:anywhere}
+.ddti-mate-recommendation{container-type:inline-size;word-break:keep-all;overflow-wrap:anywhere}
 .ddti-mate-copy{display:grid;place-content:center;justify-items:center;gap:6px;min-width:0;text-align:center}
 .ddti-mate-recommendation b{font-size:22px;line-height:1.2;color:var(--ddti-card-accent)}
-.ddti-mate-recommendation strong{font-size:16px;line-height:1.4;color:var(--ink)}
+.ddti-mate-recommendation strong{font-size:min(13px,calc(100cqi / var(--ddti-mate-name-units)));line-height:1.4;color:var(--ink);white-space:nowrap}
 #app.type-result .tbt{justify-content:center;gap:8px;margin-top:16px}
 #app.type-result .tci{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--divider);border-radius:999px;background:var(--card);color:#267B58;font-size:14px;padding:8px 14px;min-height:max(48px,calc(49px / var(--fz,1)))}
 #app.type-result .tci .ic{width:16px;height:16px}
@@ -4375,13 +4375,13 @@ function typeSVG(key,t,names,withRecommendations){
 function ddtiRecommendationArt(key,width){
  var book=ddtiMatchBooks(key)[0],bookTitle=LB[book.k][0],mate=ddtiMateKey(key),mateName=T[mate][0],colors=DDTI_PROFILE_COLORS[key];
  var gap=10,panelWidth=(width-gap)/2,mateX=panelWidth+gap,mateCenter=mateX+panelWidth/2;
- var bookLines=qWrap(bookTitle,6),mateLines=qWrap(mateName,9),height=122;
+ var bookLines=qWrap(bookTitle,6),height=122;
  var textMetrics=document.createElement('canvas').getContext('2d');
  textMetrics.font='700 15px "Malgun Gothic", sans-serif';
  var copyWidth=Math.max(53,...bookLines.map(function(row){return textMetrics.measureText(row).width}));
  var coverX=(panelWidth-44-6-copyWidth)/2,copyX=coverX+44+6,middleY=(34+height)/2;
  var bookTop=middleY-(18*bookLines.length+28)/2,badgeY=bookTop+18*bookLines.length+4;
- var mateTop=middleY-(31+mateLines.length*19)/2;
+ var mateSize=ddtiMateNameSize(mateName,panelWidth-16),mateHeight=32+mateSize*1.4,mateTop=middleY-mateHeight/2;
  var cover=new DOMParser().parseFromString(coverSVG(book.k),'text/html').body.firstElementChild;
  cover.setAttribute('width','44');cover.setAttribute('height','59');
  function panel(x){return '<rect x="'+(x+.5)+'" y="0.5" width="'+(panelWidth-1)+'" height="'+(height-1)+'" rx="12" fill="'+colors[0]+'" stroke="'+colors[1]+'" stroke-opacity=".28"/>'}
@@ -4393,7 +4393,7 @@ function ddtiRecommendationArt(key,width){
   +'<rect x="'+copyX+'" y="'+badgeY+'" width="53" height="24" rx="12" fill="#FFFFFF"/>'
   +'<g text-anchor="middle">'+line(book.p+'%',copyX+26.5,badgeY+12,17,colors[1])+'</g>'
   +panel(mateX)+'<g text-anchor="middle">'+line('잘 맞는 DDTI',mateCenter,20,15)+line(mate,mateCenter,mateTop+13,22,colors[1])
-  +mateLines.map(function(row,i){return line(row,mateCenter,mateTop+40.5+i*19,16)}).join('')+'</g></g>';
+  +line(mateName,mateCenter,mateTop+32+mateSize*.7,mateSize)+'</g></g>';
  return {height:height,markup:markup,label:'추천하는 책 '+bookTitle+'. 추천 독서 메이트 '+mate+' '+mateName+'.'};
 }
 function cardPNG(svg,cb,sc){sc=sc||1.5;var i=new Image();i.onload=function(){var c=document.createElement("canvas");c.width=i.width*sc;c.height=i.height*sc;var x=c.getContext("2d");x.scale(sc,sc);x.drawImage(i,0,0);c.toBlob(cb,"image/png")};i.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)}
@@ -4780,12 +4780,14 @@ function ddtiMatchBooks(key){
  return Object.keys(RK).map(function(k){var m=[];for(var i=0;i<4;i++)if(RK[k].charAt(i)===key.charAt(i))m.push(AX[i]["FSAEDWIJ".indexOf(key.charAt(i))%2]);return{k:+k,m:m,p:Math.min(98,52+m.length*10+(k*13)%9)}}).sort(function(a,b){return b.p-a.p||a.k-b.k}).slice(0,3);
 }
 function ddtiMateKey(key){return key.slice(0,2)+(key[2]==='D'?'W':'D')+key[3]}
+function ddtiMateNameUnits(name){return Array.from(name).reduce(function(length,char){return length+(char===' '?0.35:1)},0)}
+function ddtiMateNameSize(name,width){return Math.min(13,width/ddtiMateNameUnits(name))}
 function recBox(key){
  return'<section class="ddti-book-list"><h3>추천 책 3권</h3><div class="rbx">'+ddtiMatchBooks(key).map(function(r){var b=LB[r.k];return'<div class="rbk rbw" data-k="'+r.k+'"><i data-art="1" aria-hidden="true">'+coverSVG(r.k)+'</i><span><b>'+esc(b[0])+'<strong class="rbp">'+r.p+'%</strong></b><small>'+esc(b[1])+'</small>'+(r.m.length?'<em>'+r.m.join(" · ")+' 일치</em>':'')+'<p>'+(RWHY[r.k]||"")+'</p></span></div>'}).join("")+'</div></section>'}
 function ddtiRecommendations(key){
  var match=ddtiMatchBooks(key)[0],book=LB[match.k],mate=ddtiMateKey(key);
  return '<div class="ddti-recommendations"><section class="ddti-recommendation"><h3>추천하는 책</h3><div class="ddti-featured-book"><i aria-hidden="true">'+coverSVG(match.k)+'</i><div class="ddti-featured-copy"><b>'+esc(book[0])+'</b><strong class="rbp">'+match.p+'%</strong></div></div></section>'
-  +'<section class="ddti-recommendation ddti-mate-recommendation"><h3>잘 맞는 DDTI</h3><div class="ddti-mate-copy"><b>'+mate+'</b><strong>'+esc(T[mate][0])+'</strong></div></section></div>';
+  +'<section class="ddti-recommendation ddti-mate-recommendation"><h3>잘 맞는 DDTI</h3><div class="ddti-mate-copy"><b>'+mate+'</b><strong style="--ddti-mate-name-units:'+ddtiMateNameUnits(T[mate][0])+'">'+esc(T[mate][0])+'</strong></div></section></div>';
 }
 function ddtiResultCard(c){var colors=DDTI_PROFILE_COLORS[c.key];return '<div class="tcard" style="--ddti-card-tint:'+colors[0]+';--ddti-card-accent:'+colors[1]+'">'+typeSVG(c.key,c.t,c.names)+ddtiRecommendations(c.key)+'</div>'}
 function ddtiResultActions(key){
