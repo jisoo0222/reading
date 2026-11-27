@@ -2073,7 +2073,9 @@ body:has(.app.hso) #pawf{display:none!important}
 #app .ppx .rdr .av{display:none!important}
 #app .rbg{position:absolute;left:-9px;top:-2px;width:58px;height:58px;z-index:3;pointer-events:none;color:#174D37}
 #app .rbg .rib{width:58px;height:58px;display:block}
-#app .rbg b{position:absolute;left:0;right:0;top:11px;text-align:center;font-size:20px;font-weight:600;line-height:26px;color:inherit}
+/* 리본 SVG의 원 중심은 (29, 24), viewBox는 58×58이에요. */
+#app .rbg b{position:absolute;left:50%;top:calc(100% * 24 / 58);transform:translate(-50%,-50%);font-size:20px;font-weight:600;color:inherit}
+#app :is(.rbg>b,.rkb>span){line-height:1;text-box:trim-both cap alphabetic}
 #app .ppx .pps{padding-top:2px;padding-left:9px;margin-left:-9px}
 #app .gnc{display:grid!important;grid-template-columns:repeat(4,70px)!important;justify-content:space-between;gap:9px 0!important;padding:0 7px!important;background:none!important;border:0!important;margin-top:20px}
 #app .gnt{display:flex!important;flex-direction:column;align-items:center;gap:9px;font-size:14px!important;font-weight:600!important;color:var(--ink)!important;background:none;border:0;padding:0}
@@ -3069,7 +3071,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app:not(.hm) .rbg b{color:#174D37!important}
 #app.lib .ppx .rbg{width:44px;height:44px;left:-6px;top:-2px}
 #app.lib .ppx .rbg .rib{width:44px;height:44px}
-#app.lib .ppx .rbg b{top:8px;font-size:16px;line-height:20px}
 #app.shp .vl3{color:#174D37!important}
 #app:is(.community,.community-detail,.home-feed) .bal button{color:#174D37!important;border-color:#9CB3A3!important}
 #app:is(.community,.community-detail,.home-feed) .pav2:not([style*="url("]),#app.pf .pfc>span:not([style*="url("]){background:#50675A!important;color:#FFFFFF!important}
@@ -3883,7 +3884,7 @@ body{font-size:var(--font-body)}
 #app.lib .ppx .pps .rdr{display:block;min-width:0;margin-top:4px!important;white-space:normal!important;word-break:keep-all;overflow-wrap:anywhere}
 #app.lib .ppx .pps .reader-status{display:inline-block;max-width:100%}
 #app.lib .ppx .rbg,#app.lib .ppx .rbg .rib{width:36px!important;height:36px!important}
-#app.lib .ppx .rbg b{top:6px;font-size:14px;line-height:18px}
+#app.lib .ppx .rbg b{font-size:14px}
 #app.lib .gnc{margin-top:0!important;row-gap:12px!important;column-gap:8px!important}
 #app.lib .gnt{gap:10px!important}
 #app.lib .gnt>span{width:min(60px,100%)!important;height:auto!important;aspect-ratio:1;margin-bottom:0!important}
@@ -5112,7 +5113,7 @@ function likeN(k){return Math.max(1,Math.round(LB[k][3]*.4+((k*37)%9)))+(HB[k]?1
 function popRank(){return LB.map(function(b,k){return k}).filter(function(k){return !!BD[k]}).sort(function(a,b){return LB[b][3]-LB[a][3]||likeN(b)-likeN(a)||LB[a][0].localeCompare(LB[b][0],"ko")})}
 function rankPg(){
  app.className="app";
- app.innerHTML='<div class="sh2"><button class="ib" id="rk0" aria-label="뒤로">'+ic("back")+'</button><h2>인기 급상승 오늘의 책</h2><span class="sp3"></span></div><div class="rkp">'+(function(){var R=popRank();return[1,0,2].map(function(i){var k=R[i];if(k===undefined)return'';var b=LB[k];return'<div class="bk rkt rk'+(i+1)+'" data-k="'+k+'" role="button" tabindex="0" aria-label="'+(i+1)+'위 '+esc(b[0])+'"><span class="rkb">'+(i+1)+'</span><div class="rkc"><div class="cv" data-bt="'+esc(b[0])+'" style="background:'+b[2]+'"></div><button class="hb" aria-pressed="'+(!!HB[k])+'" aria-label="찜하기">'+ic("heart")+'</button></div><p class="t">'+b[0]+'</p><small>'+b[3]+'명이 읽는 중</small></div>'}).join("")})()+'</div><div class="rkl">'+popRank().slice(3).map(function(k,j){var i=j+3,b=LB[k];return'<div class="bk rkr" data-k="'+k+'" role="button" tabindex="0"><b class="rkn">'+(i+1)+'</b><div class="cv" data-bt="'+esc(b[0])+'" style="background:'+b[2]+'"></div><div class="rki"><p class="t">'+b[0]+'</p><p class="a">'+b[1]+'</p><small>'+b[3]+'명이 읽는 중 · 찜 '+likeN(k)+'</small></div><button class="hb" aria-pressed="'+(!!HB[k])+'" aria-label="찜하기">'+ic("heart")+'</button></div>'}).join("")+'</div>';
+ app.innerHTML='<div class="sh2"><button class="ib" id="rk0" aria-label="뒤로">'+ic("back")+'</button><h2>인기 급상승 오늘의 책</h2><span class="sp3"></span></div><div class="rkp">'+(function(){var R=popRank();return[1,0,2].map(function(i){var k=R[i];if(k===undefined)return'';var b=LB[k];return'<div class="bk rkt rk'+(i+1)+'" data-k="'+k+'" role="button" tabindex="0" aria-label="'+(i+1)+'위 '+esc(b[0])+'"><span class="rkb"><span>'+(i+1)+'</span></span><div class="rkc"><div class="cv" data-bt="'+esc(b[0])+'" style="background:'+b[2]+'"></div><button class="hb" aria-pressed="'+(!!HB[k])+'" aria-label="찜하기">'+ic("heart")+'</button></div><p class="t">'+b[0]+'</p><small>'+b[3]+'명이 읽는 중</small></div>'}).join("")})()+'</div><div class="rkl">'+popRank().slice(3).map(function(k,j){var i=j+3,b=LB[k];return'<div class="bk rkr" data-k="'+k+'" role="button" tabindex="0"><b class="rkn">'+(i+1)+'</b><div class="cv" data-bt="'+esc(b[0])+'" style="background:'+b[2]+'"></div><div class="rki"><p class="t">'+b[0]+'</p><p class="a">'+b[1]+'</p><small>'+b[3]+'명이 읽는 중 · 찜 '+likeN(k)+'</small></div><button class="hb" aria-pressed="'+(!!HB[k])+'" aria-label="찜하기">'+ic("heart")+'</button></div>'}).join("")+'</div>';
  document.getElementById("rk0").onclick=library;lbWire(rankPg)}
 function lbWire(back){
  app.querySelectorAll(".bk").forEach(function(c){var k=+c.dataset.k;function go(){warn(function(){bookDt(k,back)})}c.onclick=function(e){if(!e.target.closest(".hb"))go()};c.onkeydown=function(e){if(e.key==="Enter"&&e.target===c)go()}});
