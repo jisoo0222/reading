@@ -2477,23 +2477,20 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.type-result .sc>.sh2:first-child{height:60px!important;min-height:60px!important;margin-bottom:20px!important}
 #app.type-result .sh2 h2{font-size:18px!important;font-weight:700}
 #app.type-result .tcard{margin:0;flex:none;overflow:hidden;background:var(--card);border:1px solid color-mix(in srgb,var(--ddti-card-accent) 25%,transparent);border-radius:15px}
-#app.type-result .ddti-recommendations{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:10px;padding:0 12px 12px}
-#app.type-result .ddti-recommendations>.ddti-recommendation{min-width:0;padding:10px;border:1px solid var(--bd-card);border-radius:12px;background:var(--bg)}
+#app.type-result .ddti-recommendations{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:0 12px 12px}
+#app.type-result .ddti-recommendations>.ddti-recommendation{min-width:0;padding:12px 10px;border:1px solid color-mix(in srgb,var(--ddti-card-accent) 28%,var(--ddti-card-tint));border-radius:12px;background:var(--ddti-card-tint);text-align:center}
 #app.type-result :is(.ddti-recommendations,.ddti-book-list) h3{margin:0 0 12px;color:var(--ink);font-size:16px;font-weight:750}
-.ddti-featured-book{display:grid;grid-template-columns:36px minmax(0,1fr);align-items:start;gap:8px;overflow-wrap:anywhere}
-.ddti-featured-book>i{position:relative;overflow:hidden;width:36px;aspect-ratio:3/4;border-radius:5px}
-.ddti-featured-book>span{display:grid;justify-items:start;gap:4px;min-width:0;font-size:14px}
+.ddti-featured-book{display:grid;justify-items:center;gap:8px;overflow-wrap:anywhere}
+.ddti-featured-book>i{position:relative;overflow:hidden;width:min(56px,100%);aspect-ratio:3/4;border-radius:5px}
+.ddti-featured-book>b{font-size:16px;line-height:1.35;word-break:keep-all}
+.ddti-featured-book .rbp{padding:4px 10px;background:var(--card);color:var(--ddti-card-accent);font-size:20px;line-height:1.15}
 #app.type-result .ddti-book-list{margin-top:24px;padding:16px;border:1px solid var(--bd-card);border-radius:15px;background:var(--card)}
 #app.type-result .ddti-book-list .rbx{margin:0;padding:0}
 #app.type-result .ddti-book-list .rbk{background:none!important;border-radius:0!important}
 #app.type-result .ddti-book-list .rbk+.rbk{border-top:1px solid var(--bd-card)!important}
-.ddti-mate-recommendation{display:grid;gap:8px}
-.ddti-mate-symbol{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--ddti-mate-bg);color:var(--ddti-mate-accent)}
-.ddti-mate-symbol .ic{width:24px;height:24px}
-.ddti-mate-copy{min-width:0;display:grid;gap:4px;word-break:keep-all}
-.ddti-mate-copy small{font-size:14px;font-weight:700;color:var(--sub)}
-.ddti-mate-copy strong{font-size:16px;color:var(--ink)}
-.ddti-mate-copy p{margin:0;font-size:14px;color:var(--sub);line-height:1.5}
+.ddti-mate-recommendation{display:grid;align-content:center;justify-items:center;gap:6px;word-break:keep-all;overflow-wrap:anywhere}
+.ddti-mate-recommendation b{font-size:22px;line-height:1.2;color:var(--ddti-card-accent)}
+.ddti-mate-recommendation strong{font-size:16px;line-height:1.4;color:var(--ink)}
 #app.type-result .tbt{justify-content:center;gap:8px;margin-top:16px}
 #app.type-result .tci{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--divider);border-radius:999px;background:var(--card);color:#267B58;font-size:14px;padding:8px 14px;min-height:max(48px,calc(49px / var(--fz,1)))}
 #app.type-result .tci .ic{width:16px;height:16px}
@@ -4374,24 +4371,23 @@ function typeSVG(key,t,names,withRecommendations){
   +(rec?'<g transform="translate('+inset+' '+baseHeight+')">'+rec.markup+'</g>':'')+'</svg>';
 }
 function ddtiRecommendationArt(key,width){
- var book=ddtiMatchBooks(key)[0],bookTitle=LB[book.k][0],mate=ddtiMateKey(key),mateName=T[mate][0],accent=DDTI_PROFILE_COLORS[mate][1];
- var gap=10,panelWidth=(width-gap)/2,mateX=panelWidth+gap,pad=12;
- var bookLines=qWrap(bookTitle,8),mateLines=qWrap(mateName,10),noteLines=['네 가지 독서 성향 중','세 가지가 같아요.'];
- var height=86+19*mateLines.length+17*noteLines.length;
+ var book=ddtiMatchBooks(key)[0],bookTitle=LB[book.k][0],mate=ddtiMateKey(key),mateName=T[mate][0],colors=DDTI_PROFILE_COLORS[key];
+ var gap=10,panelWidth=(width-gap)/2,bookX=panelWidth/2,mateX=panelWidth+gap;
+ var bookLines=qWrap(bookTitle,9),mateLines=qWrap(mateName,9),badgeY=120+bookLines.length*21;
+ var height=badgeY+45,mateTop=(height-32-mateLines.length*20)/2;
  var palette=THREE_BOOK_PALETTES[0].slice();palette[0]=getComputedStyle(app).getPropertyValue('--three-books-pink').trim()||'#FFBBD1';
  var cover=new DOMParser().parseFromString(coverSVG(book.k,null,false,120,160,palette),'text/html').body.firstElementChild;
- cover.setAttribute('width','36');cover.setAttribute('height','48');
- function panel(x){return '<rect x="'+(x+.5)+'" y="0.5" width="'+(panelWidth-1)+'" height="'+(height-1)+'" rx="12" fill="#F5F7F4" stroke="#D7E0D9"/>'}
- function line(text,x,y,attributes){return '<text x="'+x+'" y="'+y+'"'+(attributes?' '+attributes:'')+'>'+esc(text)+'</text>'}
- var markup='<g font-family="Pretendard, Apple SD Gothic Neo, Malgun Gothic, sans-serif" font-size="14" fill="#17241C">'
-  +panel(0)+line('추천하는 책',pad,24,'font-weight="700"')
-  +'<g transform="translate('+pad+' 39)">'+new XMLSerializer().serializeToString(cover)+'</g>'
-  +bookLines.map(function(row,i){return line(row,pad+45,52+i*19,'font-weight="700"')}).join('')
-  +line(book.p+'%',pad+45,56+bookLines.length*19,'fill="#174D37" font-weight="700"')
-  +panel(mateX)+line('추천 독서 메이트',mateX+pad,24,'font-weight="700"')
-  +line(mate,mateX+pad,49,'fill="'+accent+'" font-weight="700"')
-  +mateLines.map(function(row,i){return line(row,mateX+pad,69+i*19,'font-weight="700"')}).join('')
-  +noteLines.map(function(row,i){return line(row,mateX+pad,74+mateLines.length*19+i*17,'font-size="13" fill="#34483B"')}).join('')+'</g>';
+ cover.setAttribute('width','56');cover.setAttribute('height','74');
+ function panel(x){return '<rect x="'+(x+.5)+'" y="0.5" width="'+(panelWidth-1)+'" height="'+(height-1)+'" rx="12" fill="'+colors[0]+'" stroke="'+colors[1]+'" stroke-opacity=".28"/>'}
+ function line(text,x,y,size,color){return '<text x="'+x+'" y="'+y+'" font-size="'+size+'"'+(color?' fill="'+color+'"':'')+'>'+esc(text)+'</text>'}
+ var markup='<g font-family="Pretendard, Apple SD Gothic Neo, Malgun Gothic, sans-serif" font-weight="700" text-anchor="middle" fill="#17241C">'
+  +panel(0)+line('추천하는 책',bookX,25,15)
+  +'<g transform="translate('+(bookX-28)+' 36)">'+new XMLSerializer().serializeToString(cover)+'</g>'
+  +bookLines.map(function(row,i){return line(row,bookX,131+i*21,17)}).join('')
+  +'<rect x="'+(bookX-34)+'" y="'+badgeY+'" width="68" height="31" rx="15.5" fill="#FFFFFF"/>'
+  +line(book.p+'%',bookX,badgeY+22,20,colors[1])
+  +panel(mateX)+line(mate,mateX+bookX,mateTop+23,24,colors[1])
+  +mateLines.map(function(row,i){return line(row,mateX+bookX,mateTop+45+i*20,17)}).join('')+'</g>';
  return {height:height,markup:markup,label:'추천하는 책 '+bookTitle+'. 추천 독서 메이트 '+mate+' '+mateName+'.'};
 }
 function cardPNG(svg,cb,sc){sc=sc||1.5;var i=new Image();i.onload=function(){var c=document.createElement("canvas");c.width=i.width*sc;c.height=i.height*sc;var x=c.getContext("2d");x.scale(sc,sc);x.drawImage(i,0,0);c.toBlob(cb,"image/png")};i.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)}
@@ -4781,12 +4777,11 @@ function ddtiMateKey(key){return key.slice(0,2)+(key[2]==='D'?'W':'D')+key[3]}
 function recBox(key){
  return'<section class="ddti-book-list"><h3>추천 책 3권</h3><div class="rbx">'+ddtiMatchBooks(key).map(function(r,i){var b=LB[r.k];return'<div class="rbk rbw" data-k="'+r.k+'"><i data-art="1" aria-hidden="true">'+coverSVG(r.k,null,false,120,160,THREE_BOOK_PALETTES[i])+'</i><span><b>'+esc(b[0])+'<strong class="rbp">'+r.p+'%</strong></b><small>'+esc(b[1])+'</small>'+(r.m.length?'<em>'+r.m.join(" · ")+' 일치</em>':'')+'<p>'+(RWHY[r.k]||"")+'</p></span></div>'}).join("")+'</div></section>'}
 function ddtiRecommendations(key){
- var match=ddtiMatchBooks(key)[0],book=LB[match.k],mate=ddtiMateKey(key),colors=DDTI_PROFILE_COLORS[mate];
- return '<div class="ddti-recommendations"><section class="ddti-recommendation"><h3>추천하는 책</h3><div class="ddti-featured-book"><i aria-hidden="true">'+coverSVG(match.k,null,false,120,160,THREE_BOOK_PALETTES[0])+'</i><span><b>'+esc(book[0])+'</b><strong class="rbp">'+match.p+'%</strong></span></div></section>'
-  +'<section class="ddti-recommendation"><h3>추천 독서 메이트</h3><div class="ddti-mate-recommendation" style="--ddti-mate-bg:'+colors[0]+';--ddti-mate-accent:'+colors[1]+'">'
-  +'<span class="ddti-mate-symbol">'+ic("users")+'</span><div class="ddti-mate-copy"><small>'+mate+'</small><strong>'+esc(T[mate][0])+'</strong><p>네 가지 독서 성향 중 세 가지가 같아요.</p></div></div></section></div>';
+ var match=ddtiMatchBooks(key)[0],book=LB[match.k],mate=ddtiMateKey(key);
+ return '<div class="ddti-recommendations"><section class="ddti-recommendation"><h3>추천하는 책</h3><div class="ddti-featured-book"><i aria-hidden="true">'+coverSVG(match.k,null,false,120,160,THREE_BOOK_PALETTES[0])+'</i><b>'+esc(book[0])+'</b><strong class="rbp">'+match.p+'%</strong></div></section>'
+  +'<section class="ddti-recommendation ddti-mate-recommendation" aria-label="추천 독서 메이트"><b>'+mate+'</b><strong>'+esc(T[mate][0])+'</strong></section></div>';
 }
-function ddtiResultCard(c){return '<div class="tcard" style="--ddti-card-accent:'+DDTI_PROFILE_COLORS[c.key][1]+'">'+typeSVG(c.key,c.t,c.names)+ddtiRecommendations(c.key)+'</div>'}
+function ddtiResultCard(c){var colors=DDTI_PROFILE_COLORS[c.key];return '<div class="tcard" style="--ddti-card-tint:'+colors[0]+';--ddti-card-accent:'+colors[1]+'">'+typeSVG(c.key,c.t,c.names)+ddtiRecommendations(c.key)+'</div>'}
 function ddtiResultActions(key){
  return '<div class="tbt tbc"><button class="tci" id="tsv">'+ic('dl')+'이미지 저장</button><button class="tci" id="tsh">'+ic('share')+'공유하기</button></div>'+recBox(key);
 }
