@@ -3481,6 +3481,13 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.rd .cpt>span{width:44px;height:44px;background:var(--reader-soft);color:var(--reader-accent);border:0;border-radius:12px}
 #app.rd .cpt>span .ic{width:24px;height:24px;stroke-width:1.8}
 #app.rd .cpt:active{background:var(--reader-soft)}
+#app.rd .reader-comment-list{max-height:min(42dvh,340px);overflow-y:auto;overscroll-behavior-y:contain}
+#app.rd .reader-comment-row{display:grid;gap:4px;width:100%;min-height:64px;padding:12px 8px;border:0;border-bottom:1px solid var(--reader-line);background:transparent;color:var(--reader-ink);font:inherit;text-align:left;cursor:pointer}
+#app.rd .reader-comment-row:last-child{border-bottom:0}
+#app.rd .reader-comment-row:focus-visible{outline-offset:-3px}
+#app.rd .reader-comment-row b{font-size:14px;color:var(--reader-accent)}
+#app.rd .reader-comment-row span{font-size:14px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;word-break:keep-all}
+#app.rd .s[data-id]:focus{outline:2px solid var(--reader-accent);outline-offset:2px}
 #app.rd #cp .prg{padding:26px 0 0;background:transparent;color:var(--reader-muted)}
 #app.rd #cp .pr{color:var(--reader-muted);font:500 14px/1.5 Pretendard,sans-serif}
 #app.rd #cp .tk{height:6px;background:var(--reader-soft);border-radius:4px}
@@ -6055,8 +6062,8 @@ function pH(pi){return PAGES[pi].map(function(p,pj){return'<p class="pp'+(isHd(p
  function rt(){nmx();lf.innerHTML=pH(cur);gck();sbCheckpoint()}
  function gck(){if(BK>=0&&!BD[BK])return;var t=todayStr();if(RDY.d!==t)RDY={d:t,p:{},ok:0};RDY.p[BK+"-"+pg]=1;readToday();if(Object.keys(RDY.p).length>=Math.max(GOAL||0,PCFG.ACT.jeong.minGoal))award("jeong");if(GOAL&&!RDY.ok&&Object.keys(RDY.p).length>=GOAL){RDY.ok=1;ptToast("오늘의 목표 "+GOAL+"쪽을 달성했어요.","success",3200)}}
  function pr(){var pc=function(v){return v*100/TOT};document.getElementById("pg").innerHTML='<div class="pr"><span>'+pg+'p</span><div class="tk"><i style="width:'+pc(pg)+'%"></i><b class="th" style="left:'+pc(pg)+'%" role="slider" aria-label="진행도" aria-valuemin="1" aria-valuemax="'+TOT+'" aria-valuenow="'+pg+'"></b>'+BM.map(function(b){return'<button class="rb" data-p="'+b+'" style="left:'+pc(b)+'%" aria-label="'+b+'쪽 책갈피"></button>'}).join("")+MP.map(function(m){return'<em class="md" style="left:'+pc(mpg(m))+'%;background:'+m[2]+'" aria-label="'+m[0]+' '+mpg(m)+'쪽">'+m[0].charAt(0)+'</em>'}).join("")+'</div><span>'+TOT+'p</span></div><p class="pc">'+Math.round(pc(pg))+'% · '+MP.map(function(m){return m[0]+" "+mpg(m)+"p"}).join(" · ")+'</p>'}
- function fl(n){if(!busy&&n===PGN.length&&cur===PGN.length-1&&BK>=0&&BD[BK]){doneBk(BK);return}if(busy||n<0||n>=PGN.length||n===cur)return;busy=true;eid=null;var d=n>cur?1:-1;pg=PGN[n];
-  function fin(){cur=n;lf.style.transition="none";lf.style.transform="none";lf.classList.remove("flip");rt();un.innerHTML="";busy=false;pr()}
+  function fl(n,after){if(!busy&&n===PGN.length&&cur===PGN.length-1&&BK>=0&&BD[BK]){doneBk(BK);return}if(busy||n<0||n>=PGN.length||n===cur)return;busy=true;eid=null;var d=n>cur?1:-1;pg=PGN[n];
+   function fin(){cur=n;lf.style.transition="none";lf.style.transform="none";lf.classList.remove("flip");rt();un.innerHTML="";busy=false;pr();if(after)after()}
   if(S.m===1||matchMedia("(prefers-reduced-motion: reduce)").matches){fin();return}
   lf.classList.add("flip");
   if(d>0){un.innerHTML=pH(n);lf.style.transition="transform .6s ease";lf.style.transform="rotateY(-100deg)"}
@@ -6066,6 +6073,28 @@ function pH(pi){return PAGES[pi].map(function(p,pj){return'<p class="pp'+(isHd(p
  function spoilerSwitch(id,on,help){return'<div class="reader-switch-row"><div><b>스포 방지</b><small id="'+id+'-help">'+help+'</small></div>'+switchControl(id,'스포 방지',on,id+'-help')+'</div>'}
  function st(){so('<h3>읽기 설정</h3>'+sg("화면 모드","n",["낮","밤"])+sg("읽기 모드","m",["넘김","스크롤"])+sg("글자 크기","f",["작게","보통","크게"])+sg("글씨체","ff",["명조체","고딕"])+spoilerSwitch('reader-spoiler',S.s===0,'스포일러가 있는 코멘트를 가려요.'))}
  function commentEditor(quote){csp=false;so((quote?'<p class="sm lgq" style="margin:0 0 10px">“'+esc(quote)+'”</p>':'')+'<textarea id="ta" rows="3" placeholder="이 문장에 남길 코멘트" aria-label="코멘트"></textarea>'+spoilerSwitch('comment-spoiler',false,'이 쪽을 아직 읽지 않은 메이트에게 코멘트를 가려요.')+'<button class="btn" id="sv" style="width:100%">저장</button>')}
+  function commentList(){
+   var rows=[];
+   function add(id,page,name,text){
+    rows.push('<button type="button" class="reader-comment-row" data-comment-sentence="'+id+'"><b>'+PGN[page]+'쪽 · '+esc(name)+'</b><span>'+esc(text)+'</span></button>');
+   }
+   PAGES.forEach(function(page,pi){page.forEach(function(paragraph,pj){paragraph.forEach(function(sentence,si){
+    var id=pi+'-'+pj+'-'+si,own=my[id],mate=CM[sentence.c];
+    if(own)add(id,pi,'내 코멘트',own.t);
+    if(mate&&cmOK(mate.n))add(id,pi,mate.n+'님',S.s===0&&mate.sp?'스포 방지 중이라 숨겨져 있어요.':mate.t);
+   })})});
+   so('<h3>코멘트 모아보기</h3>'+(rows.length?'<div class="reader-comment-list" role="group" aria-label="이 책의 코멘트">'+rows.join('')+'</div>':'<p class="sm">이 책에 아직 코멘트가 없어요.</p>'));
+  }
+  function jumpToComment(id){
+   var page=Number(id.split('-')[0]);
+   function focusSentence(){requestAnimationFrame(function(){
+    var sentence=lf.querySelector('[data-id="'+id+'"]');
+    if(sentence){sentence.tabIndex=-1;sentence.focus({preventScroll:true});sentence.scrollIntoView({block:'center'})}
+   })}
+   if(busy)return;
+   sc();
+   if(page===cur)focusSentence();else fl(page,focusSentence);
+  }
  function nm(el){if(app.classList.contains("zen"))return;var k=+el.dataset.k;np.innerHTML='<div class="who"><i style="background:'+AVC[k%4]+'">'+esc(CH[k][0]).charAt(0)+'</i>'+esc(CH[k][0])+'</div><p>'+esc(CH[k][1])+'</p>';np.classList.add("on");
   var a=app.getBoundingClientRect(),r=el.getBoundingClientRect(),w=np.offsetWidth,h=np.offsetHeight,l=Math.min(Math.max(8,r.left-a.left+r.width/2-w/2),a.width-w-8),t=r.top-a.top-h-8;if(t<8)t=r.bottom-a.top+8;np.style.left=l+"px";np.style.top=t+"px"}
  function nmx(){np.classList.remove("on")}
@@ -6164,6 +6193,7 @@ function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':(typeof
  sheet.addEventListener("click",function(e){
   var b=e.target.closest("button");if(!b)return;
   if(b.classList.contains("cl"))sc();
+   else if(b.dataset.commentSentence)jumpToComment(b.dataset.commentSentence);
   else if(b.dataset.ed!==undefined)addc(+b.dataset.ed);
   else if(b.dataset.del!==undefined){CH.splice(+b.dataset.del,1);rt();dic()}
   else if(b.id==="ca")addc()
@@ -6188,7 +6218,7 @@ function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':(typeof
   var n=at(e.clientX);show(n);tk.setPointerCapture(e.pointerId);
   tk.onpointermove=function(v){n=at(v.clientX);show(n)};
   tk.onpointerup=tk.onpointercancel=function(){tk.onpointermove=tk.onpointerup=tk.onpointercancel=null;if(n!==cur){eid=null;nmx();cur=n;pg=PGN[n];rt();un.innerHTML=""}pr()}});
- var CPT=[["hl","형광펜","ul"],["memo","스티커","memo"],["wd","단어 사전","dict"],["ch","인물 사전","person"],["sh","책 공유","bksh"]];
+ var CPT=[["hl","형광펜","ul"],["memo","스티커","memo"],["wd","단어 사전","dict"],["ch","인물 사전","person"],["comments","코멘트 모아보기","chat"],["sh","책 공유","bksh"]];
  var cp=document.createElement("div");cp.id="cp";cp.setAttribute("role","dialog");cp.setAttribute("aria-label","읽기 도구");
  cp.innerHTML='<div class="cph" id="cph"><i></i></div><div class="cpg">'+CPT.map(function(t){return'<button class="cpt" data-a="'+t[0]+'"><span>'+ic(t[2])+'</span>'+t[1]+'</button>'}).join("")+'</div>';
  cp.appendChild(document.getElementById("pg"));
@@ -6218,7 +6248,7 @@ function mcls(i){return typeof i==="number"&&i>=0?' class="psk ps'+i+'"':(typeof
   if(a==="hl")hlPop();else if(a==="cm")tset(3);else if(a==="memo")memo();
   else if(a==="bm"){var i=BM.indexOf(pg);i>-1?BM.splice(i,1):BM.push(pg);rt();pr();toast(i>-1?pg+"쪽 책갈피를 뺐어요.":pg+"쪽에 책갈피를 꽂았어요.")}
   else if(a==="wd"){so('<h3 class="dh">단어 사전</h3><form class="dsr" role="search"><input id="wi" type="search" placeholder="찾을 단어를 입력하세요" aria-label="찾을 단어" autocomplete="off"><button aria-label="검색">'+ic("search")+'</button></form><div id="wr" aria-live="polite"></div>');wsr();document.getElementById("wi").focus()}
-  else if(a==="ch")dic();else if(a==="sh"){bookShare(BT,BK>=0?LB[BK][1]:"",BK>=0?LB[BK][2]:"#6A4F6A")}};
+   else if(a==="ch")dic();else if(a==="comments")commentList();else if(a==="sh"){bookShare(BT,BK>=0?LB[BK][1]:"",BK>=0?LB[BK][2]:"#6A4F6A")}};
  function selRange(){var s=window.getSelection();if(!s||!s.rangeCount||s.isCollapsed)return null;var r=s.getRangeAt(0);return lf.contains(r.commonAncestorContainer)&&String(s).trim()?r:null}
  function selHide(){selb.classList.remove("on")}
  function selShow(){
