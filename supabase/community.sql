@@ -122,6 +122,11 @@ begin
   select coalesce(jsonb_agg(public.ddok_post_json(x.id,u) order by x.created_at desc),'[]') into result
   from (select id,created_at from public.ddok_posts where public.ddok_post_visible(id,u) order by created_at desc limit 100) x;
   return result;
+ elsif p_action='my_posts' then
+  if u is null or not exists(select 1 from auth.users where id=u) then raise exception 'login_required' using errcode='42501';end if;
+  select coalesce(jsonb_agg(public.ddok_post_json(x.id,u) order by x.created_at desc),'[]') into result
+  from public.ddok_posts x where x.author_id=u and public.ddok_post_visible(x.id,u);
+  return result;
  elsif p_action='detail' then
   p:=(p_data->>'id')::uuid;
   if not public.ddok_post_visible(p,u) then raise exception 'content_unavailable' using errcode='42501'; end if;

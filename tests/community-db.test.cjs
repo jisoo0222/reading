@@ -29,7 +29,10 @@ async function main(){
  const first=(await rpc('create_post',{kind:'자유',body:'첫 글',visibility:0})).id;
  const privatePost=(await rpc('create_post',{kind:'자유',body:'비공개 글',visibility:2})).id;
  const friendPost=(await rpc('create_post',{kind:'자유',body:'친구 글',visibility:1})).id;
+ assert.deepEqual((await rpc('my_posts',{user_id:b})).map(p=>p.id).sort(),[first,privatePost,friendPost].sort());checks++;
  await as(b);assert.equal((await rpc('feed')).length,1);checks++;
+ assert.deepEqual(await rpc('my_posts',{user_id:a}),[]);checks++;
+ await as(null,'anon');await deny(()=>rpc('my_posts',{user_id:a}),'guest archive');await as(b);
  await deny(()=>rpc('detail',{id:privatePost}),'private');await deny(()=>rpc('detail',{id:friendPost}),'not friends');
  await deny(()=>rpc('delete_post',{id:first}),'other post');await deny(()=>db.query('select * from public.ddok_reports'),'reports RLS');
  const comment=(await rpc('create_comment',{post_id:first,body:'댓글'})).id;
