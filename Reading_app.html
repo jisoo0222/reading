@@ -2480,9 +2480,9 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.type-result .ddti-recommendations{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:0 12px 12px}
 #app.type-result .ddti-recommendations>.ddti-recommendation{display:grid;grid-template-rows:auto 1fr;min-width:0;padding:12px 10px;border:1px solid color-mix(in srgb,var(--ddti-card-accent) 28%,var(--ddti-card-tint));border-radius:12px;background:var(--ddti-card-tint);text-align:center}
 #app.type-result :is(.ddti-recommendations,.ddti-book-list) h3{margin:0 0 12px;color:var(--ink);font-size:16px;font-weight:750}
-.ddti-featured-book{display:grid;grid-template-columns:min(44px,38%) minmax(0,1fr);align-items:center;gap:7px;overflow-wrap:anywhere}
-.ddti-featured-book>i{position:relative;overflow:hidden;width:100%;aspect-ratio:3/4;border-radius:5px}
-.ddti-featured-copy{display:grid;justify-items:end;gap:5px;min-width:0;text-align:right}
+.ddti-featured-book{display:flex;align-items:center;justify-content:center;gap:6px;overflow-wrap:anywhere}
+.ddti-featured-book>i{position:relative;overflow:hidden;flex:none;width:44px;max-width:38%;aspect-ratio:3/4;border-radius:5px}
+.ddti-featured-copy{display:grid;justify-items:start;gap:5px;min-width:0;text-align:left}
 .ddti-featured-copy>b{font-size:15px;line-height:1.35;word-break:keep-all}
 .ddti-featured-book .rbp{padding:3px 7px;background:var(--card);color:var(--ddti-card-accent);font-size:17px;line-height:1.15}
 #app.type-result .ddti-book-list{margin-top:24px;padding:16px;border:1px solid var(--bd-card);border-radius:15px;background:var(--card)}
@@ -4374,9 +4374,12 @@ function typeSVG(key,t,names,withRecommendations){
 }
 function ddtiRecommendationArt(key,width){
  var book=ddtiMatchBooks(key)[0],bookTitle=LB[book.k][0],mate=ddtiMateKey(key),mateName=T[mate][0],colors=DDTI_PROFILE_COLORS[key];
- var gap=10,panelWidth=(width-gap)/2,mateX=panelWidth+gap,mateCenter=mateX+panelWidth/2,pad=11;
+ var gap=10,panelWidth=(width-gap)/2,mateX=panelWidth+gap,mateCenter=mateX+panelWidth/2;
  var bookLines=qWrap(bookTitle,6),mateLines=qWrap(mateName,9),height=122;
- var middleY=(34+height)/2,bookEnd=panelWidth-pad;
+ var textMetrics=document.createElement('canvas').getContext('2d');
+ textMetrics.font='700 15px "Malgun Gothic", sans-serif';
+ var copyWidth=Math.max(53,...bookLines.map(function(row){return textMetrics.measureText(row).width}));
+ var coverX=(panelWidth-44-6-copyWidth)/2,copyX=coverX+44+6,middleY=(34+height)/2;
  var bookTop=middleY-(18*bookLines.length+28)/2,badgeY=bookTop+18*bookLines.length+4;
  var mateTop=middleY-(31+mateLines.length*19)/2;
  var palette=THREE_BOOK_PALETTES[0].slice();palette[0]=getComputedStyle(app).getPropertyValue('--three-books-pink').trim()||'#FFBBD1';
@@ -4386,10 +4389,10 @@ function ddtiRecommendationArt(key,width){
  function line(text,x,y,size,color){return '<text x="'+x+'" y="'+y+'" dominant-baseline="central" font-size="'+size+'"'+(color?' fill="'+color+'"':'')+'>'+esc(text)+'</text>'}
  var markup='<g font-family="Pretendard, Apple SD Gothic Neo, Malgun Gothic, sans-serif" font-weight="700" fill="#17241C">'
   +panel(0)+'<g text-anchor="middle">'+line('추천하는 책',panelWidth/2,20,15)+'</g>'
-  +'<g transform="translate('+pad+' '+(middleY-59/2)+')">'+new XMLSerializer().serializeToString(cover)+'</g>'
-  +'<g text-anchor="end">'+bookLines.map(function(row,i){return line(row,bookEnd,bookTop+9+i*18,15)}).join('')+'</g>'
-  +'<rect x="'+(bookEnd-53)+'" y="'+badgeY+'" width="53" height="24" rx="12" fill="#FFFFFF"/>'
-  +'<g text-anchor="middle">'+line(book.p+'%',bookEnd-26.5,badgeY+12,17,colors[1])+'</g>'
+  +'<g transform="translate('+coverX+' '+(middleY-59/2)+')">'+new XMLSerializer().serializeToString(cover)+'</g>'
+  +bookLines.map(function(row,i){return line(row,copyX,bookTop+9+i*18,15)}).join('')
+  +'<rect x="'+copyX+'" y="'+badgeY+'" width="53" height="24" rx="12" fill="#FFFFFF"/>'
+  +'<g text-anchor="middle">'+line(book.p+'%',copyX+26.5,badgeY+12,17,colors[1])+'</g>'
   +panel(mateX)+'<g text-anchor="middle">'+line('잘 맞는 DDTI',mateCenter,20,15)+line(mate,mateCenter,mateTop+13,22,colors[1])
   +mateLines.map(function(row,i){return line(row,mateCenter,mateTop+40.5+i*19,16)}).join('')+'</g></g>';
  return {height:height,markup:markup,label:'추천하는 책 '+bookTitle+'. 추천 독서 메이트 '+mate+' '+mateName+'.'};
