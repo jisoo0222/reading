@@ -4382,8 +4382,7 @@ function ddtiRecommendationArt(key,width){
  var coverX=(panelWidth-44-6-copyWidth)/2,copyX=coverX+44+6,middleY=(34+height)/2;
  var bookTop=middleY-(18*bookLines.length+28)/2,badgeY=bookTop+18*bookLines.length+4;
  var mateTop=middleY-(31+mateLines.length*19)/2;
- var palette=THREE_BOOK_PALETTES[0].slice();palette[0]=getComputedStyle(app).getPropertyValue('--three-books-pink').trim()||'#FFBBD1';
- var cover=new DOMParser().parseFromString(coverSVG(book.k,null,false,120,160,palette),'text/html').body.firstElementChild;
+ var cover=new DOMParser().parseFromString(coverSVG(book.k),'text/html').body.firstElementChild;
  cover.setAttribute('width','44');cover.setAttribute('height','59');
  function panel(x){return '<rect x="'+(x+.5)+'" y="0.5" width="'+(panelWidth-1)+'" height="'+(height-1)+'" rx="12" fill="'+colors[0]+'" stroke="'+colors[1]+'" stroke-opacity=".28"/>'}
  function line(text,x,y,size,color){return '<text x="'+x+'" y="'+y+'" dominant-baseline="central" font-size="'+size+'"'+(color?' fill="'+color+'"':'')+'>'+esc(text)+'</text>'}
@@ -4782,10 +4781,10 @@ function ddtiMatchBooks(key){
 }
 function ddtiMateKey(key){return key.slice(0,2)+(key[2]==='D'?'W':'D')+key[3]}
 function recBox(key){
- return'<section class="ddti-book-list"><h3>추천 책 3권</h3><div class="rbx">'+ddtiMatchBooks(key).map(function(r,i){var b=LB[r.k];return'<div class="rbk rbw" data-k="'+r.k+'"><i data-art="1" aria-hidden="true">'+coverSVG(r.k,null,false,120,160,THREE_BOOK_PALETTES[i])+'</i><span><b>'+esc(b[0])+'<strong class="rbp">'+r.p+'%</strong></b><small>'+esc(b[1])+'</small>'+(r.m.length?'<em>'+r.m.join(" · ")+' 일치</em>':'')+'<p>'+(RWHY[r.k]||"")+'</p></span></div>'}).join("")+'</div></section>'}
+ return'<section class="ddti-book-list"><h3>추천 책 3권</h3><div class="rbx">'+ddtiMatchBooks(key).map(function(r){var b=LB[r.k];return'<div class="rbk rbw" data-k="'+r.k+'"><i data-art="1" aria-hidden="true">'+coverSVG(r.k)+'</i><span><b>'+esc(b[0])+'<strong class="rbp">'+r.p+'%</strong></b><small>'+esc(b[1])+'</small>'+(r.m.length?'<em>'+r.m.join(" · ")+' 일치</em>':'')+'<p>'+(RWHY[r.k]||"")+'</p></span></div>'}).join("")+'</div></section>'}
 function ddtiRecommendations(key){
  var match=ddtiMatchBooks(key)[0],book=LB[match.k],mate=ddtiMateKey(key);
- return '<div class="ddti-recommendations"><section class="ddti-recommendation"><h3>추천하는 책</h3><div class="ddti-featured-book"><i aria-hidden="true">'+coverSVG(match.k,null,false,120,160,THREE_BOOK_PALETTES[0])+'</i><div class="ddti-featured-copy"><b>'+esc(book[0])+'</b><strong class="rbp">'+match.p+'%</strong></div></div></section>'
+ return '<div class="ddti-recommendations"><section class="ddti-recommendation"><h3>추천하는 책</h3><div class="ddti-featured-book"><i aria-hidden="true">'+coverSVG(match.k)+'</i><div class="ddti-featured-copy"><b>'+esc(book[0])+'</b><strong class="rbp">'+match.p+'%</strong></div></div></section>'
   +'<section class="ddti-recommendation ddti-mate-recommendation"><h3>잘 맞는 DDTI</h3><div class="ddti-mate-copy"><b>'+mate+'</b><strong>'+esc(T[mate][0])+'</strong></div></section></div>';
 }
 function ddtiResultCard(c){var colors=DDTI_PROFILE_COLORS[c.key];return '<div class="tcard" style="--ddti-card-tint:'+colors[0]+';--ddti-card-accent:'+colors[1]+'">'+typeSVG(c.key,c.t,c.names)+ddtiRecommendations(c.key)+'</div>'}
