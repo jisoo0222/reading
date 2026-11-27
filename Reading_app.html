@@ -3356,7 +3356,11 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.signup-intro .tin>.ddti-art{position:relative;width:min(184px,100%);aspect-ratio:184/156;flex:none;margin:0 0 22px}
 .ddti-art::before{content:'';position:absolute;left:57%;top:53%;width:36%;height:14%;border:3px solid var(--pri);border-radius:999px;background:linear-gradient(90deg,var(--pri) 23%,var(--three-books-yellow) 23%);transform:rotate(45deg);transform-origin:left center}
 .ddti-lens{position:absolute;left:14%;top:5%;width:59%;aspect-ratio:1;display:grid;place-items:center;border:6px solid var(--pri);border-radius:50%;background:#F7FCF8;box-shadow:inset 0 0 0 3px #C8DED1;color:var(--pri)}
-.ddti-lens .ic{width:46%;height:46%;stroke-width:1.65}
+.ddti-lens i,.ddti-lens i::before,.ddti-lens i::after{position:absolute;height:5%;border-radius:999px;background:#7BA490}
+.ddti-lens i{width:48%;top:48%;left:26%}
+.ddti-lens i::before,.ddti-lens i::after{content:'';left:0;height:100%}
+.ddti-lens i::before{width:78%;top:-285%}
+.ddti-lens i::after{width:65%;top:285%}
 #app.signup-intro .tin h1{font-size:24px;font-weight:750;line-height:1.4;letter-spacing:-.035em;color:#17241C}
 #app.signup-intro .tin .hint{margin-top:12px;color:#34483B;font-size:14px;line-height:1.65}
 #app.signup-intro .tsk{min-height:48px;font-size:14px;color:var(--tx3);margin-top:2px;text-decoration:underline;text-underline-offset:4px}
@@ -4345,7 +4349,7 @@ function goal(){
  nx.onclick=tiIntro}
 function tiIntro(){
  app.className="app signup signup-intro";
- var art='<div class="ddti-art" aria-hidden="true"><span class="ddti-lens">'+ic('book')+'</span></div>';
+ var art='<div class="ddti-art" aria-hidden="true"><span class="ddti-lens"><i></i></span></div>';
  app.innerHTML=signupHeader()+ost(3)+'<div class="tin">'+art
  +'<h1>나의 DDTI 알아보기</h1><p class="hint tis"><span>네 가지 질문에 답하면</span><span>취향에 맞는 책을 추천해요.</span></p><button class="tsk" id="tsk" type="button">검사 건너뛰기</button></div>'
  +'<div class="foot"><button class="btn ghost" id="tib">이전</button><button class="btn" id="tig">시작하기</button></div>';
