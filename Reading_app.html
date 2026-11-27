@@ -1290,8 +1290,8 @@ button.cd.on{padding:0!important}
 .hd.hgt .hgd{top:22px!important}
 
 /* 알림: 모두 읽음 */
-.nall{flex:none;font:inherit;font-size:14px;font-weight:700;color:var(--pri);background:none;border:0;padding:8px 4px;cursor:pointer;white-space:nowrap}
-.nall:disabled{color:var(--sub);opacity:.5;cursor:default}
+.nall{flex:none;font:inherit;font-size:14px;font-weight:600;color:var(--pri);background:var(--card);border:1px solid var(--pri);border-radius:10px;padding:8px 10px;cursor:pointer;white-space:nowrap}
+.nall:disabled{color:var(--tx3);background:var(--bg);border-color:var(--bd);cursor:default}
 
 /* 직접 꾸미기: 오른쪽 세로 굵기 바 */
 .pwb{position:absolute;left:10px;top:50%;transform:translateY(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px 8px;background:var(--card);border:1.5px solid var(--line);border-radius:999px;box-shadow:0 2px 8px rgba(31,30,30,.1)}
@@ -3753,8 +3753,7 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.calendar-page .lge{margin:0;padding:0;line-height:1.7}
 /* 알림: 최신 디자인 시스템의 카드·간격·색상을 화면 안에서 적용해요. */
 #app.notification-page .sc>.sh2.concept-heading{--header-side:80px;margin-bottom:24px!important;gap:0}
-#app.notification-page .nall{justify-self:end;min-height:48px;padding:0;font-size:14px;font-weight:600;color:var(--strong)}
-#app.notification-page .nall:disabled{color:var(--tx3);opacity:.5}
+#app.notification-page .nall{justify-self:end;min-height:48px}
 #app.notification-page .ntm{gap:12px;padding:20px;margin:0 0 16px;background:var(--card);border:1px solid var(--line);border-radius:15px;box-shadow:none}
 #app.notification-page .nti{width:40px!important;height:40px!important;border-radius:12px;background:var(--soft);color:var(--strong)}
 #app.notification-page .nti .ic{width:30px!important;height:30px!important}
