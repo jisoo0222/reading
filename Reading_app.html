@@ -2536,7 +2536,6 @@ body:has(.app.hso) #pawf{display:none!important}
 .point-history .points-heading{display:flex;align-items:center;gap:12px;margin-bottom:20px}
 .point-history .points-symbol{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid #A9BDB0;border-radius:50%;font-size:22px;font-weight:750;color:#174D37;background:#EAF0E9}
 .point-history .points-heading h3{margin:0;font-size:20px;line-height:1.4;color:#17241C}
-.point-history .points-heading p{margin:4px 0 0;font-size:14px;line-height:1.5;color:#34483B;word-break:keep-all}
 .point-history .points-wallet{padding:20px;background:#174D37;border-radius:15px;color:#FFFFFF;display:flex;flex-direction:column;gap:8px}
 .point-history .points-wallet>span{font-size:14px;line-height:1.5}
 .point-history .points-wallet strong{font-size:32px;line-height:1.25;font-weight:750;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
@@ -2544,7 +2543,6 @@ body:has(.app.hso) #pawf{display:none!important}
 .point-history .point-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0 24px;padding:0;border:0}
 .point-history .point-summary>div{display:flex;flex-direction:column;gap:8px;padding:14px 12px;background:#EFF3EF;border-radius:10px;min-width:0}
 .point-history .point-summary>div>span{display:flex;align-items:center;gap:4px;font-size:14px;line-height:1.5;color:#34483B;flex-wrap:wrap}
-.point-history .point-summary .ic{width:16px;height:16px;flex:none}
 .point-history .point-summary strong{font-size:24px;line-height:1.3;color:#17241C;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .point-history .point-summary>div:first-child strong{color:#174D37}
 .point-history .points-list-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-bottom:12px;border-bottom:1px solid #D7E0D9}
@@ -2561,11 +2559,10 @@ body:has(.app.hso) #pawf{display:none!important}
 .point-history .point-ledger strong{font-size:18px;line-height:1.5;font-weight:750;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;margin-left:auto}
 .point-history .point-ledger strong small{display:inline;margin-top:0;color:inherit}
 .point-history .point-earned{color:#174D37}.point-history .point-spent{color:#17241C}
-.point-history .points-empty{padding:24px 8px;text-align:center;display:flex;align-items:center;flex-direction:column;gap:8px}
+.point-history .points-empty{margin-bottom:24px;padding:24px 8px;text-align:center;display:flex;align-items:center;flex-direction:column;gap:8px}
 .point-history .points-empty>span{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#EFF3EF;color:#526A5B}
 .point-history .points-empty .ic{width:24px;height:24px}
 .point-history .points-empty b{font-size:16px;line-height:1.5;color:#17241C}
-.point-history .points-empty p{margin:0;font-size:14px;line-height:1.6;color:#34483B;word-break:keep-all}
 .point-history #points-close{width:100%;min-height:48px;height:auto;margin-top:16px;padding:12px;font-size:16px;position:sticky;bottom:0;background:#FFFFFF;border:1px solid #A9BDB0;color:#174D37}
 
 #app.shp .vl3{display:inline-flex;align-items:center;justify-content:center;gap:3px}
@@ -2773,10 +2770,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.hm .cx-day.is-today span{background:#3E9370;color:white;box-shadow:0 0 0 3px #F7F6F0,0 0 0 4px #3E937050}
 #app.hm .cx-day .ic{width:18px;height:18px}
 #app.hm .cx-weeknote{font-size:14px;color:#586858;margin:14px 0 0;line-height:1.65}
-#app.hm .cx-points{display:flex;align-items:center;gap:11px;margin:23px 0 30px;padding:15px 0;border:0;border-top:1px solid #DDE2D4;border-bottom:1px solid #DDE2D4;width:100%;background:none;text-align:left;color:#253B30;min-height:58px}
-#app.hm .cx-pointmark{width:31px;height:31px;display:grid;place-items:center;flex:none;border-radius:50%;background:#EFE6BE;color:#6A5C2D;font:600 14px Pretendard,sans-serif}
-#app.hm .cx-points b{font-size:14px;font-weight:500;flex:1}.cx-points strong{color:#28674B}
-#app.hm .cx-points>.ic{width:16px;height:16px;color:#63735F}
 #app.hm .cx-books{margin:0 -24px;padding:0 0 25px}
 #app.hm .cx-books .cx-sectionhead{padding:0 24px;margin-bottom:13px}
 #app.hm .cx-booklist{display:flex;gap:17px;overflow-x:auto;padding:0 24px 15px;scroll-snap-type:x mandatory;scrollbar-width:none}
@@ -2827,11 +2820,6 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.hm .cx-readfoot>span b{margin-top:3px;font-size:14px}
 #app.hm .cx-continue{background:#28674E;color:#FFFFFF;border-radius:13px;min-height:49px;padding:0 16px;font-size:14px}
 #app.hm .cx-continue .ic{width:15px;height:15px}
-#app.hm .cx-points{margin:12px 0 27px;padding:15px 18px;border:0;border-radius:17px;background:#E5EAE7;position:relative;overflow:hidden}
-#app.hm .cx-pointmark{width:40px;height:40px;background:none;border:2px solid #8A9C90;color:#4E6A57;font-size:19px;font-weight:500;position:relative}
-#app.hm .cx-pointmark:after{content:'';position:absolute;inset:4px;border:1px solid #A7B6AC;border-radius:50%}
-#app.hm .cx-points b{font-size:14px;font-weight:600;color:#344439}
-#app.hm .cx-points strong{display:block;margin-top:4px;font-size:14px;font-weight:500;color:#52685A}
 #app.hm .cx-week{margin:26px 0 0;padding:19px 16px 17px;border-radius:17px;background:#FFFFFF}
 #app.hm .cx-sectionhead{margin-bottom:14px}
 #app.hm .cx-sectionhead h2{font-size:15px;font-weight:600;color:#303B33}
@@ -2871,12 +2859,10 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.hm .cx-inline-meter i{background:#174D37}
 #app.hm .cx-continue{background:#174D37;color:#FFFFFF}
 #app.hm .cx-readfoot{margin-top:22px}
-#app.hm .cx-link,#app.hm .cx-day small,#app.hm .cx-day span,#app.hm .cx-post footer,#app.hm .cx-points strong{color:#34483B}
+#app.hm .cx-link,#app.hm .cx-day small,#app.hm .cx-day span,#app.hm .cx-post footer{color:#34483B}
 #app.hm .cx-day.is-read span{color:#213C2B}
 #app.hm .cx-day.is-today span{background:#174D37;color:#FFFFFF}
-#app.hm .cx-points b{color:#17241C}
-#app.hm .cx-pointmark{border-color:#4B6655;color:#253F2E}
-#app.hm .cx-points>.ic,#app.hm .cx-notice{color:#34483B}
+#app.hm .cx-notice{color:#34483B}
 
 #app.hm .cx-readbody h2{font-size:30px;font-weight:750;letter-spacing:-.8px}
 #app.hm .cx-read-cover{top:-27px}
@@ -2896,9 +2882,16 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.hm .cx-sectionhead h2{font-size:14px;line-height:1.4;font-weight:600}
 #app.hm .cx-link{min-height:36px;padding:0}
 #app.hm .cx-week .cx-days{gap:8px}
-#app.hm .cx-points{gap:12px;text-align:left}
-#app.hm .cx-points b{font-size:14px;line-height:1.4;font-weight:600}
-#app.hm .cx-points strong{margin-top:5px;font-size:14px;line-height:1.5;font-weight:500}
+#app.hm .cx-points{display:grid;gap:16px;border:1px solid var(--bd-card);text-align:left;color:var(--ink);cursor:pointer}
+#app.hm .cx-points-summary{display:flex;align-items:center;gap:12px;min-width:0}
+#app.hm .cx-pointmark{width:48px;height:48px;flex:none;border-radius:12px;background:var(--three-books-yellow);color:var(--state-warning);font-size:24px;font-weight:750}
+#app.hm .cx-points-copy{display:grid;flex:1;min-width:0;gap:4px}
+#app.hm .cx-points-copy>b{font-size:14px;font-weight:650;color:var(--ink)}
+#app.hm .cx-points-value{display:flex;align-items:baseline;flex-wrap:wrap;column-gap:5px;font-size:14px;color:var(--tx3);font-variant-numeric:tabular-nums}
+#app.hm .cx-points-value strong{font-size:24px;font-weight:750;line-height:1.15;color:var(--pri)}
+#app.hm .cx-points-summary>.ic{width:var(--icon-inline);height:var(--icon-inline);flex:none;color:var(--sub)}
+#app.hm .cx-points-track{display:block;height:6px;background:var(--soft);overflow:hidden;border-radius:999px}
+#app.hm .cx-points-track i{display:block;height:100%;border-radius:inherit;background:var(--pri)}
 #app.hm .cx-post{padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
 #app.hm .cx-post p{margin:0 0 16px}
 #app.hm .cx-post footer{margin:0;line-height:1.5}
@@ -3348,14 +3341,16 @@ OTHER DEALINGS IN THE FONT SOFTWARE.
 #app.signup-goal .gw{flex:none;height:var(--goal-wheel-step);line-height:var(--goal-wheel-step)}
 #app.signup-goal #gsr{flex:none;height:48px;background:transparent;color:#174D37}
 
-/* DDTI 소개는 도서관과 같은 표지 그림을 사용해요. */
+/* DDTI 소개의 돋보기 */
 #app.signup-intro .tin{margin:0;padding:24px 20px;background:#DAEAE1;border-radius:15px;flex:1 0 auto;min-height:320px;justify-content:center}
-#app.signup-intro .tin>.ddti-art{position:relative;width:min(242px,100%);aspect-ratio:242/158;flex:none;margin:0 0 22px}
-.ddti-art-cover{position:absolute;top:10%;width:37%;border-radius:7px;overflow:hidden;box-shadow:0 5px 10px #174D3733}
-.ddti-art-cover:nth-child(1){left:12%;transform:rotate(-15deg) scale(.92)}
-.ddti-art-cover:nth-child(2){right:12%;transform:rotate(15deg) scale(.92)}
-.ddti-art-cover:nth-child(3){top:4%;left:30%;width:40%;transform:rotate(-4deg)}
-.ddti-art-cover .cva{position:static;display:block;width:100%;height:auto;margin:0}
+#app.signup-intro .tin>.ddti-art{position:relative;width:min(208px,100%);aspect-ratio:208/158;flex:none;margin:0 0 22px}
+.ddti-art::before{content:'';position:absolute;left:57%;top:66%;width:33%;height:15%;border:3px solid var(--pri);border-radius:7px 999px 999px 7px;background:var(--three-books-yellow);transform:rotate(43deg);transform-origin:14% 50%}
+.ddti-lens{position:absolute;left:18%;top:6%;width:55%;aspect-ratio:1;border:8px solid var(--pri);border-radius:50%;background:#F7FCF8;box-shadow:inset 0 0 0 4px #C8DED1,0 4px 12px #174D3726}
+.ddti-lens i,.ddti-lens i::before,.ddti-lens i::after{position:absolute;height:5%;border-radius:999px;background:#7BA490}
+.ddti-lens i{width:48%;top:48%;left:26%}
+.ddti-lens i::before,.ddti-lens i::after{content:'';left:0;height:100%}
+.ddti-lens i::before{width:78%;top:-285%}
+.ddti-lens i::after{width:65%;top:285%}
 #app.signup-intro .tin h1{font-size:24px;font-weight:750;line-height:1.4;letter-spacing:-.035em;color:#17241C}
 #app.signup-intro .tin .hint{margin-top:12px;color:#34483B;font-size:14px;line-height:1.65}
 #app.signup-intro .tsk{min-height:48px;font-size:14px;color:var(--tx3);margin-top:2px;text-decoration:underline;text-underline-offset:4px}
@@ -4344,9 +4339,7 @@ function goal(){
  nx.onclick=tiIntro}
 function tiIntro(){
  app.className="app signup signup-intro";
- var art='<div class="ddti-art" aria-hidden="true">'+[[0,'stars'],[2,'leaf'],[1,'compass']].map(function(cover){
-  return '<span class="ddti-art-cover">'+coverSVG(cover[0],cover[1],true,107,154.12,THREE_BOOK_PALETTES[cover[0]])+'</span>'
- }).join('')+'</div>';
+ var art='<div class="ddti-art" aria-hidden="true"><span class="ddti-lens"><i></i></span></div>';
  app.innerHTML=signupHeader()+ost(3)+'<div class="tin">'+art
  +'<h1>나의 DDTI 알아보기</h1><p class="hint tis"><span>네 가지 질문에 답하면</span><span>취향에 맞는 책을 추천해요.</span></p><button class="tsk" id="tsk" type="button">검사 건너뛰기</button></div>'
  +'<div class="foot"><button class="btn ghost" id="tib">이전</button><button class="btn" id="tig">시작하기</button></div>';
@@ -4730,8 +4723,8 @@ function msSync(){var s=psDay();MS.forEach(function(m,i){var k=MK[i];m[2]=PCFG.A
 function recordPoints(amount,label){if(!AUTH_SESSION.signedIn)return;if(amount!==0)ARCH.points.unshift({amount:amount,label:label,day:todayStr(),at:new Date().toISOString()});archiveSave()}
 function pointHistory(){
  var day=todayStr(),items=ARCH.points.filter(function(p){return p.day===day&&p.amount!==0}).slice().sort(function(a,b){return b.at.localeCompare(a.at)}),earned=items.reduce(function(n,p){return n+Math.max(0,p.amount)},0),spent=items.reduce(function(n,p){return n+Math.max(0,-p.amount)},0),trigger=document.activeElement,number=function(n){return Number(n).toLocaleString('ko-KR')};
- var dismiss=pop('<div class="points-heading"><span class="points-symbol" aria-hidden="true">P</span><div><h3 id="points-title">포인트 내역</h3><p id="points-description">오늘 받은 포인트와 쓴 포인트예요.</p></div></div><div class="points-wallet"><span>보유 포인트</span><strong>'+number(PT)+'<small>P</small></strong></div><div class="point-summary"><div><span>'+ic('plus')+'오늘 받음</span><strong>+'+number(earned)+'<small>P</small></strong></div><div><span>'+ic('minus')+'오늘 사용</span><strong>−'+number(spent)+'<small>P</small></strong></div></div><div class="points-list-heading"><h4>오늘의 내역</h4><time>'+esc(day)+'</time></div>'+(items.length?'<ul class="point-ledger">'+items.map(function(p){var received=p.amount>0,date=new Date(p.at),time=isNaN(date.getTime())?'':date.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false});return '<li><span class="points-entry-icon '+(received?'received':'spent')+'" aria-hidden="true">'+ic(received?'plus':'minus')+'</span><div><b>'+esc(p.label)+'</b><small>'+(received?'받음':'사용')+(time?' · '+esc(time):'')+'</small></div><strong class="'+(received?'point-earned':'point-spent')+'">'+(received?'+':'−')+number(Math.abs(p.amount))+'<small>P</small></strong></li>'}).join('')+'</ul>':'<div class="points-empty"><span aria-hidden="true">'+ic('clock')+'</span><b>아직 포인트 내역이 없어요.</b><p>포인트를 받거나 사용하면 여기에 보여요.</p></div>')+'<button class="btn ghost" id="points-close">닫기</button>');
- var d=document.getElementById('dlg');function close(){dismiss();if(trigger&&trigger.isConnected)trigger.focus({preventScroll:true})}d.classList.add('point-history');d.setAttribute('aria-labelledby','points-title');d.setAttribute('aria-describedby','points-description');document.getElementById('points-close').onclick=close;document.getElementById('ov2').onclick=close;d.onkeydown=function(e){if(e.key==='Escape'){e.preventDefault();close()}else if(e.key==='Tab'){e.preventDefault();document.getElementById('points-close').focus()}};document.getElementById('points-close').focus({preventScroll:true});
+ var dismiss=pop('<div class="points-heading"><span class="points-symbol" aria-hidden="true">P</span><h3 id="points-title">포인트 내역</h3></div><div class="points-wallet"><span>보유 포인트</span><strong>'+number(PT)+'<small>P</small></strong></div><div class="point-summary"><div><span>오늘 받음</span><strong>'+number(earned)+'<small>P</small></strong></div><div><span>오늘 사용</span><strong>'+number(spent)+'<small>P</small></strong></div></div><div class="points-list-heading"><h4>오늘의 내역</h4><time>'+esc(day)+'</time></div>'+(items.length?'<ul class="point-ledger">'+items.map(function(p){var received=p.amount>0,date=new Date(p.at),time=isNaN(date.getTime())?'':date.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false});return '<li><span class="points-entry-icon '+(received?'received':'spent')+'" aria-hidden="true">'+ic(received?'plus':'minus')+'</span><div><b>'+esc(p.label)+'</b><small>'+(received?'받음':'사용')+(time?' · '+esc(time):'')+'</small></div><strong class="'+(received?'point-earned':'point-spent')+'">'+(received?'+':'−')+number(Math.abs(p.amount))+'<small>P</small></strong></li>'}).join('')+'</ul>':'<div class="points-empty"><span aria-hidden="true">'+ic('clock')+'</span><b>아직 포인트 내역이 없어요.</b></div>')+'<button class="btn ghost" id="points-close">닫기</button>');
+ var d=document.getElementById('dlg');function close(){dismiss();if(trigger&&trigger.isConnected)trigger.focus({preventScroll:true})}d.classList.add('point-history');d.setAttribute('aria-labelledby','points-title');document.getElementById('points-close').onclick=close;document.getElementById('ov2').onclick=close;d.onkeydown=function(e){if(e.key==='Escape'){e.preventDefault();close()}else if(e.key==='Tab'){e.preventDefault();document.getElementById('points-close').focus()}};document.getElementById('points-close').focus({preventScroll:true});
 }
 function award(k,quiet){if(!AUTH_SESSION.signedIn)return 0;var s=psDay(),c=PCFG.ACT[k];if(!c||(k in s.got))return 0;
  if(SB_SESSION&&AUTH_SESSION.provider==='supabase')return sbQueuePoint(k,quiet);
@@ -5147,7 +5140,7 @@ function likeN(k){return Math.max(1,Math.round(LB[k][3]*.4+((k*37)%9)))+(HB[k]?1
 function popRank(){return LB.map(function(b,k){return k}).filter(function(k){return !!BD[k]}).sort(function(a,b){return LB[b][3]-LB[a][3]||likeN(b)-likeN(a)||LB[a][0].localeCompare(LB[b][0],"ko")})}
 function rankPg(){
  app.className="app";
- app.innerHTML='<div class="sh2"><button class="ib" id="rk0" aria-label="뒤로">'+ic("back")+'</button><h2>인기 급상승 오늘의 책</h2><span class="sp3"></span></div><div class="rkp">'+(function(){var R=popRank();return[1,0,2].map(function(i){var k=R[i];if(k===undefined)return'';var b=LB[k];return'<div class="bk rkt rk'+(i+1)+'" data-k="'+k+'" role="button" tabindex="0" aria-label="'+(i+1)+'위 '+esc(b[0])+'"><span class="rkb"><span>'+(i+1)+'</span></span><div class="rkc"><div class="cv" data-bt="'+esc(b[0])+'" style="background:'+b[2]+'"></div><button class="hb" aria-pressed="'+(!!HB[k])+'" aria-label="찜하기">'+ic("heart")+'</button></div><p class="t">'+b[0]+'</p><small>'+b[3]+'명이 읽는 중</small></div>'}).join("")})()+'</div><div class="rkl">'+popRank().slice(3).map(function(k,j){var i=j+3,b=LB[k];return'<div class="bk rkr" data-k="'+k+'" role="button" tabindex="0"><b class="rkn">'+(i+1)+'</b><div class="cv" data-bt="'+esc(b[0])+'" style="background:'+b[2]+'"></div><div class="rki"><p class="t">'+b[0]+'</p><p class="a">'+b[1]+'</p><small>'+b[3]+'명이 읽는 중 · 찜 '+likeN(k)+'</small></div><button class="hb" aria-pressed="'+(!!HB[k])+'" aria-label="찜하기">'+ic("heart")+'</button></div>'}).join("")+'</div>';
+ app.innerHTML='<div class="sh2"><button class="ib" id="rk0" aria-label="뒤로">'+ic("back")+'</button><h2>오늘의 인기 책</h2><span class="sp3"></span></div><div class="rkp">'+(function(){var R=popRank();return[1,0,2].map(function(i){var k=R[i];if(k===undefined)return'';var b=LB[k];return'<div class="bk rkt rk'+(i+1)+'" data-k="'+k+'" role="button" tabindex="0" aria-label="'+(i+1)+'위 '+esc(b[0])+'"><span class="rkb"><span>'+(i+1)+'</span></span><div class="rkc"><div class="cv" data-bt="'+esc(b[0])+'" style="background:'+b[2]+'"></div><button class="hb" aria-pressed="'+(!!HB[k])+'" aria-label="찜하기">'+ic("heart")+'</button></div><p class="t">'+b[0]+'</p><small>'+b[3]+'명이 읽는 중</small></div>'}).join("")})()+'</div><div class="rkl">'+popRank().slice(3).map(function(k,j){var i=j+3,b=LB[k];return'<div class="bk rkr" data-k="'+k+'" role="button" tabindex="0"><b class="rkn">'+(i+1)+'</b><div class="cv" data-bt="'+esc(b[0])+'" style="background:'+b[2]+'"></div><div class="rki"><p class="t">'+b[0]+'</p><p class="a">'+b[1]+'</p><small>'+b[3]+'명이 읽는 중 · 찜 '+likeN(k)+'</small></div><button class="hb" aria-pressed="'+(!!HB[k])+'" aria-label="찜하기">'+ic("heart")+'</button></div>'}).join("")+'</div>';
  document.getElementById("rk0").onclick=library;lbWire(rankPg)}
 function lbWire(back){
  app.querySelectorAll(".bk").forEach(function(c){var k=+c.dataset.k;function go(){warn(function(){bookDt(k,back)})}c.onclick=function(e){if(!e.target.closest(".hb"))go()};c.onkeydown=function(e){if(e.key==="Enter"&&e.target===c)go()}});
@@ -5158,7 +5151,7 @@ function library(){
  var tabs=[["book","도서관"],["basket","디지털 문구점"],["home","홈"],["chat","커뮤니티"],["person","마이페이지"]].map(function(t){return'<button'+(t[0]==="book"?' aria-current="page"':'')+'>'+ic(t[0])+t[1]+'</button>'}).join("");
  app.innerHTML='<div class="sh2"><span class="sp3"></span><h2>도서관</h2><span class="sp3"></span></div><div class="lsrow"><div class="csr lsr"><input id="lq" type="search" placeholder="책 제목, 저자로 찾기" aria-label="책 제목이나 저자로 찾기" autocomplete="off"><button class="csb2" id="lsb" aria-label="검색">'+ic("search")+'</button></div></div><div id="lres" hidden></div><div id="lmain">'
  
- +'<section class="fs"><div class="fsh"><h3>인기 급상승 오늘의 책</h3><button class="pme" id="rkm">전체 보기'+ic("next")+'</button></div><div class="box ppx"><div class="shs pps">'+popRank().slice(0,10).map(function(k,i){return bcard(k,i+1)}).join("")+'</div></div></section>'
+ +'<section class="fs"><div class="fsh"><h3>오늘의 인기 책</h3><button class="pme" id="rkm">전체 보기'+ic("next")+'</button></div><div class="box ppx"><div class="shs pps">'+popRank().slice(0,10).map(function(k,i){return bcard(k,i+1)}).join("")+'</div></div></section>'
  +'<section class="fs"><div class="fsh"><h3>장르</h3></div><div class="box gnc" role="group" aria-label="장르별로 보기">'+GEN.map(function(g,i){return'<button class="gnt" data-g="'+i+'"><span><img src="'+genreIconSource(i)+'" alt=""></span><b class="gnt-label">'+g+'</b></button>'}).join("")+'</div></section>'
  +'</div><nav class="tab" aria-label="주요 메뉴">'+tabs+'</nav>';
  app.firstChild.style.paddingBottom="76px";
@@ -6984,6 +6977,7 @@ home=function(){
  var started=AUTH_SESSION.signedIn&&(!!PICKED||OPN.length>0),key=RKEY||(ans.length===Q.length&&ans.every(function(v){return Number.isInteger(v)&&v>=0&&v<4})?calcType().key:''),state=!AUTH_SESSION.signedIn?'guest':started?'reading':key?'recommend':'assessment',recs=state==='recommend'?recList(key):[];
  var stackBooks=state==='reading'?cxReadingBooks():[];if(stackBooks.length&&stackBooks.indexOf(DEF)<0)DEF=stackBooks[0];if(state==='reading'&&BK!==DEF)useBk(DEF);
  var k=DEF,B=LB[k],q=state==='reading'?bprog(k):{c:0},today=new Date().getDay(),G=GOAL||10,pages=AUTH_SESSION.signedIn&&RDY.d===todayStr()?Object.keys(RDY.p).length:0;
+ var points=AUTH_SESSION.signedIn?Number(psDay().act)||0:0,pointFill=Math.max(0,Math.min(100,points/PCFG.DAILY_CAP*100));
  var days='일월화수목금토'.split('').map(function(d,i){var n=AUTH_SESSION.signedIn?(i===today?pages:(i<today?WK[i]:null)):null;return '<div class="cx-day'+(n?' is-read':'')+(i===today?' is-today':'')+'"><small>'+d+'</small><span aria-label="'+d+'요일 '+(n?n+'쪽 읽음':'읽은 기록 없음')+'">'+(n?ic('bkck'):(i===today?'<b>오늘</b>':'·'))+'</span></div>'}).join('');
  var posts=PO.filter(function(p){return p.v===0}).sort(function(a,b){return(b.l+b.c.length)-(a.l+a.c.length)}).slice(0,4);
  var nav=[0,1,2,3,4].map(function(i){return '<button data-nav="'+i+'"'+(i===2?' aria-current="page"':'')+'>'+navItemHTML(i)+'</button>'}).join('');
@@ -6991,9 +6985,9 @@ home=function(){
  +''
  +cxHomeCard(state,stackBooks,k,q,pages,G,recs)
  +'<section class="cx-week"><div class="cx-sectionhead"><h2>이번 주 독서</h2><button class="cx-link" id="cx-calendar">전체 보기'+ic('next')+'</button></div><div class="cx-days">'+days+'</div></section>'
- +'<button class="cx-points" id="cx-missions"><span class="cx-pointmark">P</span><b>오늘의 포인트<strong>'+(AUTH_SESSION.signedIn?psDay().act:0)+' / '+PCFG.DAILY_CAP+'P</strong></b>'+ic('next')+'</button>'
+ +'<button class="cx-points" id="cx-missions" type="button"><span class="cx-points-summary"><span class="cx-pointmark" aria-hidden="true">P</span><span class="cx-points-copy"><b>오늘의 포인트</b><span class="cx-points-value"><strong>'+points+'P</strong><span> / '+PCFG.DAILY_CAP+'P</span></span></span>'+ic('next')+'</span><span class="cx-points-track" aria-hidden="true"><i style="width:'+pointFill+'%"></i></span></button>'
  +'<section class="cx-community"><div class="cx-sectionhead"><h2>커뮤니티 인기글</h2><button class="cx-link" id="cx-community">전체 보기'+ic('next')+'</button></div>'+(posts.length?'<ul class="cx-community-list" id="cx-posts">'+posts.map(function(post){var likes=post.l+(AUTH_SESSION.signedIn&&LKD[post.id]?1:0),author=post.mine?ME:post.u;return '<li><button class="cx-community-row" type="button" data-post="'+post.id+'"><span class="cx-community-copy">'+esc(post.x)+'</span><span class="cx-community-meta"><span class="cx-community-author">'+esc((author?author+' · ':'')+(TN[post.t]||post.t))+'</span><span class="cx-community-counts"><span role="img" aria-label="좋아요 '+likes+'개">'+ic('heart')+likes+'</span><span role="img" aria-label="댓글 '+post.c.length+'개">'+ic('chat')+post.c.length+'</span></span></span></button></li>'}).join('')+'</ul>':'<p class="cx-weeknote">아직 올라온 이야기가 없어요.</p>')+'</section>'
- +'<section class="cx-popular" aria-labelledby="cx-popular-title"><div class="cx-sectionhead"><h2 id="cx-popular-title">인기 급상승 오늘의 책</h2><button class="cx-link" id="cx-rank">전체 보기'+ic('next')+'</button></div><div class="shs pps">'+popRank().slice(0,10).map(function(book,i){return bcard(book,i+1)}).join('')+'</div></section>'
+ +'<section class="cx-popular" aria-labelledby="cx-popular-title"><div class="cx-sectionhead"><h2 id="cx-popular-title">오늘의 인기 책</h2><button class="cx-link" id="cx-rank">전체 보기'+ic('next')+'</button></div><div class="shs pps">'+popRank().slice(0,10).map(function(book,i){return bcard(book,i+1)}).join('')+'</div></section>'
  +'<nav class="fx concept-nav" aria-label="주요 메뉴">'+nav+'</nav>';
  var login=document.getElementById('cx-login'),assessment=document.getElementById('cx-assessment'),read=document.getElementById('cx-read'),detail=document.getElementById('cx-detail'),selected=recs.length?recs[0].k:k;
  if(login)login.onclick=function(){AUTH_NEXT=home;loginPage()};if(assessment)assessment.onclick=function(){TFROM=home;testPg(0,[null,null,null,null])};
@@ -7014,7 +7008,7 @@ home=function(){
 </script>
 <script>(function(){
  var route={title:'',group:2},queued=false;
- var routes={library:['도서관',0],genrePg:['장르별 책',0],rankPg:['인기 급상승 오늘의 책',0],bookDt:['책 정보',0],lsearch:['책 검색',0],catPg:['분류별 책',0],themeList:['테마 독서',0],shop:['디지털 문구점',1],profile:['마이페이지',4],readPg:['읽은 책',4],shelfPg:['내 책장',4],likedPg:['찜한 책',4],quoteArchive:['문장 보관함',4],setPg:['설정',4],frList:['독서 메이트',4],inbox:['알림',4],community:['커뮤니티',3],loginPage:['로그인',null],signupAccount:['회원가입',null],info:['회원가입',null],goal:['회원가입',null],ask:['회원가입',null],tiIntro:['DDTI',null],testPg:['DDTI 검사',null],typePg:['DDTI 분석',4],testRes:['DDTI 결과',null],result:['DDTI 결과',null]};
+ var routes={library:['도서관',0],genrePg:['장르별 책',0],rankPg:['오늘의 인기 책',0],bookDt:['책 정보',0],lsearch:['책 검색',0],catPg:['분류별 책',0],themeList:['테마 독서',0],shop:['디지털 문구점',1],profile:['마이페이지',4],readPg:['읽은 책',4],shelfPg:['내 책장',4],likedPg:['찜한 책',4],quoteArchive:['문장 보관함',4],setPg:['설정',4],frList:['독서 메이트',4],inbox:['알림',4],community:['커뮤니티',3],loginPage:['로그인',null],signupAccount:['회원가입',null],info:['회원가입',null],goal:['회원가입',null],ask:['회원가입',null],tiIntro:['DDTI',null],testPg:['DDTI 검사',null],typePg:['DDTI 분석',4],testRes:['DDTI 결과',null],result:['DDTI 결과',null]};
  function schedule(){if(queued)return;queued=true;(document.hidden?setTimeout:requestAnimationFrame)(function(){queued=false;adapt()})}
  Object.keys(routes).forEach(function(name){var fn=window[name];if(typeof fn!=='function')return;window[name]=function(){var previous=uiRenderView;uiRenderView=name;try{route={title:routes[name][0],group:routes[name][1]};var out=fn.apply(this,arguments);adapt();return out}finally{uiRenderView=previous}}});
  function adapt(){
