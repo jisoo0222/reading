@@ -5882,7 +5882,7 @@ function community(){
    return h+L.map(function(c){return'<button type="button" class="bsi" data-c="'+CATB.indexOf(c)+'"><span class="compose-book-cover" aria-hidden="true">'+(c[3]>-1?coverSVG(c[3],0,true,36,50):'<span style="background:'+c[2]+'"></span>')+'</span><span class="bt"><b>'+esc(c[0])+'</b><small>'+esc(c[1])+'</small></span><span class="compose-book-choice" aria-hidden="true">'+(bk===c?'✓':'+')+'</span></button>'}).join("")}
   function pickBook(){sv();bq="";var sc=app.querySelector('.sc'),scroll=sc?sc.scrollTop:0;
    var close=pop('<h3>책 고르기</h3><label class="compose-picker-label" for="bq">책 제목이나 저자</label><input id="bq" type="search" placeholder="책 제목이나 저자로 찾기" autocomplete="off"><div id="bl" class="bls"></div><p id="compose-picker-count" class="compose-picker-label" role="status" aria-live="polite"></p>');
-   var dlg=document.getElementById("dlg"),input=document.getElementById("bq"),list=document.getElementById("bl");dlg.classList.add("compose-book-picker");
+   var dlg=document.getElementById("dlg"),input=document.getElementById("bq"),list=document.getElementById("bl");dlg.dataset.nox="1";dlg.classList.add("compose-book-picker");
    input.oninput=function(){bq=input.value;list.innerHTML=blist();document.getElementById("compose-picker-count").textContent=list.querySelectorAll('.bsi').length+'권을 찾았어요.'};list.innerHTML=blist();list.onclick=function(e){var button=e.target.closest(".bsi");if(!button)return;bk=CATB[+button.dataset.c];msg="";close();r();document.getElementById("compose-book-open").focus({preventScroll:true});if(sc)sc.scrollTop=scroll};input.focus({preventScroll:true})}
   function sv(){var a=document.getElementById("ct");if(a)tx=a.value;var p0=document.getElementById("o0");if(p0){o[0]=p0.value;o[1]=document.getElementById("o1").value}}
   function seg(l,k,arr,cur){return'<div class="sg"><b>'+l+'</b><div>'+arr.map(function(t,i){return'<button data-k="'+k+'" data-i="'+i+'" aria-pressed="'+(cur===i)+'">'+t+'</button>'}).join("")+'</div></div>'}
@@ -7254,6 +7254,7 @@ function cmBookLabel(k){var b=k!==''&&LB[Number(k)];return b?'<span class="compo
 function cmPickBook(done){
  var close=pop('<h3>책 고르기</h3><label class="compose-picker-label" for="bq">책 제목이나 저자</label><input id="bq" type="search" autocomplete="off" placeholder="책 제목이나 저자로 찾기"><div id="cm-book-results" class="bls" aria-live="polite"></div>');
  var dialog=document.getElementById('dlg'),input=document.getElementById('bq'),list=document.getElementById('cm-book-results');
+ dialog.dataset.nox='1';
  dialog.classList.add('compose-book-picker');
  function draw(){
   var query=input.value.trim().toLowerCase(),ids=[];
