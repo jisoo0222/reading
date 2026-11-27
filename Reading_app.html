@@ -2479,17 +2479,14 @@ body:has(.app.hso) #pawf{display:none!important}
 #app.type-result .tcard{margin:0;flex:none;overflow:hidden;background:var(--card);border:1px solid color-mix(in srgb,var(--ddti-card-accent) 25%,transparent);border-radius:15px}
 #app.type-result .ddti-recommendations{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:10px;padding:0 12px 12px}
 #app.type-result .ddti-recommendations>.ddti-recommendation{min-width:0;padding:10px;border:1px solid var(--bd-card);border-radius:12px;background:var(--bg)}
-#app.type-result .ddti-recommendations h3{margin:0 0 12px;color:var(--ink);font-size:16px;font-weight:750}
-#app.type-result .ddti-recommendations .rbx{margin:0;padding:0;border:0;background:none;box-shadow:none}
-#app.type-result .ddti-recommendation .rbk{display:block;padding:0;background:none!important;border-radius:0!important}
-#app.type-result .ddti-recommendation .rbk+.rbk{border-top:1px solid var(--bd-card)!important}
-.ddti-book-summary{display:grid;grid-template-columns:26px minmax(0,1fr);gap:6px;position:relative;align-items:start;padding:10px 10px 10px 0;list-style:none;cursor:pointer}
-.ddti-book-summary::-webkit-details-marker{display:none}
-.ddti-book-summary::after{content:'';position:absolute;right:1px;top:15px;width:5px;height:5px;border:solid var(--sub);border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
-.rbk[open] .ddti-book-summary::after{transform:rotate(225deg)}
-.ddti-book-summary>i{position:relative;width:26px;overflow:hidden}
-#app.type-result .ddti-book-summary b{flex-wrap:wrap;gap:4px;overflow-wrap:anywhere}
-.ddti-book-reason{padding:0 0 12px;min-width:0}
+#app.type-result :is(.ddti-recommendations,.ddti-book-list) h3{margin:0 0 12px;color:var(--ink);font-size:16px;font-weight:750}
+.ddti-featured-book{display:grid;grid-template-columns:36px minmax(0,1fr);align-items:start;gap:8px;overflow-wrap:anywhere}
+.ddti-featured-book>i{position:relative;overflow:hidden;width:36px;aspect-ratio:3/4;border-radius:5px}
+.ddti-featured-book>span{display:grid;justify-items:start;gap:4px;min-width:0;font-size:14px}
+#app.type-result .ddti-book-list{margin-top:24px;padding:16px;border:1px solid var(--bd-card);border-radius:15px;background:var(--card)}
+#app.type-result .ddti-book-list .rbx{margin:0;padding:0}
+#app.type-result .ddti-book-list .rbk{background:none!important;border-radius:0!important}
+#app.type-result .ddti-book-list .rbk+.rbk{border-top:1px solid var(--bd-card)!important}
 .ddti-mate-recommendation{display:grid;gap:8px}
 .ddti-mate-symbol{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--ddti-mate-bg);color:var(--ddti-mate-accent)}
 .ddti-mate-symbol .ic{width:24px;height:24px}
@@ -4065,18 +4062,18 @@ dialog.app-loading-screen::backdrop{background:#F5F7F4}
 #app .friend-search-actions button[data-action="request"]:disabled span{background:#E6EEE8;color:#34483B;border-color:#91A599}
 /* Service copy preserves the explicit boundary between complete sentences. */
 #app :is(.type-analysis p,.ax p,.account-status,.account-help,.consent-detail p,.hmr small,.ntx b,.mtp),#app #dlg>h3,#app #dlg .sm,#hn,#ptt{white-space:pre-line}
-/* DDTI 분석: 똑독 로고의 표지와 책갈피를 살린 책장 넘김 */
+/* DDTI 분석: 펼친 책에서 오른쪽 책장이 왼쪽으로 넘어가요. */
 #app .center.type-loading{display:flex;flex-direction:column;align-items:center;justify-content:center;align-self:center;width:100%;max-width:360px;margin:auto 0;padding:32px 12px;min-height:320px;background:transparent;border-radius:0;text-align:center}
-#app .type-loading-art{width:200px;max-width:100%;margin-bottom:24px;perspective:500px}
+#app .type-loading-art{width:220px;max-width:100%;margin-bottom:24px}
 #app .type-loading-art svg{display:block;width:100%;height:auto;overflow:visible}
-#app .type-loading-page{transform-box:view-box;transform-origin:102px 108px;animation:type-page-turn 1.6s cubic-bezier(.4,0,.2,1) infinite}
+#app .type-loading-page{transform-box:view-box;transform-origin:110px 96px;animation:type-page-turn 1.5s ease-in-out both}
 #app .type-loading h1{font-size:22px;line-height:1.5;color:var(--ink);word-break:keep-all}
 #app .type-loading .hint{font-size:14px;line-height:1.6;color:var(--sub);margin-top:8px}
 .type-loading-dots{display:flex;gap:8px;margin-top:24px;min-height:8px;align-items:center}
 .type-loading-dots i{width:6px;height:6px;border-radius:50%;background:var(--pri);animation:type-dot-breathe 1.2s ease-in-out infinite}
 .type-loading-dots i:nth-child(2){animation-delay:.15s}
 .type-loading-dots i:nth-child(3){animation-delay:.3s}
-@keyframes type-page-turn{0%,12%{transform:rotateY(0deg);opacity:0}22%{opacity:1}75%{transform:rotateY(-165deg);opacity:1}88%,100%{transform:rotateY(-165deg);opacity:0}}
+@keyframes type-page-turn{0%,12%{transform:scaleX(1);opacity:1}47%{transform:scaleX(0) skewY(-12deg);opacity:1}82%,92%{transform:scaleX(-1);opacity:1}100%{transform:scaleX(-1);opacity:0}}
 @keyframes type-dot-breathe{0%,100%{opacity:.35;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
 @media(prefers-reduced-motion:reduce){#app .type-loading-page,.type-loading-dots i{animation:none!important;transform:none;opacity:1}#app .type-loading-page{display:none}}
 /* 직접 꾸미기: 그림과 도구를 분리한 작업대 */
@@ -4167,10 +4164,10 @@ Object.assign(FIGMA_ASSETS,{"shop_imgRectangle34627078":"data:image/svg+xml;base
 Object.assign(FIGMA_ASSETS,{"type_imgBookEmblem":"data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjE0MS4xNDYiIGhlaWdodD0iMTMzLjA4OSIgdmlld0JveD0iMCAwIDE0MS4xNDYgMTMzLjA4OSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgaWQ9ImJvb2stZW1ibGVtIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTY2LjY2NjcgMTMzLjA4OUMxMDMuNDg2IDEzMy4wODkgMTMzLjMzMyAxMDMuMjk2IDEzMy4zMzMgNjYuNTQ0N0MxMzMuMzMzIDI5Ljc5MzEgMTAzLjQ4NiAwIDY2LjY2NjcgMEMyOS44NDc3IDAgMi41NDMxM2UtMDYgMjkuNzkzMSAyLjU0MzEzZS0wNiA2Ni41NDQ3QzIuNTQzMTNlLTA2IDEwMy4yOTYgMjkuODQ3NyAxMzMuMDg5IDY2LjY2NjcgMTMzLjA4OVoiIGZpbGw9IiNFOUYwRUQiLz4KPGcgaWQ9InR5cGUtbW90aWYiPgo8cGF0aCBpZD0iVmVjdG9yXzIiIGQ9Ik0zOC4xNjY1IDU1LjYzMjNDNDguMTg0NiA1My42MzI0IDU3Ljg2ODggNTMuNjMyNCA2Ny4yMTkxIDU1LjYzMjNNMzguMTY2NSA2OS42MzJDNDQuMTc3NCA2OC4yOTg3IDQ5Ljg1NDMgNjguMjk4NyA1NS4xOTczIDY5LjYzMk0zOC4xNjY1IDgzLjYzMThINDguMTg0NiIgc3Ryb2tlLXdpZHRoPSIzLjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlPSIjODFBQzk4Ii8+CjxwYXRoIGlkPSJWZWN0b3JfMyIgZD0iTTU5LjIwNTIgNzkuNjMxMUw3MS4yMjcgNDkuNjMxN0w5My4yNjY4IDU5LjYzMTVMODUuMjUyMyA3Ny42MzEyTDU3LjIwMTYgOTcuNjMwOEw1OS4yMDUyIDc5LjYzMTFaIiBmaWxsPSIjRUNGM0YwIiBzdHJva2Utd2lkdGg9IjMuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IiM0NTg1NjgiLz4KPHBhdGggaWQ9IlZlY3Rvcl80IiBkPSJNNzEuMjI2NSA0OS42MzE3TDc2LjIzNTUgNDAuNjMxOEw5Ny4yNzM2IDUwLjYzMTZMOTMuMjY2MyA1OS42MzE1TDcxLjIyNjUgNDkuNjMxN1oiIGZpbGw9IiNDMkQ3Q0QiIHN0cm9rZS13aWR0aD0iMy4zIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZT0iIzQ1ODU2OCIvPgo8cGF0aCBpZD0iVmVjdG9yXzUiIGQ9Ik01Ny4yMDE2IDk3LjYzMThMNzMuMjMwNiA3MC42MzI0IiBzdHJva2Utd2lkdGg9IjMuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2U9IiM0NTg1NjgiLz4KPHBhdGggaWQ9IlZlY3Rvcl82IiBkPSJNNzMuMjMwMiA3My4xMzA5Qzc0LjYxMzQgNzMuMTMwOSA3NS43MzQ3IDcyLjAxMTYgNzUuNzM0NyA3MC42MzA5Qzc1LjczNDcgNjkuMjUwMiA3NC42MTM0IDY4LjEzMSA3My4yMzAyIDY4LjEzMUM3MS44NDcgNjguMTMxIDcwLjcyNTYgNjkuMjUwMiA3MC43MjU2IDcwLjYzMDlDNzAuNzI1NiA3Mi4wMTE2IDcxLjg0NyA3My4xMzA5IDczLjIzMDIgNzMuMTMwOVoiIGZpbGw9IiM0NTg1NjgiLz4KPHBhdGggaWQ9IlZlY3Rvcl83IiBkPSJNNzkuMjQwMiA5NS42MzE1SDk3LjI3MjgiIHN0cm9rZS13aWR0aD0iMy4xIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZT0iIzgxQUM5OCIvPgo8L2c+CjxnIGlkPSJzcGFya2xlcyI+CjxwYXRoIGlkPSJWZWN0b3JfOCIgZD0iTTcuMjkxNjcgMTUuNTk2NEwxMC40MTY3IDguMzE4MUwxMy41NDE3IDE1LjU5NjRMMjAuODMzMyAxOC43MTU3TDEzLjU0MTcgMjEuODM1TDEwLjQxNjcgMjkuMTEzM0w3LjI5MTY3IDIxLjgzNUwwIDE4LjcxNTdMNy4yOTE2NyAxNS41OTY0WiIgZmlsbD0iIzk1QjlBOSIvPgo8cGF0aCBpZD0iVmVjdG9yXzkiIGQ9Ik0xMzIuMjkyIDEwMy45NzZMMTM0LjM3NSA5OS4yOTcyTDEzNi40NTggMTAzLjk3NkwxNDEuMTQ2IDEwNi4wNTZMMTM2LjQ1OCAxMDguMTM1TDEzNC4zNzUgMTEyLjgxNEwxMzIuMjkyIDEwOC4xMzVMMTI3LjYwNCAxMDYuMDU2TDEzMi4yOTIgMTAzLjk3NloiIGZpbGw9IiM5NUI5QTkiLz4KPC9nPgo8L2c+Cjwvc3ZnPgo="});
 var AX=[["완독형","선택형"],["분석형","공감형"],["깊이형","넓이형"],["정보형","재미형"]];
 var Q=[
-{a:0,t:"읽던 책이 재미없어지면 어떻게 하나요?",h:"나와 가장 가까운 행동을 골라 주세요.",o:["시작한 책은 웬만하면 끝까지 읽어요.","잠시 쉬었다가 다시 읽을 마음이 들면 이어서 읽어요.","흥미가 떨어진 이유를 생각해보고 조금 더 읽을지 결정해요.","지금 끌리지 않는다면 과감하게 다른 책으로 넘어가요."]},
-{a:1,t:"책을 덮고 나면 어떤 생각이 먼저 드나요?",h:"나와 가장 가까운 행동을 골라 주세요.",o:["글의 구성과 전개가 얼마나 탄탄했는지 돌아봐요.","글이 전달하는 주장에 동의할 수 있는지 따져봐요.","등장인물이나 글쓴이가 왜 그런 선택을 했는지 생각해요.","읽는 동안 느꼈던 감정과 장면들이 계속 떠올라요."]},
-{a:2,t:"새로운 관심사가 생기면 어떻게 하나요?",h:"나와 가장 가까운 행동을 골라 주세요.",o:["한 분야를 정하면 관련 책과 자료를 찾아 깊이 있게 공부해요.","대표적인 책 몇 권을 읽으며 그 분야의 핵심을 이해해요.","서로 다른 관점의 책을 읽으며 관심 분야의 전체적인 지도를 그려요.","한 가지에 머무르기보다 새로운 분야를 계속 발견하고 옮겨다녀요."]},
-{a:3,t:"책을 펴는 가장 큰 이유는 무엇인가요?",h:"나와 가장 가까운 행동을 골라 주세요.",o:["읽고 나서 새로운 지식이나 실용적인 정보를 얻는 것이 중요해요.","새로운 관점이나 생각할 거리를 얻을 수 있다면 좋아요.","이야기의 전개나 문장의 표현이 흥미로우면 계속 읽게 돼요.","특별한 목적 없이 책을 읽는 시간 자체를 즐겨요."]},
+{a:0,t:"읽던 책이 재미없어지면\n어떻게 하나요?",h:"나와 가장 가까운 행동을 골라 주세요.",o:["시작한 책은 웬만하면 끝까지 읽어요.","잠시 쉬었다가 다시 읽을 마음이 들면 이어서 읽어요.","흥미가 떨어진 이유를 생각해보고 조금 더 읽을지 결정해요.","지금 끌리지 않는다면 과감하게 다른 책으로 넘어가요."]},
+{a:1,t:"책을 덮고 나면\n어떤 생각이 먼저 드나요?",h:"나와 가장 가까운 행동을 골라 주세요.",o:["글의 구성과 전개가 얼마나 탄탄했는지 돌아봐요.","글이 전달하는 주장에 동의할 수 있는지 따져봐요.","등장인물이나 글쓴이가 왜 그런 선택을 했는지 생각해요.","읽는 동안 느꼈던 감정과 장면들이 계속 떠올라요."]},
+{a:2,t:"새로운 관심사가 생기면\n어떻게 하나요?",h:"나와 가장 가까운 행동을 골라 주세요.",o:["한 분야를 정하면 관련 책과 자료를 찾아 깊이 있게 공부해요.","대표적인 책 몇 권을 읽으며 그 분야의 핵심을 이해해요.","서로 다른 관점의 책을 읽으며 관심 분야의 전체적인 지도를 그려요.","한 가지에 머무르기보다 새로운 분야를 계속 발견하고 옮겨다녀요."]},
+{a:3,t:"책을 펴는 가장 큰 이유는\n무엇인가요?",h:"나와 가장 가까운 행동을 골라 주세요.",o:["읽고 나서 새로운 지식이나 실용적인 정보를 얻는 것이 중요해요.","새로운 관점이나 생각할 거리를 얻을 수 있다면 좋아요.","이야기의 전개나 문장의 표현이 흥미로우면 계속 읽게 돼요.","특별한 목적 없이 책을 읽는 시간 자체를 즐겨요."]},
 ];
 var T={
 FADI:["완벽주의 전략 독서가","계획을 세워 한 권을 빈틈없이 끝까지 읽어 내는 독자"],
@@ -4198,7 +4195,7 @@ function bar(n){var s="";for(var i=0;i<Q.length;i++)s+='<i class="'+(i<n?"on":""
 function ask(){
  app.className="app signup signup-quiz";var q=Q[step];
  var o=q.o.map(function(x,i){return'<button class="opt" data-i="'+i+'" aria-pressed="'+(ans[step]===i)+'"><span>'+x+'</span><span class="mk"></span></button>'}).join("");
- app.innerHTML=signupHeader()+ost(3)+bar(step+1)+'<p class="hint qhn">'+q.h+'</p><h1>'+(step===0?'읽던 책이 재미없어지면<br>어떻게 하나요?':q.t)+'</h1><div class="opts">'+o+'</div><div class="foot">'+'<button class="btn ghost" id="bk">이전</button>'+'<button class="btn" id="nx">'+(step===Q.length-1?"프로필 만들기":"다음")+'</button></div>';
+ app.innerHTML=signupHeader()+ost(3)+bar(step+1)+'<p class="hint qhn">'+q.h+'</p><h1>'+esc(q.t).replace('\n','<br>')+'</h1><div class="opts">'+o+'</div><div class="foot">'+'<button class="btn ghost" id="bk">이전</button>'+'<button class="btn" id="nx">'+(step===Q.length-1?"프로필 만들기":"다음")+'</button></div>';
  var nx=document.getElementById("nx");nx.disabled=ans[step]===null;
  app.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){
   ans[step]=+b.dataset.i;
@@ -4207,16 +4204,13 @@ function ask(){
  document.getElementById("bk").onclick=function(){if(step){step--;ask()}else tiIntro()};
 }
 function personalityLoadingMarkup(profile){
- var paper='M102 43C124 36 147 35 173 38V175C147 173 124 178 102 188Z';
- var lines='M116 68C130 64 144 62 157 63M116 85C130 81 144 79 157 80M116 102C130 98 144 96 157 97';
- var book='<svg viewBox="0 0 200 212" fill="none"><ellipse cx="99" cy="201" rx="71" ry="6" fill="#DAEAE1"/>'
-  +'<rect x="82" y="30" width="100" height="160" rx="8" fill="#006D4E"/>'
-  +'<path d="'+paper+'" fill="#FFFFFF" stroke="#D2E3D8" stroke-width="1.5"/>'
-  +'<path d="'+lines+'" stroke="#BED3C6" stroke-width="2" stroke-linecap="round"/>'
-  +'<path d="M151 176L165 175V196L158 191L151 198Z" fill="#FFC95F"/>'
-  +'<path d="M18 47C18 43 21 40 25 39L92 19C97 17 102 20 102 26V191C102 196 97 199 92 197L25 179C21 178 18 175 18 171Z" fill="#00946D"/>'
-  +'<path d="M66 108L79 107V112L66 111Z" fill="#FFC95F"/><ellipse cx="82" cy="109.5" rx="6.4" ry="5.8" fill="#FFC95F"/>'
-  +'<g class="type-loading-page"><path d="'+paper+'" fill="#F9FFFB" stroke="#91B8A2" stroke-width="1.5"/><path d="'+lines+'" stroke="#9ABAA7" stroke-width="2" stroke-linecap="round"/></g></svg>';
+ var paper='M110 44Q145 25 197 31V117Q147 111 110 132Z';
+ var lines='M126 60Q153 50 181 51M126 75Q153 65 181 66M126 90Q148 82 170 81';
+ function leaf(fill){return '<path d="'+paper+'" fill="'+fill+'" stroke="#A9BDB0" stroke-width="1.5" stroke-linejoin="round"/><path d="'+lines+'" stroke="#A9BDB0" stroke-width="2" stroke-linecap="round"/>'}
+ var book='<svg viewBox="0 0 220 152" fill="none">'
+  +'<path d="M15 40Q64 33 110 49Q156 33 205 40V127Q155 124 110 140Q65 124 15 127Z" fill="#174D37" stroke="#174D37" stroke-width="4" stroke-linejoin="round"/>'
+  +'<g transform="translate(220 0) scale(-1 1)">'+leaf('#FFFDF7')+'</g>'+leaf('#FFFDF7')
+  +'<g class="type-loading-page">'+leaf('#FFFFFF')+'</g></svg>';
  return '<div class="center type-loading" role="status" aria-live="polite"><div class="type-loading-art" aria-hidden="true">'+book+'</div><h1>DDTI를 분석하고 있어요.</h1><p class="hint">답변을 바탕으로 '+(profile?'프로필을':'결과를')+' 만드는 중이에요.</p><div class="type-loading-dots" aria-hidden="true"><i></i><i></i><i></i></div></div>';
 }
 function load(){
@@ -4244,13 +4238,13 @@ function cardWire(key,t,names){
   else note("이 기기에서는 공유를 지원하지 않아요.")})}}
 function typePg(){
  app.className="app type-result";var c=calcType();
- app.innerHTML='<div class="sh2"><button class="ib" id="ty0" aria-label="뒤로">'+ic("back")+'</button><h2>DDTI 분석</h2><span class="sp3"></span></div>'+ddtiResultCard(c)+'<div class="tbt tbc"><button class="tci" id="tsv">'+ic("dl")+'이미지 저장</button><button class="tci" id="tsh">'+ic("share")+'공유하기</button></div><div class="sec type-analysis"><h3>DDTI 자세히 보기</h3>'+c.rows+'</div>'+'<button class="btn ghost tre" id="tre">다시 하기</button>';
+ app.innerHTML='<div class="sh2"><button class="ib" id="ty0" aria-label="뒤로">'+ic("back")+'</button><h2>DDTI 분석</h2><span class="sp3"></span></div>'+ddtiResultCard(c)+ddtiResultActions(c.key)+'<div class="sec type-analysis"><h3>DDTI 자세히 보기</h3>'+c.rows+'</div>'+'<button class="btn ghost tre" id="tre">다시 하기</button>';
  document.getElementById("ty0").onclick=profile;document.getElementById("tre").onclick=function(){step=0;ans=[null,null,null,null];tiIntro()};cardWire(c.key,c.t,c.names);
  }
 var TFROM=home;
 function testPg(n,a){
  n=n||0;a=a||[null,null,null,null];var q=Q[n];app.className="app";
- app.innerHTML='<div class="sh2 tqh"><button class="ib" id="tq0" aria-label="뒤로">'+ic("back")+'</button><h2>테스트</h2><span class="sp3"></span></div>'+bar(n+1)+'<p class="hint qhn">'+q.h+'</p><h1>'+q.t+'</h1><div class="opts">'+q.o.map(function(x,i){return'<button class="opt" data-i="'+i+'" aria-pressed="'+(a[n]===i)+'"><span>'+x+'</span><span class="mk"></span></button>'}).join("")+'</div><div class="foot"><button class="btn" id="tqg">'+(n===Q.length-1?"결과 보기":"다음")+'</button></div>';
+ app.innerHTML='<div class="sh2 tqh"><button class="ib" id="tq0" aria-label="뒤로">'+ic("back")+'</button><h2>테스트</h2><span class="sp3"></span></div>'+bar(n+1)+'<p class="hint qhn">'+q.h+'</p><h1>'+esc(q.t).replace('\n','<br>')+'</h1><div class="opts">'+q.o.map(function(x,i){return'<button class="opt" data-i="'+i+'" aria-pressed="'+(a[n]===i)+'"><span>'+x+'</span><span class="mk"></span></button>'}).join("")+'</div><div class="foot"><button class="btn" id="tqg">'+(n===Q.length-1?"결과 보기":"다음")+'</button></div>';
  window.scrollTo(0,0);app.scrollTop=0;
  var g=document.getElementById("tqg");g.disabled=a[n]===null;document.getElementById("tq0").onclick=function(){TFROM()};
  app.querySelectorAll(".opt").forEach(function(b){b.onclick=function(){a[n]=+b.dataset.i;app.querySelectorAll(".opt").forEach(function(c){c.setAttribute("aria-pressed",c===b)});g.disabled=false}});
@@ -4258,7 +4252,7 @@ function testPg(n,a){
   ans=a.slice();app.innerHTML='<div class="sh2 tsh"><h2>테스트</h2></div>'+bar(Q.length)+personalityLoadingMarkup(false);setTimeout(testRes,1600)}}
 function testRes(){
  var c=calcType();RKEY=c.key;app.className="app type-result";
- app.innerHTML='<div class="sh2 tsh"><h2>테스트 결과</h2></div>'+ddtiResultCard(c)+'<div class="tbt tbc"><button class="tci" id="tsv">'+ic("dl")+'이미지 저장</button><button class="tci" id="tsh">'+ic("share")+'공유하기</button></div>'
+ app.innerHTML='<div class="sh2 tsh"><h2>테스트 결과</h2></div>'+ddtiResultCard(c)+ddtiResultActions(c.key)
  +'<div class="sec type-analysis"><h3>DDTI 자세히 보기</h3>'+c.rows+'</div>'
  +'<div class="foot rsf"><button class="btn ghost" id="re">다시 하기</button><button class="btn" id="go">홈으로 가기</button></div>';
  window.scrollTo(0,0);app.scrollTop=0;
@@ -4267,7 +4261,7 @@ function testRes(){
 function result(){
  app.className="app type-result entry-result";
  var c=calcType(),key=c.key,t=c.t,names=c.names,rows=c.rows;RKEY=key;
- app.innerHTML=signupHeader()+bar(Q.length)+'<h1>DDTI 결과가 나왔어요.</h1>'+ddtiResultCard(c)+'<div class="tbt tbc"><button class="tci" id="tsv">'+ic("dl")+'이미지 저장</button><button class="tci" id="tsh">'+ic("share")+'공유하기</button></div>'
+ app.innerHTML=signupHeader()+bar(Q.length)+'<h1>DDTI 결과가 나왔어요.</h1>'+ddtiResultCard(c)+ddtiResultActions(c.key)
  +'<div class="sec type-analysis"><h3>DDTI 자세히 보기</h3>'+rows+'</div>'
  +'<div class="foot rsf"><button class="btn ghost" id="re">다시 하기</button><button class="btn" id="go">홈으로 가기</button></div>';
  document.getElementById("go").onclick=completeSignupHome;
@@ -4380,20 +4374,25 @@ function typeSVG(key,t,names,withRecommendations){
   +(rec?'<g transform="translate('+inset+' '+baseHeight+')">'+rec.markup+'</g>':'')+'</svg>';
 }
 function ddtiRecommendationArt(key,width){
- var books=ddtiMatchBooks(key),mate=ddtiMateKey(key),mateName=T[mate][0],accent=DDTI_PROFILE_COLORS[mate][1];
+ var book=ddtiMatchBooks(key)[0],bookTitle=LB[book.k][0],mate=ddtiMateKey(key),mateName=T[mate][0],accent=DDTI_PROFILE_COLORS[mate][1];
  var gap=10,panelWidth=(width-gap)/2,mateX=panelWidth+gap,pad=12;
- var mateLines=qWrap(mateName,10),noteLines=['네 가지 독서 성향 중','세 가지가 같아요.'];
- var height=Math.max(42+books.length*26,86+19*mateLines.length+17*noteLines.length);
+ var bookLines=qWrap(bookTitle,8),mateLines=qWrap(mateName,10),noteLines=['네 가지 독서 성향 중','세 가지가 같아요.'];
+ var height=86+19*mateLines.length+17*noteLines.length;
+ var palette=THREE_BOOK_PALETTES[0].slice();palette[0]=getComputedStyle(app).getPropertyValue('--three-books-pink').trim()||'#FFBBD1';
+ var cover=new DOMParser().parseFromString(coverSVG(book.k,null,false,120,160,palette),'text/html').body.firstElementChild;
+ cover.setAttribute('width','36');cover.setAttribute('height','48');
  function panel(x){return '<rect x="'+(x+.5)+'" y="0.5" width="'+(panelWidth-1)+'" height="'+(height-1)+'" rx="12" fill="#F5F7F4" stroke="#D7E0D9"/>'}
  function line(text,x,y,attributes){return '<text x="'+x+'" y="'+y+'"'+(attributes?' '+attributes:'')+'>'+esc(text)+'</text>'}
  var markup='<g font-family="Pretendard, Apple SD Gothic Neo, Malgun Gothic, sans-serif" font-size="14" fill="#17241C">'
   +panel(0)+line('추천하는 책',pad,24,'font-weight="700"')
-  +books.map(function(book,i){var y=52+i*26;return line(LB[book.k][0],pad,y)+line(book.p+'%',panelWidth-pad,y,'text-anchor="end" fill="#174D37" font-weight="700"')}).join('')
+  +'<g transform="translate('+pad+' 39)">'+new XMLSerializer().serializeToString(cover)+'</g>'
+  +bookLines.map(function(row,i){return line(row,pad+45,52+i*19,'font-weight="700"')}).join('')
+  +line(book.p+'%',pad+45,56+bookLines.length*19,'fill="#174D37" font-weight="700"')
   +panel(mateX)+line('추천 독서 메이트',mateX+pad,24,'font-weight="700"')
   +line(mate,mateX+pad,49,'fill="'+accent+'" font-weight="700"')
   +mateLines.map(function(row,i){return line(row,mateX+pad,69+i*19,'font-weight="700"')}).join('')
   +noteLines.map(function(row,i){return line(row,mateX+pad,74+mateLines.length*19+i*17,'font-size="13" fill="#34483B"')}).join('')+'</g>';
- return {height:height,markup:markup,label:'추천하는 책 '+books.map(function(book){return LB[book.k][0]}).join(', ')+'. 추천 독서 메이트 '+mate+' '+mateName+'.'};
+ return {height:height,markup:markup,label:'추천하는 책 '+bookTitle+'. 추천 독서 메이트 '+mate+' '+mateName+'.'};
 }
 function cardPNG(svg,cb,sc){sc=sc||1.5;var i=new Image();i.onload=function(){var c=document.createElement("canvas");c.width=i.width*sc;c.height=i.height*sc;var x=c.getContext("2d");x.scale(sc,sc);x.drawImage(i,0,0);c.toBlob(cb,"image/png")};i.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg)}
 var QTH=[["종이","#FFFFFF","#1F1E1E","#4CAE85","#898585"],["연초록","#C6EED0","#1F1E1E","#267B58","#267B58"],["초록","#4CAE85","#FFFFFF","#FFFFFF","#DCF5E2"],["노랑","#FFF3A0","#1F1E1E","#4CAE85","#666161"],["밤","#1F1E1E","#F6F6F6","#A8E5B7","#B1AFAE"]];
@@ -4780,14 +4779,17 @@ function ddtiMatchBooks(key){
 }
 function ddtiMateKey(key){return key.slice(0,2)+(key[2]==='D'?'W':'D')+key[3]}
 function recBox(key){
- return'<section class="ddti-recommendation"><h3>추천하는 책</h3><div class="rbx">'+ddtiMatchBooks(key).map(function(r,i){var b=LB[r.k];return'<details class="rbk rbw" data-k="'+r.k+'"><summary class="ddti-book-summary"><i data-art="1" aria-hidden="true">'+coverSVG(r.k,null,false,120,160,THREE_BOOK_PALETTES[i])+'</i><span><b>'+b[0]+'<strong class="rbp">'+r.p+'%</strong></b></span></summary><div class="ddti-book-reason"><small>'+b[1]+'</small>'+(r.m.length?'<em>'+r.m.join(" · ")+' 일치</em>':'')+'<p>'+(RWHY[r.k]||"")+'</p></div></details>'}).join("")+'</div></section>'}
+ return'<section class="ddti-book-list"><h3>추천 책 3권</h3><div class="rbx">'+ddtiMatchBooks(key).map(function(r,i){var b=LB[r.k];return'<div class="rbk rbw" data-k="'+r.k+'"><i data-art="1" aria-hidden="true">'+coverSVG(r.k,null,false,120,160,THREE_BOOK_PALETTES[i])+'</i><span><b>'+esc(b[0])+'<strong class="rbp">'+r.p+'%</strong></b><small>'+esc(b[1])+'</small>'+(r.m.length?'<em>'+r.m.join(" · ")+' 일치</em>':'')+'<p>'+(RWHY[r.k]||"")+'</p></span></div>'}).join("")+'</div></section>'}
 function ddtiRecommendations(key){
- var mate=ddtiMateKey(key),colors=DDTI_PROFILE_COLORS[mate];
- return '<div class="ddti-recommendations">'+recBox(key)
+ var match=ddtiMatchBooks(key)[0],book=LB[match.k],mate=ddtiMateKey(key),colors=DDTI_PROFILE_COLORS[mate];
+ return '<div class="ddti-recommendations"><section class="ddti-recommendation"><h3>추천하는 책</h3><div class="ddti-featured-book"><i aria-hidden="true">'+coverSVG(match.k,null,false,120,160,THREE_BOOK_PALETTES[0])+'</i><span><b>'+esc(book[0])+'</b><strong class="rbp">'+match.p+'%</strong></span></div></section>'
   +'<section class="ddti-recommendation"><h3>추천 독서 메이트</h3><div class="ddti-mate-recommendation" style="--ddti-mate-bg:'+colors[0]+';--ddti-mate-accent:'+colors[1]+'">'
   +'<span class="ddti-mate-symbol">'+ic("users")+'</span><div class="ddti-mate-copy"><small>'+mate+'</small><strong>'+esc(T[mate][0])+'</strong><p>네 가지 독서 성향 중 세 가지가 같아요.</p></div></div></section></div>';
 }
 function ddtiResultCard(c){return '<div class="tcard" style="--ddti-card-accent:'+DDTI_PROFILE_COLORS[c.key][1]+'">'+typeSVG(c.key,c.t,c.names)+ddtiRecommendations(c.key)+'</div>'}
+function ddtiResultActions(key){
+ return '<div class="tbt tbc"><button class="tci" id="tsv">'+ic('dl')+'이미지 저장</button><button class="tci" id="tsh">'+ic('share')+'공유하기</button></div>'+recBox(key);
+}
 var RBR=0;
 var I={scrl:"M7 4h11a2 2 0 0 1 0 4H7M7 4a2 2 0 0 0 0 4v10a2 2 0 0 0 2 2h9V8M11 12h4M11 15h4",bulb:"M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z",atom:"M12 10.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zM3.5 12c0-2.2 3.8-4 8.5-4s8.5 1.8 8.5 4-3.8 4-8.5 4-8.5-1.8-8.5-4zM12 3.5c2.2 0 4 3.8 4 8.5s-1.8 8.5-4 8.5-4-3.8-4-8.5 1.8-8.5 4-8.5z",spark:"M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z",caret:"M7 10l5 5 5-5",sys:"M4 5h16v11H4zM9 20h6M12 16v4",bkck:"M6 3.5h11a1.5 1.5 0 0 1 1.5 1.5v15H7.5A2.5 2.5 0 0 1 5 17.5V4.5a1 1 0 0 1 1-1zM5 17.5A2.5 2.5 0 0 1 7.5 15h11M9 9l2 2 4-4",sort:"M8 4v16M4.5 7.5L8 4l3.5 3.5M16 20V4M12.5 16.5L16 20l3.5-3.5",fwd:"M4 19c.5-6.500 5-10 12-10h2M14 5l5 4-5 4",dict:"M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6.500A1.500 1.500 0 0 1 5 19.500v-15A1.500 1.500 0 0 1 6.500 3zM5 18.500A1.500 1.500 0 0 1 6.500 17H19M9 8.500l2-4.500 2 4.500M9.700 7h2.600M15 6.500v3",menu:"M4 7h16M4 12h16M4 17h16",search:"M11 5a6 6 0 1 0 0 12 6 6 0 0 0 0-12zM16 16l4 4",bell:"M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15zM10 20a2 2 0 0 0 4 0",set:"M4 7h10M18 7h2M4 17h2M10 17h10M16 5v4M8 15v4",chat:"M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-9l-4 3v-3H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z",basket:"M4 9h16l-1.5 9a1 1 0 0 1-1 .8h-11a1 1 0 0 1-1-.8zM9 9l3-5 3 5",home:"M4 11l8-7 8 7M6 10v10h12V10",book:"M3 5.5C5.500 4 9 4 12 6c3-2 6.500-2 9-.5V19c-2.500-1.500-6-1.500-9 .5-3-2-6.500-2-9-.5zM12 6v13.500",person:"M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8zM4 20c1-4 4-6 8-6s7 2 8 6",heart:"M12 20s-7-4.500-7-10a4 4 0 0 1 7-2.500A4 4 0 0 1 19 10c0 5.500-7 10-7 10z",next:"M9 5l7 7-7 7",cog:"M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zM19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z",plus:"M12 5v14M5 12h14",back:"M15 5l-7 7 7 7",pen:"M4 20l1-4L16 5l3 3L8 19zM14 7l3 3",share:"M12 15V4M8 8l4-4 4 4M5 13v6h14v-6",zen:"M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"};
 function ic(k){return'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="'+I[k]+'"/></svg>'}
